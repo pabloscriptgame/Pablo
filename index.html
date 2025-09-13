@@ -6,20 +6,15 @@
   <title>Vaquinha Solidária — Dê Gusto Lanchonete</title>
   <style>
     :root {
-      /* Gradiente masculino e feminino */
-      --accent: #ff5f91; /* Rosa - feminino */
-      --accent2: #4f8cff; /* Azul - masculino */
-      --bg-gradient: linear-gradient(135deg, #ff5f91, #4f8cff); /* Fundo geral */
+      --accent: #ff5f91;
+      --accent2: #4f8cff;
+      --bg-gradient: linear-gradient(135deg, #ff5f91, #4f8cff);
       --card: #fff;
       --radius: 26px;
       font-family: 'Poppins', system-ui, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
@@ -44,40 +39,15 @@
       margin-top: 70px;
     }
 
-    header {
-      grid-column: 1 / -1;
-      text-align: center;
-    }
+    header { grid-column: 1 / -1; text-align: center; }
+    h1 { font-size: clamp(20px, 4vw, 28px); margin-bottom: 10px; color: #111; word-wrap: break-word; }
+    .lead { font-size: clamp(14px, 3vw, 16px); color: #555; }
 
-    h1 {
-      font-size: clamp(20px, 4vw, 28px);
-      margin-bottom: 10px;
-      color: #111;
-      word-wrap: break-word;
-    }
-
-    .lead {
-      font-size: clamp(14px, 3vw, 16px);
-      color: #555;
-    }
-
-    .left p {
-      line-height: 1.6;
-      font-size: 16px;
-      color: #333;
-      margin-top: 14px;
-      text-align: center;
-      word-wrap: break-word;
-    }
+    .left p { line-height: 1.6; font-size: 16px; color: #333; margin-top: 14px; text-align: center; word-wrap: break-word; }
 
     .goals {
-      margin-top: 20px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
+      margin-top: 20px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
     }
-
     .goal {
       background: linear-gradient(135deg, #fff, #faf9ff);
       border-radius: 20px;
@@ -88,24 +58,10 @@
       flex: 1;
       text-align: center;
     }
+    .goal strong { display: block; margin-top: 4px; }
 
-    .goal strong {
-      display: block;
-      margin-top: 4px;
-    }
-
-    .center-img {
-      grid-column: 1 / -1;
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .center-img img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    }
+    .center-img { grid-column: 1 / -1; text-align: center; margin: 20px 0; }
+    .center-img img { max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); }
 
     .right {
       background: linear-gradient(180deg, #fff, #f9f7ff);
@@ -130,65 +86,21 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     }
 
-    .buttons {
-      display: flex;
-      gap: 12px;
-      width: 100%;
-    }
-
-    button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 20px;
-      border: 0;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 15px;
-      transition: all 0.2s ease;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .copy {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .copy:active {
-      transform: scale(0.97);
-    }
-
-    .donate-link {
-      background: transparent;
-      border: 2px solid var(--accent2);
-      color: var(--accent2);
-    }
-
-    .donate-link:hover {
-      background: var(--accent2);
-      color: #fff;
-    }
-
-    .donate-link:active {
-      transform: scale(0.97);
-    }
+    .buttons { display: flex; gap: 12px; width: 100%; }
+    button { flex: 1; padding: 12px; border-radius: 20px; border: 0; font-weight: 600; cursor: pointer; font-size: 15px; transition: all 0.2s ease; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); }
+    .copy { background: var(--accent); color: #fff; }
+    .copy:active { transform: scale(0.97); }
+    .donate-link { background: transparent; border: 2px solid var(--accent2); color: var(--accent2); }
+    .donate-link:hover { background: var(--accent2); color: #fff; }
+    .donate-link:active { transform: scale(0.97); }
 
     .qr {
-      width: 220px;
-      height: 220px;
-      border-radius: 30px;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      width: 220px; height: 220px; border-radius: 30px; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      padding: 14px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
 
-    .small {
-      font-size: 13px;
-      color: #666;
-      text-align: center;
-    }
+    .small { font-size: 13px; color: #666; text-align: center; }
 
     footer {
       grid-column: 1 / -1;
@@ -198,112 +110,57 @@
       color: #777;
     }
 
-    .row {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-    }
-
-    input[type="number"] {
-      flex: 1;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #e6e6e6;
+    .regulamento {
+      margin-top: 20px;
+      text-align: left;
       font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      background: #f9f9f9;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    /* Botão WhatsApp */
+    .row { display: flex; gap: 8px; width: 100%; }
+    input[type="number"] { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 14px; }
+
     .whatsapp-btn {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 14px 24px;
-      background: #25D366;
-      color: #fff;
-      font-weight: 600;
-      font-size: 16px;
-      border-radius: 30px;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: inline-block; margin-top: 16px; padding: 14px 24px;
+      background: #25D366; color: #fff; font-weight: 600; font-size: 16px;
+      border-radius: 30px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: all 0.2s ease;
     }
+    .whatsapp-btn:hover { background: #1ebe5d; transform: scale(1.03); }
 
-    .whatsapp-btn:hover {
-      background: #1ebe5d;
-      transform: scale(1.03);
-    }
-
-    /* Texto rolando */
     .marquee {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(90deg, #ff5f91, #4f8cff); /* Gradiente no texto rolando */
-      color: #fff;
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      padding: 12px 0;
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: linear-gradient(90deg, #ff5f91, #4f8cff);
+      color: #fff; font-size: 18px; font-weight: bold; text-align: center;
+      white-space: nowrap; overflow: hidden; padding: 12px 0;
       text-shadow: 0 0 8px #fff, 0 0 12px rgba(255,255,255,0.6);
       z-index: 9999;
     }
+    .marquee span { display: inline-block; padding-left: 100%; animation: marquee 12s linear infinite; }
+    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
 
-    .marquee span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: marquee 12s linear infinite;
-    }
-
-    @keyframes marquee {
-      0% {
-        transform: translateX(0%);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
-    }
-
-    /* Responsividade */
     @media (max-width: 820px) {
-      .container {
-        grid-template-columns: 1fr;
-        padding: 20px;
-        border-radius: 20px;
-      }
-
-      .goals {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-      }
-
-      .goal {
-        width: 100%;
-      }
-
-      .center-img img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      body {
-        padding: 10px;
-      }
+      .container { grid-template-columns: 1fr; padding: 20px; border-radius: 20px; }
+      .goals { flex-direction: column; align-items: center; width: 100%; }
+      .goal { width: 100%; }
+      .center-img img { max-width: 100%; height: auto; }
+      body { padding: 10px; }
     }
   </style>
 </head>
 <body>
-  <!-- Texto rolando -->
   <div class="marquee">
     <span>🚨 VÃO SER DISTRIBUÍDOS 50 SANDUÍCHES PARA NOSSAS CRIANÇAS — Local será divulgado próximo do dia 🚨</span>
   </div>
 
   <main class="container">
     <header>
-      <h1>💖 Vaquinha Solidária
-      DêGusto Lanchonete</h1>
+      <h1>💖 Vaquinha Solidária — Dê Gusto Lanchonete</h1>
       <div class="lead">Ajude nossas crianças com brinquedos, balas, pirulitos e balões</div>
     </header>
 
@@ -353,6 +210,29 @@
       🌟 Dê Gusto Lanchonete — juntos por nossas crianças 💖
       <br>
       <a class="whatsapp-btn" href="https://wa.me/5534999537698" target="_blank">📲 Entre em contato</a>
+      
+      <div style="margin-top:20px; text-align:center; font-size:13px; color:#666; line-height:1.5;">
+        <strong>Política de Privacidade</strong><br>
+        Suas informações são utilizadas apenas para fins de contato e doações.<br>
+        Não compartilhamos seus dados com terceiros, exceto quando necessário para o processamento da contribuição.<br>
+        Ao participar da vaquinha, você concorda com este regulamento e com nossa política de privacidade.
+      </div>
+
+      <div class="regulamento">
+        <h3>🎉 Regulamento da Vaquinha</h3>
+        <p><strong>Ação do Dia das Crianças</strong><br>
+        Somos a Dê Gusto Lanchonete e estamos reunindo nossa comunidade para trazer alegria às crianças no Dia das Crianças. 💖</p>
+        <p><em>Qualquer valor é muito bem-vindo!</em></p>
+        <p>Sua contribuição ajudará a comprar:</p>
+        <ul>
+          <li>🎁 Brinquedos</li>
+          <li>🍭 Balas, pirulitos e guloseimas</li>
+          <li>🎈 Balões e itens de decoração</li>
+          <li>🥪 50 sanduíches fresquinhos preparados pela Dê Gusto</li>
+          <li>🎉 Materiais para brincadeiras e atividades especiais</li>
+        </ul>
+        <p>✅ <strong>Selo de Confiança – Vaquinha Solidária</strong></p>
+      </div>
     </footer>
   </main>
 
