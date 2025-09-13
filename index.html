@@ -5,27 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vaquinha Solidária — Dê Gusto Lanchonete</title>
   <style>
-    :root{ --accent:#ff5f91; --accent2:#8b5cff; --card:#fff; --radius:26px; font-family: 'Poppins', system-ui, sans-serif; }
+    :root{ --accent:#ff5f91; --accent2:#8b5cff; --bg-gradient:linear-gradient(135deg,#ffe6f0,#e6e9ff); --card:#fff; --radius:26px; font-family: 'Poppins', system-ui, sans-serif; }
     *{box-sizing:border-box;margin:0;padding:0}
-
-    body {
-      min-height: 100vh;
-      background: linear-gradient(270deg, #ADD8E6, #FFB6C1); /* Azul claro e rosa claro */
-      background-size: 400% 400%;
-      animation: bodyShift 15s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      color: #222;
-    }
-
-    @keyframes bodyShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
+    body{min-height:100vh;background:var(--bg-gradient);display:flex;justify-content:center;align-items:center;padding:20px;color:#222;}
     .container{background:var(--card);border-radius:var(--radius);box-shadow:0 10px 40px rgba(0,0,0,0.12);max-width:880px;width:100%;display:grid;grid-template-columns:1fr 340px;gap:32px;padding:36px;}
     header{grid-column:1 / -1;text-align:center}
     h1{font-size:26px;margin-bottom:10px;color:#111}
@@ -70,15 +52,13 @@
       transform:scale(1.03);
     }
 
-    /* Texto rolando gradiente */
+    /* Texto rolando neon */
     .marquee {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: linear-gradient(90deg, #ADD8E6, #FFB6C1, #ADD8E6);
-      background-size: 400% 400%;
-      animation: bgShift 12s ease infinite;
+      background: #ff00ff;
       color: #fff;
       font-size: 20px;
       font-weight: bold;
@@ -99,12 +79,6 @@
     @keyframes marquee {
       0%   { transform: translateX(0%); }
       100% { transform: translateX(-100%); }
-    }
-
-    @keyframes bgShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     /* Responsividade */
@@ -143,7 +117,7 @@
       </div>
     </section>
 
-    <!-- Imagens -->
+    <!-- Imagem centralizada -->
     <div class="center-img">
       <img src="https://i.ibb.co/q3Jc4nbk/8458c281064e5e82a6fdad162841f773-high.jpg" alt="Imagem da campanha">
     </div>
