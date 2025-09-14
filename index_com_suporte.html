@@ -72,6 +72,21 @@
     .slide{min-width:100%;height:var(--h)}
     .slide img{width:100%;height:100%;object-fit:cover;display:block}
     @media (max-width:600px){:root{--h:200px}}
+
+    /* ===== Suporte flutuante (adicionado sem alterar layout existente) ===== */
+    .help-btn{position:fixed;right:18px;bottom:18px;background:var(--accent2);color:#fff;border-radius:50px;padding:14px 16px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.18);z-index:10000;cursor:pointer;border:0}
+    .help-btn:active{transform:scale(.98)}
+    .help-modal{position:fixed;right:18px;bottom:78px;width:340px;max-width:94%;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.25);z-index:10001;padding:12px;display:none;flex-direction:column;gap:10px}
+    .help-header{display:flex;align-items:center;justify-content:space-between}
+    .help-header h4{margin:0;font-size:16px}
+    .help-body{max-height:320px;overflow:auto;padding-right:6px}
+    .help-input{display:flex;gap:8px;margin-top:8px}
+    .help-input input{flex:1;padding:10px;border-radius:10px;border:1px solid #e6e6e6}
+    .help-msg{background:#f5f7ff;padding:8px;border-radius:10px;margin-bottom:6px;font-size:14px}
+    .help-quick{display:flex;gap:6px;flex-wrap:wrap}
+    .chip{background:#f1f1f1;padding:6px 10px;border-radius:999px;font-size:13px;cursor:pointer}
+    .help-footer{display:flex;gap:8px;justify-content:space-between;align-items:center}
+    .link-like{background:transparent;border:none;color:var(--accent2);font-weight:700;cursor:pointer}
   </style>
 </head>
 <body>
@@ -107,6 +122,41 @@
       <div class="regulamento"><h3>🎉 Regulamento da Vaquinha</h3><p><strong>Ação do Dia das Crianças</strong><br>Somos a Dê Gusto Lanchonete e estamos reunindo nossa comunidade para trazer alegria às crianças no Dia das Crianças. 💖</p><p><em>Qualquer valor é muito bem-vindo!</em></p><p>Sua contribuição ajudará a comprar:</p><ul><li>🎁 Brinquedos</li><li>🍭 Balas, pirulitos e guloseimas</li><li>🎈 Balões e itens de decoração</li><li>🥪 50 sanduíches fresquinhos preparados pela Dê Gusto</li><li>🎉 Materiais para brincadeiras e atividades especiais</li></ul><p>✅ <strong>Selo de Confiança – Vaquinha Solidária</strong></p></div>
     </footer>
   </main>
+
+  <!-- ===== Suporte flutuante (adicionado sem alterar a estrutura existente) ===== -->
+  <button id="helpBtn" class="help-btn" aria-label="Ajuda">💬 Ajuda</button>
+  <div id="helpModal" class="help-modal" role="dialog" aria-hidden="true">
+    <div class="help-header">
+      <h4>Ajuda rápida</h4>
+      <div>
+        <button id="copyPixFromHelp" class="link-like" title="Copiar chave Pix">Copiar Pix</button>
+        <button id="closeHelp" class="link-like" title="Fechar">Fechar</button>
+      </div>
+    </div>
+    <div class="help-body" id="helpBody">
+      <div class="help-msg"><strong>Como doar</strong><br>Você pode gerar o QR com valor, escanear o QR ou copiar a chave Pix e colar no seu app.</div>
+      <div class="help-msg"><strong>Contato</strong><br>Clique em "📲 Entre em contato" no rodapé para falar via WhatsApp.</div>
+      <div class="help-msg"><strong>Perguntas frequentes</strong><br>- Posso doar qualquer valor? Sim!<br>- Recebo comprovante? Sim, via app do seu banco.</div>
+      <div style="margin-top:8px">
+        <div class="help-quick">
+          <div class="chip" data-q="como doar">Como doar</div>
+          <div class="chip" data-q="pix">Pix</div>
+          <div class="chip" data-q="qr">Gerar QR</div>
+          <div class="chip" data-q="contato">Contato</div>
+        </div>
+      </div>
+      <div style="margin-top:8px" id="dynamicAnswers"></div>
+    </div>
+    <div class="help-input">
+      <input id="helpInput" placeholder="Digite sua dúvida (ex: gerar QR)" />
+      <button id="helpSend" class="donate-link">Perguntar</button>
+    </div>
+    <div class="help-footer">
+      <a class="whatsapp-btn" href="https://wa.me/5534999537698" target="_blank">Falar no WhatsApp</a>
+      <button id="openFullChat" class="link-like">Abrir chat (simples)</button>
+    </div>
+  </div>
+
   <script>
     const PIX_KEY = "10738419605"; const MERCHANT_NAME = "DE GUSTO LANCHONETE"; const MERCHANT_CITY = "SAO PAULO"; const TXID = "VAQUINHA";
     const copyBtn = document.getElementById('copyBtn'); const qrImg = document.getElementById('qrImg'); const amountInput = document.getElementById('amountInput'); const generateBtn = document.getElementById('generateBtn');
@@ -118,6 +168,52 @@
     generateBtn.addEventListener('click', () => { const amt = amountInput.value ? amountInput.value : null; updateQR(amt); });
     amountInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { generateBtn.click(); } });
     (function(){ const track = document.getElementById('track'); const slides = Array.from(track.children); let current = 0; const total = slides.length; const intervalMs = 3000; function update(){ track.style.transform = `translateX(${-current * 100}%)`; } function nextSlide(){ current = (current + 1) % total; update(); } setInterval(nextSlide, intervalMs); update(); })();
+  </script>
+
+  <script>
+    // Script do suporte - não altera nada fora do escopo do suporte
+    (function(){
+      const helpBtn = document.getElementById('helpBtn');
+      const helpModal = document.getElementById('helpModal');
+      const closeHelp = document.getElementById('closeHelp');
+      const helpInput = document.getElementById('helpInput');
+      const helpSend = document.getElementById('helpSend');
+      const dynamic = document.getElementById('dynamicAnswers');
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const copyPixFromHelp = document.getElementById('copyPixFromHelp');
+      const openFullChat = document.getElementById('openFullChat');
+
+      const canned = {
+        'como doar': 'Para doar: insira um valor, clique em "Gerar QR" e escaneie com seu app. Ou copie a chave Pix e cole no seu app.',
+        'pix': 'A chave Pix é: ' + PIX_KEY + '. Você pode copiar usando o botão "Copiar chave" ou pelo botão aqui.',
+        'qr': 'Clique em "Gerar QR" e o QR será atualizado com o valor digitado (se houver). Depois é só escanear.',
+        'contato': 'Você pode falar conosco pelo WhatsApp: (34) 99953-7698 — botão no rodapé.'
+      };
+
+      function showModal(){ helpModal.style.display = 'flex'; helpModal.setAttribute('aria-hidden','false'); }
+      function hideModal(){ helpModal.style.display = 'none'; helpModal.setAttribute('aria-hidden','true'); }
+
+      helpBtn.addEventListener('click', ()=>{ if (helpModal.style.display === 'flex') hideModal(); else showModal(); });
+      closeHelp.addEventListener('click', hideModal);
+
+      chips.forEach(c=> c.addEventListener('click', ()=>{ const q = c.dataset.q; showAnswer(q); }));
+
+      function showAnswer(q){ const txt = canned[q] || 'Desculpe, não entendi. Tente palavras como: "como doar", "pix", "qr", "contato".'; const el = document.createElement('div'); el.className = 'help-msg'; el.textContent = txt; dynamic.prepend(el); }
+
+      helpSend.addEventListener('click', ()=>{ const q = helpInput.value.trim().toLowerCase(); if (!q) return; showAnswer(q); helpInput.value = ''; });
+      helpInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') helpSend.click(); });
+
+      copyPixFromHelp.addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(PIX_KEY); copyPixFromHelp.textContent = 'Copiado!'; setTimeout(()=> copyPixFromHelp.textContent = 'Copiar Pix', 2000); }catch(e){ alert('Não foi possível copiar: ' + PIX_KEY); } });
+
+      openFullChat.addEventListener('click', ()=>{
+        // abre o modal e adiciona uma mensagem explicando que é um chat local simples
+        showAnswer('Olá! Este é um chat local com respostas automáticas. Para suporte humano clique em "Falar no WhatsApp".');
+      });
+
+      // fecha se clicar fora (apenas no modal)
+      window.addEventListener('click', (e)=>{ if (helpModal.style.display === 'flex' && !helpModal.contains(e.target) && e.target !== helpBtn) { hideModal(); } });
+
+    })();
   </script>
 </body>
 </html>
