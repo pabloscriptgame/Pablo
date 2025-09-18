@@ -11,12 +11,10 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
-
                 // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
                 // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
-
                 // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
@@ -25,7 +23,6 @@
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
-
                 // Convert filtered JSON back to CSV
                 var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
@@ -98,8 +95,8 @@
     }
     .carousel-item {
       flex: 0 0 auto;
-      width: 200px;
-      height: 140px;
+      width: 300px;
+      height: 210px;
       margin-right: 1rem;
       display: flex;
       align-items: center;
@@ -193,8 +190,8 @@
         max-width: 100px;
       }
       .carousel-item {
-        width: 140px;
-        height: 100px;
+        width: 220px;
+        height: 155px;
       }
       .help-content {
         padding: 1rem;
@@ -222,7 +219,6 @@
     <p class="mt-2 text-lg">Sanduíches artesanais — Atendimento via WhatsApp</p>
     <p class="mt-2 text-lg">📞 <a href="tel:+5534999537698" class="underline hover:text-red-300">(34) 9 9953-7698</a></p>
   </header>
-
   <!-- Carousel -->
   <div class="carousel-container max-w-6xl mx-auto">
     <div class="carousel" id="carousel">
@@ -235,11 +231,25 @@
       <div class="carousel-item">
         <img src="https://i.ibb.co/t0Qy0Gq/20250916-232104.jpg" alt="Hambúrguer 3" />
       </div>
+  <div class="carousel-item">
+        <img src="https://i.ibb.co/1Y16sK88/IMG-20250913-WA0008.jpg" alt="Hambúrguer 4" />
+      </div>
+  <div class="carousel-item">
+        <img src="https://i.ibb.co/605MR6B0/IMG-20250913-WA0011.jpg" alt="Hambúrguer 5" />
+      </div>
+  <div class="carousel-item">
+        <img src="https://i.ibb.co/pv1myzJv/IMG-20250913-WA0012.jpg" alt="Hambúrguer 6" />
+      </div>
+   <div class="carousel-item">
+        <img src="https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg" alt="Hambúrguer 7" />
+      </div>
+  <div class="carousel-item">
+        <img src="https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg" alt="Hambúrguer 7" />
+      </div>
     </div>
     <div class="carousel-nav left" onclick="moveCarousel(-1)">&#10094;</div>
     <div class="carousel-nav right" onclick="moveCarousel(1)">&#10095;</div>
   </div>
-
   <!-- Main Content -->
   <main class="max-w-6xl mx-auto p-4">
     <!-- Hambúrgueres -->
@@ -344,7 +354,6 @@
         </div>
       </div>
     </section>
-
     <!-- Molhos -->
     <section class="my-8">
       <h2 class="text-2xl font-semibold mb-4">🧂 Molhos</h2>
@@ -416,7 +425,6 @@
         </div>
       </div>
     </section>
-
     <!-- Porções de Batata -->
     <section class="my-8">
       <h2 class="text-2xl font-semibold mb-4">🍟 Porções de Batata</h2>
@@ -441,7 +449,6 @@
         </div>
       </div>
     </section>
-
     <!-- Bebidas -->
     <section class="my-8">
       <h2 class="text-2xl font-semibold mb-4">🥤 Bebidas</h2>
@@ -489,17 +496,14 @@
       </div>
     </section>
   </main>
-
   <!-- Cart Button -->
   <button class="fixed sticky-cart gradient-btn text-white p-4 rounded-full shadow-lg" onclick="toggleCart()">
     🧺 <span id="cart-count">0</span>
   </button>
-
   <!-- Help Button -->
   <button class="fixed help-button gradient-btn text-white p-3 rounded-full shadow-lg" onclick="toggleHelpModal()" title="Como Comprar">
     ❓
   </button>
-
   <!-- Cart Modal -->
   <div id="cart-modal" class="cart-modal hidden">
     <div class="cart-content">
@@ -531,7 +535,6 @@
       </div>
     </div>
   </div>
-
   <!-- Help Modal -->
   <div id="help-modal" class="help-modal hidden">
     <div class="help-content">
@@ -566,32 +569,26 @@
       </div>
     </div>
   </div>
-
   <!-- Footer -->
   <footer class="gradient-bg text-white text-center py-4 mt-8">
     <p>© 2025 DeGusto Lanchonete — Atendimento via WhatsApp: <a href="tel:+5534999537698" class="underline hover:text-red-300">(34) 9 9953-7698</a></p>
   </footer>
-
   <script>
     let cart = [];
     let currentSlide = 0;
     let autoScrollInterval;
-
     function addToCart(itemName, price) {
       cart.push({ name: itemName, price: price });
       updateCart();
     }
-
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCart();
     }
-
     function clearCart() {
       cart = [];
       updateCart();
     }
-
     function updateCart() {
       const cartItems = document.getElementById('cart-items');
       const cartTotal = document.getElementById('cart-total');
@@ -600,7 +597,6 @@
       const changeAmountSection = document.getElementById('change-amount-section');
       cartItems.innerHTML = '';
       let total = 0;
-
       if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-gray-400">Seu carrinho está vazio. Adicione itens ao pedido.</p>';
         changeAmountSection.classList.add('hidden');
@@ -615,18 +611,15 @@
           `;
           cartItems.appendChild(itemDiv);
         });
-
         if (paymentMethod === 'Dinheiro') {
           changeAmountSection.classList.remove('hidden');
         } else {
           changeAmountSection.classList.add('hidden');
         }
       }
-
       cartTotal.textContent = total.toFixed(2);
       cartCount.textContent = cart.length;
     }
-
     function toggleCart() {
       const modal = document.getElementById('cart-modal');
       modal.classList.toggle('hidden');
@@ -634,16 +627,13 @@
         updateCart();
       }
     }
-
     function toggleHelpModal() {
       const modal = document.getElementById('help-modal');
       modal.classList.toggle('hidden');
     }
-
     document.getElementById('payment-method').addEventListener('change', function() {
       updateCart();
     });
-
     function finalizeOrder() {
       if (cart.length === 0) {
         alert('Seu carrinho está vazio!');
@@ -666,7 +656,6 @@
       const whatsappUrl = `https://wa.me/5534999537698?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
     }
-
     function moveCarousel(direction) {
       const carousel = document.getElementById('carousel');
       const items = carousel.querySelectorAll('.carousel-item');
@@ -675,20 +664,16 @@
       currentSlide = (currentSlide + direction + totalItems) % totalItems;
       carousel.style.transform = `translateX(-${currentSlide * itemWidth}px)`;
     }
-
     function startAutoScroll() {
       autoScrollInterval = setInterval(() => {
         moveCarousel(1);
       }, 3000);
     }
-
     function stopAutoScroll() {
       clearInterval(autoScrollInterval);
     }
-
     // Start auto-scroll when the page loads
     startAutoScroll();
-
     // Pause auto-scroll on hover
     document.querySelector('.carousel-container').addEventListener('mouseenter', stopAutoScroll);
     document.querySelector('.carousel-container').addEventListener('mouseleave', startAutoScroll);
