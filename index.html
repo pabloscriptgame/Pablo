@@ -11,6 +11,45 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
                 // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
                 // Filter out blank rows (rows where all cells are empty, null, or undefined)
@@ -34,7 +73,8 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+</script>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -216,7 +256,7 @@
     </div>
     <!-- Title and Subtitle -->
     <h1 class="text-3xl font-bold">DeGusto Lanchonete</h1>
-    <p class="mt-2 text-lg">Atendimento via WhatsApp — Somente Delivery</p>
+    <p class="mt-2 text-lg">Sanduíches artesanais — Atendimento via WhatsApp</p>
     <p class="mt-2 text-lg">📞 <a href="tel:+5534999537698" class="underline hover:text-red-300">(34) 9 9953-7698</a></p>
   </header>
   <!-- Carousel -->
@@ -231,20 +271,20 @@
       <div class="carousel-item">
         <img src="https://i.ibb.co/t0Qy0Gq/20250916-232104.jpg" alt="Hambúrguer 3" />
       </div>
-  <div class="carousel-item">
+      <div class="carousel-item">
         <img src="https://i.ibb.co/1Y16sK88/IMG-20250913-WA0008.jpg" alt="Hambúrguer 4" />
       </div>
-  <div class="carousel-item">
+      <div class="carousel-item">
         <img src="https://i.ibb.co/605MR6B0/IMG-20250913-WA0011.jpg" alt="Hambúrguer 5" />
       </div>
-  <div class="carousel-item">
+      <div class="carousel-item">
         <img src="https://i.ibb.co/pv1myzJv/IMG-20250913-WA0012.jpg" alt="Hambúrguer 6" />
       </div>
-   <div class="carousel-item">
+      <div class="carousel-item">
         <img src="https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg" alt="Hambúrguer 7" />
       </div>
-  <div class="carousel-item">
-        <img src="https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg" alt="Hambúrguer 7" />
+      <div class="carousel-item">
+        <img src="https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg" alt="Hambúrguer 8" />
       </div>
     </div>
     <div class="carousel-nav left" onclick="moveCarousel(-1)">&#10094;</div>
@@ -351,6 +391,72 @@
           <p class="text-red-400">R$ 30,00</p>
           <p class="text-gray-400 mt-2">Pão, hambúrguer de picanha, steak de frango, bacon, salsicha, presunto, muçarela, Catupiry, cheddar, milho, batata palha e salada.</p>
           <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('X-Bagunça', 30.00)">Adicionar</button>
+        </div>
+      </div>
+    </section>
+    <!-- Combos -->
+    <section class="my-8">
+      <h2 class="text-2xl font-semibold mb-4">🎁 Combos</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 1: 2 X-Tudo</h3>
+          <p class="text-red-400">R$ 40,00</p>
+          <p class="text-gray-400 mt-2">2 hambúrgueres X-Tudo.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 1: 2 X-Tudo', 40.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 2: 2 X-Tudo + 2 Refrigerantes</h3>
+          <p class="text-red-400">R$ 44,00</p>
+          <p class="text-gray-400 mt-2">2 hambúrgueres X-Tudo + 2 refrigerantes 200 ml.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 2: 2 X-Tudo + 2 Refrigerantes', 44.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 3: 2 X-Dobro</h3>
+          <p class="text-red-400">R$ 44,00</p>
+          <p class="text-gray-400 mt-2">2 hambúrgueres X-Dobro.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 3: 2 X-Dobro', 44.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 4: X-Tudo + Batata + Refrigerante</h3>
+          <p class="text-red-400">R$ 25,00</p>
+          <p class="text-gray-400 mt-2">1 hambúrguer X-Tudo + 1 porção de batata tamanho P + 1 refrigerante 200 ml.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 4: X-Tudo + Batata + Refrigerante', 25.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 5: X-Salada + Batata + Refrigerante</h3>
+          <p class="text-red-400">R$ 23,00</p>
+          <p class="text-gray-400 mt-2">1 hambúrguer X-Salada + 1 porção de batata tamanho P + 1 refrigerante 200 ml.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 5: X-Salada + Batata + Refrigerante', 23.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 6: 3 X-Tudo + 3 Refrigerantes</h3>
+          <p class="text-red-400">R$ 70,00</p>
+          <p class="text-gray-400 mt-2">3 hambúrgueres X-Tudo + 3 refrigerantes 200 ml.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 6: 3 X-Tudo + 3 Refrigerantes', 70.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 7: 2 X-Tudo + 2 Refrigerantes + Batata</h3>
+          <p class="text-red-400">R$ 50,00</p>
+          <p class="text-gray-400 mt-2">2 hambúrgueres X-Tudo + 2 refrigerantes 200 ml + 1 porção de batata tamanho P.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 7: 2 X-Tudo + 2 Refrigerantes + Batata', 50.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 8: X-DÊ-GUSTO + Batata + Refrigerante</h3>
+          <p class="text-red-400">R$ 30,00</p>
+          <p class="text-gray-400 mt-2">1 hambúrguer X-DÊ-GUSTO + 1 porção de batata tamanho P + 1 refrigerante 200 ml.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 8: X-DÊ-GUSTO + Batata + Refrigerante', 30.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 9: 3 X-Tudo</h3>
+          <p class="text-red-400">R$ 60,00</p>
+          <p class="text-gray-400 mt-2">3 hambúrgueres X-Tudo.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 9: 3 X-Tudo', 60.00)">Adicionar</button>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg gradient-border">
+          <h3 class="text-xl font-bold">Combo 10: 2 Artesanal Nº1</h3>
+          <p class="text-red-400">R$ 50,00</p>
+          <p class="text-gray-400 mt-2">2 hambúrgueres Artesanal Nº1.</p>
+          <button class="mt-4 gradient-btn text-white px-4 py-2 rounded" onclick="addToCart('Combo 10: 2 Artesanal Nº1', 50.00)">Adicionar</button>
         </div>
       </div>
     </section>
@@ -545,7 +651,7 @@
       <div class="space-y-4">
         <div class="help-step">
           <h3>1️⃣ Escolha seus itens</h3>
-          <p class="text-gray-300">Navegue pelo cardápio e clique em "Adicionar" nos hambúrgueres, molhos, batatas e bebidas que deseja.</p>
+          <p class="text-gray-300">Navegue pelo cardápio e clique em "Adicionar" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja.</p>
         </div>
         <div class="help-step">
           <h3>2️⃣ Veja seu carrinho</h3>
