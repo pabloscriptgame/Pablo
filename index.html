@@ -54,6 +54,10 @@
       bottom: 1rem;
       right: 1rem;
     }
+    .help-button {
+      bottom: 1rem;
+      left: 1rem;
+    }
     .gradient-bg {
       background: linear-gradient(to right, #ff0000, #000000);
     }
@@ -130,6 +134,39 @@
     .carousel-container:hover .carousel {
       animation-play-state: paused;
     }
+    .help-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .help-content {
+      background: #1a1a1a;
+      border: 2px solid transparent;
+      border-image: linear-gradient(to right, #ff0000, #000000) 1;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+      color: white;
+    }
+    .help-step {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255, 0, 0, 0.1);
+      border-left: 4px solid #ff0000;
+      border-radius: 4px;
+    }
+    .help-step h3 {
+      color: #ff0000;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
     @media (max-width: 640px) {
       .logo-container {
         max-width: 100px;
@@ -137,6 +174,13 @@
       .carousel-item {
         width: 140px;
         height: 100px;
+      }
+      .help-content {
+        padding: 1rem;
+        margin: 1rem;
+      }
+      .help-step {
+        padding: 0.75rem;
       }
     }
   </style>
@@ -426,6 +470,11 @@
     🧺 <span id="cart-count">0</span>
   </button>
 
+  <!-- Help Button -->
+  <button class="fixed help-button gradient-btn text-white p-3 rounded-full shadow-lg" onclick="toggleHelpModal()" title="Como Comprar">
+    ❓
+  </button>
+
   <!-- Cart Modal -->
   <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
     <div class="bg-gray-800 p-6 rounded-lg gradient-border w-full max-w-md">
@@ -451,6 +500,41 @@
         <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearCart()">Limpar</button>
         <button class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition" onclick="toggleCart()">Fechar</button>
         <button class="gradient-btn text-white px-4 py-2 rounded" onclick="finalizeOrder()">📲 Enviar Pedido via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="help-modal" class="help-modal hidden">
+    <div class="help-content">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">🆘 Como Comprar na DeGusto</h2>
+        <button class="text-2xl text-red-400 hover:text-red-300" onclick="toggleHelpModal()">&times;</button>
+      </div>
+      <div class="space-y-4">
+        <div class="help-step">
+          <h3>1️⃣ Escolha seus itens</h3>
+          <p class="text-gray-300">Navegue pelo cardápio e clique em "Adicionar" nos hambúrgueres, molhos, batatas e bebidas que deseja.</p>
+        </div>
+        <div class="help-step">
+          <h3>2️⃣ Veja seu carrinho</h3>
+          <p class="text-gray-300">Clique no ícone 🧺 no canto inferior direito para ver os itens adicionados e o total do pedido.</p>
+        </div>
+        <div class="help-step">
+          <h3>3️⃣ Selecione o pagamento</h3>
+          <p class="text-gray-300">Escolha entre Dinheiro, Cartão de Crédito, Cartão de Débito ou Pix. Se escolher Dinheiro, informe o valor para troco.</p>
+        </div>
+        <div class="help-step">
+          <h3>4️⃣ Finalize o pedido</h3>
+          <p class="text-gray-300">Clique em "📲 Enviar Pedido via WhatsApp" e seu pedido será enviado diretamente para nossa equipe!</p>
+        </div>
+        <div class="help-step">
+          <h3>5️⃣ Aguarde o contato</h3>
+          <p class="text-gray-300">Nossa equipe entrará em contato via WhatsApp para confirmar o pedido e combinar a entrega ou retirada.</p>
+        </div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-red-600">
+        <p class="text-center text-sm text-gray-400">Precisa de mais ajuda? Ligue para 📞 (34) 9 9953-7698</p>
       </div>
     </div>
   </div>
@@ -521,6 +605,11 @@
       if (!modal.classList.contains('hidden')) {
         updateCart();
       }
+    }
+
+    function toggleHelpModal() {
+      const modal = document.getElementById('help-modal');
+      modal.classList.toggle('hidden');
     }
 
     document.getElementById('payment-method').addEventListener('change', function() {
