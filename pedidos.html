@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DeGusto Lanchonete</title>
+
+  <!-- Google Font (fallback se bloqueado) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #1b0000;
+      --bg2: #8b0000;
+      --accent: #ffcc00;
+      --muted: #cfcfcf;
+      --card-bg: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
+      --whats: #25d366;
+      --max-width: 1100px;
+      --radius: 14px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100%;
+      color:#fff;
+      background: linear-gradient(180deg, var(--bg2), #220000 60%, #0a0a0a 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .site{
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.45));
+      border-radius:20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    header{
+      padding:22px;
+      display:flex;
+      gap:18px;
+      align-items:center;
+      background: linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      position:relative;
+    }
+
+    .logo {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .logo h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:1px;
+      color:var(--accent);
+      text-shadow: 0 2px 12px rgba(255,204,0,0.08), 0 0 20px rgba(255,0,0,0.06);
+    }
+    .logo p{margin:0;font-size:13px;color:var(--muted)}
+
+    .header-right{
+      margin-left:auto;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .phone{
+      font-weight:600;
+      color:#fff;
+      background:linear-gradient(90deg,#ff4b4b,#ffb3b3);
+      padding:8px 12px;
+      border-radius:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      font-size:14px;
+    }
+
+    /* Main layout */
+    .main{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+      padding:22px;
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .main{grid-template-columns:1fr}
+      .header-right{display:none}
+    }
+
+    /* Left column (menu) */
+    .menu{
+      padding:12px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      overflow:auto;
+      max-height: calc(80vh - 120px);
+    }
+
+    h2.section-title{
+      margin:0 0 14px 0;
+      color:var(--accent);
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      border-bottom:1px dashed rgba(255,255,255,0.04);
+      padding-bottom:8px;
+    }
+
+    .grid{
+      display:grid;
+      gap:10px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width:680px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background:var(--card-bg);
+      padding:12px;
+      border-radius:12px;
+      border: 1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:80px;
+    }
+    .card h3{margin:0;font-size:15px}
+    .card p{margin:0;font-size:13px;color:var(--muted)}
+    .price-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .price{font-weight:700;color:var(--accent)}
+    .add-btn{
+      background: linear-gradient(90deg,#ff4b4b,#ff8b00);
+      border:none;
+      color:#fff;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(255,75,75,0.12);
+    }
+    .add-btn:active{transform:translateY(1px)}
+
+    /* Right column (cart) */
+    .cart{
+      padding:16px;
+      border-radius:12px;
+      height:100%;
+      background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      position:sticky;
+      top:28px;
+      max-height: calc(80vh - 120px);
+      overflow:auto;
+    }
+    .cart h3{margin:0;color:var(--accent)}
+    .cart-items{display:flex;flex-direction:column;gap:8px}
+    .cart-item{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      background:var(--glass);
+      padding:8px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .cart-item .left{display:flex;gap:8px;align-items:center}
+    .qty{
+      background:transparent;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-weight:700;
+    }
+    .qty button{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:#fff;
+      width:26px;height:26px;border-radius:6px;cursor:pointer;
+    }
+    .total-row{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:800;color:var(--accent)}
+    .whats-btn{
+      background: linear-gradient(90deg, #25d366, #17b35a);
+      border:none;
+      color:#063;
+      padding:12px 14px;
+      border-radius:12px;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.12);
+      color:#fff;
+      font-size:16px;
+    }
+
+    .clear-btn{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* Floating WhatsApp */
+    .floating-whats{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:1200;
+      display:flex;
+      gap:10px;
+      flex-direction:column;
+      align-items:flex-end;
+    }
+    .floating-whats a{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      background:var(--whats);
+      color:#063;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:800;
+      box-shadow:0 8px 30px rgba(0,0,0,0.3);
+      color:#fff;
+    }
+
+    /* Small footer */
+    footer{
+      padding:12px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      border-top:1px solid rgba(255,255,255,0.03);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* subtle separators */
+    .separator{height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);margin:10px 0;border-radius:2px}
+
+    /* nice hover for cards */
+    .card:hover{transform:translateY(-3px);transition:transform .18s ease-in-out}
+  </style>
+</head>
+<body>
+
+  <div class="site" role="application" aria-label="Site DeGusto Lanchonete">
+    <header>
+      <div class="logo" aria-hidden="false">
+        <h1>DeGusto Lanchonete</h1>
+        <p>Sanduíches artesanais — Atendimento via WhatsApp</p>
+      </div>
+
+      <div class="header-right">
+        <div class="phone">📞 (34) 9 9953-7698</div>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- LEFT: MENU -->
+      <section class="menu" aria-labelledby="cardapio-title">
+        <h2 id="cardapio-title" class="section-title">Cardápio Completo</h2>
+
+        <!-- HAMBÚRGUERES -->
+        <div>
+          <h3 class="section-title">🍔 Hambúrgueres</h3>
+          <div class="grid" id="menu-hamburgueres">
+            <!-- Items generated in HTML for clarity -->
+            <div class="card" data-name="Especial Tilápia" data-price="30.00">
+              <h3>Especial Tilápia <span class="price">R$ 30,00</span></h3>
+              <p>Hambúrguer de tilápia, anéis de cebola, queijo, molho de picles, milho e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="Artesanal com Goiabada" data-price="30.00">
+              <h3>Artesanal com Goiabada <span class="price">R$ 30,00</span></h3>
+              <p>Hambúrguer de carne, molho de goiabada, cebola caramelizada, milho, bacon, presunto, muçarela e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="Especial Steak" data-price="30.00">
+              <h3>Especial Steak <span class="price">R$ 30,00</span></h3>
+              <p>Steak de frango, anéis de cebola, molho barbecue, maionese de churrasco, presunto, muçarela, bacon, milho e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-DÊ-GUSTO" data-price="30.00">
+              <h3>X-DÊ-GUSTO <span class="price">R$ 30,00</span></h3>
+              <p>Pão, 2 hambúrgueres de picanha, ovo, salsicha, presunto, muçarela, bacon, milho, cheddar, Catupiry, batata palha e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="ARTESANAL 1" data-price="30.00">
+              <h3>ARTESANAL 1 <span class="price">R$ 30,00</span></h3>
+              <p>Pão, hambúrguer artesanal, bacon, cheddar, cebola caramelizada, presunto, muçarela, milho, batata palha e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="ARTESANAL 2" data-price="30.00">
+              <h3>ARTESANAL 2 <span class="price">R$ 30,00</span></h3>
+              <p>Pão, hambúrguer artesanal, bacon, cheddar, cebola caramelizada, milho, presunto, muçarela, Doritos e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="ARTESANAL DUPLO" data-price="30.00">
+              <h3>ARTESANAL DUPLO <span class="price">R$ 30,00</span></h3>
+              <p>Pão, 2 hambúrgueres artesanais, bacon, cheddar, cebola caramelizada, presunto, muçarela, milho e batata palha.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-BOLO" data-price="36.00">
+              <h3>X-BOLO <span class="price">R$ 36,00</span></h3>
+              <p>Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, calabresa, muçarela. Finalizado com muito cheddar e batata frita.</p>
+              <div class="price-row">
+                <span class="price">R$ 36,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-TUDO" data-price="24.00">
+              <h3>X-TUDO <span class="price">R$ 24,00</span></h3>
+              <p>Pão, hambúrguer de picanha, ovo, presunto, muçarela, milho, bacon, Catupiry e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 24,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-BACON" data-price="22.00">
+              <h3>X-BACON <span class="price">R$ 22,00</span></h3>
+              <p>Pão, hambúrguer de picanha, salsicha, ovo, presunto, muçarela, milho, bacon, Catupiry e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 22,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-CALABRESA" data-price="22.00">
+              <h3>X-CALABRESA <span class="price">R$ 22,00</span></h3>
+              <p>Pão, hambúrguer de picanha, ovo, presunto, muçarela, milho, calabresa, cheddar e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 22,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-CHEDDAR" data-price="22.00">
+              <h3>X-CHEDDAR <span class="price">R$ 22,00</span></h3>
+              <p>Pão, hambúrguer de picanha, presunto, muçarela, salsicha, milho, bacon, cheddar e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 22,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-SALADA" data-price="16.00">
+              <h3>X-SALADA <span class="price">R$ 16,00</span></h3>
+              <p>Pão, hambúrguer de picanha, presunto, muçarela, Catupiry, milho e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 16,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-STEAK" data-price="20.00">
+              <h3>X-STEAK <span class="price">R$ 20,00</span></h3>
+              <p>Pão, steak de frango, presunto, muçarela, milho, molho verde, molho de churrasco, batata palha e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 20,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-DOBRO" data-price="30.00">
+              <h3>X-DOBRO <span class="price">R$ 30,00</span></h3>
+              <p>Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, cheddar, Catupiry, presunto, muçarela, milho e batata palha.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+
+            <div class="card" data-name="X-BAGUNÇA" data-price="30.00">
+              <h3>X-BAGUNÇA <span class="price">R$ 30,00</span></h3>
+              <p>Pão, hambúrguer de picanha, steak de frango, bacon, salsicha, presunto, muçarela, Catupiry, cheddar, milho, batata palha e salada.</p>
+              <div class="price-row">
+                <span class="price">R$ 30,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- MOLHOS -->
+        <div>
+          <h3 class="section-title">🧂 Molhos</h3>
+          <div class="grid" id="menu-molhos">
+            <div class="card" data-name="Molho de churrasco" data-price="3.00">
+              <h3>Molho de churrasco <span class="price">R$ 3,00</span></h3>
+              <div class="price-row">
+                <span class="price">R$ 3,00</span>
+                <button class="add-btn" onclick="addToCart(this)">Adicionar</button>
+              </div>
+            </div>
+            <div class="card" data-name="Molho de alho" data-price="3.00">
+              <h3>Molho de alho <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho verde" data-price="3.00">
+              <h3>Molho verde <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de goiabada" data-price="3.00">
+              <h3>Molho de goiabada <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de picles" data-price="3.00">
+              <h3>Molho de picles <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho cheddar" data-price="3.00">
+              <h3>Molho cheddar <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho Catupiry" data-price="3.00">
+              <h3>Molho Catupiry <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho barbecue" data-price="3.00">
+              <h3>Molho barbecue <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de cebola caramelizada" data-price="3.00">
+              <h3>Molho de cebola caramelizada <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de pimenta" data-price="3.00">
+              <h3>Molho de pimenta <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de mostarda com mel" data-price="3.00">
+              <h3>Molho de mostarda com mel <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de maracujá" data-price="3.00">
+              <h3>Molho de maracujá <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Molho de abacaxi" data-price="3.00">
+              <h3>Molho de abacaxi <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- PORÇÕES -->
+        <div>
+          <h3 class="section-title">🍟 Porções de Batata</h3>
+          <div class="grid" id="menu-porcoes">
+            <div class="card" data-name="Porção Batata P (200g)" data-price="10.00">
+              <h3>Tamanho P — R$ 10,00</h3>
+              <p>200 g de batata, bacon e cheddar.</p>
+              <div class="price-row"><span class="price">R$ 10,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Porção Batata M (400g)" data-price="20.00">
+              <h3>Tamanho M — R$ 20,00</h3>
+              <p>400 g de batata, bacon e cheddar.</p>
+              <div class="price-row"><span class="price">R$ 20,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Porção Batata G (300g especial)" data-price="35.00">
+              <h3>Tamanho G — R$ 35,00</h3>
+              <p>300 g de batata, salsicha, hambúrguer, calabresa, bacon, salada, muçarela, cheddar e Catupiry.</p>
+              <div class="price-row"><span class="price">R$ 35,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- BEBIDAS -->
+        <div>
+          <h3 class="section-title">🥤 Bebidas</h3>
+          <div class="grid" id="menu-bebidas">
+            <div class="card" data-name="Coca-Cola 2 L" data-price="14.00">
+              <h3>Coca-Cola 2 L <span class="price">R$ 14,00</span></h3>
+              <div class="price-row"><span class="price">R$ 14,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Coca-Cola 1 L" data-price="10.00">
+              <h3>Coca-Cola 1 L <span class="price">R$ 10,00</span></h3>
+              <div class="price-row"><span class="price">R$ 10,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Coca-Cola lata" data-price="6.00">
+              <h3>Coca-Cola lata <span class="price">R$ 6,00</span></h3>
+              <div class="price-row"><span class="price">R$ 6,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Fanta Laranja 2 L" data-price="12.00">
+              <h3>Fanta Laranja 2 L <span class="price">R$ 12,00</span></h3>
+              <div class="price-row"><span class="price">R$ 12,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Fanta Laranja 1 L" data-price="10.00">
+              <h3>Fanta Laranja 1 L <span class="price">R$ 10,00</span></h3>
+              <div class="price-row"><span class="price">R$ 10,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Kuat 2 L" data-price="10.00">
+              <h3>Kuat 2 L <span class="price">R$ 10,00</span></h3>
+              <div class="price-row"><span class="price">R$ 10,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Mineiro 2 L" data-price="12.00">
+              <h3>Mineiro 2 L <span class="price">R$ 12,00</span></h3>
+              <div class="price-row"><span class="price">R$ 12,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+            <div class="card" data-name="Pithula" data-price="3.00">
+              <h3>Pithula <span class="price">R$ 3,00</span></h3>
+              <div class="price-row"><span class="price">R$ 3,00</span><button class="add-btn" onclick="addToCart(this)">Adicionar</button></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT: CART -->
+      <aside class="cart" aria-labelledby="carrinho-title">
+        <h3 id="carrinho-title">🧺 Seu pedido</h3>
+        <div class="cart-items" id="cart-items">
+          <p style="color:var(--muted);font-size:14px">Seu carrinho está vazio. Adicione itens ao pedido.</p>
+        </div>
+
+        <div style="margin-top:auto">
+          <div class="total-row">
+            <span>Total</span>
+            <span id="total-price">R$ 0,00</span>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="whats-btn" id="send-whats" onclick="sendWhats()">
+              📲 Enviar pedido via WhatsApp
+            </button>
+            <button class="clear-btn" onclick="clearCart()">Limpar</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© <strong>DeGusto Lanchonete</strong> — Atendimento via WhatsApp: (34) 9 9953-7698</div>
+      <div style="color:var(--muted)">Pronto para usar — salvar como <code>index.html</code></div>
+    </footer>
+  </div>
+
+  <!-- Floating WhatsApp quick link -->
+  <div class="floating-whats" aria-hidden="true">
+    <a href="https://wa.me/5534999537698" target="_blank" rel="noopener noreferrer">💬 Pedir no WhatsApp</a>
+  </div>
+
+  <script>
+    /* --- Carrinho simples em JS --- */
+    const CART = {}; // { "Nome": {price: number, qty: number} }
+    const cartItemsEl = document.getElementById('cart-items');
+    const totalPriceEl = document.getElementById('total-price');
+    const WHATS_NUMBER = "5534999537698"; // +55 34 9 9953-7698
+
+    // formatador BRL
+    function formatBRL(v){
+      return 'R$ ' + v.toFixed(2).replace('.',',');
+    }
+
+    // adicionar item (botão dentro do card chama addToCart(this))
+    function addToCart(btn){
+      const card = btn.closest('.card');
+      const name = card.getAttribute('data-name') || card.querySelector('h3').innerText.trim();
+      const price = parseFloat(card.getAttribute('data-price') || card.querySelector('.price').innerText.replace(/[R$\s,]/g,'.').replace('..','.')) || 0;
+      if(!CART[name]) CART[name] = {price: price, qty: 0};
+      CART[name].qty += 1;
+      renderCart();
+      // feedback visual
+      btn.innerText = 'Adicionado ✓';
+      setTimeout(()=> btn.innerText = 'Adicionar', 900);
+    }
+
+    // render do carrinho
+    function renderCart(){
+      // clear
+      cartItemsEl.innerHTML = '';
+      const names = Object.keys(CART);
+      if(names.length === 0){
+        cartItemsEl.innerHTML = '<p style="color:var(--muted);font-size:14px">Seu carrinho está vazio. Adicione itens ao pedido.</p>';
+        totalPriceEl.innerText = formatBRL(0);
+        return;
+      }
+
+      let total = 0;
+      names.forEach(name => {
+        const item = CART[name];
+        if(item.qty <= 0) { delete CART[name]; return; }
+        total += item.price * item.qty;
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart-item';
+
+        itemEl.innerHTML = `
+          <div class="left">
+            <div style="min-width:8px"></div>
+            <div>
+              <div style="font-weight:700">${escapeHtml(name)}</div>
+              <div style="font-size:13px;color:var(--muted)">${formatBRL(item.price)} cada</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty" aria-label="Quantidade">
+              <button onclick="changeQty('${escapeJs(name)}', -1)">−</button>
+              <span style="min-width:22px;text-align:center;display:inline-block">${item.qty}</span>
+              <button onclick="changeQty('${escapeJs(name)}', 1)">+</button>
+            </div>
+            <div style="min-width:70px;text-align:right;font-weight:700">${formatBRL(item.price * item.qty)}</div>
+          </div>
+        `;
+        cartItemsEl.appendChild(itemEl);
+      });
+
+      totalPriceEl.innerText = formatBRL(total);
+    }
+
+    // mudar quantidade
+    function changeQty(name, delta){
+      const realName = unescapeJs(name);
+      if(!CART[realName]) return;
+      CART[realName].qty += delta;
+      if(CART[realName].qty <= 0) delete CART[realName];
+      renderCart();
+    }
+
+    // limpar carrinho
+    function clearCart(){
+      if(confirm('Deseja limpar todo o pedido?')) {
+        for(const k in CART) delete CART[k];
+        renderCart();
+      }
+    }
+
+    // montar mensagem e abrir WhatsApp
+    function sendWhats(){
+      const names = Object.keys(CART);
+      if(names.length === 0){
+        alert('Seu carrinho está vazio. Adicione pelo menos um item antes de enviar o pedido.');
+        return;
+      }
+      let total = 0;
+      let msg = `*Pedido - DeGusto Lanchonete*%0A`;
+      msg += `Telefone/Contato: (coloque seu número)%0A--------------------------------%0A`;
+      names.forEach(name => {
+        const item = CART[name];
+        total += item.price * item.qty;
+        msg += `${item.qty}x ${encodeURIComponent(name)} - R$ ${item.price.toFixed(2).replace('.',',')}%0A`;
+      });
+      msg += `--------------------------------%0A`;
+      msg += `*Total:* R$ ${total.toFixed(2).replace('.',',')}%0A`;
+      msg += `%0A*Observações:* (ex: sem cebola, ponto da carne, entrega, etc)`;
+      const url = `https://wa.me/${WHATS_NUMBER}?text=${msg}`;
+      window.open(url, '_blank');
+    }
+
+    /* --- Utility helpers to safely embed names in onclick strings --- */
+    function escapeJs(s){
+      return s.replace(/'/g,"\\'").replace(/"/g,'\\"').replace(/\n/g,' ');
+    }
+    function unescapeJs(s){
+      return s;
+    }
+    function escapeHtml(unsafe){
+      return unsafe.replace(/[&<"'>]/g, function(m){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]);
+      });
+    }
+
+    // initial render
+    renderCart();
+
+    // Accessibility: keyboard shortcut "w" to open WhatsApp quick link
+    document.addEventListener('keydown',(e)=>{
+      if(e.key.toLowerCase() === 'w' && !e.metaKey && !e.ctrlKey && !e.altKey){
+        window.open('https://wa.me/' + WHATS_NUMBER, '_blank');
+      }
+    });
+  </script>
+</body>
+</html>
