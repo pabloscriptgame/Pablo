@@ -167,6 +167,27 @@
       margin-bottom: 0.5rem;
       font-weight: bold;
     }
+    .cart-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .cart-content {
+      background: #1a1a1a;
+      border: 2px solid transparent;
+      border-image: linear-gradient(to right, #ff0000, #000000) 1;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+      color: white;
+    }
     @media (max-width: 640px) {
       .logo-container {
         max-width: 100px;
@@ -176,6 +197,10 @@
         height: 100px;
       }
       .help-content {
+        padding: 1rem;
+        margin: 1rem;
+      }
+      .cart-content {
         padding: 1rem;
         margin: 1rem;
       }
@@ -194,7 +219,7 @@
     </div>
     <!-- Title and Subtitle -->
     <h1 class="text-3xl font-bold">DeGusto Lanchonete</h1>
-    <p class="mt-2 text-lg"> Atendimento via WhatsApp — Somente Delivery</p>
+    <p class="mt-2 text-lg">Sanduíches artesanais — Atendimento via WhatsApp</p>
     <p class="mt-2 text-lg">📞 <a href="tel:+5534999537698" class="underline hover:text-red-300">(34) 9 9953-7698</a></p>
   </header>
 
@@ -476,9 +501,12 @@
   </button>
 
   <!-- Cart Modal -->
-  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
-    <div class="bg-gray-800 p-6 rounded-lg gradient-border w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-4">🧺 Seu Pedido</h2>
+  <div id="cart-modal" class="cart-modal hidden">
+    <div class="cart-content">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">🧺 Seu Pedido</h2>
+        <button class="text-2xl text-red-400 hover:text-red-300" onclick="toggleCart()">&times;</button>
+      </div>
       <div id="cart-items" class="mb-4">
         <p class="text-gray-400">Seu carrinho está vazio. Adicione itens ao pedido.</p>
       </div>
@@ -495,8 +523,8 @@
           <input type="number" id="change-amount" step="0.01" min="0" placeholder="Ex: 50.00" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-red-400">
         </div>
       </div>
-      <p class="text-xl font-semibold">Total: R$ <span id="cart-total">0.00</span></p>
-      <div class="flex justify-between mt-4">
+      <p class="text-xl font-semibold mb-4">Total: R$ <span id="cart-total">0.00</span></p>
+      <div class="flex flex-wrap justify-between gap-2">
         <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearCart()">Limpar</button>
         <button class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition" onclick="toggleCart()">Fechar</button>
         <button class="gradient-btn text-white px-4 py-2 rounded" onclick="finalizeOrder()">📲 Enviar Pedido via WhatsApp</button>
