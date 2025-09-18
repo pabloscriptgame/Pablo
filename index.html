@@ -44,7 +44,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DeGusto Lanchonete</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     @media (max-width: 640px) {
       .grid-cols-2 {
@@ -341,8 +340,11 @@
           <option value="Cartão de Débito">Cartão de Débito</option>
           <option value="Pix">Pix</option>
         </select>
+        <div id="change-amount-section" class="mt-2 hidden">
+          <label for="change-amount" class="block text-lg font-semibold mb-2">Precisa de troco? Quanto?</label>
+          <input type="number" id="change-amount" step="0.01" min="0" placeholder="Ex: 50.00" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-red-400">
+        </div>
       </div>
-      <div id="qr-code" class="hidden mb-4 flex justify-center"></div>
       <p class="text-xl font-semibold">Total: R$ <span id="cart-total">0.00</span></p>
       <div class="flex justify-between mt-4">
         <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearCart()">Limpar</button>
@@ -359,7 +361,6 @@
 
   <script>
     let cart = [];
-    let qrCode = null;
 
     function addToCart(itemName, price) {
       cart.push({ name: itemName, price: price });
@@ -380,14 +381,14 @@
       const cartItems = document.getElementById('cart-items');
       const cartTotal = document.getElementById('cart-total');
       const cartCount = document.getElementById('cart-count');
-      const qrCodeDiv = document.getElementById('qr-code');
       const paymentMethod = document.getElementById('payment-method').value;
+      const changeAmountSection = document.getElementById('change-amount-section');
       cartItems.innerHTML = '';
       let total = 0;
 
       if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-gray-400">Seu carrinho está vazio. Adicione itens ao pedido.</p>';
-        qrCodeDiv.classList.add('hidden');
+        changeAmountSection.classList.add('hidden');
       } else {
         cart.forEach((item, index) => {
           total += item.price;
@@ -400,18 +401,10 @@
           cartItems.appendChild(itemDiv);
         });
 
-        if (paymentMethod === 'Pix') {
-          qrCodeDiv.classList.remove('hidden');
-          qrCodeDiv.innerHTML = '';
-          qrCode = new QRCode(qrCodeDiv, {
-            text: `00020101021126360014BR.GOV.BCB.PIX0114107384196055204000053039865405${total.toFixed(2)}5802BR5920DeGusto Lanchonete6009Sao Paulo62070503***6304`,
-            width: 200,
-            height: 200,
-            colorDark: '#ffffff',
-            colorLight: '#000000'
-          });
+        if (paymentMethod === 'Dinheiro') {
+          changeAmountSection.classList.remove('hidden');
         } else {
-          qrCodeDiv.classList.add('hidden');
+          changeAmountSection.classList.add('hidden');
         }
       }
 
@@ -437,6 +430,7 @@
         return;
       }
       const paymentMethod = document.getElementById('payment-method').value;
+      const changeAmount = document.getElementById('change-amount').value;
       let message = '🍔 Pedido DeGusto Lanchonete:\n\n';
       cart.forEach(item => {
         message += `${item.name} - R$ ${item.price.toFixed(2)}\n`;
@@ -445,6 +439,8 @@
       message += `\nForma de Pagamento: ${paymentMethod}`;
       if (paymentMethod === 'Pix') {
         message += `\nChave Pix: 10738419605`;
+      } else if (paymentMethod === 'Dinheiro' && changeAmount) {
+        message += `\nPrecisa de troco para: R$ ${parseFloat(changeAmount).toFixed(2)}`;
       }
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/5534999537698?text=${encodedMessage}`;
