@@ -908,6 +908,114 @@
             font-size: 0.8rem;
             border-top: 1px solid rgba(139, 0, 0, 0.2);
         }
+        /* Bloco de Parceiros - Carrossel */
+        .partners-section {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            margin: 1rem;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(220, 20, 60, 0.2);
+            text-align: center;
+        }
+        .partners-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #DC143C, #8B0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .partners-carousel-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .partners-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 200%; /* Para 2 imagens */
+            height: 100%;
+        }
+        .partner-slide {
+            min-width: 50%; /* Cada slide ocupa metade da largura */
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 10px;
+        }
+        .partner-img {
+            display: block;
+            max-width: 100%;
+            max-height: 100px;
+            height: auto;
+            object-fit: contain; /* Mostra a imagem inteira sem cortar */
+            border-radius: 8px;
+            border: 2px solid rgba(220, 20, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+        .partner-img:hover {
+            transform: scale(1.05);
+            border-color: #DC143C;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
+        }
+        .partners-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #DC143C, #8B0000);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(139, 0, 0, 0.4);
+        }
+        .partners-nav:hover {
+            background: linear-gradient(135deg, #B22222, #8B0000);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.5);
+        }
+        .partners-nav.left {
+            left: 5px;
+        }
+        .partners-nav.right {
+            right: 5px;
+        }
+        /* Auto-scroll para parceiros */
+        @keyframes autoScroll {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .partners-auto {
+            animation: autoScroll 8s infinite ease-in-out;
+        }
+        .partners-pause:hover .partners-auto {
+            animation-play-state: paused;
+        }
+        .partners-pause {
+            position: relative;
+        }
         /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
@@ -978,6 +1086,24 @@
             }
             .promotion-description {
                 font-size: 0.8rem;
+            }
+            .partners-section {
+                margin: 0.5rem;
+                padding: 0.8rem;
+            }
+            .partners-title {
+                font-size: 1.1rem;
+            }
+            .partners-carousel-container {
+                height: 100px;
+            }
+            .partner-img {
+                max-height: 80px;
+            }
+            .partners-nav {
+                width: 25px;
+                height: 25px;
+                font-size: 12px;
             }
         }
         @media (max-width: 480px) {
@@ -1065,6 +1191,28 @@
                 padding: 0.2rem 0.6rem;
                 font-size: 0.7rem;
                 transform: rotate(10deg);
+            }
+            .partners-section {
+                margin: 0.3rem;
+                padding: 0.6rem;
+            }
+            .partners-title {
+                font-size: 1rem;
+            }
+            .partners-carousel-container {
+                height: 90px;
+            }
+            .partner-img {
+                max-height: 70px;
+            }
+            .partners-nav {
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+                left: 2px;
+            }
+            .partners-nav.right {
+                right: 2px;
             }
         }
         /* Scrollbar */
@@ -1473,6 +1621,28 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Seção de Parceiros -->
+        <div class="partners-section partners-pause">
+            <h3 class="partners-title">📢 Anuncie aqui</h3>
+            <div class="partners-carousel-container">
+                <div class="partners-carousel partners-auto" id="partnersCarousel">
+                    <div class="partner-slide">
+                        <a href="https://wa.me/5534999537698" target="_blank" rel="noopener noreferrer">
+                            <img src="https://i.ibb.co/gM4t12B2/20250919-142700.png" alt="Parceiro 1" class="partner-img">
+                        </a>
+                    </div>
+                    <div class="partner-slide">
+                        <a href="https://wa.me/5534999537698" target="_blank" rel="noopener noreferrer">
+                            <img src="https://i.ibb.co/gM4t12B2/20250919-142700.png" alt="Parceiro 2" class="partner-img">
+                        </a>
+                    </div>
+                </div>
+                <button class="partners-nav left" onclick="movePartners(-1)">❮</button>
+                <button class="partners-nav right" onclick="movePartners(1)">❯</button>
+            </div>
+        </div>
+        
         <!-- Footer -->
         <footer class="footer">
             <p>© 2025 DeGusto Lanchonete — Atendimento via WhatsApp: <a href="https://wa.me/5534999537698" style="color: #25D366;">(34) 9 9953-7698</a></p>
@@ -1630,7 +1800,7 @@
             });
         }
        
-        // Carousel functionality
+        // Carousel principal functionality
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.carousel-item');
         const totalSlides = slides.length;
@@ -1687,6 +1857,42 @@
         }
         // Initialize carousel
         showSlide(0);
+        
+        // Carrossel de Parceiros
+        let currentPartnerIndex = 0;
+        const totalPartners = 2;
+        const partnersCarousel = document.getElementById('partnersCarousel');
+        
+        function showPartnerSlide(index) {
+            if (index >= totalPartners) {
+                currentPartnerIndex = 0;
+            } else if (index < 0) {
+                currentPartnerIndex = totalPartners - 1;
+            } else {
+                currentPartnerIndex = index;
+            }
+          
+            partnersCarousel.style.transform = `translateX(-${currentPartnerIndex * 50}%)`;
+        }
+        
+        function movePartners(direction) {
+            showPartnerSlide(currentPartnerIndex + direction);
+        }
+        
+        // Auto-scroll para parceiros - rola para a direita a cada 4 segundos
+        setInterval(() => {
+            movePartners(1);
+        }, 4000);
+        
+        // Pause no hover
+        const partnersSection = document.querySelector('.partners-section');
+        partnersSection.addEventListener('mouseenter', () => {
+            partnersCarousel.style.animationPlayState = 'paused';
+        });
+        partnersSection.addEventListener('mouseleave', () => {
+            partnersCarousel.style.animationPlayState = 'running';
+        });
+        
         // Cart functionality
         let cart = [];
         let total = 0;
@@ -1875,6 +2081,7 @@
         // Initial setup
         updateCartDisplay();
         updateCartBadge();
+        showPartnerSlide(0);
     </script>
 </body>
 </html>
