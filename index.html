@@ -103,7 +103,7 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
-      
+       
         /* Carousel */
         .carousel-container {
             position: relative;
@@ -212,7 +212,7 @@
             background: #DC143C;
             transform: scale(1.2);
         }
-      
+       
         /* Navigation */
         .nav {
             background: rgba(0, 0, 0, 0.9);
@@ -360,34 +360,10 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
             border: 1px solid rgba(220, 20, 60, 0.3);
-            position: relative;
-            overflow: hidden;
         }
         .add-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
-        }
-        /* Estado "Adicionado" - A cada clique */
-        .add-btn.adding {
-            background: linear-gradient(135deg, #28a745, #20c997) !important;
-            color: white !important;
-            border-color: rgba(40, 167, 69, 0.3) !important;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4) !important;
-            animation: pulse 0.6s ease-in-out;
-        }
-        @keyframes pulse {
-            0% { 
-                transform: scale(1);
-                box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
-            }
-            100% { 
-                transform: scale(1);
-                box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-            }
         }
         /* Cart */
         .cart-container {
@@ -985,7 +961,7 @@
                 </a>
             </div>
         </header>
-      
+       
         <!-- Carousel -->
         <div class="carousel-container">
             <div class="carousel" id="carousel">
@@ -1027,7 +1003,7 @@
                 <span class="indicator" onclick="currentSlide(7)"></span>
             </div>
         </div>
-      
+       
         <!-- Navigation -->
         <nav class="nav">
             <button class="nav-btn active" data-category="hamburgers">🍔 Hambúrgueres</button>
@@ -1349,7 +1325,7 @@
     <!-- Cart Container -->
     <div class="cart-container">
         <button class="cart-btn" id="cartBtn">
-            🛒
+            🧺
             <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
         </button>
     </div>
@@ -1357,7 +1333,7 @@
     <div class="cart-modal" id="cartModal">
         <div class="cart-content">
             <div class="cart-header">
-                <h2>🛒 Seu Pedido</h2>
+                <h2>🧺 Seu Pedido</h2>
                 <button class="close-cart" id="closeCart">×</button>
             </div>
             <div id="cartItems" class="cart-items">
@@ -1420,14 +1396,14 @@
                     <div class="step-number">1️⃣</div>
                     <div class="step-content">
                         <h4>Escolha seus itens</h4>
-                        <p>Clique em "Adicionar" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja. Cada clique adiciona um item ao carrinho!</p>
+                        <p>Navegue pelo cardápio e clique em "Adicionar" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja.</p>
                     </div>
                 </div>
                 <div class="help-step">
                     <div class="step-number">2️⃣</div>
                     <div class="step-content">
                         <h4>Veja seu carrinho</h4>
-                        <p>Clique no ícone 🛒 no canto inferior direito para ver os itens adicionados e o total do pedido.</p>
+                        <p>Clique no ícone 🧺 no canto inferior direito para ver os itens adicionados e o total do pedido.</p>
                     </div>
                 </div>
                 <div class="help-step">
@@ -1486,7 +1462,7 @@
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-               
+                
                 const btn = event.target;
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✅ Copiado!';
@@ -1497,7 +1473,7 @@
                 }, 2000);
             });
         }
-       
+        
         // Carousel functionality
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.carousel-item');
@@ -1512,9 +1488,9 @@
             } else {
                 currentSlideIndex = index;
             }
-          
+           
             carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-          
+           
             // Update indicators
             indicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === currentSlideIndex);
@@ -1567,28 +1543,19 @@
                 document.getElementById(btn.dataset.category).classList.add('active');
             });
         });
-        // Add to cart - EFEITO VERDE A CADA CLIQUE
+        // Add to cart
         document.querySelectorAll('.add-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const itemData = JSON.parse(btn.dataset.item);
                 cart.push(itemData);
                 total += itemData.price;
-             
+              
                 updateCartDisplay();
                 updateCartBadge();
-                
-                // Salva o texto original
-                const originalText = btn.innerHTML;
-                
-                // Aplica o efeito visual VERDE a cada clique
-                btn.innerHTML = '✅ Adicionado';
-                btn.classList.add('adding');
-                
-                // Remove o efeito após 1.5 segundos e volta ao normal
+                btn.style.background = 'linear-gradient(135deg, #B22222, #8B0000)';
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('adding');
-                }, 1500);
+                    btn.style.background = 'linear-gradient(135deg, #DC143C, #8B0000)';
+                }, 200);
             });
         });
         // Cart toggle
@@ -1615,45 +1582,30 @@
                 document.querySelector('#changeSection').style.display = 'none';
             } else {
                 let itemsHTML = '';
-                // Agrupa itens iguais para mostrar quantidade
-                const itemCounts = {};
-                cart.forEach(item => {
-                    const key = `${item.name}-${item.price}`;
-                    if (!itemCounts[key]) {
-                        itemCounts[key] = { ...item, quantity: 0 };
-                    }
-                    itemCounts[key].quantity++;
-                });
-                
-                Object.values(itemCounts).forEach(groupedItem => {
-                    const subtotal = groupedItem.price * groupedItem.quantity;
+                cart.forEach((item, index) => {
                     itemsHTML += `
                         <div class="cart-item">
                             <div class="cart-item-info">
-                                <div class="cart-item-name">${groupedItem.name} (${groupedItem.quantity}x)</div>
-                                <div class="cart-item-price">R$ ${subtotal.toFixed(2).replace('.', ',')}</div>
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                             </div>
-                            <button class="remove-item" onclick="removeAllFromCart('${groupedItem.name}', ${groupedItem.price})">Remover</button>
+                            <button class="remove-item" onclick="removeFromCart(${index})">Remover</button>
                         </div>
                     `;
                 });
-                
                 cartItems.innerHTML = itemsHTML;
                 totalAmount.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
                 document.querySelector('#changeSection').style.display = 'block';
                 cartEmpty.style.display = 'none';
             }
         }
-        
-        // Remove all instances of an item from cart
-        function removeAllFromCart(name, price) {
-            const filteredCart = cart.filter(item => !(item.name === name && item.price === price));
-            total = filteredCart.reduce((sum, item) => sum + item.price, 0);
-            cart = filteredCart;
+        // Remove from cart
+        function removeFromCart(index) {
+            total -= cart[index].price;
+            cart.splice(index, 1);
             updateCartDisplay();
             updateCartBadge();
         }
-        
         // Update cart badge
         function updateCartBadge() {
             const badge = document.getElementById('cartBadge');
@@ -1680,7 +1632,7 @@
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-             
+              
                 const changeSection = document.getElementById('changeSection');
                 const pixInfo = document.getElementById('pixInfo');
                 if (btn.dataset.payment === 'cash') {
@@ -1714,22 +1666,10 @@
             const address = orderType === 'delivery' ? document.getElementById('addressInput').value : 'Retirada no local';
             const change = payment === 'cash' ? document.getElementById('changeInput').value : '';
             let message = `🍔 *PEDIDO DE GUSTO LANCHONETE*\n\n`;
-            message += `🛒 *Itens do Pedido:*\n`;
-            
-            // Agrupa itens para a mensagem
-            const itemCounts = {};
+            message += `🧺 *Itens do Pedido:*\n`;
             cart.forEach(item => {
-                const key = `${item.name}-${item.price}`;
-                if (!itemCounts[key]) {
-                    itemCounts[key] = { ...item, quantity: 0 };
-                }
-                itemCounts[key].quantity++;
+                message += `• ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}\n`;
             });
-            
-            Object.values(itemCounts).forEach(groupedItem => {
-                message += `• ${groupedItem.name} (${groupedItem.quantity}x) - R$ ${(groupedItem.price * groupedItem.quantity).toFixed(2).replace('.', ',')}\n`;
-            });
-            
             message += `\n💰 *Total: R$ ${total.toFixed(2).replace('.', ',')}\n\n`;
             message += `📍 *Tipo de Pedido:* ${orderType === 'delivery' ? '🚚 Entrega' : '🏪 Retirada no Local'}\n`;
             if (orderType === 'delivery' && address) {
@@ -1744,7 +1684,7 @@
             message += `\n📲 *Aguardando confirmação...*`;
             const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-         
+          
             // Close modal after sending
             document.getElementById('cartModal').classList.remove('active');
         });
