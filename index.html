@@ -103,7 +103,7 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
-        
+       
         /* Carousel */
         .carousel-container {
             position: relative;
@@ -112,24 +112,36 @@
             overflow: hidden;
             background: #000;
             border-radius: 10px;
-            margin: 1rem;
+            margin: 0.8rem;
             box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
             border: 2px solid rgba(220, 20, 60, 0.2);
+            height: 280px; /* Altura fixa para manter proporção */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .carousel {
             display: flex;
             transition: transform 0.5s ease-in-out;
             width: 100%;
+            height: 100%;
         }
         .carousel-item {
             min-width: 100%;
             position: relative;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 10px;
         }
         .carousel-item img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            object-fit: contain; /* Mostra a imagem inteira sem cortar */
             display: block;
             border-radius: 8px;
         }
@@ -140,7 +152,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(220, 20, 60, 0.3), rgba(139, 0, 0, 0.4));
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(139, 0, 0, 0.3));
             border-radius: 8px;
             pointer-events: none;
         }
@@ -200,7 +212,7 @@
             background: #DC143C;
             transform: scale(1.2);
         }
-        
+       
         /* Navigation */
         .nav {
             background: rgba(0, 0, 0, 0.9);
@@ -587,6 +599,54 @@
         .change-input::placeholder {
             color: #999;
         }
+        .pix-info {
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(37, 211, 102, 0.05));
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .pix-info.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .pix-info h4 {
+            color: #25D366;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pix-code {
+            background: #000;
+            color: #25D366;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            word-break: break-all;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+        .pix-copy-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .pix-copy-btn:hover {
+            background: #1DA851;
+            transform: translateY(-1px);
+        }
         .total-section {
             padding: 1rem;
             background: linear-gradient(135deg, #DC143C, #8B0000);
@@ -797,9 +857,10 @@
             }
             .carousel-container {
                 margin: 0.5rem;
+                height: 220px;
             }
-            .carousel-item img {
-                height: 200px;
+            .carousel-item {
+                padding: 8px;
             }
             .carousel-nav {
                 width: 35px;
@@ -853,9 +914,10 @@
             }
             .carousel-container {
                 margin: 0.3rem;
+                height: 200px;
             }
-            .carousel-item img {
-                height: 180px;
+            .carousel-item {
+                padding: 6px;
             }
             .carousel-nav {
                 width: 30px;
@@ -899,7 +961,7 @@
                 </a>
             </div>
         </header>
-        
+       
         <!-- Carousel -->
         <div class="carousel-container">
             <div class="carousel" id="carousel">
@@ -941,7 +1003,7 @@
                 <span class="indicator" onclick="currentSlide(7)"></span>
             </div>
         </div>
-        
+       
         <!-- Navigation -->
         <nav class="nav">
             <button class="nav-btn active" data-category="hamburgers">🍔 Hambúrgueres</button>
@@ -1306,6 +1368,12 @@
                     <h3>💰 Precisa de troco? Quanto?</h3>
                     <input type="text" class="change-input" id="changeInput" placeholder="Ex: R$ 50,00">
                 </div>
+                <!-- PIX Information -->
+                <div class="pix-info" id="pixInfo">
+                    <h4>💳 PIX - Chave: 110738419605</h4>
+                    <div class="pix-code" id="pixCode">110738419605</div>
+                    <button class="pix-copy-btn" onclick="copyPixCode()">📋 Copiar Código PIX</button>
+                </div>
             </div>
             <div class="total-section">
                 <div class="total-amount" id="totalAmount">R$ 0,00</div>
@@ -1374,13 +1442,44 @@
         </div>
     </div>
     <script>
+        // PIX copy functionality
+        function copyPixCode() {
+            const pixCode = document.getElementById('pixCode').textContent;
+            navigator.clipboard.writeText(pixCode).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copiado!';
+                btn.style.background = '#1DA851';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '#25D366';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = pixCode;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copiado!';
+                btn.style.background = '#1DA851';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '#25D366';
+                }, 2000);
+            });
+        }
+        
         // Carousel functionality
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.carousel-item');
         const totalSlides = slides.length;
         const carousel = document.getElementById('carousel');
         const indicators = document.querySelectorAll('.indicator');
-
         function showSlide(index) {
             if (index >= totalSlides) {
                 currentSlideIndex = 0;
@@ -1389,45 +1488,37 @@
             } else {
                 currentSlideIndex = index;
             }
-            
+           
             carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-            
+           
             // Update indicators
             indicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === currentSlideIndex);
             });
         }
-
         function moveCarousel(direction) {
             showSlide(currentSlideIndex + direction);
         }
-
         function currentSlide(index) {
             showSlide(index);
         }
-
         // Auto-slide every 4 seconds
         setInterval(() => {
             moveCarousel(1);
         }, 4000);
-
         // Touch/swipe support for mobile
         let startX = 0;
         let endX = 0;
-
         carousel.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
         });
-
         carousel.addEventListener('touchend', (e) => {
             endX = e.changedTouches[0].clientX;
             handleSwipe();
         });
-
         function handleSwipe() {
             const threshold = 50;
             const diff = startX - endX;
-
             if (Math.abs(diff) > threshold) {
                 if (diff > 0) {
                     // Swipe left - next slide
@@ -1438,10 +1529,8 @@
                 }
             }
         }
-
         // Initialize carousel
         showSlide(0);
-
         // Cart functionality
         let cart = [];
         let total = 0;
@@ -1460,7 +1549,7 @@
                 const itemData = JSON.parse(btn.dataset.item);
                 cart.push(itemData);
                 total += itemData.price;
-               
+              
                 updateCartDisplay();
                 updateCartBadge();
                 btn.style.background = 'linear-gradient(135deg, #B22222, #8B0000)';
@@ -1543,12 +1632,18 @@
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-               
+              
                 const changeSection = document.getElementById('changeSection');
+                const pixInfo = document.getElementById('pixInfo');
                 if (btn.dataset.payment === 'cash') {
                     changeSection.style.display = 'block';
+                    pixInfo.classList.remove('active');
+                } else if (btn.dataset.payment === 'pix') {
+                    changeSection.style.display = 'none';
+                    pixInfo.classList.add('active');
                 } else {
                     changeSection.style.display = 'none';
+                    pixInfo.classList.remove('active');
                     document.getElementById('changeInput').value = '';
                 }
             });
@@ -1583,11 +1678,13 @@
             message += `💳 *Forma de Pagamento:* ${payment.toUpperCase()}\n`;
             if (payment === 'cash' && change) {
                 message += `💰 *Troco para:* ${change}\n`;
+            } else if (payment === 'pix') {
+                message += `💳 *PIX - Chave:* 110738419605\n`;
             }
             message += `\n📲 *Aguardando confirmação...*`;
             const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-           
+          
             // Close modal after sending
             document.getElementById('cartModal').classList.remove('active');
         });
