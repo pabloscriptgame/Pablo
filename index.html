@@ -103,7 +103,102 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
-       
+      
+        /* Promoção em Destaque */
+        .promotion-highlight {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            margin: 0.8rem;
+            border-radius: 15px;
+            padding: 1.2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            border: 3px solid #FF8C00;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 10px 30px rgba(255, 165, 0, 0.5); }
+            100% { box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); }
+        }
+        .promotion-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .promotion-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .promotion-image {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #FF8C00;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .promotion-text {
+            flex: 1;
+            min-width: 200px;
+        }
+        .promotion-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 0.3rem;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+        .promotion-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #8B0000;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+        }
+        .promotion-price .original {
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+            margin-right: 0.5rem;
+        }
+        .promotion-description {
+            color: #8B0000;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            max-width: 300px;
+            font-weight: 500;
+        }
+        .promotion-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #DC143C, #8B0000);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+            transform: rotate(15deg);
+        }
+      
         /* Carousel */
         .carousel-container {
             position: relative;
@@ -212,7 +307,7 @@
             background: #DC143C;
             transform: scale(1.2);
         }
-       
+      
         /* Navigation */
         .nav {
             background: rgba(0, 0, 0, 0.9);
@@ -867,6 +962,23 @@
                 height: 35px;
                 font-size: 16px;
             }
+            .promotion-highlight {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+            .promotion-image {
+                width: 60px;
+                height: 60px;
+            }
+            .promotion-title {
+                font-size: 1.2rem;
+            }
+            .promotion-price {
+                font-size: 1.4rem;
+            }
+            .promotion-description {
+                font-size: 0.8rem;
+            }
         }
         @media (max-width: 480px) {
             .header {
@@ -928,6 +1040,32 @@
             .carousel-nav.right {
                 right: 5px;
             }
+            .promotion-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .promotion-image {
+                width: 70px;
+                height: 70px;
+                align-self: center;
+            }
+            .promotion-title {
+                font-size: 1.1rem;
+            }
+            .promotion-price {
+                font-size: 1.3rem;
+            }
+            .promotion-description {
+                font-size: 0.75rem;
+                max-width: 100%;
+            }
+            .promotion-badge {
+                top: -5px;
+                right: -5px;
+                padding: 0.2rem 0.6rem;
+                font-size: 0.7rem;
+                transform: rotate(10deg);
+            }
         }
         /* Scrollbar */
         ::-webkit-scrollbar {
@@ -961,7 +1099,25 @@
                 </a>
             </div>
         </header>
-       
+      
+        <!-- Promoção em Destaque -->
+        <div class="promotion-highlight">
+            <div class="promotion-badge">🔥 PROMOÇÃO</div>
+            <div class="promotion-content">
+                <img src="https://i.ibb.co/wNj9qnDr/IMG-20250916-WA0068.jpg" alt="X-DÊ-GUSTO" class="promotion-image">
+                <div class="promotion-text">
+                    <div class="promotion-title">X-DÊ-GUSTO</div>
+                    <div class="promotion-price">
+                        <span class="original">R$ 28,00</span>
+                        <span>HOJE R$ 27,00</span>
+                    </div>
+                    <div class="promotion-description">
+                        Pão, 2 hambúrgueres de picanha, ovo, salsicha, presunto, muçarela, bacon, milho, cheddar, Catupiry, batata palha e salada.
+                    </div>
+                </div>
+            </div>
+        </div>
+      
         <!-- Carousel -->
         <div class="carousel-container">
             <div class="carousel" id="carousel">
@@ -1003,7 +1159,7 @@
                 <span class="indicator" onclick="currentSlide(7)"></span>
             </div>
         </div>
-       
+      
         <!-- Navigation -->
         <nav class="nav">
             <button class="nav-btn active" data-category="hamburgers">🍔 Hambúrgueres</button>
@@ -1036,9 +1192,9 @@
                 </div>
                 <div class="menu-item">
                     <h3>X-DÊ-GUSTO</h3>
-                    <div class="price">R$ 30,00</div>
+                    <div class="price">R$ 27,00</div>
                     <div class="description">Pão, 2 hambúrgueres de picanha, ovo, salsicha, presunto, muçarela, bacon, milho, cheddar, Catupiry, batata palha e salada.</div>
-                    <button class="add-btn" data-item='{"name":"X-DÊ-GUSTO","price":30,"category":"hamburgers"}'>Adicionar</button>
+                    <button class="add-btn" data-item='{"name":"X-DÊ-GUSTO","price":27,"category":"hamburgers"}'>Adicionar</button>
                 </div>
                 <div class="menu-item">
                     <h3>Artesanal 1</h3>
@@ -1462,7 +1618,7 @@
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                
+               
                 const btn = event.target;
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✅ Copiado!';
@@ -1473,7 +1629,7 @@
                 }, 2000);
             });
         }
-        
+       
         // Carousel functionality
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.carousel-item');
@@ -1488,9 +1644,9 @@
             } else {
                 currentSlideIndex = index;
             }
-           
+          
             carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-           
+          
             // Update indicators
             indicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === currentSlideIndex);
@@ -1549,7 +1705,7 @@
                 const itemData = JSON.parse(btn.dataset.item);
                 cart.push(itemData);
                 total += itemData.price;
-              
+             
                 updateCartDisplay();
                 updateCartBadge();
                 btn.style.background = 'linear-gradient(135deg, #B22222, #8B0000)';
@@ -1632,7 +1788,7 @@
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-              
+             
                 const changeSection = document.getElementById('changeSection');
                 const pixInfo = document.getElementById('pixInfo');
                 if (btn.dataset.payment === 'cash') {
@@ -1684,7 +1840,7 @@
             message += `\n📲 *Aguardando confirmação...*`;
             const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-          
+         
             // Close modal after sending
             document.getElementById('cartModal').classList.remove('active');
         });
