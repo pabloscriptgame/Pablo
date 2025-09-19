@@ -103,7 +103,7 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
-      
+     
         /* Promoção em Destaque */
         .promotion-highlight {
             background: linear-gradient(135deg, #FFD700, #FFA500);
@@ -198,7 +198,7 @@
             box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
             transform: rotate(15deg);
         }
-      
+     
         /* Carousel */
         .carousel-container {
             position: relative;
@@ -307,7 +307,7 @@
             background: #DC143C;
             transform: scale(1.2);
         }
-      
+     
         /* Navigation */
         .nav {
             background: rgba(0, 0, 0, 0.9);
@@ -1247,25 +1247,25 @@
                 </a>
             </div>
         </header>
-      
+     
         <!-- Promoção em Destaque -->
         <div class="promotion-highlight">
-            <div class="promotion-badge">🔥 PROMOÇÃO</div>
+            <div class="promotion-badge">🔥 PROMOÇÃO DE HOJE</div>
             <div class="promotion-content">
-                <img src="https://i.ibb.co/wNj9qnDr/IMG-20250916-WA0068.jpg" alt="X-DÊ-GUSTO" class="promotion-image">
+                <img src="https://i.ibb.co/xK0qBwzS/costela.jpg" alt="X-COSTELA" class="promotion-image">
                 <div class="promotion-text">
-                    <div class="promotion-title">X-DÊ-GUSTO</div>
+                    <div class="promotion-title">X-COSTELA</div>
                     <div class="promotion-price">
-                        <span class="original">R$ 28,00</span>
-                        <span>HOJE R$ 27,00</span>
+                        <span class="original">R$ 32,00</span>
+                        <span>HOJE R$ 30,00</span>
                     </div>
                     <div class="promotion-description">
-                        Pão, 2 hambúrgueres de picanha, ovo, salsicha, presunto, muçarela, bacon, milho, cheddar, Catupiry, batata palha e salada.
+                        Pão amanteigado, costela desfiada, cheddar, anel de cebola, molho de churrasco, cebola caramelizada, bacon e milho.
                     </div>
                 </div>
             </div>
         </div>
-      
+     
         <!-- Carousel -->
         <div class="carousel-container">
             <div class="carousel" id="carousel">
@@ -1307,7 +1307,7 @@
                 <span class="indicator" onclick="currentSlide(7)"></span>
             </div>
         </div>
-      
+     
         <!-- Navigation -->
         <nav class="nav">
             <button class="nav-btn active" data-category="hamburgers">🍔 Hambúrgueres</button>
@@ -1320,6 +1320,12 @@
         <div id="hamburgers" class="categories active">
             <h2 class="category-title" data-category="hamburgers">Hambúrgueres</h2>
             <div class="menu-grid">
+                <div class="menu-item">
+                    <h3>X-COSTELA</h3>
+                    <div class="price">R$ 30,00</div>
+                    <div class="description">Pão amanteigado, costela desfiada, queijo cheddar, anéis de cebola, molho barbecue, cebola caramelizada, bacon e milho.</div>
+                    <button class="add-btn" data-item='{"name":"X-COSTELA","price":30,"category":"hamburgers"}'>Adicionar</button>
+                </div>
                 <div class="menu-item">
                     <h3>Especial Tilápia</h3>
                     <div class="price">R$ 30,00</div>
@@ -1621,7 +1627,7 @@
                 </div>
             </div>
         </div>
-        
+       
         <!-- Seção de Parceiros -->
         <div class="partners-section partners-pause">
             <h3 class="partners-title">📢 Anuncie aqui</h3>
@@ -1642,7 +1648,7 @@
                 <button class="partners-nav right" onclick="movePartners(1)">❯</button>
             </div>
         </div>
-        
+       
         <!-- Footer -->
         <footer class="footer">
             <p>© 2025 DeGusto Lanchonete — Atendimento via WhatsApp: <a href="https://wa.me/5534999537698" style="color: #25D366;">(34) 9 9953-7698</a></p>
@@ -1788,7 +1794,7 @@
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-               
+              
                 const btn = event.target;
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✅ Copiado!';
@@ -1799,7 +1805,7 @@
                 }, 2000);
             });
         }
-       
+      
         // Carousel principal functionality
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.carousel-item');
@@ -1814,9 +1820,9 @@
             } else {
                 currentSlideIndex = index;
             }
-          
+         
             carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-          
+         
             // Update indicators
             indicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === currentSlideIndex);
@@ -1857,12 +1863,12 @@
         }
         // Initialize carousel
         showSlide(0);
-        
+       
         // Carrossel de Parceiros
         let currentPartnerIndex = 0;
         const totalPartners = 2;
         const partnersCarousel = document.getElementById('partnersCarousel');
-        
+       
         function showPartnerSlide(index) {
             if (index >= totalPartners) {
                 currentPartnerIndex = 0;
@@ -1871,19 +1877,19 @@
             } else {
                 currentPartnerIndex = index;
             }
-          
+         
             partnersCarousel.style.transform = `translateX(-${currentPartnerIndex * 50}%)`;
         }
-        
+       
         function movePartners(direction) {
             showPartnerSlide(currentPartnerIndex + direction);
         }
-        
+       
         // Auto-scroll para parceiros - rola para a direita a cada 4 segundos
         setInterval(() => {
             movePartners(1);
         }, 4000);
-        
+       
         // Pause no hover
         const partnersSection = document.querySelector('.partners-section');
         partnersSection.addEventListener('mouseenter', () => {
@@ -1892,7 +1898,7 @@
         partnersSection.addEventListener('mouseleave', () => {
             partnersCarousel.style.animationPlayState = 'running';
         });
-        
+       
         // Cart functionality
         let cart = [];
         let total = 0;
@@ -1911,7 +1917,7 @@
                 const itemData = JSON.parse(btn.dataset.item);
                 cart.push(itemData);
                 total += itemData.price;
-             
+            
                 updateCartDisplay();
                 updateCartBadge();
                 btn.style.background = 'linear-gradient(135deg, #B22222, #8B0000)';
@@ -1994,7 +2000,7 @@
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-             
+            
                 const changeSection = document.getElementById('changeSection');
                 const pixInfo = document.getElementById('pixInfo');
                 if (btn.dataset.payment === 'cash') {
@@ -2046,7 +2052,7 @@
             message += `\n📲 *Aguardando confirmação...*`;
             const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-         
+        
             // Close modal after sending
             document.getElementById('cartModal').classList.remove('active');
         });
