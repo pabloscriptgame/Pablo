@@ -11,12 +11,10 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
-
                 // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
                 // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
-
                 // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
@@ -25,7 +23,6 @@
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
-
                 // Convert filtered JSON back to CSV
                 var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
@@ -225,6 +222,26 @@
       overflow-y: auto;
       color: white;
     }
+    .order-type-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: 2px solid #ff0000;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 0.25rem;
+    }
+    .order-type-btn.active {
+      background: linear-gradient(to right, #ff0000, #1a1a1a);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+    .address-section {
+      margin-top: 1rem;
+    }
+    .address-section.hidden {
+      display: none;
+    }
     @media (max-width: 640px) {
       .logo-container {
         max-width: 100px;
@@ -244,6 +261,11 @@
       .help-step {
         padding: 0.75rem;
       }
+      .order-type-btn {
+        margin: 0.125rem;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+      }
     }
   </style>
 </head>
@@ -256,7 +278,7 @@
     </div>
     <!-- Title and Subtitle -->
     <h1 class="text-3xl font-bold">DeGusto Lanchonete</h1>
-    <p class="mt-2 text-lg">Atendimento via WhatsApp — Somente Delivery</p>
+    <p class="mt-2 text-lg">Atendimento via WhatsApp — Delivery e Retirada</p>
     <p class="mt-2 text-lg">📞 <a href="tel:+5534999537698" class="underline hover:text-red-300">(34) 9 9953-7698</a></p>
   </header>
   <!-- Carousel -->
@@ -617,9 +639,36 @@
         <h2 class="text-2xl font-bold">🧺 Seu Pedido</h2>
         <button class="text-2xl text-red-400 hover:text-red-300" onclick="toggleCart()">&times;</button>
       </div>
+      
+      <!-- Order Type Selection -->
+      <div class="mb-4">
+        <label class="block text-lg font-semibold mb-2">Tipo de Pedido</label>
+        <div class="flex flex-wrap gap-2">
+          <button class="order-type-btn active" id="pickup-btn" onclick="selectOrderType('pickup')">
+            🏪 Retirada no Local
+          </button>
+          <button class="order-type-btn" id="delivery-btn" onclick="selectOrderType('delivery')">
+            🚚 Entrega em Casa
+          </button>
+        </div>
+      </div>
+
+      <!-- Address Section -->
+      <div id="address-section" class="address-section hidden">
+        <label class="block text-lg font-semibold mb-2">📍 Endereço Completo para Entrega</label>
+        <textarea 
+          id="delivery-address" 
+          placeholder="Ex: Rua das Flores, 123, Bairro Centro, Uberlândia - MG. Referência: ao lado da padaria" 
+          class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-red-400 resize-vertical min-h-[80px]"
+          rows="3"
+        ></textarea>
+        <p class="text-sm text-gray-400 mt-1">Inclua rua, número, bairro, cidade e referência se necessário</p>
+      </div>
+
       <div id="cart-items" class="mb-4">
         <p class="text-gray-400">Seu carrinho está vazio. Adicione itens ao pedido.</p>
       </div>
+      
       <div class="mb-4">
         <label for="payment-method" class="block text-lg font-semibold mb-2">Forma de Pagamento</label>
         <select id="payment-method" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-red-400">
@@ -633,6 +682,7 @@
           <input type="number" id="change-amount" step="0.01" min="0" placeholder="Ex: 50.00" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-red-400">
         </div>
       </div>
+      
       <p class="text-xl font-semibold mb-4">Total: R$ <span id="cart-total">0.00</span></p>
       <div class="flex flex-wrap justify-between gap-2">
         <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearCart()">Limpar</button>
@@ -658,15 +708,19 @@
           <p class="text-gray-300">Clique no ícone 🧺 no canto inferior direito para ver os itens adicionados e o total do pedido.</p>
         </div>
         <div class="help-step">
-          <h3>3️⃣ Selecione o pagamento</h3>
-          <p class="text-gray-300">Escolha entre Dinheiro, Cartão de Crédito, Cartão de Débito ou Pix. Se escolher Dinheiro, informe o valor para troco.</p>
+          <h3>3️⃣ Selecione o tipo de pedido</h3>
+          <p class="text-gray-300">Escolha entre "Retirada no Local" ou "Entrega em Casa". Para entrega, preencha seu endereço completo.</p>
         </div>
         <div class="help-step">
-          <h3>4️⃣ Finalize o pedido</h3>
+          <h3>4️⃣ Escolha o pagamento</h3>
+          <p class="text-gray-300">Selecione entre Dinheiro, Cartão de Crédito, Cartão de Débito ou Pix. Se escolher Dinheiro, informe o valor para troco.</p>
+        </div>
+        <div class="help-step">
+          <h3>5️⃣ Finalize o pedido</h3>
           <p class="text-gray-300">Clique em "📲 Enviar Pedido via WhatsApp" e seu pedido será enviado diretamente para nossa equipe!</p>
         </div>
         <div class="help-step">
-          <h3>5️⃣ Aguarde o contato</h3>
+          <h3>6️⃣ Aguarde o contato</h3>
           <p class="text-gray-300">Nossa equipe entrará em contato via WhatsApp para confirmar o pedido e combinar a entrega ou retirada.</p>
         </div>
       </div>
@@ -683,26 +737,52 @@
     let cart = [];
     let currentSlide = 0;
     let autoScrollInterval;
+    let orderType = 'pickup'; // Default to pickup
+
     function addToCart(itemName, price) {
       cart.push({ name: itemName, price: price });
       updateCart();
     }
+
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCart();
     }
+
     function clearCart() {
       cart = [];
       updateCart();
     }
+
+    function selectOrderType(type) {
+      orderType = type;
+      // Update button styles
+      document.querySelectorAll('.order-type-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      if (type === 'pickup') {
+        document.getElementById('pickup-btn').classList.add('active');
+        document.getElementById('delivery-btn').classList.remove('active');
+        document.getElementById('address-section').classList.add('hidden');
+        document.getElementById('delivery-address').value = '';
+      } else {
+        document.getElementById('delivery-btn').classList.add('active');
+        document.getElementById('pickup-btn').classList.remove('active');
+        document.getElementById('address-section').classList.remove('hidden');
+      }
+    }
+
     function updateCart() {
       const cartItems = document.getElementById('cart-items');
       const cartTotal = document.getElementById('cart-total');
       const cartCount = document.getElementById('cart-count');
       const paymentMethod = document.getElementById('payment-method').value;
       const changeAmountSection = document.getElementById('change-amount-section');
+      
       cartItems.innerHTML = '';
       let total = 0;
+      
       if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-gray-400">Seu carrinho está vazio. Adicione itens ao pedido.</p>';
         changeAmountSection.classList.add('hidden');
@@ -717,15 +797,18 @@
           `;
           cartItems.appendChild(itemDiv);
         });
+        
         if (paymentMethod === 'Dinheiro') {
           changeAmountSection.classList.remove('hidden');
         } else {
           changeAmountSection.classList.add('hidden');
         }
       }
+      
       cartTotal.textContent = total.toFixed(2);
       cartCount.textContent = cart.length;
     }
+
     function toggleCart() {
       const modal = document.getElementById('cart-modal');
       modal.classList.toggle('hidden');
@@ -733,35 +816,65 @@
         updateCart();
       }
     }
+
     function toggleHelpModal() {
       const modal = document.getElementById('help-modal');
       modal.classList.toggle('hidden');
     }
+
     document.getElementById('payment-method').addEventListener('change', function() {
       updateCart();
     });
+
     function finalizeOrder() {
       if (cart.length === 0) {
         alert('Seu carrinho está vazio!');
         return;
       }
+
       const paymentMethod = document.getElementById('payment-method').value;
       const changeAmount = document.getElementById('change-amount').value;
+      const deliveryAddress = document.getElementById('delivery-address').value;
+
       let message = '🍔 Pedido DeGusto Lanchonete:\n\n';
-      cart.forEach(item => {
-        message += `${item.name} - R$ ${item.price.toFixed(2)}\n`;
-      });
-      message += `\nTotal: R$ ${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}`;
-      message += `\nForma de Pagamento: ${paymentMethod}`;
-      if (paymentMethod === 'Pix') {
-        message += `\nChave Pix: 10738419605`;
-      } else if (paymentMethod === 'Dinheiro' && changeAmount) {
-        message += `\nPrecisa de troco para: R$ ${parseFloat(changeAmount).toFixed(2)}`;
+      
+      // Order type info
+      if (orderType === 'pickup') {
+        message += '🛒 TIPO DE PEDIDO: Retirada no Local\n\n';
+      } else {
+        if (!deliveryAddress.trim()) {
+          alert('Por favor, preencha o endereço completo para entrega!');
+          return;
+        }
+        message += '🚚 TIPO DE PEDIDO: Entrega em Casa\n';
+        message += `📍 Endereço: ${deliveryAddress}\n\n`;
       }
+
+      // Items
+      cart.forEach(item => {
+        message += `• ${item.name} - R$ ${item.price.toFixed(2)}\n`;
+      });
+
+      // Total
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      message += `\n💰 Total: R$ ${total.toFixed(2)}`;
+      
+      // Payment
+      message += `\n\n💳 Forma de Pagamento: ${paymentMethod}`;
+      
+      if (paymentMethod === 'Pix') {
+        message += `\n🔑 Chave Pix: 10738419605`;
+      } else if (paymentMethod === 'Dinheiro' && changeAmount) {
+        message += `\n💵 Precisa de troco para: R$ ${parseFloat(changeAmount).toFixed(2)}`;
+      }
+
+      message += `\n\n📱 Aguardo confirmação!`;
+
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/5534999537698?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
     }
+
     function moveCarousel(direction) {
       const carousel = document.getElementById('carousel');
       const items = carousel.querySelectorAll('.carousel-item');
@@ -770,14 +883,17 @@
       currentSlide = (currentSlide + direction + totalItems) % totalItems;
       carousel.style.transform = `translateX(-${currentSlide * itemWidth}px)`;
     }
+
     function startAutoScroll() {
       autoScrollInterval = setInterval(() => {
         moveCarousel(1);
       }, 3000);
     }
+
     function stopAutoScroll() {
       clearInterval(autoScrollInterval);
     }
+
     // Start auto-scroll when the page loads
     startAutoScroll();
     // Pause auto-scroll on hover
