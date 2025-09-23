@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +49,8 @@
             padding: 0;
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
             background: linear-gradient(135deg, #ff0000, #000000);
             font-family: 'Arial', sans-serif;
             color: #fff;
@@ -56,6 +95,30 @@
             animation: glow 2s ease-in-out infinite alternate;
         }
 
+        .marquee-top, .marquee-bottom {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+        }
+
+        .marquee-top p, .marquee-bottom p {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+            font-size: 1.2rem;
+        }
+
+        .marquee-bottom p {
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1); }
@@ -80,14 +143,27 @@
             .logo {
                 font-size: 2.5rem;
             }
+            .marquee-top p {
+                font-size: 1rem;
+            }
+            .marquee-bottom p {
+                font-size: 1.4rem;
+                line-height: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="marquee-top">
+        <p>Informamos que não abrimos às segundas-feiras para descanso da equipe. Voltamos com nosso atendimento normalmente na terça-feira!</p>
+    </div>
     <div class="container">
         <div class="logo">Dê Gusto Lanchonete</div>
         <h1>Estamos Fechados Hoje</h1>
         <p>Abriremos <span class="highlight">amanhã</span> com muito sabor!</p>
+    </div>
+    <div class="marquee-bottom">
+        <p>🍔🔥 Promoções Todos os Dias! 🔥🍔 &nbsp;&nbsp;&nbsp; 🥇 1 Artesanal Nº1 + 1 Refrigerante 200 ml 👉 Apenas R$ 28,00 &nbsp;&nbsp;&nbsp; 🍔🍔 2 Lanches “Tudo” (completo, do jeito que você ama) 👉 Só R$ 40,00</p>
     </div>
 </body>
 </html>
