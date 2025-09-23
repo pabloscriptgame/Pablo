@@ -1,697 +1,169 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeGusto Lanchonete - Delivery Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>:root{--primary-red: #DC143C;--dark-red: #8B0000;--gold: #FFD700;--orange: #FFA500;--dark-bg: #0a0a0a;--card-bg: rgba(26,26,26,0.95);--text-primary: #ffffff;--text-secondary: #cccccc;--text-muted: #999999;--border-color: rgba(220,20,60,0.2);--shadow-light: 0 4px 20px rgba(139,0,0,0.2);--shadow-medium: 0 8px 30px rgba(139,0,0,0.3);--shadow-heavy: 0 20px 50px rgba(139,0,0,0.4);--radius-sm: 12px;--radius-md: 20px;--radius-lg: 24px;--transition-fast: all 0.2s cubic-bezier(0.4,0,0.2,1);--transition-normal: all 0.3s cubic-bezier(0.4,0,0.2,1);--transition-slow: all 0.5s cubic-bezier(0.4,0,0.2,1);}*{margin: 0;padding: 0;box-sizing: border-box;}body{font-family: 'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background: linear-gradient(135deg,var(--dark-red) 0%,var(--dark-bg) 50%);min-height: 100vh;color: var(--text-primary);line-height: 1.6;overflow-x: hidden;position: relative;}.loading-screen{position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: linear-gradient(135deg,var(--primary-red),var(--dark-red));display: flex;align-items: center;justify-content: center;z-index: 9999;transition: var(--transition-slow);}.loading-content{text-align: center;transform: scale(0.8);opacity: 0;animation: loadingIn 0.8s ease-out forwards;}.loading-logo{width: 80px;height: 80px;margin-bottom: 1.5rem;filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));}.loading-text{font-family: 'Space Grotesk',sans-serif;font-size: 1.5rem;font-weight: 600;color: white;margin-bottom: 1rem;}.loading-spinner{width: 40px;height: 40px;border: 3px solid rgba(255,255,255,0.2);border-top: 3px solid white;border-radius: 50%;animation: spin 1s linear infinite;margin: 0 auto;}@keyframes loadingIn{to{transform: scale(1);opacity: 1;}}@keyframes spin{0%{transform: rotate(0deg);}100%{transform: rotate(360deg);}}.main-container{max-width: 1200px;margin: 0 auto;min-height: 100vh;background: var(--card-bg);backdrop-filter: blur(20px);border: 1px solid var(--border-color);box-shadow: var(--shadow-heavy);position: relative;overflow: hidden;transform: translateY(100px);opacity: 0;animation: slideUpContent 0.8s ease-out 0.5s forwards;}@keyframes slideUpContent{to{transform: translateY(0);opacity: 1;}}.bg-animation{position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;overflow: hidden;}.bg-particle{position: absolute;background: radial-gradient(circle,rgba(220,20,60,0.1) 0%,transparent 70%);border-radius: 50%;animation: float 20s infinite linear;}@keyframes float{0%{transform: translateY(100vh) rotate(0deg);opacity: 0;}10%{opacity: 1;}90%{opacity: 1;}100%{transform: translateY(-100px) rotate(360deg);opacity: 0;}}.header{background: linear-gradient(135deg,var(--primary-red) 0%,var(--dark-red) 100%);padding: 1.5rem;position: relative;overflow: hidden;border-bottom: 1px solid var(--border-color);}.header::before{content: '';position: absolute;top: 0;left: -100%;width: 100%;height: 100%;background: linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation: shimmer 3s infinite;}@keyframes shimmer{0%{left: -100%;}100%{left: 100%;}}.header-content{display: flex;align-items: center;justify-content: space-between;max-width: 1200px;margin: 0 auto;position: relative;z-index: 2;}.logo-section{display: flex;align-items: center;gap: 1rem;}.logo{width: 60px;height: 60px;border-radius: 50%;border: 2px solid rgba(255,255,255,0.2);box-shadow: var(--shadow-light);transition: var(--transition-normal);}.logo:hover{transform: scale(1.05) rotate(5deg);box-shadow: var(--shadow-medium);}.header-text h1{font-family: 'Space Grotesk',sans-serif;font-size: 2rem;font-weight: 700;margin-bottom: 0.25rem;background: linear-gradient(45deg,#fff,var(--gold));-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;}.header-text p{color: rgba(255,255,255,0.8);font-size: 0.95rem;}.header-actions{display: flex;gap: 1rem;align-items: center;}.whatsapp-btn{display: flex;align-items: center;gap: 0.5rem;background: linear-gradient(135deg,#25D366,#20C997);color: white;padding: 0.75rem 1.5rem;border-radius: var(--radius-md);text-decoration: none;font-weight: 600;font-size: 0.9rem;transition: var(--transition-normal);box-shadow: var(--shadow-light);position: relative;overflow: hidden;}.whatsapp-btn::before{content: '';position: absolute;top: 0;left: -100%;width: 100%;height: 100%;background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition: left 0.5s;}.whatsapp-btn:hover::before{left: 100%;}.whatsapp-btn:hover{transform: translateY(-2px);box-shadow: var(--shadow-medium);}.fab-container{position: fixed;bottom: 2rem;right: 2rem;display: flex;flex-direction: column;gap: 1rem;z-index: 1000;}.fab{width: 60px;height: 60px;border-radius: var(--radius-md);display: flex;align-items: center;justify-content: center;font-size: 1.4rem;color: white;text-decoration: none;box-shadow: var(--shadow-medium);transition: var(--transition-normal);position: relative;overflow: hidden;backdrop-filter: blur(20px);}.fab-primary{background: linear-gradient(135deg,var(--primary-red),var(--dark-red));border: 2px solid var(--border-color);}.fab-secondary{background: linear-gradient(135deg,#6C757D,#495057);border: 2px solid rgba(108,117,125,0.3);}.fab:hover{transform: translateY(-4px) scale(1.05);box-shadow: var(--shadow-heavy);}.cart-badge{position: absolute;top: -6px;right: -6px;background: var(--gold);color: var(--dark-red);width: 24px;height: 24px;border-radius: 50%;font-size: 0.8rem;font-weight: 700;display: flex;align-items: center;justify-content: center;border: 2px solid var(--dark-red);animation: pulse 2s infinite;}@keyframes pulse{0%,100%{transform: scale(1);}50%{transform: scale(1.1);}}.rolling-banner{background: linear-gradient(90deg,var(--primary-red),var(--dark-red),var(--primary-red));background-size: 200% 100%;animation: gradientShift 3s ease infinite;padding: 0.75rem 0;position: relative;overflow: hidden;border-bottom: 1px solid var(--border-color);}@keyframes gradientShift{0%,100%{background-position: 0% 50%;}50%{background-position: 100% 50%;}}.rolling-content{display: flex;width: max-content;animation: scroll 30s linear infinite;}.rolling-text{font-size: 0.85rem;font-weight: 600;color: white;white-space: nowrap;padding: 0 3rem;text-shadow: 0 2px 4px rgba(0,0,0,0.3);display: flex;align-items: center;gap: 0.5rem;}@keyframes scroll{0%{transform: translateX(100%);}100%{transform: translateX(-100%);}}.rolling-banner:hover .rolling-content{animation-play-state: paused;}.promo-section{padding: 2rem;background: linear-gradient(135deg,var(--gold),var(--orange));margin: 0 1rem;border-radius: var(--radius-lg);position: relative;overflow: hidden;box-shadow: var(--shadow-heavy);transform: translateY(20px);opacity: 0;animation: slideUpItem 0.6s ease-out forwards;}.promo-section:nth-child(2){animation-delay: 0.1s;}.promo-section:nth-child(3){animation-delay: 0.2s;}@keyframes slideUpItem{to{transform: translateY(0);opacity: 1;}}.promo-badge{position: absolute;top: -10px;right: 20px;background: linear-gradient(135deg,var(--primary-red),var(--dark-red));color: white;padding: 0.5rem 1rem;border-radius: var(--radius-md);font-size: 0.8rem;font-weight: 700;box-shadow: var(--shadow-light);transform: rotate(12deg);z-index: 2;}.promo-content{display: grid;grid-template-columns: 80px 1fr;gap: 1.5rem;align-items: center;position: relative;z-index: 1;}.promo-image{width: 80px;height: 80px;border-radius: var(--radius-md);object-fit: cover;border: 3px solid rgba(139,0,0,0.3);box-shadow: var(--shadow-medium);transition: var(--transition-normal);}.promo-image:hover{transform: scale(1.05);border-color: var(--primary-red);}.promo-text h3{font-family: 'Space Grotesk',sans-serif;font-size: 1.5rem;font-weight: 700;color: var(--dark-red);margin-bottom: 0.5rem;}.promo-price{font-size: 1.8rem;font-weight: 800;color: var(--dark-red);margin-bottom: 0.75rem;}.promo-price .original{text-decoration: line-through;font-size: 1.3rem;color: #666;font-weight: 500;margin-right: 0.5rem;}.promo-description{color: var(--dark-red);font-size: 0.9rem;line-height: 1.5;opacity: 0.9;}.gallery-section{padding: 2rem 1rem;background: var(--dark-bg);}.gallery-container{max-width: 1200px;margin: 0 auto;position: relative;height: 300px;border-radius: var(--radius-lg);overflow: hidden;box-shadow: var(--shadow-heavy);background: var(--dark-bg);}.gallery-slides{display: flex;height: 100%;transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);}.gallery-slide{min-width: 100%;height: 100%;position: relative;display: flex;align-items: center;justify-content: center;}.gallery-slide img{width: 100%;height: 100%;object-fit: cover;transition: var(--transition-normal);}.gallery-slide:hover img{transform: scale(1.05);}.gallery-overlay{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: linear-gradient(135deg,rgba(220,20,60,0.7) 0%,rgba(139,0,0,0.5) 100%);opacity: 0;transition: var(--transition-normal);}.gallery-slide:hover .gallery-overlay{opacity: 1;}.gallery-nav{position: absolute;top: 50%;transform: translateY(-50%);background: rgba(255,255,255,0.2);backdrop-filter: blur(10px);color: white;border: none;width: 50px;height: 50px;border-radius: 50%;cursor: pointer;display: flex;align-items: center;justify-content: center;font-size: 1.2rem;z-index: 10;transition: var(--transition-normal);border: 2px solid rgba(255,255,255,0.3);}.gallery-nav:hover{background: rgba(255,255,255,0.3);transform: translateY(-50%) scale(1.1);border-color: rgba(255,255,255,0.5);}.gallery-nav.prev{left: 20px;}.gallery-nav.next{right: 20px;}.gallery-indicators{position: absolute;bottom: 20px;left: 50%;transform: translateX(-50%);display: flex;gap: 10px;z-index: 10;}.indicator{width: 12px;height: 12px;border-radius: 50%;background: rgba(255,255,255,0.3);border: 2px solid rgba(255,255,255,0.5);cursor: pointer;transition: var(--transition-fast);}.indicator.active{background: white;transform: scale(1.2);}.nav-section{background: rgba(10,10,10,0.95);backdrop-filter: blur(20px);padding: 1rem;border-bottom: 1px solid var(--border-color);position: sticky;top: 0;z-index: 100;}.nav-container{max-width: 1200px;margin: 0 auto;display: flex;justify-content: center;gap: 0.5rem;overflow-x: auto;padding: 0.5rem 0;scrollbar-width: none;-ms-overflow-style: none;}.nav-container::-webkit-scrollbar{display: none;}.nav-btn{background: rgba(255,255,255,0.05);border: 2px solid var(--border-color);color: var(--text-primary);padding: 0.75rem 1.5rem;border-radius: var(--radius-md);font-weight: 600;cursor: pointer;white-space: nowrap;transition: var(--transition-normal);font-size: 0.9rem;display: flex;align-items: center;gap: 0.5rem;}.nav-btn:hover,.nav-btn.active{background: linear-gradient(135deg,var(--primary-red),var(--dark-red));border-color: var(--primary-red);transform: translateY(-2px);box-shadow: var(--shadow-light);}.category-section{display: none;padding: 2rem 1rem;animation: fadeInUp 0.6s ease-out;transform: translateY(30px);opacity: 0;}.category-section.active{display: block;animation: fadeInUp 0.6s ease-out forwards;}@keyframes fadeInUp{to{transform: translateY(0);opacity: 1;}}.category-header{text-align: center;margin-bottom: 2rem;}.category-title{font-family: 'Space Grotesk',sans-serif;font-size: 2.5rem;font-weight: 800;background: linear-gradient(45deg,var(--primary-red),var(--gold));-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;margin-bottom: 0.5rem;position: relative;}.category-title::after{content: '';position: absolute;bottom: -10px;left: 50%;transform: translateX(-50%);width: 60px;height: 4px;background: linear-gradient(90deg,var(--primary-red),var(--gold));border-radius: 2px;}.menu-grid{display: grid;gap: 1.5rem;max-width: 1200px;margin: 0 auto;}.menu-card{background: rgba(255,255,255,0.03);backdrop-filter: blur(10px);border: 1px solid var(--border-color);border-radius: var(--radius-lg);padding: 1.5rem;transition: var(--transition-normal);position: relative;overflow: hidden;}.menu-card::before{content: '';position: absolute;top: 0;left: 0;right: 0;height: 4px;background: linear-gradient(90deg,var(--primary-red),var(--gold));transform: scaleX(0);transition: transform 0.3s ease;}.menu-card:hover{transform: translateY(-10px);box-shadow: var(--shadow-heavy);border-color: var(--primary-red);}.menu-card:hover::before{transform: scaleX(1);}.menu-card h3{font-family: 'Space Grotesk',sans-serif;font-size: 1.3rem;font-weight: 700;color: var(--text-primary);margin-bottom: 0.75rem;line-height: 1.3;}.menu-price{font-size: 1.4rem;font-weight: 800;color: var(--gold);margin: 1rem 0;text-shadow: 0 2px 4px rgba(255,215,0,0.3);}.menu-description{color: var(--text-secondary);font-size: 0.9rem;line-height: 1.6;margin-bottom: 1.25rem;}.add-to-cart{width: 100%;background: linear-gradient(135deg,var(--primary-red),var(--dark-red));color: white;border: none;padding: 1rem;border-radius: var(--radius-md);font-weight: 600;font-size: 1rem;cursor: pointer;transition: var(--transition-normal);position: relative;overflow: hidden;}.add-to-cart::before{content: '';position: absolute;top: 0;left: -100%;width: 100%;height: 100%;background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition: left 0.5s;}.add-to-cart:hover::before{left: 100%;}.add-to-cart:hover{transform: scale(1.02);box-shadow: var(--shadow-medium);}.add-to-cart:active{transform: scale(0.98);}.partners-section{padding: 2rem 1rem;background: linear-gradient(135deg,rgba(26,26,26,0.8),rgba(10,10,10,0.8));margin: 2rem 1rem;border-radius: var(--radius-lg);border: 1px solid var(--border-color);box-shadow: var(--shadow-light);}.partners-header{text-align: center;margin-bottom: 2rem;}.partners-title{font-family: 'Space Grotesk',sans-serif;font-size: 1.8rem;font-weight: 700;background: linear-gradient(45deg,var(--primary-red),var(--gold));-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;}.partners-grid{display: grid;grid-template-columns: repeat(auto-fit,minmax(200px,1fr));gap: 1.5rem;margin-top: 1.5rem;}.partner-card{background: rgba(255,255,255,0.05);border: 1px solid var(--border-color);border-radius: var(--radius-md);padding: 1.5rem;text-align: center;transition: var(--transition-normal);position: relative;overflow: hidden;}.partner-card::before{content: '';position: absolute;top: 0;left: 0;right: 0;height: 3px;background: linear-gradient(90deg,var(--primary-red),var(--gold));transform: scaleX(0);transition: transform 0.3s ease;}.partner-card:hover{transform: translateY(-5px);box-shadow: var(--shadow-medium);border-color: var(--primary-red);}.partner-card:hover::before{transform: scaleX(1);}.partner-logo{width: 100%;max-width: 150px;height: auto;margin-bottom: 1rem;filter: grayscale(100%);transition: var(--transition-normal);}.partner-card:hover .partner-logo{filter: grayscale(0%);transform: scale(1.05);}.partner-name{font-weight: 600;color: var(--text-primary);margin-bottom: 0.5rem;}.partner-contact{color: var(--text-secondary);font-size: 0.9rem;text-decoration: none;display: inline-flex;align-items: center;gap: 0.5rem;}.footer{background: linear-gradient(180deg,var(--dark-bg) 0%,var(--dark-red) 100%);padding: 2rem 1rem;text-align: center;border-top: 1px solid var(--border-color);}.footer-content{max-width: 1200px;margin: 0 auto;}.footer-text{color: var(--text-secondary);font-size: 0.9rem;margin-bottom: 1rem;}.footer-link{color: #25D366;text-decoration: none;font-weight: 600;transition: var(--transition-fast);}.footer-link:hover{text-decoration: underline;}.modal{display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.8);backdrop-filter: blur(20px);z-index: 2000;align-items: center;justify-content: center;padding: 1rem;opacity: 0;visibility: hidden;transition: all 0.3s ease;}.modal.active{display: flex;opacity: 1;visibility: visible;}.modal-content{background: linear-gradient(135deg,var(--card-bg),rgba(42,42,42,0.95));border-radius: var(--radius-lg);width: 100%;max-width: 500px;max-height: 90vh;overflow-y: auto;box-shadow: var(--shadow-heavy);border: 1px solid var(--border-color);transform: translateY(50px) scale(0.9);transition: var(--transition-normal);position: relative;}.modal.active .modal-content{transform: translateY(0) scale(1);}.modal-header{display: flex;align-items: center;justify-content: space-between;padding: 1.5rem;border-bottom: 1px solid var(--border-color);background: linear-gradient(135deg,var(--primary-red),var(--dark-red));border-radius: var(--radius-lg) var(--radius-lg) 0 0;}.modal-title{font-family: 'Space Grotesk',sans-serif;font-size: 1.5rem;font-weight: 700;color: white;display: flex;align-items: center;gap: 0.75rem;}.modal-close{background: rgba(255,255,255,0.2);border: none;color: white;width: 40px;height: 40px;border-radius: 50%;cursor: pointer;display: flex;align-items: center;justify-content: center;font-size: 1.2rem;transition: var(--transition-fast);}.modal-close:hover{background: rgba(255,255,255,0.3);transform: rotate(90deg) scale(1.1);}.cart-item{display: flex;align-items: center;padding: 1.25rem;border-bottom: 1px solid rgba(220,20,60,0.1);transition: var(--transition-normal);}.cart-item:hover{background: rgba(220,20,60,0.05);transform: translateX(5px);}.cart-item-info{flex: 1;margin-right: 1rem;}.cart-item-name{font-weight: 600;font-size: 1.1rem;margin-bottom: 0.25rem;}.cart-item-category{font-size: 0.8rem;color: var(--primary-red);font-weight: 500;text-transform: uppercase;letter-spacing: 0.5px;background: rgba(220,20,60,0.1);padding: 0.2rem 0.6rem;border-radius: var(--radius-sm);display: inline-block;}.cart-item-price{font-size: 1.2rem;font-weight: 700;color: var(--gold);margin-top: 0.5rem;}.quantity-controls{display: flex;align-items: center;background: rgba(255,255,255,0.05);border-radius: var(--radius-md);padding: 0.25rem;border: 1px solid var(--border-color);margin-right: 1rem;}.quantity-btn{background: linear-gradient(135deg,var(--primary-red),var(--dark-red));color: white;border: none;width: 32px;height: 32px;border-radius: 50%;cursor: pointer;font-size: 1rem;font-weight: bold;transition: var(--transition-fast);display: flex;align-items: center;justify-content: center;}.quantity-btn:hover:not(:disabled){transform: scale(1.1);}.quantity-btn:disabled{opacity: 0.4;cursor: not-allowed;}.quantity-display{min-width: 30px;text-align: center;color: var(--text-primary);font-weight: 600;font-size: 1rem;padding: 0 1rem;background: rgba(220,20,60,0.2);border-radius: var(--radius-sm);}.remove-item{background: linear-gradient(135deg,#DC3545,#C82333);color: white;border: none;padding: 0.5rem 1rem;border-radius: var(--radius-sm);cursor: pointer;font-size: 0.9rem;font-weight: 600;transition: var(--transition-fast);}.remove-item:hover{transform: scale(1.05);box-shadow: var(--shadow-light);}.order-section{padding: 1.5rem;background: rgba(42,42,42,0.8);border-top: 1px solid var(--border-color);}.order-section h3{margin-bottom: 1rem;color: var(--text-primary);font-size: 1.1rem;display: flex;align-items: center;gap: 0.75rem;font-weight: 600;text-transform: uppercase;letter-spacing: 0.5px;}.delivery-info{display: flex;align-items: center;gap: 1rem;padding: 1rem;background: linear-gradient(135deg,rgba(220,20,60,0.1),rgba(139,0,0,0.1));border-radius: var(--radius-md);border: 1px solid var(--border-color);color: var(--primary-red);margin-bottom: 1.5rem;font-weight: 500;transition: var(--transition-normal);}.delivery-info:hover{transform: translateY(-2px);box-shadow: var(--shadow-light);}.form-input{width: 100%;padding: 1rem;border: 2px solid var(--border-color);border-radius: var(--radius-md);margin-bottom: 1rem;font-size: 1rem;background: rgba(255,255,255,0.05);color: var(--text-primary);transition: var(--transition-normal);}.form-input:focus{outline: none;border-color: var(--primary-red);box-shadow: 0 0 0 3px rgba(220,20,60,0.1);background: rgba(255,255,255,0.08);}.form-input::placeholder{color: var(--text-muted);}.payment-grid{display: grid;grid-template-columns: repeat(auto-fit,minmax(120px,1fr));gap: 1rem;margin-bottom: 1rem;}.payment-btn{padding: 1rem;border: 2px solid var(--border-color);background: rgba(255,255,255,0.05);border-radius: var(--radius-md);cursor: pointer;transition: var(--transition-normal);font-size: 0.9rem;color: var(--text-primary);font-weight: 600;text-transform: uppercase;letter-spacing: 0.5px;display: flex;flex-direction: column;align-items: center;gap: 0.5rem;}.payment-btn:hover,.payment-btn.active{border-color: var(--primary-red);background: linear-gradient(135deg,rgba(220,20,60,0.1),rgba(139,0,0,0.1));color: var(--primary-red);transform: translateY(-2px);box-shadow: var(--shadow-light);}.pix-section{background: linear-gradient(135deg,rgba(37,211,102,0.15),rgba(37,211,102,0.05));border: 2px solid rgba(37,211,102,0.3);border-radius: var(--radius-md);padding: 1.5rem;margin-top: 1rem;display: none;animation: fadeIn 0.3s ease;}.pix-section.active{display: block;}.pix-code{background: #000;color: #25D366;padding: 1rem;border-radius: var(--radius-sm);font-family: 'SF Mono',monospace;font-size: 1rem;text-align: center;margin: 1rem 0;word-break: break-all;border: 1px solid rgba(37,211,102,0.3);}.pix-copy{background: linear-gradient(135deg,#25D366,#20C997);color: white;border: none;padding: 0.75rem 1.5rem;border-radius: var(--radius-md);cursor: pointer;font-weight: 600;width: 100%;transition: var(--transition-normal);}.pix-copy:hover{transform: translateY(-2px);box-shadow: var(--shadow-light);}.total-section{padding: 1.5rem;background: linear-gradient(135deg,var(--primary-red),var(--dark-red));text-align: center;border-top: 2px solid var(--gold);position: relative;overflow: hidden;}.total-section::before{content: '';position: absolute;top: -50%;left: -50%;width: 200%;height: 200%;background: linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent);transform: rotate(45deg);animation: shimmer 3s infinite;}.total-amount{font-family: 'Space Grotesk',sans-serif;font-size: 2.5rem;font-weight: 800;color: var(--gold);margin-bottom: 1rem;position: relative;z-index: 1;text-shadow: 0 2px 10px rgba(0,0,0,0.5);}.cart-actions{display: flex;gap: 1rem;margin-top: 1rem;}.btn-secondary{background: linear-gradient(135deg,#6C757D,#495057);color: white;border: none;padding: 1rem 2rem;border-radius: var(--radius-md);cursor: pointer;font-weight: 600;transition: var(--transition-normal);flex: 1;}.btn-secondary:hover{transform: translateY(-2px);box-shadow: var(--shadow-light);}.btn-primary{background: linear-gradient(135deg,var(--gold),var(--orange));color: var(--dark-red);border: none;padding: 1.25rem;border-radius: var(--radius-md);cursor: pointer;font-weight: 700;font-size: 1.1rem;transition: var(--transition-normal);flex: 1;position: relative;overflow: hidden;border: 2px solid var(--dark-red);}.btn-primary:hover{transform: translateY(-3px);box-shadow: var(--shadow-heavy);}.btn-primary::before{content: '';position: absolute;top: 0;left: -100%;width: 100%;height: 100%;background: linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition: left 0.5s;}.btn-primary:hover::before{left: 100%;}.empty-state{text-align: center;padding: 3rem 2rem;color: var(--text-muted);}.empty-icon{font-size: 4rem;margin-bottom: 1.5rem;opacity: 0.3;animation: bounce 2s infinite;}@keyframes bounce{0%,20%,50%,80%,100%{transform: translateY(0);}40%{transform: translateY(-10px);}60%{transform: translateY(-5px);}}.help-section{max-height: 70vh;overflow-y: auto;}.help-item{display: flex;align-items: flex-start;gap: 1rem;padding: 1.5rem;margin-bottom: 1rem;background: rgba(255,255,255,0.03);border-radius: var(--radius-md);border-left: 4px solid var(--primary-red);}.help-number{background: linear-gradient(135deg,var(--primary-red),var(--dark-red));color: white;width: 35px;height: 35px;border-radius: 50%;display: flex;align-items: center;justify-content: center;font-weight: 700;flex-shrink: 0;font-size: 1rem;}.help-content h4{color: var(--text-primary);margin-bottom: 0.5rem;font-size: 1rem;}.help-content p{color: var(--text-secondary);font-size: 0.9rem;line-height: 1.6;}.help-contact{padding: 1.5rem;background: rgba(42,42,42,0.8);text-align: center;border-top: 1px solid var(--border-color);}@media (max-width: 768px){.header-content{flex-direction: column;gap: 1rem;text-align: center;}.header-text h1{font-size: 1.6rem;}.promo-content{grid-template-columns: 1fr;text-align: center;}.promo-image{justify-self: center;}.payment-grid{grid-template-columns: repeat(2,1fr);}.cart-actions{flex-direction: column;}.fab-container{bottom: 1.5rem;right: 1.5rem;flex-direction: row;}.fab{width: 55px;height: 55px;font-size: 1.2rem;}.gallery-container{height: 250px;}.menu-grid{grid-template-columns: 1fr;gap: 1rem;}.partners-grid{grid-template-columns: 1fr;}}@media (max-width: 480px){.main-container{margin: 0;border-radius: 0;min-height: 100vh;}.header{padding: 1rem;}.header-text h1{font-size: 1.4rem;}.promo-section{margin: 0 0.5rem;padding: 1.5rem;}.gallery-container{height: 200px;margin: 0 0.5rem;}.category-section{padding: 1.5rem 0.5rem;}.category-title{font-size: 2rem;}.modal-content{margin: 0.5rem;max-width: calc(100vw - 1rem);}.payment-grid{grid-template-columns: 1fr;}.cart-item{flex-direction: column;align-items: flex-start;gap: 1rem;}.quantity-controls{margin-right: 0;margin-bottom: 1rem;}}::-webkit-scrollbar{width: 8px;}::-webkit-scrollbar-track{background: rgba(255,255,255,0.05);border-radius: var(--radius-sm);}::-webkit-scrollbar-thumb{background: linear-gradient(135deg,var(--primary-red),var(--dark-red));border-radius: var(--radius-sm);}::-webkit-scrollbar-thumb:hover{background: linear-gradient(135deg,var(--gold),var(--orange));}.notification{position: fixed;top: 20px;right: 20px;background: linear-gradient(135deg,#28a745,#20c997);color: white;padding: 1rem 1.5rem;border-radius: var(--radius-lg);font-weight: 600;z-index: 3000;transform: translateX(400px);opacity: 0;transition: all 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow: var(--shadow-heavy);max-width: 300px;font-family: 'Inter',sans-serif;}.notification.show{transform: translateX(0);opacity: 1;}.notification.error{background: linear-gradient(135deg,#dc3545,#c82333);}.notification.success{background: linear-gradient(135deg,#28a745,#20c997);}@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration: 0.01ms !important;animation-iteration-count: 1 !important;transition-duration: 0.01ms !important;}}.nav-btn:focus,.add-to-cart:focus,.payment-btn:focus,.form-input:focus,.modal-close:focus{outline: 2px solid var(--gold);outline-offset: 2px;}@media (max-width: 768px){.nav-container{justify-content: center;flex-wrap: wrap;}.nav-btn{font-size: 0.85rem;padding: 0.6rem 1rem;}}.scroll-top-btn{display: none;opacity: 0;transition: opacity 0.3s ease,transform 0.3s ease;}.scroll-top-btn.visible{display: flex;opacity: 1;}.scroll-top-btn:hover{transform: translateY(-6px) scale(1.1);}</style>
+    <title>Dê Gusto Lanchonete - Fechado</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #ff0000, #000000);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff3333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .highlight {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .marquee-top, .marquee-bottom {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+        }
+
+        .marquee-top p, .marquee-bottom p {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+            font-size: 1.2rem;
+        }
+
+        .marquee-bottom p {
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            }
+            to {
+                text-shadow: 0 0 20px #ff3333, 0 0 30px #ff6666;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1.2rem;
+            }
+            .logo {
+                font-size: 2.5rem;
+            }
+            .marquee-top p {
+                font-size: 1rem;
+            }
+            .marquee-bottom p {
+                font-size: 1.4rem;
+                line-height: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-content">
-            <img src="https://i.ibb.co/cXhPsYB2/1756735289113.png" alt="DeGusto Logo" class="loading-logo">
-            <div class="loading-text">DeGusto Lanchonete</div>
-            <div class="loading-spinner"></div>
-        </div>
+    <div class="marquee-top">
+        <p>Informamos que não abrimos às segundas-feiras para descanso da equipe. Voltamos com nosso atendimento normalmente na terça-feira!</p>
     </div>
-
-    <!-- Animated Background -->
-    <div class="bg-animation" id="bgAnimation"></div>
-
-    <div class="main-container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="https://i.ibb.co/cXhPsYB2/1756735289113.png" alt="DeGusto Logo" class="logo">
-                    <div class="header-text">
-                        <h1>DeGusto Lanchonete</h1>
-                        <p>Somente Delivery 🛵</p>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete" style="display: inline-block; background: linear-gradient(to right, #ff0000, #000000); color: white; padding: 0.2em 1em; text-decoration: none; border-radius: 5px; font-size: 0.6em;">Baixar APK</a>
-                    
-                </div>
-            </div>
-        </header>
-
-        <!-- Rolling Banner -->
-        <div class="rolling-banner">
-            <div class="rolling-content">
-                <span class="rolling-text">
-                    <i class="fas fa-fire"></i> Promoções diárias • Delivery em 30min • Peça agora!
-                </span>
-                <span class="rolling-text">
-                    <i class="fas fa-hamburger"></i> ARTESANAL GOIABADA por apenas R$25 hoje • Combos incríveis!
-                </span>
-                <span class="rolling-text">
-                    <i class="fas fa-clock"></i> Segunda f. não abrimos • Entrega em toda região
-                </span>
-                <span class="rolling-text">
-                    <i class="fas fa-star"></i> Qualidade Premium • Satisfação garantida • Peça já!
-                </span>
-            </div>
-        </div>
-
-        <!-- Promotion Section -->
-        <section class="promo-section">
-            <div class="promo-badge">
-                <i class="fas fa-fire"></i> HOJE!
-            </div>
-            <div class="promo-content">
-                <img src="https://i.ibb.co/BVmyqpXB/20250913-141851.png" alt="X-ARTESANALGOIABADA" class="promo-image">
-                <div class="promo-text">
-                    <h3>X-ARTESANAL GOIABADA</h3>
-                    <div class="promo-price">
-                        <span class="original">R$ 30,00</span>
-                        <strong>HOJE R$ 25,00</strong>
-                    </div>
-                    <p class="promo-description">
-                        Hambúrguer de carne, molho de goiabada, cebola caramelizada, milho, bacon, presunto, muçarela e salada.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gallery Section -->
-        <section class="gallery-section">
-            <div class="gallery-container">
-                <div class="gallery-slides" id="gallerySlides">
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/PGksN5Sg/20250921-034850.jpg" alt="Hambúrguer Premium 1">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/mCpKRrQC/20250921-034739.jpg" alt="Hambúrguer Premium 2">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/nsXPMwYV/20250921-034930.jpg" alt="Hambúrguer Premium 3">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/Df5Ps7kz/20250921-035003.jpg" alt="Hambúrguer Premium 4">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/6cDCJYhL/20250921-035041.jpg" alt="Hambúrguer Premium 5">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/GjqwKnr/20250921-035117.jpg" alt="Hambúrguer Premium 6">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg" alt="Hambúrguer Premium 7">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                    <div class="gallery-slide">
-                        <img src="https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg" alt="Hambúrguer Premium 8">
-                        <div class="gallery-overlay"></div>
-                    </div>
-                </div>
-                <button class="gallery-nav prev" onclick="moveGallery(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="gallery-nav next" onclick="moveGallery(1)"><i class="fas fa-chevron-right"></i></button>
-                <div class="gallery-indicators" id="galleryIndicators"></div>
-            </div>
-        </section>
-
-        <!-- Navigation -->
-        <nav class="nav-section">
-            <div class="nav-container">
-                <button class="nav-btn active" data-category="hamburgers">
-                    <i class="fas fa-hamburger"></i> Hambúrgueres
-                </button>
-                <button class="nav-btn" data-category="combos">
-                    <i class="fas fa-gift"></i> Combos
-                </button>
-                <button class="nav-btn" data-category="molhos">
-                    <i class="fas fa-pepper-hot"></i> Molhos
-                </button>
-                <button class="nav-btn" data-category="batata">
-                    <i class="fas fa-drumstick-bite"></i> Batatas
-                </button>
-                <button class="nav-btn" data-category="bebidas">
-                    <i class="fas fa-wine-bottle"></i> Bebidas
-                </button>
-            </div>
-        </nav>
-
-        <!-- Categories -->
-        <div id="hamburgers" class="category-section active">
-            <div class="category-header">
-                <h2 class="category-title">🍔 Hambúrgueres Premium</h2>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <h3>X-COSTELA EXCLUSIVA</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">Pão artesanal, costela desfiada suculenta, queijo cheddar derretido, anéis de cebola crocantes, molho barbecue especial, cebola caramelizada, bacon crocante e milho doce.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-COSTELA EXCLUSIVA","price":25,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ESPECIAL TILÁPIA</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">Hambúrguer de tilápia grelhada, anéis de cebola empanados, queijo muçarela, molho de picles caseiro, milho fresco e salada crocante.</div>
-                    <button class="add-to-cart" data-item='{"name":"ESPECIAL TILÁPIA","price":25,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ARTESANAL GOIABADA</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">Hambúrguer artesanal de carne bovina, molho de goiabada especial, cebola caramelizada, milho, bacon crocante, presunto, muçarela e salada fresca.</div>
-                    <button class="add-to-cart" data-item='{"name":"ARTESANAL GOIABADA","price":25,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ESPECIAL STEAK</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">Steak de frango grelhado, anéis de cebola, molho barbecue, maionese de churrasco, presunto, muçarela, bacon, milho e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"ESPECIAL STEAK","price":25,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-DÊ-GUSTO SUPREMO</h3>
-                    <div class="menu-price">R$ 27,00</div>
-                    <div class="menu-description">Pão premium, 2 hambúrgueres de picanha, ovo frito, salsicha artesanal, presunto, muçarela, bacon, milho, cheddar, Catupiry e batata palha.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-DÊ-GUSTO SUPREMO","price":27,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ARTESANAL CLÁSSICO</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">Pão artesanal, hambúrguer artesanal, bacon crocante, cheddar, cebola caramelizada, presunto, muçarela, milho, batata palha e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"ARTESANAL CLÁSSICO","price":25,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ARTESANAL DORITOS</h3>
-                    <div class="menu-price">R$ 27,00</div>
-                    <div class="menu-description">Pão artesanal, hambúrguer artesanal, bacon, cheddar, cebola caramelizada, milho, presunto, muçarela, Doritos e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"ARTESANAL DORITOS","price":27,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>ARTESANAL DUPLO</h3>
-                    <div class="menu-price">R$ 30,00</div>
-                    <div class="menu-description">Pão artesanal, 2 hambúrgueres artesanais, bacon, cheddar, cebola caramelizada, presunto, muçarela, milho e batata palha.</div>
-                    <button class="add-to-cart" data-item='{"name":"ARTESANAL DUPLO","price":30,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-BOLO GIGANTE</h3>
-                    <div class="menu-price">R$ 36,00</div>
-                    <div class="menu-description">Pão premium, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, calabresa, muçarela. Finalizado com muito cheddar e batata frita.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-BOLO GIGANTE","price":36,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-TUDO PREMIUM</h3>
-                    <div class="menu-price">R$ 24,00</div>
-                    <div class="menu-description">Pão artesanal, hambúrguer de picanha, ovo frito, presunto, muçarela, milho, bacon, Catupiry e salada crocante.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-TUDO PREMIUM","price":24,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-BACON ESPECIAL</h3>
-                    <div class="menu-price">R$ 22,00</div>
-                    <div class="menu-description">Pão premium, hambúrguer de picanha, salsicha, ovo, presunto, muçarela, milho, bacon, Catupiry e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-BACON ESPECIAL","price":22,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-CALABRESA</h3>
-                    <div class="menu-price">R$ 22,00</div>
-                    <div class="menu-description">Pão artesanal, hambúrguer de picanha, ovo, presunto, muçarela, milho, calabresa, cheddar e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-CALABRESA","price":22,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-CHEDDAR MELT</h3>
-                    <div class="menu-price">R$ 22,00</div>
-                    <div class="menu-description">Pão premium, hambúrguer de picanha, presunto, muçarela, salsicha, milho, bacon, cheddar e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-CHEDDAR MELT","price":22,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-SALADA FRESCA</h3>
-                    <div class="menu-price">R$ 16,00</div>
-                    <div class="menu-description">Pão artesanal, hambúrguer de picanha, presunto, muçarela, Catupiry, milho e salada crocante.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-SALADA FRESCA","price":16,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-STEAK GRELHADO</h3>
-                    <div class="menu-price">R$ 20,00</div>
-                    <div class="menu-description">Pão premium, steak de frango grelhado, presunto, muçarela, milho, molho verde, molho barbecue, batata palha e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-STEAK GRELHADO","price":20,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-DOBRO PODEROSO</h3>
-                    <div class="menu-price">R$ 30,00</div>
-                    <div class="menu-description">Pão artesanal, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, cheddar, Catupiry, presunto, muçarela, milho e batata palha.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-DOBRO PODEROSO","price":30,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>X-BAGUNÇA TOTAL</h3>
-                    <div class="menu-price">R$ 30,00</div>
-                    <div class="menu-description">Pão premium, hambúrguer de picanha, steak de frango, bacon, salsicha, presunto, muçarela, Catupiry, cheddar, milho, batata palha e salada.</div>
-                    <button class="add-to-cart" data-item='{"name":"X-BAGUNÇA TOTAL","price":30,"category":"hamburgers"}'>Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="combos" class="category-section">
-            <div class="category-header">
-                <h2 class="category-title">🎁 Combos Irresistíveis</h2>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <h3>COMBO DUPLO TUDO</h3>
-                    <div class="menu-price">R$ 40,00</div>
-                    <div class="menu-description">2 hambúrgueres X-Tudo Premium - Perfeito para compartilhar!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO DUPLO TUDO","price":40,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO FAMÍLIA</h3>
-                    <div class="menu-price">R$ 44,00</div>
-                    <div class="menu-description">2 hambúrgueres X-Tudo + 2 refrigerantes 200ml - Combo completo!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO FAMÍLIA","price":44,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO DUPLO PODER</h3>
-                    <div class="menu-price">R$ 44,00</div>
-                    <div class="menu-description">2 hambúrgueres X-Dobro Poderoso - Para quem tem muita fome!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO DUPLO PODER","price":44,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO X-TUDO COMPLETO</h3>
-                    <div class="menu-price">R$ 25,00</div>
-                    <div class="menu-description">1 X-Tudo + Batata tamanho P + Refrigerante 200ml - Combo individual perfeito!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO X-TUDO COMPLETO","price":25,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO LEVE E SAUDÁVEL</h3>
-                    <div class="menu-price">R$ 23,00</div>
-                    <div class="menu-description">1 X-Salada Fresca + Batata tamanho P + Refrigerante 200ml - Opção mais leve!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO LEVE E SAUDÁVEL","price":23,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO TRIO TUDO</h3>
-                    <div class="menu-price">R$ 70,00</div>
-                    <div class="menu-description">3 hambúrgueres X-Tudo + 3 refrigerantes 200ml - Para 3 pessoas!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO TRIO TUDO","price":70,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO COMPLETO FAMÍLIA</h3>
-                    <div class="menu-price">R$ 50,00</div>
-                    <div class="menu-description">2 X-Tudo + 2 refrigerantes + Batata tamanho P - Combo familiar completo!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO COMPLETO FAMÍLIA","price":50,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO SUPREMO DÊ-GUSTO</h3>
-                    <div class="menu-price">R$ 30,00</div>
-                    <div class="menu-description">1 X-Dê-Gusto Supremo + Batata tamanho P + Refrigerante 200ml - O melhor!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO SUPREMO DÊ-GUSTO","price":30,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO TRIO PURO</h3>
-                    <div class="menu-price">R$ 60,00</div>
-                    <div class="menu-description">3 hambúrgueres X-Tudo - Para quem quer só hambúrguer!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO TRIO PURO","price":60,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO DUPLO ARTESANAL</h3>
-                    <div class="menu-price">R$ 50,00</div>
-                    <div class="menu-description">2 hambúrgueres Artesanal Clássico - Qualidade premium em dobro!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO DUPLO ARTESANAL","price":50,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COMBO ARTESANAL + REFRIGERANTE</h3>
-                    <div class="menu-price">R$ 28,00</div>
-                    <div class="menu-description">1 Artesanal Clássico + Refrigerante 200ml - Combinação perfeita!</div>
-                    <button class="add-to-cart" data-item='{"name":"COMBO ARTESANAL + REFRIGERANTE","price":28,"category":"combos"}'>Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="molhos" class="category-section">
-            <div class="category-header">
-                <h2 class="category-title">🧂 Molhos Especiais</h2>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <h3>MOLHO CHURRASCO</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho barbecue caseiro com toque defumado - Perfeito para carnes!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO CHURRASCO","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO DE ALHO</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Cremoso molho de alho com ervas frescas - Clássico irresistível!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO DE ALHO","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO VERDE</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho verde refrescante com ervas e limão - Leve e saboroso!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO VERDE","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO GOIABADA</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho exclusivo de goiabada com especiarias - Nossas especialidade!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO GOIABADA","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO PICLES</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho de picles caseiro com toque de mostarda - Crocante e ácido!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO PICLES","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO CHEDDAR</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Queijo cheddar cremoso derretido - Para os amantes de queijo!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO CHEDDAR","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO CATUPIRY</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Clássico Catupiry cremoso - Nobreza no sabor!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO CATUPIRY","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO BARBECUE</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho barbecue tradicional com mel - Doce e defumado!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO BARBECUE","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>CEBOLA CARAMELIZADA</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Cebola caramelizada com toque de balsâmico - Doçura perfeita!</div>
-                    <button class="add-to-cart" data-item='{"name":"CEBOLA CARAMELIZADA","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO PIMENTA</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho de pimenta habanero com mel - Picante com equilíbrio!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO PIMENTA","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOSTARDA MEL</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Mostarda Dijon com mel puro - Doce e picante na medida!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOSTARDA MEL","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO MARACUJÁ</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho de maracujá com toque apimentado - Tropical e ousado!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO MARACUJÁ","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MOLHO ABACAXI</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Molho de abacaxi grelhado com curry - Exótico e surpreendente!</div>
-                    <button class="add-to-cart" data-item='{"name":"MOLHO ABACAXI","price":3,"category":"molhos"}'>Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="batata" class="category-section">
-            <div class="category-header">
-                <h2 class="category-title">🍟 Porções Crocantes</h2>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <h3>BATATA PETIT</h3>
-                    <div class="menu-price">R$ 10,00</div>
-                    <div class="menu-description">200g de batata frita crocante com bacon e cheddar derretido - Porção individual perfeita!</div>
-                    <button class="add-to-cart" data-item='{"name":"BATATA PETIT","price":10,"category":"batata"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>BATATA MÉDIA</h3>
-                    <div class="menu-price">R$ 20,00</div>
-                    <div class="menu-description">400g de batata frita com bacon crocante e cheddar - Para compartilhar!</div>
-                    <button class="add-to-cart" data-item='{"name":"BATATA MÉDIA","price":20,"category":"batata"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>BATATA GIGANTE</h3>
-                    <div class="menu-price">R$ 35,00</div>
-                    <div class="menu-description">300g de batata frita completa com salsicha, hambúrguer, calabresa, bacon, salada, muçarela, cheddar e Catupiry - A maior porção!</div>
-                    <button class="add-to-cart" data-item='{"name":"BATATA GIGANTE","price":35,"category":"batata"}'>Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="bebidas" class="category-section">
-            <div class="category-header">
-                <h2 class="category-title">🥤 Bebidas Geladas</h2>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <h3>COCA-COLA 2L</h3>
-                    <div class="menu-price">R$ 14,00</div>
-                    <div class="menu-description">Coca-Cola 2L geladinha - Perfeita para compartilhar com a família!</div>
-                    <button class="add-to-cart" data-item='{"name":"COCA-COLA 2L","price":14,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COCA-COLA 1L</h3>
-                    <div class="menu-price">R$ 10,00</div>
-                    <div class="menu-description">Coca-Cola 1L bem gelada - Ideal para acompanhar seu hambúrguer!</div>
-                    <button class="add-to-cart" data-item='{"name":"COCA-COLA 1L","price":10,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>COCA-COLA LATA</h3>
-                    <div class="menu-price">R$ 6,00</div>
-                    <div class="menu-description">Coca-Cola lata gelada 350ml - Clássico sempre!</div>
-                    <button class="add-to-cart" data-item='{"name":"COCA-COLA LATA","price":6,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>FANTA LARANJA 2L</h3>
-                    <div class="menu-price">R$ 12,00</div>
-                    <div class="menu-description">Fanta Laranja 2L - Sabor cítrico refrescante para toda família!</div>
-                    <button class="add-to-cart" data-item='{"name":"FANTA LARANJA 2L","price":12,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>FANTA LARANJA 1L</h3>
-                    <div class="menu-price">R$ 10,00</div>
-                    <div class="menu-description">Fanta Laranja 1L gelada - Perfeita para um hambúrguer leve!</div>
-                    <button class="add-to-cart" data-item='{"name":"FANTA LARANJA 1L","price":10,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>KUAT 2L</h3>
-                    <div class="menu-price">R$ 10,00</div>
-                    <div class="menu-description">Kuat Guaraná 2L - Sabor brasileiro autêntico e refrescante!</div>
-                    <button class="add-to-cart" data-item='{"name":"KUAT 2L","price":10,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>MINEIRO 2L</h3>
-                    <div class="menu-price">R$ 12,00</div>
-                    <div class="menu-description">Guaraná Mineiro 2L - Orgulho mineiro em cada gole!</div>
-                    <button class="add-to-cart" data-item='{"name":"MINEIRO 2L","price":12,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-                <div class="menu-card">
-                    <h3>PITHULÁ</h3>
-                    <div class="menu-price">R$ 3,00</div>
-                    <div class="menu-description">Pithulá 200ml - Bebida regional geladinha para acompanhar!</div>
-                    <button class="add-to-cart" data-item='{"name":"PITHULÁ","price":3,"category":"bebidas"}'>Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Partners Section -->
-        <section class="partners-section">
-            <div class="partners-header">
-                <h2 class="partners-title">🤝 Parceiros Premium</h2>
-                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Anuncie seu negócio conosco!</p>
-            </div>
-            <div class="partners-grid">
-                <div class="partner-card">
-                    <img src="https://i.ibb.co/F4x3hVXW/1756485793445.png" alt="Parceiro Premium" class="partner-logo">
-                    <div class="partner-name">Pablo LogoMarcas</div>
-                    <a href="https://www.pablologomarcas.online" class="partner-contact" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        Saiba mais
-                    </a>
-                </div>
-                <div class="partner-card">
-                    <img src="https://i.ibb.co/XxCPZqGs/20250922-113651.jpg" alt="Parceiro Premium 2" class="partner-logo">
-                    <div class="partner-name">Lorrayne Oliveira - NAIL DESIGNER</div>
-                    <a href="https://wa.me/5534999537698" class="partner-contact" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        Saiba mais
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-text">
-                    © 2025/2026 <strong>DeGusto Lanchonete Premium  </strong> — 
-                    Feito com ❤️ 
-                </div>
-                <div class="footer-text" style="font-size: 0.8rem; opacity: 0.7;">
-                    Entregamos sabor e qualidade em cada mordida!  🛵✨
-                </div>
-            </div>
-        </footer>
+    <div class="container">
+        <div class="logo">Dê Gusto Lanchonete</div>
+        <h1>Estamos Fechados Hoje</h1>
+        <p>Abriremos <span class="highlight">amanhã</span> com muito sabor!</p>
     </div>
-
-    <!-- Floating Action Buttons -->
-    <div class="fab-container">
-        <a href="#" class="fab fab-secondary scroll-top-btn" id="scrollTopBtn" title="Voltar ao topo">
-            <i class="fas fa-arrow-up"></i>
-        </a>
-        <a href="#" class="fab fab-secondary" id="helpBtn" title="Ajuda & FAQ">
-            <i class="fas fa-question-circle"></i>
-        </a>
-        <a href="#" class="fab fab-primary" id="cartBtn" title="Carrinho de Compras">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
-        </a>
+    <div class="marquee-bottom">
+        <p>🍔🔥 Promoções Todos os Dias! 🔥🍔 &nbsp;&nbsp;&nbsp; 🥇 1 Artesanal Nº1 + 1 Refrigerante 200 ml 👉 Apenas R$ 28,00 &nbsp;&nbsp;&nbsp; 🍔🍔 2 Lanches “Tudo” (completo, do jeito que você ama) 👉 Só R$ 40,00</p>
     </div>
-
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-shopping-cart"></i>
-                    Seu Carrinho
-                </h2>
-                <button class="modal-close" id="closeCart">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="cartItems">
-                <div class="empty-state">
-                    <div class="empty-icon">🛒</div>
-                    <h3>Seu carrinho está vazio</h3>
-                    <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p>
-                </div>
-            </div>
-            <div class="order-section">
-                <h3><i class="fas fa-truck"></i> Delivery Rápido</h3>
-                <div class="delivery-info">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Entrega em todo Monte Carmelo</span>
-                </div>
-                <h3><i class="fas fa-map-pin"></i> Endereço de Entrega</h3>
-                <input type="text" class="form-input" id="addressInput" placeholder="Rua, número, bairro">
-                
-                <h3><i class="fas fa-credit-card"></i> Forma de Pagamento</h3>
-                <div class="payment-grid">
-                    <button class="payment-btn active" data-payment="cash">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>Dinheiro</span>
-                    </button>
-                    <button class="payment-btn" data-payment="credit">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Crédito</span>
-                    </button>
-                    <button class="payment-btn" data-payment="debit">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Débito</span>
-                    </button>
-                    <button class="payment-btn" data-payment="pix">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>PIX</span>
-                    </button>
-                </div>
-                
-                <div id="changeSection" style="display: block;">
-                    <h3><i class="fas fa-coins"></i> Precisa de troco?</h3>
-                    <input type="text" class="form-input" id="changeInput" placeholder="Ex: R$ 50,00">
-                </div>
-                
-                <div class="pix-section" id="pixInfo">
-                    <h3><i class="fas fa-mobile-alt"></i> PIX - Pagamento Instantâneo</h3>
-                    <div class="pix-code" id="pixCode">10738419605</div>
-                    <button class="pix-copy" onclick="copyPixCode()">📋 Copiar Chave PIX</button>
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem;">
-                        Envie o comprovante após o pedido para confirmarmos!
-                    </p>
-                </div>
-            </div>
-            <div class="total-section">
-                <div class="total-amount" id="totalAmount">R$ 0,00</div>
-                <div class="cart-actions">
-                    <button class="btn-secondary" id="clearCart">
-                        <i class="fas fa-trash"></i> Limpar Carrinho
-                    </button>
-                    <button class="btn-primary" id="sendOrder">
-                        <i class="fab fa-whatsapp"></i> Enviar Pedido
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Help Modal -->
-    <div class="modal" id="helpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-question-circle"></i>
-                    Como Fazer Seu Pedido
-                </h2>
-                <button class="modal-close" id="closeHelp">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body help-section">
-                <div class="help-item">
-                    <div class="help-number">1</div>
-                    <div class="help-content">
-                        <h4><i class="fas fa-search"></i> Escolha seus itens</h4>
-                        <p>Navegue pelo nosso cardápio premium e clique em "Adicionar ao Carrinho" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja.</p>
-                    </div>
-                </div>
-                <div class="help-item">
-                    <div class="help-number">2</div>
-                    <div class="help-content">
-                        <h4><i class="fas fa-plus-minus"></i> Controle a quantidade</h4>
-                        <p>No carrinho, use os botões +/- para ajustar quantidades. Você pode adicionar mais itens ou remover os que não deseja.</p>
-                    </div>
-                </div>
-                <div class="help-item">
-                    <div class="help-number">3</div>
-                    <div class="help-content">
-                        <h4><i class="fas fa-map-marker-alt"></i> Informe seu endereço</h4>
-                        <p>Preencha seu endereço completo (rua, número, bairro, cidade e referência se necessário) para agilizar a entrega.</p>
-                    </div>
-                </div>
-                <div class="help-item">
-                    <div class="help-number">4</div>
-                    <div class="help-content">
-                        <h4><i class="fas fa-credit-card"></i> Escolha pagamento</h4>
-                        <p>Selecione entre Dinheiro, Cartão de Crédito, Débito ou PIX. Para dinheiro, informe o valor para troco se necessário.</p>
-                    </div>
-                </div>
-                <div class="help-item">
-                    <div class="help-number">5</div>
-                    <div class="help-content">
-                        <h4><i class="fab fa-whatsapp"></i> Envie seu pedido</h4>
-                        <p>Clique em "Enviar Pedido" e seu pedido será automaticamente enviado para nossa equipe via WhatsApp!</p>
-                    </div>
-                </div>
-                <div class="help-item">
-                    <div class="help-number">6</div>
-                    <div class="help-content">
-                        <h4><i class="fas fa-phone"></i> Aguarde confirmação</h4>
-                        <p>Nossa equipe entrará em contato em poucos minutos para confirmar o pedido e combinar o horário de entrega.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="help-contact">
-                <h4><i class="fas fa-headset"></i> Precisa de Ajuda?</h4>
-                <p style="margin: 1rem 0; color: var(--text-secondary);">
-                    Nossa equipe está pronta para ajudar você!
-                </p>
-                <a href="https://wa.me/5534999537698" class="btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Falar com Atendimento
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>let cart=[];let total=0;let currentGalleryIndex=0;const gallerySlides=[ "https://i.ibb.co/1tv6gDPF/20250916-232609.jpg","https://i.ibb.co/xqvh94Px/20250916-233524.jpg","https://i.ibb.co/t0Qy0Gq/20250916-232104.jpg","https://i.ibb.co/1Y16sK88/IMG-20250913-WA0008.jpg","https://i.ibb.co/605MR6B0/IMG-20250913-WA0011.jpg","https://i.ibb.co/pv1myzJv/IMG-20250913-WA0012.jpg","https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg","https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg" ];document.addEventListener('DOMContentLoaded',function(){setTimeout(()=>{document.getElementById('loadingScreen').style.opacity='0';setTimeout(()=>{document.getElementById('loadingScreen').style.display='none';},500);},2000);createBackgroundParticles();initializeGallery();initializeNavigation();initializeCart();initializeModals();initializeKeyboardShortcuts();initializeScrollTop();});function createBackgroundParticles(){const bgAnimation=document.getElementById('bgAnimation');for(let i=0;i<20;i++){const particle=document.createElement('div');particle.className='bg-particle';particle.style.left=Math.random()*100+'%';particle.style.width=Math.random()*4+2+'px';particle.style.height=particle.style.width;particle.style.animationDelay=Math.random()*20+'s';particle.style.animationDuration=(Math.random()*10+15)+'s';bgAnimation.appendChild(particle);}}function initializeGallery(){const gallerySlidesContainer=document.getElementById('gallerySlides');const galleryIndicatorsContainer=document.getElementById('galleryIndicators');gallerySlides.forEach((src,index)=>{const slide=document.createElement('div');slide.className='gallery-slide';slide.innerHTML=` <img src="${src}" alt="Hambúrguer Premium ${index + 1}" loading="lazy"> <div class="gallery-overlay"></div> `;gallerySlidesContainer.appendChild(slide);});gallerySlides.forEach((_,index)=>{const indicator=document.createElement('div');indicator.className='indicator';indicator.onclick=()=>goToSlide(index);if(index===0)indicator.classList.add('active');galleryIndicatorsContainer.appendChild(indicator);});setInterval(()=>{moveGallery(1);},4000);let startX=0;const galleryContainer=document.querySelector('.gallery-container');galleryContainer.addEventListener('touchstart',(e)=>{startX=e.touches[0].clientX;});galleryContainer.addEventListener('touchend',(e)=>{const endX=e.changedTouches[0].clientX;const diff=startX-endX;if(Math.abs(diff)>50){if(diff>0)moveGallery(1);else moveGallery(-1);}});}function moveGallery(direction){const totalSlides=gallerySlides.length;currentGalleryIndex=(currentGalleryIndex+direction+totalSlides)%totalSlides;goToSlide(currentGalleryIndex);}function goToSlide(index){const slides=document.querySelectorAll('.gallery-slide');const indicators=document.querySelectorAll('.indicator');const container=document.getElementById('gallerySlides');container.style.transform=`translateX(-${index * 100}%)`;indicators.forEach((indicator,i)=>{indicator.classList.toggle('active',i===index);});currentGalleryIndex=index;}function initializeNavigation(){document.querySelectorAll('.nav-btn').forEach(btn=>{btn.addEventListener('click',()=>{const category=btn.dataset.category;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.category-section').forEach(section=>{section.classList.remove('active');});document.getElementById(category).classList.add('active');document.getElementById(category).scrollIntoView({behavior: 'smooth',block: 'start'});});});}function initializeCart(){document.querySelectorAll('.add-to-cart').forEach(btn=>{btn.addEventListener('click',(e)=>{e.preventDefault();const itemData=JSON.parse(btn.dataset.item);addToCart(itemData,btn);});});}function addToCart(itemData,button){const existingItem=cart.find(item=>item.name===itemData.name&&item.category===itemData.category);if(existingItem){existingItem.quantity+=1;total+=itemData.price;}else{cart.push({...itemData,quantity:1});total+=itemData.price;}updateCartDisplay();updateCartBadge();showAddFeedback(button,itemData.name);showNotification(`✅ ${itemData.name} adicionado!`,'success');const cartBtn=document.getElementById('cartBtn');cartBtn.style.transform='scale(1.2)';cartBtn.style.background='linear-gradient(135deg, #28a745, #20c997)';setTimeout(()=>{cartBtn.style.transform='scale(1)';cartBtn.style.background='';},300);}function updateCartDisplay(){const cartItemsContainer=document.getElementById('cartItems');const totalAmount=document.getElementById('totalAmount');if(cart.length===0){cartItemsContainer.innerHTML=` <div class="empty-state"> <div class="empty-icon">🛒</div> <h3>Seu carrinho está vazio</h3> <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p> <button class="btn-primary" onclick="document.querySelector('.nav-btn[data-category=&quot;hamburgers&quot;]').click()" style="margin-top: 1rem; padding: 0.75rem 1.5rem;"> <i class="fas fa-hamburger"></i> Ver Hambúrgueres </button> </div> `;totalAmount.textContent='R$ 0,00';return;}let itemsHTML='';let calculatedTotal=0;cart.forEach((item,index)=>{const itemTotal=item.price*item.quantity;calculatedTotal+=itemTotal;itemsHTML+=` <div class="cart-item" data-index="${index}"> <div class="cart-item-info"> <div class="cart-item-name">${item.name}</div> <div class="cart-item-category">${item.category.toUpperCase()}</div> <div class="cart-item-price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</div> </div> <div style="display: flex; align-items: center; gap: 1rem;"> <div class="quantity-controls"> <button class="quantity-btn" onclick="updateQuantity(${index}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button> <span class="quantity-display">${item.quantity}</span> <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button> </div> <button class="remove-item" onclick="removeFromCart(${index})"> <i class="fas fa-trash"></i> </button> </div> </div> `;});cartItemsContainer.innerHTML=itemsHTML;total=calculatedTotal;totalAmount.textContent=`R$ ${total.toFixed(2).replace('.', ',')}`;const newItems=cartItemsContainer.querySelectorAll('.cart-item');newItems.forEach((item,index)=>{item.style.opacity='0';item.style.transform='translateX(30px)';setTimeout(()=>{item.style.transition='all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';item.style.opacity='1';item.style.transform='translateX(0)';},index * 150);});}function updateQuantity(index,change){if(cart[index].quantity+change>0){cart[index].quantity+=change;total+=change*cart[index].price;const quantityDisplay=document.querySelector(`.cart-item[data-index="${index}"] .quantity-display`);const originalBg=getComputedStyle(quantityDisplay).backgroundColor;if(change>0){quantityDisplay.style.background='rgba(40, 167, 69, 0.3)';}else{quantityDisplay.style.background='rgba(220, 53, 69, 0.3)';}setTimeout(()=>{quantityDisplay.style.background=originalBg;},200);updateCartDisplay();updateCartBadge();}else if(change<0){removeFromCart(index);}}function removeFromCart(index){const itemName=cart[index].name;total-=cart[index].price*cart[index].quantity;cart.splice(index,1);updateCartDisplay();updateCartBadge();showNotification(`❌ ${itemName} removido!`,'error');}function updateCartBadge(){const badge=document.getElementById('cartBadge');const totalItems=cart.reduce((sum,item)=>sum+item.quantity,0);if(totalItems>0){badge.textContent=totalItems;badge.style.display='flex';badge.style.transform='scale(0)';requestAnimationFrame(()=>{badge.style.transition='all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';badge.style.transform='scale(1)';});}else{badge.style.display='none';}}function showAddFeedback(button,itemName){const originalText=button.innerHTML;button.innerHTML='<i class="fas fa-check"></i> Adicionado!';button.style.background='linear-gradient(135deg, #28a745, #20c997)';setTimeout(()=>{button.innerHTML=originalText;button.style.background='';},800);}function initializeModals(){document.getElementById('cartBtn').addEventListener('click',(e)=>{e.preventDefault();document.getElementById('cartModal').classList.add('active');document.body.style.overflow='hidden';});document.getElementById('closeCart').addEventListener('click',()=>{document.getElementById('cartModal').classList.remove('active');document.body.style.overflow='auto';});document.getElementById('helpBtn').addEventListener('click',(e)=>{e.preventDefault();document.getElementById('helpModal').classList.add('active');document.body.style.overflow='hidden';});document.getElementById('closeHelp').addEventListener('click',()=>{document.getElementById('helpModal').classList.remove('active');document.body.style.overflow='auto';});document.querySelectorAll('.modal').forEach(modal=>{modal.addEventListener('click',(e)=>{if(e.target===modal){modal.classList.remove('active');document.body.style.overflow='auto';}});});document.querySelectorAll('.payment-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.payment-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const paymentType=btn.dataset.payment;const changeSection=document.getElementById('changeSection');const pixSection=document.getElementById('pixInfo');if(paymentType==='cash'){changeSection.style.display='block';pixSection.classList.remove('active');}else if(paymentType==='pix'){changeSection.style.display='none';pixSection.classList.add('active');}else{changeSection.style.display='none';pixSection.classList.remove('active');document.getElementById('changeInput').value='';}});});document.getElementById('clearCart').addEventListener('click',()=>{if(cart.length===0)return;if(confirm('Tem certeza que deseja limpar todo o carrinho? 😢\nEsta ação não pode ser desfeita.')){cart=[];total=0;updateCartDisplay();updateCartBadge();showNotification('🗑️ Carrinho limpo!','error');}});document.getElementById('sendOrder').addEventListener('click',()=>{if(cart.length===0){showNotification('Seu carrinho está vazio! Adicione itens primeiro! 🛒','error');document.querySelector('.nav-btn[data-category="hamburgers"]').click();return;}const address=document.getElementById('addressInput').value.trim();if(!address){showNotification('Por favor, informe seu endereço completo! 📍','error');document.getElementById('addressInput').focus();document.getElementById('addressInput').style.borderColor='#dc3545';setTimeout(()=>{document.getElementById('addressInput').style.borderColor='';},2000);return;}const activePayment=document.querySelector('.payment-btn.active').dataset.payment;const changeAmount=activePayment==='cash'?document.getElementById('changeInput').value.trim():'';let message=`🍔 *PEDIDO PREMIUM - DeGUSTO LANCHONETE*\n\n`;message+=`🧺 *MEU PEDIDO:*\n`;message+=`═══════════════════════\n`;cart.forEach(item=>{const itemTotal=item.price*item.quantity;message+=`• ${item.quantity}x ${item.name}\n`;message+=` 💰 R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;});message+=`═══════════════════════\n`;message+=`💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;message+=`📍 *TIPO:* Entrega no local\n`;message+=`📋 *ENDEREÇO:* ${address}\n`;message+=`💳 *PAGAMENTO:* ${activePayment.toUpperCase()}\n`;if(activePayment==='cash'&&changeAmount){message+=`💵 *TROCO PARA:* R$ ${changeAmount}\n`;}else if(activePayment==='pix'){message+=`📱 *PIX CHAVE:* 10738419605\n`;}message+=`\n⏰ *HORÁRIO:* ${new Date().toLocaleString('pt-BR')}\n`;message+=`\n🔥 *Aguardando confirmação urgente!*\n`;message+=`═══════════════════════`;const whatsappUrl=`https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;const sendBtn=document.getElementById('sendOrder');const originalBtnText=sendBtn.innerHTML;sendBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Enviando...';sendBtn.disabled=true;sendBtn.style.background='linear-gradient(135deg, #6c757d, #495057)';window.open(whatsappUrl,'_blank');setTimeout(()=>{sendBtn.innerHTML='<i class="fas fa-check"></i> Pedido Enviado!';sendBtn.style.background='linear-gradient(135deg, #28a745, #20c997)';showNotification('✅ Pedido enviado com sucesso! Nossa equipe entrará em contato em breve!','success');setTimeout(()=>{sendBtn.innerHTML=originalBtnText;sendBtn.disabled=false;sendBtn.style.background='';document.getElementById('cartModal').classList.remove('active');document.body.style.overflow='auto';if(confirm('Pedido enviado! Deseja limpar o carrinho para novo pedido?')){cart=[];total=0;updateCartDisplay();updateCartBadge();}},2000);},1500);});}function showNotification(message,type='success'){document.querySelectorAll('.notification').forEach(n=>n.remove());const notification=document.createElement('div');notification.className=`notification ${type}`;notification.textContent=message;document.body.appendChild(notification);requestAnimationFrame(()=>{notification.classList.add('show');});setTimeout(()=>{notification.classList.remove('show');setTimeout(()=>{notification.remove();},400);},4000);}function copyPixCode(){const pixCode='10738419605';if(navigator.clipboard){navigator.clipboard.writeText(pixCode).then(()=>{showNotification('✅ Chave PIX copiada!','success');}).catch(()=>{fallbackCopyTextToClipboard(pixCode);});}else{fallbackCopyTextToClipboard(pixCode);}}function fallbackCopyTextToClipboard(text){const textArea=document.createElement('textarea');textArea.value=text;document.body.appendChild(textArea);textArea.focus();textArea.select();try{document.execCommand('copy');showNotification('✅ Chave PIX copiada!','success');}catch(err){showNotification('Erro ao copiar. Tente novamente.','error');}document.body.removeChild(textArea);}function initializeKeyboardShortcuts(){document.addEventListener('keydown',(e)=>{if(e.key==='Escape'){const cartModal=document.getElementById('cartModal');const helpModal=document.getElementById('helpModal');if(cartModal.classList.contains('active')){cartModal.classList.remove('active');document.body.style.overflow='auto';}else if(helpModal.classList.contains('active')){helpModal.classList.remove('active');document.body.style.overflow='auto';}}if(e.key.toLowerCase()==='c'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();document.getElementById('cartModal').classList.add('active');document.body.style.overflow='hidden';}if(e.key.toLowerCase()==='h'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();document.getElementById('helpModal').classList.add('active');document.body.style.overflow='hidden';}});}document.getElementById('changeInput').addEventListener('input',(e)=>{let value=e.target.value.replace(/\D/g,'');if(value){value=parseFloat(value)/100;e.target.value=value.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}});document.getElementById('addressInput').addEventListener('input',(e)=>{e.target.style.borderColor=e.target.value.trim()?'':'#dc3545';});if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}const images=document.querySelectorAll('img[loading="lazy"]');const imageObserver=new IntersectionObserver((entries,observer)=>{entries.forEach(entry=>{if(entry.isIntersecting){const img=entry.target;img.src=img.dataset.src||img.src;img.classList.remove('lazy');observer.unobserve(img);}});});images.forEach(img=>imageObserver.observe(img));function trackEvent(eventName,data={}){console.log('Analytics Event:',eventName,data);}document.querySelectorAll('.add-to-cart').forEach(btn=>{btn.addEventListener('click',()=>{trackEvent('add_to_cart',{item:btn.dataset.item});});});document.getElementById('sendOrder').addEventListener('click',()=>{if(cart.length>0){trackEvent('order_completed',{total:total,items:cart.length});}});window.addEventListener('error',(e)=>{console.error('Global error:',e.error);showNotification('Ops! Encontramos um erro. Tente novamente.','error');});console.log('🌟 DeGusto Premium App loaded successfully! Ready for orders! 🚀');function initializeScrollTop(){const scrollTopBtn=document.getElementById('scrollTopBtn');window.addEventListener('scroll',()=>{if(window.scrollY>300){scrollTopBtn.classList.add('visible');}else{scrollTopBtn.classList.remove('visible');}});scrollTopBtn.addEventListener('click',(e)=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}</script>
 </body>
 </html>
