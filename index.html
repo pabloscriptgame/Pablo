@@ -34,6 +34,29 @@
                 </div>
                 <div class="header-actions">
                     <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete" style="display: inline-block; background: linear-gradient(to right, #ff0000, #000000); color: white; padding: 0.2em 1em; text-decoration: none; border-radius: 5px; font-size: 0.6em;">Baixar APK</a>
+					<body>
+  <div class="radio-player">
+    <button class="play-button" id="playPauseBtn">▶️ Ouvir Radio-DeGusto</button>
+    <audio id="radio" src="https://stream.zeno.fm/si5xey7akartv.mp3"></audio>
+  </div>
+
+  <script>
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const audio = document.getElementById('radio');
+
+    let isPlaying = false;
+
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.textContent = '▶️ Ouvir';
+      } else {
+        audio.play();
+        playPauseBtn.textContent = '⏸️ Pausar';
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
                     
                 </div>
             </div>
@@ -623,6 +646,7 @@
             </div>
         </div>
     </div>
+	
 
     <!-- Help Modal -->
     <div class="modal" id="helpModal">
