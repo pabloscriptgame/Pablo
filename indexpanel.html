@@ -1,0 +1,721 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DêGusto Lanchonete - Painel do Dono</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #DC143C;
+            --dark-red: #8B0000;
+            --gold: #FFD700;
+            --orange: #FFA500;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(26, 26, 26, 0.95);
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #999999;
+            --border-color: rgba(220, 20, 60, 0.2);
+            --shadow-light: 0 4px 20px rgba(139, 0, 0, 0.2);
+            --shadow-medium: 0 8px 30px rgba(139, 0, 0, 0.3);
+            --shadow-heavy: 0 20px 50px rgba(139, 0, 0, 0.4);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 24px;
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--dark-red) 0%, var(--dark-bg) 50%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .panel-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-heavy);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .panel-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .auth-section input {
+            padding: 1rem;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .auth-section input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+        }
+
+        .auth-section button {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .auth-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+        }
+
+        .panel-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-red), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .panel-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--gold));
+            border-radius: 2px;
+        }
+
+        .orders-grid, .menu-grid, .analytics-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .order-card, .menu-item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: var(--transition-normal);
+        }
+
+        .order-card:hover, .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-red);
+        }
+
+        .order-card h3, .menu-item-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .order-card p, .menu-item-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-card .status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: var(--dark-bg);
+        }
+
+        .status-completed {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            margin-top: 0.5rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .analytics-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .analytics-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .analytics-card h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .analytics-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            z-index: 3000;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-heavy);
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        @media (max-width: 768px) {
+            .panel-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .orders-grid, .menu-grid, .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-header h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--card-bg), rgba(42, 42, 42, 0.95));
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-heavy);
+            border: 1px solid var(--border-color);
+            transform: translateY(50px) scale(0.9);
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            transition: var(--transition-normal);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container" id="panelContainer" style="display: none;">
+        <header class="panel-header">
+            <h1>Painel do Dono - DêGusto Lanchonete</h1>
+        </header>
+
+        <section class="panel-section">
+            <h2><i class="fas fa-clipboard-list"></i> Pedidos Pendentes</h2>
+            <div class="orders-grid" id="ordersGrid">
+                <!-- Orders will be dynamically populated -->
+            </div>
+        </section>
+
+        <section class="panel-section">
+            <h2><i class="fas fa-utensils"></i> Gerenciar Cardápio</h2>
+            <button class="action-btn" id="addMenuItemBtn"><i class="fas fa-plus"></i> Adicionar Novo Item</button>
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be dynamically populated -->
+            </div>
+        </section>
+
+        <section class="panel-section">
+            <h2><i class="fas fa-chart-line"></i> Análise de Desempenho</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3 id="totalOrders">0</h3>
+                    <p>Pedidos Totais</p>
+                </div>
+                <div class="analytics-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3 id="totalRevenue">R$ 0,00</h3>
+                    <p>Receita Total</p>
+                </div>
+                <div class="analytics-card">
+                    <i class="fas fa-star"></i>
+                    <h3 id="topItem">-</h3>
+                    <p>Item Mais Vendido</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="auth-section" id="authSection">
+        <input type="password" id="adminPassword" placeholder="Digite a senha do administrador">
+        <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+    </div>
+
+    <!-- Add/Edit Menu Item Modal -->
+    <div class="modal" id="menuItemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-utensils"></i> Adicionar/Editar Item</h2>
+                <button class="modal-close" id="closeMenuItemModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-input" id="itemName" placeholder="Nome do Item">
+                <input type="number" class="form-input" id="itemPrice" placeholder="Preço (R$)" step="0.01">
+                <textarea class="form-input" id="itemDescription" placeholder="Descrição do Item"></textarea>
+                <select class="form-input" id="itemCategory">
+                    <option value="hamburgers">Hambúrgueres</option>
+                    <option value="combos">Combos</option>
+                    <option value="molhos">Molhos</option>
+                    <option value="batata">Batatas</option>
+                    <option value="bebidas">Bebidas</option>
+                </select>
+                <button class="action-btn" id="saveMenuItem"><i class="fas fa-save"></i> Salvar Item</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "d1d2d3d4d5"; // Updated password
+        let orders = [];
+        let menuItems = [
+            { name: "X-COSTELA", price: 25, description: "Pão artesanal, costela desfiada suculenta, queijo cheddar derretido, anéis de cebola crocantes, molho barbecue especial, cebola caramelizada, bacon crocante e milho doce.", category: "hamburgers" },
+            { name: "COMBO DUPLO TUDO", price: 40, description: "2 hambúrgueres X-Tudo Premium - Perfeito para compartilhar!", category: "combos" }
+        ];
+        let analytics = {
+            totalOrders: 0,
+            totalRevenue: 0,
+            topItem: "-"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('loginBtn').addEventListener('click', authenticate);
+            document.getElementById('addMenuItemBtn').addEventListener('click', openMenuItemModal);
+            document.getElementById('closeMenuItemModal').addEventListener('click', closeMenuItemModal);
+            document.getElementById('saveMenuItem').addEventListener('click', saveMenuItem);
+            document.getElementById('menuItemModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('menuItemModal')) {
+                    closeMenuItemModal();
+                }
+            });
+            initializePanel();
+        });
+
+        function authenticate() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('panelContainer').style.display = 'block';
+                showNotification('✅ Login bem-sucedido!', 'success');
+                initializePanel();
+            } else {
+                showNotification('❌ Senha incorreta!', 'error');
+                document.getElementById('adminPassword').style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    document.getElementById('adminPassword').style.borderColor = '';
+                }, 2000);
+            }
+        }
+
+        function initializePanel() {
+            updateOrdersDisplay();
+            updateMenuDisplay();
+            updateAnalyticsDisplay();
+        }
+
+        function updateOrdersDisplay() {
+            const ordersGrid = document.getElementById('ordersGrid');
+            if (orders.length === 0) {
+                ordersGrid.innerHTML = `
+                    <div class="order-card">
+                        <h3>Sem Pedidos</h3>
+                        <p>Ainda não há pedidos pendentes.</p>
+                    </div>`;
+                return;
+            }
+            let html = '';
+            orders.forEach((order, index) => {
+                html += `
+                    <div class="order-card">
+                        <h3>Pedido #${index + 1}</h3>
+                        <p><strong>Endereço:</strong> ${order.address}</p>
+                        <p><strong>Pagamento:</strong> ${order.payment}</p>
+                        <p><strong>Itens:</strong></p>
+                        <ul>
+                            ${order.items.map(item => `<li>${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</li>`).join('')}
+                        </ul>
+                        <p><strong>Total:</strong> R$ ${order.total.toFixed(2).replace('.', ',')}</p>
+                        <span class="status status-${order.status}">${order.status === 'pending' ? 'Pendente' : 'Concluído'}</span>
+                        <div>
+                            <button class="action-btn" onclick="markOrderCompleted(${index})">
+                                <i class="fas fa-check"></i> Marcar como Concluído
+                            </button>
+                        </div>
+                    </div>`;
+            });
+            ordersGrid.innerHTML = html;
+        }
+
+        function markOrderCompleted(index) {
+            orders[index].status = 'completed';
+            updateOrdersDisplay();
+            updateAnalytics();
+            showNotification('✅ Pedido marcado como concluído!', 'success');
+        }
+
+        function updateMenuDisplay() {
+            const menuGrid = document.getElementById('menuGrid');
+            menuGrid.innerHTML = '';
+            menuItems.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'menu-item-card';
+                card.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p><strong>Preço:</strong> R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                    <p><strong>Descrição:</strong> ${item.description}</p>
+                    <p><strong>Categoria:</strong> ${item.category.toUpperCase()}</p>
+                    <div>
+                        <button class="action-btn" onclick="editMenuItem(${index})">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="action-btn" onclick="deleteMenuItem(${index})" style="background: linear-gradient(135deg, #dc3545, #c82333);">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </div>`;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        function openMenuItemModal(index = null) {
+            const modal = document.getElementById('menuItemModal');
+            const nameInput = document.getElementById('itemName');
+            const priceInput = document.getElementById('itemPrice');
+            const descriptionInput = document.getElementById('itemDescription');
+            const categorySelect = document.getElementById('itemCategory');
+            const saveBtn = document.getElementById('saveMenuItem');
+
+            if (index !== null) {
+                nameInput.value = menuItems[index].name;
+                priceInput.value = menuItems[index].price;
+                descriptionInput.value = menuItems[index].description;
+                categorySelect.value = menuItems[index].category;
+                saveBtn.dataset.index = index;
+            } else {
+                nameInput.value = '';
+                priceInput.value = '';
+                descriptionInput.value = '';
+                categorySelect.value = 'hamburgers';
+                delete saveBtn.dataset.index;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuItemModal() {
+            document.getElementById('menuItemModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveMenuItem() {
+            const name = document.getElementById('itemName').value.trim();
+            const price = parseFloat(document.getElementById('itemPrice').value);
+            const description = document.getElementById('itemDescription').value.trim();
+            const category = document.getElementById('itemCategory').value;
+            const index = document.getElementById('saveMenuItem').dataset.index;
+
+            if (!name || isNaN(price) || !description) {
+                showNotification('❌ Preencha todos os campos corretamente!', 'error');
+                return;
+            }
+
+            const item = { name, price, description, category };
+            if (index !== undefined) {
+                menuItems[index] = item;
+                showNotification('✅ Item atualizado com sucesso!', 'success');
+            } else {
+                menuItems.push(item);
+                showNotification('✅ Item adicionado com sucesso!', 'success');
+            }
+
+            updateMenuDisplay();
+            closeMenuItemModal();
+        }
+
+        function deleteMenuItem(index) {
+            if (confirm(`Tem certeza que deseja excluir "${menuItems[index].name}"?`)) {
+                menuItems.splice(index, 1);
+                updateMenuDisplay();
+                showNotification('✅ Item excluído com sucesso!', 'success');
+            }
+        }
+
+        function updateAnalytics() {
+            analytics.totalOrders = orders.length;
+            analytics.totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+            const itemCounts = {};
+            orders.forEach(order => {
+                order.items.forEach(item => {
+                    itemCounts[item.name] = (itemCounts[item.name] || 0) + item.quantity;
+                });
+            });
+            analytics.topItem = Object.keys(itemCounts).length > 0
+                ? Object.keys(itemCounts).reduce((a, b) => itemCounts[a] > itemCounts[b] ? a : b)
+                : "-";
+
+            document.getElementById('totalOrders').textContent = analytics.totalOrders;
+            document.getElementById('totalRevenue').textContent = `R$ ${analytics.totalRevenue.toFixed(2).replace('.', ',')}`;
+            document.getElementById('topItem').textContent = analytics.topItem;
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            requestAnimationFrame(() => {
+                notification.classList.add('show');
+            });
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 400);
+            }, 4000);
+        }
+
+        // Simulate receiving orders (for demo purposes)
+        function simulateOrder(cart, address, payment) {
+            const order = {
+                items: cart.map(item => ({ ...item })),
+                address,
+                payment,
+                total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+                status: 'pending'
+            };
+            orders.push(order);
+            updateOrdersDisplay();
+            updateAnalytics();
+        }
+
+        // Example usage: simulateOrder(cart, "Rua Exemplo, 123, Bairro Centro", "pix");
+    </script>
+</body>
+</html>
