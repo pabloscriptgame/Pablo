@@ -37,7 +37,8 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-black) 50%);
+            background: url("https://i.ibb.co/3mt6B6T/hamburguer-bg.jpg") no-repeat center center fixed, linear-gradient(135deg, var(--primary-red) 0%, var(--dark-black) 50%);
+            background-size: cover;
             min-height: 100vh;
             color: var(--text-primary);
             line-height: 1.6;
@@ -1615,6 +1616,46 @@
         .scroll-top-btn:hover {
             transform: translateY(-6px) scale(1.1);
         }
+        
+        button,
+        .play-button,
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg, var(--primary-red), var(--dark-black));
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        button:hover,
+        .play-button:hover,
+        .btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(90deg, var(--dark-black), var(--primary-red));
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+        }
+        
+        .play-button {
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+        }
+        
+        .play-button::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f144";
+            /* ícone play */
+            margin-right: 8px;
+        }
     </style>
 </head>
 
@@ -1639,8 +1680,8 @@
                     <img src="https://i.ibb.co/cXhPsYB2/1756735289113.png" alt="DêGusto Logo" class="logo">
                     <div class="header-text">
                         <h1>DêGusto Lanchonete</h1>
-                        <p>Somente Delivery 🛵 
-                        <p></p>Atendimento a partir das 19h</p>
+                        <p>Somente Delivery 🛵
+                            <p></p>Atendimento a partir das 19h</p>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -2110,7 +2151,7 @@
         <!-- Partners Section -->
         <section class="partners-section">
             <div class="partners-header">
-                <h2 class="partners-title">🤝 Parceiros Premium</h2>
+                <h2 class="partners-title">🤝 Parceiros</h2>
                 <p style="color: var(--text-secondary); margin-top: 0.5rem;">Anuncie seu negócio conosco!</p>
             </div>
             <div class="partners-grid">
