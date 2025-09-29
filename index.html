@@ -1,52 +1,16 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dê Gusto Lanchonete - Fechado</title>
     <style>
         body {
             margin: 0;
             padding: 0;
+            /* espaço superior para o player fixo */
+            padding-top: 80px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -56,11 +20,10 @@
             overflow: hidden;
             perspective: 1000px;
             background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            /* Background image of sandwiches and lanches */
             position: relative;
         }
-
         /* Shine effect overlay */
+        
         body::before {
             content: '';
             position: absolute;
@@ -72,13 +35,19 @@
             animation: shine 4s infinite;
             pointer-events: none;
         }
-
+        
         @keyframes shine {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
         }
-
+        
         .container {
             text-align: center;
             padding: 20px;
@@ -91,11 +60,11 @@
             margin: auto;
             animation: float 4s ease-in-out infinite;
         }
-
+        
         .container:hover {
             transform: translateZ(70px) rotateX(0deg);
         }
-
+        
         h1 {
             font-size: 3rem;
             margin-bottom: 10px;
@@ -105,19 +74,19 @@
             text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8), 0 0 10px #ff6666;
             transform: translateZ(20px);
         }
-
+        
         p {
             font-size: 1.5rem;
             margin: 10px 0;
             color: #fff;
             transform: translateZ(10px);
         }
-
+        
         .highlight {
             color: #ff6666;
             font-weight: bold;
         }
-
+        
         .logo {
             font-size: 4rem;
             font-weight: bold;
@@ -127,37 +96,48 @@
             transform: translateZ(30px);
             animation: glow 2s ease-in-out infinite alternate;
         }
-
-        .marquee-top, .marquee-bottom {
+        
+        .marquee-top,
+        .marquee-bottom {
             width: 100%;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.8);
             padding: 10px 0;
             transform: translateZ(20px);
         }
-
-        .marquee-top p, .marquee-bottom p {
+        
+        .marquee-top p,
+        .marquee-bottom p {
             display: inline-block;
             white-space: nowrap;
             animation: marquee 15s linear infinite;
             font-size: 1.2rem;
         }
-
+        
         .marquee-bottom p {
             font-size: 1.8rem;
             line-height: 2.2rem;
         }
-
+        
         @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
-
+        
         @keyframes float {
-            0%, 100% { transform: translateZ(50px) rotateX(5deg) translateY(0); }
-            50% { transform: translateZ(50px) rotateX(5deg) translateY(-10px); }
+            0%,
+            100% {
+                transform: translateZ(50px) rotateX(5deg) translateY(0);
+            }
+            50% {
+                transform: translateZ(50px) rotateX(5deg) translateY(-10px);
+            }
         }
-
+        
         @keyframes glow {
             from {
                 text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
@@ -166,8 +146,11 @@
                 text-shadow: 0 0 20px #ff3333, 0 0 30px #ff6666, 0 0 40px #ff9999;
             }
         }
-
+        
         @media (max-width: 600px) {
+            body {
+                padding-top: 70px;
+            }
             h1 {
                 font-size: 2rem;
                 transform: translateZ(15px);
@@ -199,51 +182,74 @@
                 animation-duration: 3s;
             }
         }
-
-        .header-actions, .radio-player {
-            transform: translateZ(20px);
-            margin: 20px 0;
+        /* RADIO PLAYER fixado no topo */
+        
+        .radio-player {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            margin: 0;
             text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 14px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
         }
-
-        .header-actions a, .radio-player button {
+        
+        .radio-player button,
+        .radio-player a.apk-button {
             background: linear-gradient(to right, #ff0000, #000000);
             color: white;
-            padding: 0.5em 1.5em;
+            padding: 0.4em 1.1em;
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 1em;
+            border-radius: 8px;
+            font-size: 0.95em;
             font-weight: bold;
+            border: none;
+            cursor: pointer;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-
-        .header-actions a:hover, .radio-player button:hover {
-            transform: translateZ(30px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        
+        .radio-player a.apk-button {
+            margin-left: 10px;
+            display: inline-block;
+        }
+        
+        .radio-player button:hover,
+        .radio-player a.apk-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+        /* Garante que o conteúdo abaixo não fique por trás do player */
+        
+        .spacer-for-player {
+            height: 56px;
         }
     </style>
 </head>
+
 <body>
+    <!-- Player fixo no topo com botão Baixar APK -->
+    <div class="radio-player" aria-label="Player da Rádio DêGusto">
+        <button class="play-button" id="playPauseBtn">▶️ Ouvir Radio-DêGusto</button>
+        <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete" class="apk-button">📲 Baixar APK</a>
+        <audio id="radio" src="https://stream.zeno.fm/si5xey7akartv.mp3"></audio>
+    </div>
+
+    <div class="spacer-for-player" aria-hidden="true"></div>
+
     <div class="marquee-top">
         <p>Informamos que não abrimos às segundas-feiras para descanso da equipe. Voltamos com nosso atendimento normalmente na terça-feira!</p>
     </div>
+
     <div class="container">
         <div class="logo">Dê Gusto Lanchonete</div>
         <h1>Estamos Fechados Hoje</h1>
         <p>Abriremos <span class="highlight">amanhã</span> com muito sabor!</p>
-    </div>
-    <div class="marquee-bottom">
-        <p>🍔🔥 Promoções Todos os Dias! 🔥🍔 &nbsp;&nbsp;&nbsp; 🥇 1 Artesanal Nº1 + 1 Refrigerante 200 ml 👉 Apenas R$ 28,00 &nbsp;&nbsp;&nbsp; 🍔🍔 2 Lanches “Tudo” (completo, do jeito que você ama) 👉 Só R$ 40,00</p>
-    </div>
-
-    <div class="header-actions">
-        <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete">📲 Baixar APK</a>
-    </div>
-
-    <div class="radio-player">
-        <button class="play-button" id="playPauseBtn">▶️ Ouvir Radio-DêGusto</button>
-        <audio id="radio" src="https://stream.zeno.fm/si5xey7akartv.mp3"></audio>
     </div>
 
     <script>
@@ -261,6 +267,12 @@
             }
             isPlaying = !isPlaying;
         });
+
+        radio.addEventListener('ended', () => {
+            isPlaying = false;
+            playPauseBtn.textContent = '▶️ Ouvir Radio-DêGusto';
+        });
     </script>
 </body>
+
 </html>
