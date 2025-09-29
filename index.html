@@ -51,10 +51,32 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: linear-gradient(135deg, #ff0000, #000000);
             font-family: 'Arial', sans-serif;
             color: #fff;
             overflow: hidden;
+            perspective: 1000px;
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            /* Background image of sandwiches and lanches */
+            position: relative;
+        }
+
+        /* Shine effect overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 4s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
         }
 
         .container {
@@ -62,8 +84,16 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1.5s ease-in-out;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 51, 51, 0.5);
+            transform: translateZ(50px) rotateX(5deg);
+            transition: transform 0.3s ease;
+            max-width: 90%;
+            margin: auto;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .container:hover {
+            transform: translateZ(70px) rotateX(0deg);
         }
 
         h1 {
@@ -72,13 +102,15 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #ff3333;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8), 0 0 10px #ff6666;
+            transform: translateZ(20px);
         }
 
         p {
             font-size: 1.5rem;
             margin: 10px 0;
             color: #fff;
+            transform: translateZ(10px);
         }
 
         .highlight {
@@ -91,7 +123,8 @@
             font-weight: bold;
             color: #fff;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+            transform: translateZ(30px);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
@@ -100,6 +133,7 @@
             overflow: hidden;
             background: rgba(0, 0, 0, 0.8);
             padding: 10px 0;
+            transform: translateZ(20px);
         }
 
         .marquee-top p, .marquee-bottom p {
@@ -119,29 +153,32 @@
             100% { transform: translateX(-100%); }
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes float {
+            0%, 100% { transform: translateZ(50px) rotateX(5deg) translateY(0); }
+            50% { transform: translateZ(50px) rotateX(5deg) translateY(-10px); }
         }
 
         @keyframes glow {
             from {
-                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
             }
             to {
-                text-shadow: 0 0 20px #ff3333, 0 0 30px #ff6666;
+                text-shadow: 0 0 20px #ff3333, 0 0 30px #ff6666, 0 0 40px #ff9999;
             }
         }
 
         @media (max-width: 600px) {
             h1 {
                 font-size: 2rem;
+                transform: translateZ(15px);
             }
             p {
                 font-size: 1.2rem;
+                transform: translateZ(5px);
             }
             .logo {
                 font-size: 2.5rem;
+                transform: translateZ(20px);
             }
             .marquee-top p {
                 font-size: 1rem;
@@ -150,6 +187,40 @@
                 font-size: 1.4rem;
                 line-height: 1.8rem;
             }
+            .container {
+                padding: 15px;
+                transform: translateZ(30px) rotateX(3deg);
+            }
+            .container:hover {
+                transform: translateZ(40px) rotateX(0deg);
+            }
+            body::before {
+                width: 70%;
+                animation-duration: 3s;
+            }
+        }
+
+        .header-actions, .radio-player {
+            transform: translateZ(20px);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .header-actions a, .radio-player button {
+            background: linear-gradient(to right, #ff0000, #000000);
+            color: white;
+            padding: 0.5em 1.5em;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .header-actions a:hover, .radio-player button:hover {
+            transform: translateZ(30px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
         }
     </style>
 </head>
@@ -166,12 +237,12 @@
         <p>🍔🔥 Promoções Todos os Dias! 🔥🍔 &nbsp;&nbsp;&nbsp; 🥇 1 Artesanal Nº1 + 1 Refrigerante 200 ml 👉 Apenas R$ 28,00 &nbsp;&nbsp;&nbsp; 🍔🍔 2 Lanches “Tudo” (completo, do jeito que você ama) 👉 Só R$ 40,00</p>
     </div>
 
-    <div class="header-actions" style="text-align:center; margin: 20px 0;">
-        <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete" style="display: inline-block; background: linear-gradient(to right, #ff0000, #000000); color: white; padding: 0.5em 1.5em; text-decoration: none; border-radius: 10px; font-size: 1em; font-weight:bold;">📲 Baixar APK</a>
+    <div class="header-actions">
+        <a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete">📲 Baixar APK</a>
     </div>
 
-    <div class="radio-player" style="text-align:center; margin: 20px 0;">
-        <button class="play-button" id="playPauseBtn" style="background: #ff0000; color: #fff; border: none; padding: 10px 20px; font-size: 1em; border-radius: 8px; cursor: pointer;">▶️ Ouvir Radio-DêGusto</button>
+    <div class="radio-player">
+        <button class="play-button" id="playPauseBtn">▶️ Ouvir Radio-DêGusto</button>
         <audio id="radio" src="https://stream.zeno.fm/si5xey7akartv.mp3"></audio>
     </div>
 
@@ -191,6 +262,5 @@
             isPlaying = !isPlaying;
         });
     </script>
-
 </body>
 </html>
