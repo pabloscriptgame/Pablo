@@ -37,7 +37,8 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-black) 50%);
+            background: url("https://i.ibb.co/3mt6B6T/hamburguer-bg.jpg") no-repeat center center fixed, linear-gradient(135deg, var(--primary-red) 0%, var(--dark-black) 50%);
+            background-size: cover;
             min-height: 100vh;
             color: var(--text-primary);
             line-height: 1.6;
@@ -1615,6 +1616,46 @@
         .scroll-top-btn:hover {
             transform: translateY(-6px) scale(1.1);
         }
+        
+        button,
+        .play-button,
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg, var(--primary-red), var(--dark-black));
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        button:hover,
+        .play-button:hover,
+        .btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(90deg, var(--dark-black), var(--primary-red));
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+        }
+        
+        .play-button {
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+        }
+        
+        .play-button::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f144";
+            /* ícone play */
+            margin-right: 8px;
+        }
     </style>
 </head>
 
@@ -1639,7 +1680,8 @@
                     <img src="https://i.ibb.co/cXhPsYB2/1756735289113.png" alt="DêGusto Logo" class="logo">
                     <div class="header-text">
                         <h1>DêGusto Lanchonete</h1>
-                        <p>Somente Delivery 🛵</p>
+                        <p>Somente Delivery 🛵
+                            <p></p>Atendimento a partir das 19h</p>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -1680,34 +1722,17 @@
                     <i class="fas fa-fire"></i> Promoções diárias • Delivery em 30min • Peça agora!
                 </span>
                 <span class="rolling-text">
-                    <i class="fas fa-hamburger"></i> Macarrão - Pene e Espaguete por apenas R$15 hoje • Combos incríveis!
+                    <i class="fas fa-hamburger"></i> Terça-feira tem promoção! • Macarrão Penne ou Espaguete por apenas R$15 🎉 
                 </span>
                 <span class="rolling-text">
                     <i class="fas fa-clock"></i> • Segunda-feira é nosso dia de descanso • Voltamos na terça! 
                 </span>
                 <span class="rolling-text">
-                    <i class="fas fa-star"></i> Qualidade Premium • Satisfação garantida • Peça já!
+                    <i class="fas fa-star"></i> Qualidade Premium • Combos incríveis! • Satisfação garantida • Peça já!
                 </span>
             </div>
         </div>
         <!-- Promotion Section -->
-        <section class="promo-section">
-            <div class="promo-badge">
-                <i class="fas fa-fire"></i> HOJE!
-            </div>
-            <div class="promo-content">
-                <img src="https://i.ibb.co/vxRTfNX7/20250928-1520-image-2.png" alt="X-ARTESANALGOIABADA" class="promo-image">
-                <div class="promo-text">
-                    <h3>Macarrão: Pene e Espaguete</h3>
-                    <div class="promo-price">
-                        <span class="original">R$ 20,00</span>
-                        <strong>HJ R$15,00 500gramas</strong>
-                    </div>
-                    <p class="promo-description">
-                        Molho branco e molho vermelho Acompanhamentos: bacon, calabresa, milho, azeitona, palmito, presunto, mussarela e cheiro-verde.
-                    </p>
-                </div>
-            </div>
         </section>
         <!-- Gallery Section -->
         <section class="gallery-section">
@@ -1770,22 +1795,6 @@
                     <i class="fas fa-wine-bottle"></i> Bebidas
                 </button>
             </div>
-        </nav>
-        <nav>
-
-            <body>
-                <div id="macarrao" class="category-section active">
-                    <div class="category-header">
-                        <h2 class="category-title">MACARRÃO</h2>
-                    </div>
-                    <div class="menu-grid">
-                        <div class="menu-card">
-                            <h3>Macarrão - pene e espaguet</h3>
-                            <div class="menu-price">R$ 15,00</div>
-                            <div class="menu-description">Molho branco e molho vermelho Acompanhamentos: bacon, calabresa, milho, azeitona, palmito, presunto, mussarela e cheiro-verde.</div>
-                            <button class="add-to-cart" data-item='{"name":"MACARRÃO","price":15,"category":"MACARRÃO"}'>Adicionar ao Carrinho</button>
-                        </div>
-            </body>
         </nav>
         <!-- Categories -->
         <div id="hamburgers" class="category-section active">
@@ -2142,7 +2151,7 @@
         <!-- Partners Section -->
         <section class="partners-section">
             <div class="partners-header">
-                <h2 class="partners-title">🤝 Parceiros Premium</h2>
+                <h2 class="partners-title">🤝 Parceiros</h2>
                 <p style="color: var(--text-secondary); margin-top: 0.5rem;">Anuncie seu negócio conosco!</p>
             </div>
             <div class="partners-grid">
@@ -2174,665 +2183,665 @@
                 </div>
             </div>
         </footer>
-        </div>
+    </div>
 
-        <!-- Floating Action Buttons -->
-        <div class="fab-container">
-            <a href="#" class="fab fab-secondary scroll-top-btn" id="scrollTopBtn" title="Voltar ao topo">
-                <i class="fas fa-arrow-up"></i>
-            </a>
-            <a href="#" class="fab fab-secondary" id="helpBtn" title="Ajuda & FAQ">
-                <i class="fas fa-question-circle"></i>
-            </a>
-            <a href="#" class="fab fab-primary" id="cartBtn" title="Carrinho de Compras">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
-            </a>
-        </div>
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <a href="#" class="fab fab-secondary scroll-top-btn" id="scrollTopBtn" title="Voltar ao topo">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+        <a href="#" class="fab fab-secondary" id="helpBtn" title="Ajuda & FAQ">
+            <i class="fas fa-question-circle"></i>
+        </a>
+        <a href="#" class="fab fab-primary" id="cartBtn" title="Carrinho de Compras">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+        </a>
+    </div>
 
-        <!-- Cart Modal -->
-        <div class="modal" id="cartModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        <i class="fas fa-shopping-cart"></i> Seu Carrinho
-                    </h2>
-                    <button class="modal-close" id="closeCart">
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-shopping-cart"></i> Seu Carrinho
+                </h2>
+                <button class="modal-close" id="closeCart">
                     <i class="fas fa-times"></i>
                 </button>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <div class="empty-state">
+                    <div class="empty-icon">🛒</div>
+                    <h3>Seu carrinho está vazio</h3>
+                    <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p>
                 </div>
-                <div class="modal-body" id="cartItems">
-                    <div class="empty-state">
-                        <div class="empty-icon">🛒</div>
-                        <h3>Seu carrinho está vazio</h3>
-                        <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p>
-                    </div>
+            </div>
+            <div class="order-section">
+                <h3><i class="fas fa-truck"></i> Delivery Rápido</h3>
+                <div class="delivery-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Entrega em todo Monte Carmelo</span>
                 </div>
-                <div class="order-section">
-                    <h3><i class="fas fa-truck"></i> Delivery Rápido</h3>
-                    <div class="delivery-info">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Entrega em todo Monte Carmelo</span>
-                    </div>
-                    <h3><i class="fas fa-map-pin"></i> Endereço de Entrega</h3>
-                    <input type="text" class="form-input" id="addressInput" placeholder="Rua, número, bairro">
+                <h3><i class="fas fa-map-pin"></i> Endereço de Entrega</h3>
+                <input type="text" class="form-input" id="addressInput" placeholder="Rua, número, bairro">
 
-                    <h3><i class="fas fa-credit-card"></i> Forma de Pagamento</h3>
-                    <div class="payment-grid">
-                        <button class="payment-btn active" data-payment="cash">
+                <h3><i class="fas fa-credit-card"></i> Forma de Pagamento</h3>
+                <div class="payment-grid">
+                    <button class="payment-btn active" data-payment="cash">
                         <i class="fas fa-money-bill-wave"></i>
                         <span>Dinheiro</span>
                     </button>
-                        <button class="payment-btn" data-payment="credit">
+                    <button class="payment-btn" data-payment="credit">
                         <i class="fas fa-credit-card"></i>
                         <span>Crédito</span>
                     </button>
-                        <button class="payment-btn" data-payment="debit">
+                    <button class="payment-btn" data-payment="debit">
                         <i class="fas fa-credit-card"></i>
                         <span>Débito</span>
                     </button>
-                        <button class="payment-btn" data-payment="pix">
+                    <button class="payment-btn" data-payment="pix">
                         <i class="fas fa-mobile-alt"></i>
                         <span>PIX</span>
                     </button>
-                    </div>
-
-                    <div id="changeSection" style="display: block;">
-                        <h3><i class="fas fa-coins"></i> Precisa de troco?</h3>
-                        <input type="text" class="form-input" id="changeInput" placeholder="Ex: R$ 50,00">
-                    </div>
-
-                    <div class="pix-section" id="pixInfo">
-                        <h3><i class="fas fa-mobile-alt"></i> PIX - Pagamento Instantâneo</h3>
-                        <div class="pix-code" id="pixCode">10738419605</div>
-                        <button class="pix-copy" onclick="copyPixCode()">📋 Copiar Chave PIX</button>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem;">
-                            Envie o comprovante após o pedido para confirmarmos!
-                        </p>
-                    </div>
                 </div>
-                <div class="total-section">
-                    <div class="total-amount" id="totalAmount">R$ 0,00</div>
-                    <div class="cart-actions">
-                        <button class="btn-secondary" id="clearCart">
+
+                <div id="changeSection" style="display: block;">
+                    <h3><i class="fas fa-coins"></i> Precisa de troco?</h3>
+                    <input type="text" class="form-input" id="changeInput" placeholder="Ex: R$ 50,00">
+                </div>
+
+                <div class="pix-section" id="pixInfo">
+                    <h3><i class="fas fa-mobile-alt"></i> PIX - Pagamento Instantâneo</h3>
+                    <div class="pix-code" id="pixCode">10738419605</div>
+                    <button class="pix-copy" onclick="copyPixCode()">📋 Copiar Chave PIX</button>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem;">
+                        Envie o comprovante após o pedido para confirmarmos!
+                    </p>
+                </div>
+            </div>
+            <div class="total-section">
+                <div class="total-amount" id="totalAmount">R$ 0,00</div>
+                <div class="cart-actions">
+                    <button class="btn-secondary" id="clearCart">
                         <i class="fas fa-trash"></i> Limpar Carrinho
                     </button>
-                        <button class="btn-primary" id="sendOrder">
+                    <button class="btn-primary" id="sendOrder">
                         <i class="fab fa-whatsapp"></i> Enviar Pedido
                     </button>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- Help Modal -->
-        <div class="modal" id="helpModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        <i class="fas fa-question-circle"></i> Como Fazer Seu Pedido
-                    </h2>
-                    <button class="modal-close" id="closeHelp">
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-question-circle"></i> Como Fazer Seu Pedido
+                </h2>
+                <button class="modal-close" id="closeHelp">
                     <i class="fas fa-times"></i>
                 </button>
-                </div>
-                <div class="modal-body help-section">
-                    <div class="help-item">
-                        <div class="help-number">1</div>
-                        <div class="help-content">
-                            <h4><i class="fas fa-search"></i> Escolha seus itens</h4>
-                            <p>Navegue pelo nosso cardápio premium e clique em "Adicionar ao Carrinho" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja.</p>
-                        </div>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-number">2</div>
-                        <div class="help-content">
-                            <h4><i class="fas fa-plus-minus"></i> Controle a quantidade</h4>
-                            <p>No carrinho, use os botões +/- para ajustar quantidades. Você pode adicionar mais itens ou remover os que não deseja.</p>
-                        </div>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-number">3</div>
-                        <div class="help-content">
-                            <h4><i class="fas fa-map-marker-alt"></i> Informe seu endereço</h4>
-                            <p>Preencha seu endereço completo (rua, número, bairro, cidade e referência se necessário) para agilizar a entrega.</p>
-                        </div>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-number">4</div>
-                        <div class="help-content">
-                            <h4><i class="fas fa-credit-card"></i> Escolha pagamento</h4>
-                            <p>Selecione entre Dinheiro, Cartão de Crédito, Débito ou PIX. Para dinheiro, informe o valor para troco se necessário.</p>
-                        </div>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-number">5</div>
-                        <div class="help-content">
-                            <h4><i class="fab fa-whatsapp"></i> Envie seu pedido</h4>
-                            <p>Clique em "Enviar Pedido" e seu pedido será automaticamente enviado para nossa equipe via WhatsApp!</p>
-                        </div>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-number">6</div>
-                        <div class="help-content">
-                            <h4><i class="fas fa-phone"></i> Aguarde confirmação</h4>
-                            <p>Nossa equipe entrará em contato em poucos minutos para confirmar o pedido e combinar o horário de entrega.</p>
-                        </div>
+            </div>
+            <div class="modal-body help-section">
+                <div class="help-item">
+                    <div class="help-number">1</div>
+                    <div class="help-content">
+                        <h4><i class="fas fa-search"></i> Escolha seus itens</h4>
+                        <p>Navegue pelo nosso cardápio premium e clique em "Adicionar ao Carrinho" nos hambúrgueres, combos, molhos, batatas e bebidas que deseja.</p>
                     </div>
                 </div>
-                <div class="help-contact">
-                    <h4><i class="fas fa-headset"></i> Precisa de Ajuda?</h4>
-                    <p style="margin: 1rem 0; color: var(--text-secondary);">
-                        Nossa equipe está pronta para ajudar você!
-                    </p>
-                    <a href="https://wa.me/5534999537698" class="btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Falar com Atendimento
-                    </a>
+                <div class="help-item">
+                    <div class="help-number">2</div>
+                    <div class="help-content">
+                        <h4><i class="fas fa-plus-minus"></i> Controle a quantidade</h4>
+                        <p>No carrinho, use os botões +/- para ajustar quantidades. Você pode adicionar mais itens ou remover os que não deseja.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-number">3</div>
+                    <div class="help-content">
+                        <h4><i class="fas fa-map-marker-alt"></i> Informe seu endereço</h4>
+                        <p>Preencha seu endereço completo (rua, número, bairro, cidade e referência se necessário) para agilizar a entrega.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-number">4</div>
+                    <div class="help-content">
+                        <h4><i class="fas fa-credit-card"></i> Escolha pagamento</h4>
+                        <p>Selecione entre Dinheiro, Cartão de Crédito, Débito ou PIX. Para dinheiro, informe o valor para troco se necessário.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-number">5</div>
+                    <div class="help-content">
+                        <h4><i class="fab fa-whatsapp"></i> Envie seu pedido</h4>
+                        <p>Clique em "Enviar Pedido" e seu pedido será automaticamente enviado para nossa equipe via WhatsApp!</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-number">6</div>
+                    <div class="help-content">
+                        <h4><i class="fas fa-phone"></i> Aguarde confirmação</h4>
+                        <p>Nossa equipe entrará em contato em poucos minutos para confirmar o pedido e combinar o horário de entrega.</p>
+                    </div>
                 </div>
             </div>
+            <div class="help-contact">
+                <h4><i class="fas fa-headset"></i> Precisa de Ajuda?</h4>
+                <p style="margin: 1rem 0; color: var(--text-secondary);">
+                    Nossa equipe está pronta para ajudar você!
+                </p>
+                <a href="https://wa.me/5534999537698" class="btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Falar com Atendimento
+                </a>
+            </div>
         </div>
+    </div>
 
-        <script>
-            let cart = [];
-            let total = 0;
-            let currentGalleryIndex = 0;
-            const gallerySlides = ["https://i.ibb.co/1tv6gDPF/20250916-232609.jpg", "https://i.ibb.co/xqvh94Px/20250916-233524.jpg", "https://i.ibb.co/t0Qy0Gq/20250916-232104.jpg", "https://i.ibb.co/1Y16sK88/IMG-20250913-WA0008.jpg", "https://i.ibb.co/605MR6B0/IMG-20250913-WA0011.jpg", "https://i.ibb.co/pv1myzJv/IMG-20250913-WA0012.jpg", "https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg", "https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg"];
-            document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        let cart = [];
+        let total = 0;
+        let currentGalleryIndex = 0;
+        const gallerySlides = ["https://i.ibb.co/1tv6gDPF/20250916-232609.jpg", "https://i.ibb.co/xqvh94Px/20250916-233524.jpg", "https://i.ibb.co/t0Qy0Gq/20250916-232104.jpg", "https://i.ibb.co/1Y16sK88/IMG-20250913-WA0008.jpg", "https://i.ibb.co/605MR6B0/IMG-20250913-WA0011.jpg", "https://i.ibb.co/pv1myzJv/IMG-20250913-WA0012.jpg", "https://i.ibb.co/svT0h53T/IMG-20250916-WA0068.jpg", "https://i.ibb.co/kgKCS6zV/IMG-20250913-WA0013.jpg"];
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
                 setTimeout(() => {
-                    document.getElementById('loadingScreen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('loadingScreen').style.display = 'none';
-                    }, 500);
-                }, 2000);
-                createBackgroundParticles();
-                initializeGallery();
-                initializeNavigation();
-                initializeCart();
-                initializeModals();
-                initializeKeyboardShortcuts();
-                initializeScrollTop();
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 2000);
+            createBackgroundParticles();
+            initializeGallery();
+            initializeNavigation();
+            initializeCart();
+            initializeModals();
+            initializeKeyboardShortcuts();
+            initializeScrollTop();
+        });
+
+        function createBackgroundParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'bg-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        function initializeGallery() {
+            const gallerySlidesContainer = document.getElementById('gallerySlides');
+            const galleryIndicatorsContainer = document.getElementById('galleryIndicators');
+            gallerySlides.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'gallery-slide';
+                slide.innerHTML = ` <img src="${src}" alt="Hambúrguer Premium ${index + 1}" loading="lazy"> <div class="gallery-overlay"></div> `;
+                gallerySlidesContainer.appendChild(slide);
             });
-
-            function createBackgroundParticles() {
-                const bgAnimation = document.getElementById('bgAnimation');
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'bg-particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.width = Math.random() * 4 + 2 + 'px';
-                    particle.style.height = particle.style.width;
-                    particle.style.animationDelay = Math.random() * 20 + 's';
-                    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                    bgAnimation.appendChild(particle);
+            gallerySlides.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.onclick = () => goToSlide(index);
+                if (index === 0) indicator.classList.add('active');
+                galleryIndicatorsContainer.appendChild(indicator);
+            });
+            setInterval(() => {
+                moveGallery(1);
+            }, 4000);
+            let startX = 0;
+            const galleryContainer = document.querySelector('.gallery-container');
+            galleryContainer.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            galleryContainer.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) moveGallery(1);
+                    else moveGallery(-1);
                 }
-            }
+            });
+        }
 
-            function initializeGallery() {
-                const gallerySlidesContainer = document.getElementById('gallerySlides');
-                const galleryIndicatorsContainer = document.getElementById('galleryIndicators');
-                gallerySlides.forEach((src, index) => {
-                    const slide = document.createElement('div');
-                    slide.className = 'gallery-slide';
-                    slide.innerHTML = ` <img src="${src}" alt="Hambúrguer Premium ${index + 1}" loading="lazy"> <div class="gallery-overlay"></div> `;
-                    gallerySlidesContainer.appendChild(slide);
-                });
-                gallerySlides.forEach((_, index) => {
-                    const indicator = document.createElement('div');
-                    indicator.className = 'indicator';
-                    indicator.onclick = () => goToSlide(index);
-                    if (index === 0) indicator.classList.add('active');
-                    galleryIndicatorsContainer.appendChild(indicator);
-                });
-                setInterval(() => {
-                    moveGallery(1);
-                }, 4000);
-                let startX = 0;
-                const galleryContainer = document.querySelector('.gallery-container');
-                galleryContainer.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                });
-                galleryContainer.addEventListener('touchend', (e) => {
-                    const endX = e.changedTouches[0].clientX;
-                    const diff = startX - endX;
-                    if (Math.abs(diff) > 50) {
-                        if (diff > 0) moveGallery(1);
-                        else moveGallery(-1);
-                    }
-                });
-            }
+        function moveGallery(direction) {
+            const totalSlides = gallerySlides.length;
+            currentGalleryIndex = (currentGalleryIndex + direction + totalSlides) % totalSlides;
+            goToSlide(currentGalleryIndex);
+        }
 
-            function moveGallery(direction) {
-                const totalSlides = gallerySlides.length;
-                currentGalleryIndex = (currentGalleryIndex + direction + totalSlides) % totalSlides;
-                goToSlide(currentGalleryIndex);
-            }
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const container = document.getElementById('gallerySlides');
+            container.style.transform = `translateX(-${index * 100}%)`;
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === index);
+            });
+            currentGalleryIndex = index;
+        }
 
-            function goToSlide(index) {
-                const slides = document.querySelectorAll('.gallery-slide');
-                const indicators = document.querySelectorAll('.indicator');
-                const container = document.getElementById('gallerySlides');
-                container.style.transform = `translateX(-${index * 100}%)`;
-                indicators.forEach((indicator, i) => {
-                    indicator.classList.toggle('active', i === index);
-                });
-                currentGalleryIndex = index;
-            }
-
-            function initializeNavigation() {
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const category = btn.dataset.category;
-                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        document.querySelectorAll('.category-section').forEach(section => {
-                            section.classList.remove('active');
-                        });
-                        document.getElementById(category).classList.add('active');
-                        document.getElementById(category).scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+        function initializeNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.dataset.category;
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.category-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(category).classList.add('active');
+                    document.getElementById(category).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 });
-            }
+            });
+        }
 
-            function initializeCart() {
-                document.querySelectorAll('.add-to-cart').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const itemData = JSON.parse(btn.dataset.item);
-                        addToCart(itemData, btn);
-                    });
+        function initializeCart() {
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const itemData = JSON.parse(btn.dataset.item);
+                    addToCart(itemData, btn);
                 });
-            }
+            });
+        }
 
-            function addToCart(itemData, button) {
-                const existingItem = cart.find(item => item.name === itemData.name && item.category === itemData.category);
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                    total += itemData.price;
+        function addToCart(itemData, button) {
+            const existingItem = cart.find(item => item.name === itemData.name && item.category === itemData.category);
+            if (existingItem) {
+                existingItem.quantity += 1;
+                total += itemData.price;
+            } else {
+                cart.push({...itemData,
+                    quantity: 1
+                });
+                total += itemData.price;
+            }
+            updateCartDisplay();
+            updateCartBadge();
+            showAddFeedback(button, itemData.name);
+            showNotification(`✅ ${itemData.name} adicionado!`, 'success');
+            const cartBtn = document.getElementById('cartBtn');
+            cartBtn.style.transform = 'scale(1.2)';
+            cartBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            setTimeout(() => {
+                cartBtn.style.transform = 'scale(1)';
+                cartBtn.style.background = '';
+            }, 300);
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const totalAmount = document.getElementById('totalAmount');
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = ` <div class="empty-state"> <div class="empty-icon">🛒</div> <h3>Seu carrinho está vazio</h3> <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p> <button class="btn-primary" onclick="document.querySelector('.nav-btn[data-category=&quot;hamburgers&quot;]').click()" style="margin-top: 1rem; padding: 0.75rem 1.5rem;"> <i class="fas fa-hamburger"></i> Ver Hambúrgueres </button> </div> `;
+                totalAmount.textContent = 'R$ 0,00';
+                return;
+            }
+            let itemsHTML = '';
+            let calculatedTotal = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                calculatedTotal += itemTotal;
+                itemsHTML += ` <div class="cart-item" data-index="${index}"> <div class="cart-item-info"> <div class="cart-item-name">${item.name}</div> <div class="cart-item-category">${item.category.toUpperCase()}</div> <div class="cart-item-price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</div> </div> <div style="display: flex; align-items: center; gap: 1rem;"> <div class="quantity-controls"> <button class="quantity-btn" onclick="updateQuantity(${index}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button> <span class="quantity-display">${item.quantity}</span> <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button> </div> <button class="remove-item" onclick="removeFromCart(${index})"> <i class="fas fa-trash"></i> </button> </div> </div> `;
+            });
+            cartItemsContainer.innerHTML = itemsHTML;
+            total = calculatedTotal;
+            totalAmount.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            const newItems = cartItemsContainer.querySelectorAll('.cart-item');
+            newItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, index * 150);
+            });
+        }
+
+        function updateQuantity(index, change) {
+            if (cart[index].quantity + change > 0) {
+                cart[index].quantity += change;
+                total += change * cart[index].price;
+                const quantityDisplay = document.querySelector(`.cart-item[data-index="${index}"] .quantity-display`);
+                const originalBg = getComputedStyle(quantityDisplay).backgroundColor;
+                if (change > 0) {
+                    quantityDisplay.style.background = 'rgba(40, 167, 69, 0.3)';
                 } else {
-                    cart.push({...itemData,
-                        quantity: 1
-                    });
-                    total += itemData.price;
+                    quantityDisplay.style.background = 'rgba(220, 53, 69, 0.3)';
                 }
+                setTimeout(() => {
+                    quantityDisplay.style.background = originalBg;
+                }, 200);
                 updateCartDisplay();
                 updateCartBadge();
-                showAddFeedback(button, itemData.name);
-                showNotification(`✅ ${itemData.name} adicionado!`, 'success');
-                const cartBtn = document.getElementById('cartBtn');
-                cartBtn.style.transform = 'scale(1.2)';
-                cartBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-                setTimeout(() => {
-                    cartBtn.style.transform = 'scale(1)';
-                    cartBtn.style.background = '';
-                }, 300);
+            } else if (change < 0) {
+                removeFromCart(index);
             }
+        }
 
-            function updateCartDisplay() {
-                const cartItemsContainer = document.getElementById('cartItems');
-                const totalAmount = document.getElementById('totalAmount');
-                if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = ` <div class="empty-state"> <div class="empty-icon">🛒</div> <h3>Seu carrinho está vazio</h3> <p>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p> <button class="btn-primary" onclick="document.querySelector('.nav-btn[data-category=&quot;hamburgers&quot;]').click()" style="margin-top: 1rem; padding: 0.75rem 1.5rem;"> <i class="fas fa-hamburger"></i> Ver Hambúrgueres </button> </div> `;
-                    totalAmount.textContent = 'R$ 0,00';
-                    return;
-                }
-                let itemsHTML = '';
-                let calculatedTotal = 0;
-                cart.forEach((item, index) => {
-                    const itemTotal = item.price * item.quantity;
-                    calculatedTotal += itemTotal;
-                    itemsHTML += ` <div class="cart-item" data-index="${index}"> <div class="cart-item-info"> <div class="cart-item-name">${item.name}</div> <div class="cart-item-category">${item.category.toUpperCase()}</div> <div class="cart-item-price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</div> </div> <div style="display: flex; align-items: center; gap: 1rem;"> <div class="quantity-controls"> <button class="quantity-btn" onclick="updateQuantity(${index}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button> <span class="quantity-display">${item.quantity}</span> <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button> </div> <button class="remove-item" onclick="removeFromCart(${index})"> <i class="fas fa-trash"></i> </button> </div> </div> `;
+        function removeFromCart(index) {
+            const itemName = cart[index].name;
+            total -= cart[index].price * cart[index].quantity;
+            cart.splice(index, 1);
+            updateCartDisplay();
+            updateCartBadge();
+            showNotification(`❌ ${itemName} removido!`, 'error');
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalItems > 0) {
+                badge.textContent = totalItems;
+                badge.style.display = 'flex';
+                badge.style.transform = 'scale(0)';
+                requestAnimationFrame(() => {
+                    badge.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    badge.style.transform = 'scale(1)';
                 });
-                cartItemsContainer.innerHTML = itemsHTML;
-                total = calculatedTotal;
-                totalAmount.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-                const newItems = cartItemsContainer.querySelectorAll('.cart-item');
-                newItems.forEach((item, index) => {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateX(30px)';
-                    setTimeout(() => {
-                        item.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateX(0)';
-                    }, index * 150);
-                });
+            } else {
+                badge.style.display = 'none';
             }
+        }
 
-            function updateQuantity(index, change) {
-                if (cart[index].quantity + change > 0) {
-                    cart[index].quantity += change;
-                    total += change * cart[index].price;
-                    const quantityDisplay = document.querySelector(`.cart-item[data-index="${index}"] .quantity-display`);
-                    const originalBg = getComputedStyle(quantityDisplay).backgroundColor;
-                    if (change > 0) {
-                        quantityDisplay.style.background = 'rgba(40, 167, 69, 0.3)';
-                    } else {
-                        quantityDisplay.style.background = 'rgba(220, 53, 69, 0.3)';
+        function showAddFeedback(button, itemName) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Adicionado!';
+            button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '';
+            }, 800);
+        }
+
+        function initializeModals() {
+            document.getElementById('cartBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('cartModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            document.getElementById('closeCart').addEventListener('click', () => {
+                document.getElementById('cartModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('helpBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('helpModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            document.getElementById('closeHelp').addEventListener('click', () => {
+                document.getElementById('helpModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
                     }
-                    setTimeout(() => {
-                        quantityDisplay.style.background = originalBg;
-                    }, 200);
+                });
+            });
+            document.querySelectorAll('.payment-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const paymentType = btn.dataset.payment;
+                    const changeSection = document.getElementById('changeSection');
+                    const pixSection = document.getElementById('pixInfo');
+                    if (paymentType === 'cash') {
+                        changeSection.style.display = 'block';
+                        pixSection.classList.remove('active');
+                    } else if (paymentType === 'pix') {
+                        changeSection.style.display = 'none';
+                        pixSection.classList.add('active');
+                    } else {
+                        changeSection.style.display = 'none';
+                        pixSection.classList.remove('active');
+                        document.getElementById('changeInput').value = '';
+                    }
+                });
+            });
+            document.getElementById('clearCart').addEventListener('click', () => {
+                if (cart.length === 0) return;
+                if (confirm('Tem certeza que deseja limpar todo o carrinho? 😢\nEsta ação não pode ser desfeita.')) {
+                    cart = [];
+                    total = 0;
                     updateCartDisplay();
                     updateCartBadge();
-                } else if (change < 0) {
-                    removeFromCart(index);
+                    showNotification('🗑️ Carrinho limpo!', 'error');
                 }
-            }
-
-            function removeFromCart(index) {
-                const itemName = cart[index].name;
-                total -= cart[index].price * cart[index].quantity;
-                cart.splice(index, 1);
-                updateCartDisplay();
-                updateCartBadge();
-                showNotification(`❌ ${itemName} removido!`, 'error');
-            }
-
-            function updateCartBadge() {
-                const badge = document.getElementById('cartBadge');
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                if (totalItems > 0) {
-                    badge.textContent = totalItems;
-                    badge.style.display = 'flex';
-                    badge.style.transform = 'scale(0)';
-                    requestAnimationFrame(() => {
-                        badge.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                        badge.style.transform = 'scale(1)';
-                    });
-                } else {
-                    badge.style.display = 'none';
+            });
+            document.getElementById('sendOrder').addEventListener('click', () => {
+                if (cart.length === 0) {
+                    showNotification('Seu carrinho está vazio! Adicione itens primeiro! 🛒', 'error');
+                    document.querySelector('.nav-btn[data-category="hamburgers"]').click();
+                    return;
                 }
-            }
-
-            function showAddFeedback(button, itemName) {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Adicionado!';
-                button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                const address = document.getElementById('addressInput').value.trim();
+                if (!address) {
+                    showNotification('Por favor, informe seu endereço completo! 📍', 'error');
+                    document.getElementById('addressInput').focus();
+                    document.getElementById('addressInput').style.borderColor = '#dc3545';
+                    setTimeout(() => {
+                        document.getElementById('addressInput').style.borderColor = '';
+                    }, 2000);
+                    return;
+                }
+                const activePayment = document.querySelector('.payment-btn.active').dataset.payment;
+                const changeAmount = activePayment === 'cash' ? document.getElementById('changeInput').value.trim() : '';
+                let message = `🍔 *PEDIDO PREMIUM - DêGusto LANCHONETE*\n\n`;
+                message += `🧺 *MEU PEDIDO:*\n`;
+                message += `═══════════════════════\n`;
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    message += `• ${item.quantity}x ${item.name}\n`;
+                    message += ` 💰 R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
+                });
+                message += `═══════════════════════\n`;
+                message += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
+                message += `📍 *TIPO:* Entrega no local\n`;
+                message += `📋 *ENDEREÇO:* ${address}\n`;
+                message += `💳 *PAGAMENTO:* ${activePayment.toUpperCase()}\n`;
+                if (activePayment === 'cash' && changeAmount) {
+                    message += `💵 *TROCO PARA:* R$ ${changeAmount}\n`;
+                } else if (activePayment === 'pix') {
+                    message += `📱 *PIX CHAVE:* 10738419605\n`;
+                }
+                message += `\n⏰ *HORÁRIO:* ${new Date().toLocaleString('pt-BR')}\n`;
+                message += `\n🔥 *Aguardando confirmação urgente!*\n`;
+                message += `═══════════════════════`;
+                const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
+                const sendBtn = document.getElementById('sendOrder');
+                const originalBtnText = sendBtn.innerHTML;
+                sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                sendBtn.disabled = true;
+                sendBtn.style.background = 'linear-gradient(135deg, #6c757d, #495057)';
+                window.open(whatsappUrl, '_blank');
                 setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.background = '';
-                }, 800);
-            }
+                    sendBtn.innerHTML = '<i class="fas fa-check"></i> Pedido Enviado!';
+                    sendBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                    showNotification('✅ Pedido enviado com sucesso! Nossa equipe entrará em contato em breve!', 'success');
+                    setTimeout(() => {
+                        sendBtn.innerHTML = originalBtnText;
+                        sendBtn.disabled = false;
+                        sendBtn.style.background = '';
+                        document.getElementById('cartModal').classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        if (confirm('Pedido enviado! Deseja limpar o carrinho para novo pedido?')) {
+                            cart = [];
+                            total = 0;
+                            updateCartDisplay();
+                            updateCartBadge();
+                        }
+                    }, 2000);
+                }, 1500);
+            });
+        }
 
-            function initializeModals() {
-                document.getElementById('cartBtn').addEventListener('click', (e) => {
+        function showNotification(message, type = 'success') {
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            requestAnimationFrame(() => {
+                notification.classList.add('show');
+            });
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 400);
+            }, 4000);
+        }
+
+        function copyPixCode() {
+            const pixCode = '10738419605';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(pixCode).then(() => {
+                    showNotification('✅ Chave PIX copiada!', 'success');
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(pixCode);
+                });
+            } else {
+                fallbackCopyTextToClipboard(pixCode);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showNotification('✅ Chave PIX copiada!', 'success');
+            } catch (err) {
+                showNotification('Erro ao copiar. Tente novamente.', 'error');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function initializeKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const cartModal = document.getElementById('cartModal');
+                    const helpModal = document.getElementById('helpModal');
+                    if (cartModal.classList.contains('active')) {
+                        cartModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    } else if (helpModal.classList.contains('active')) {
+                        helpModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+                if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
                     e.preventDefault();
                     document.getElementById('cartModal').classList.add('active');
                     document.body.style.overflow = 'hidden';
-                });
-                document.getElementById('closeCart').addEventListener('click', () => {
-                    document.getElementById('cartModal').classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-                document.getElementById('helpBtn').addEventListener('click', (e) => {
+                }
+                if (e.key.toLowerCase() === 'h' && !e.ctrlKey && !e.metaKey) {
                     e.preventDefault();
                     document.getElementById('helpModal').classList.add('active');
                     document.body.style.overflow = 'hidden';
-                });
-                document.getElementById('closeHelp').addEventListener('click', () => {
-                    document.getElementById('helpModal').classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.addEventListener('click', (e) => {
-                        if (e.target === modal) {
-                            modal.classList.remove('active');
-                            document.body.style.overflow = 'auto';
-                        }
-                    });
-                });
-                document.querySelectorAll('.payment-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        const paymentType = btn.dataset.payment;
-                        const changeSection = document.getElementById('changeSection');
-                        const pixSection = document.getElementById('pixInfo');
-                        if (paymentType === 'cash') {
-                            changeSection.style.display = 'block';
-                            pixSection.classList.remove('active');
-                        } else if (paymentType === 'pix') {
-                            changeSection.style.display = 'none';
-                            pixSection.classList.add('active');
-                        } else {
-                            changeSection.style.display = 'none';
-                            pixSection.classList.remove('active');
-                            document.getElementById('changeInput').value = '';
-                        }
-                    });
-                });
-                document.getElementById('clearCart').addEventListener('click', () => {
-                    if (cart.length === 0) return;
-                    if (confirm('Tem certeza que deseja limpar todo o carrinho? 😢\nEsta ação não pode ser desfeita.')) {
-                        cart = [];
-                        total = 0;
-                        updateCartDisplay();
-                        updateCartBadge();
-                        showNotification('🗑️ Carrinho limpo!', 'error');
-                    }
-                });
-                document.getElementById('sendOrder').addEventListener('click', () => {
-                    if (cart.length === 0) {
-                        showNotification('Seu carrinho está vazio! Adicione itens primeiro! 🛒', 'error');
-                        document.querySelector('.nav-btn[data-category="hamburgers"]').click();
-                        return;
-                    }
-                    const address = document.getElementById('addressInput').value.trim();
-                    if (!address) {
-                        showNotification('Por favor, informe seu endereço completo! 📍', 'error');
-                        document.getElementById('addressInput').focus();
-                        document.getElementById('addressInput').style.borderColor = '#dc3545';
-                        setTimeout(() => {
-                            document.getElementById('addressInput').style.borderColor = '';
-                        }, 2000);
-                        return;
-                    }
-                    const activePayment = document.querySelector('.payment-btn.active').dataset.payment;
-                    const changeAmount = activePayment === 'cash' ? document.getElementById('changeInput').value.trim() : '';
-                    let message = `🍔 *PEDIDO PREMIUM - DêGusto LANCHONETE*\n\n`;
-                    message += `🧺 *MEU PEDIDO:*\n`;
-                    message += `═══════════════════════\n`;
-                    cart.forEach(item => {
-                        const itemTotal = item.price * item.quantity;
-                        message += `• ${item.quantity}x ${item.name}\n`;
-                        message += ` 💰 R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
-                    });
-                    message += `═══════════════════════\n`;
-                    message += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
-                    message += `📍 *TIPO:* Entrega no local\n`;
-                    message += `📋 *ENDEREÇO:* ${address}\n`;
-                    message += `💳 *PAGAMENTO:* ${activePayment.toUpperCase()}\n`;
-                    if (activePayment === 'cash' && changeAmount) {
-                        message += `💵 *TROCO PARA:* R$ ${changeAmount}\n`;
-                    } else if (activePayment === 'pix') {
-                        message += `📱 *PIX CHAVE:* 10738419605\n`;
-                    }
-                    message += `\n⏰ *HORÁRIO:* ${new Date().toLocaleString('pt-BR')}\n`;
-                    message += `\n🔥 *Aguardando confirmação urgente!*\n`;
-                    message += `═══════════════════════`;
-                    const whatsappUrl = `https://wa.me/5534999537698?text=${encodeURIComponent(message)}`;
-                    const sendBtn = document.getElementById('sendOrder');
-                    const originalBtnText = sendBtn.innerHTML;
-                    sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-                    sendBtn.disabled = true;
-                    sendBtn.style.background = 'linear-gradient(135deg, #6c757d, #495057)';
-                    window.open(whatsappUrl, '_blank');
-                    setTimeout(() => {
-                        sendBtn.innerHTML = '<i class="fas fa-check"></i> Pedido Enviado!';
-                        sendBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-                        showNotification('✅ Pedido enviado com sucesso! Nossa equipe entrará em contato em breve!', 'success');
-                        setTimeout(() => {
-                            sendBtn.innerHTML = originalBtnText;
-                            sendBtn.disabled = false;
-                            sendBtn.style.background = '';
-                            document.getElementById('cartModal').classList.remove('active');
-                            document.body.style.overflow = 'auto';
-                            if (confirm('Pedido enviado! Deseja limpar o carrinho para novo pedido?')) {
-                                cart = [];
-                                total = 0;
-                                updateCartDisplay();
-                                updateCartBadge();
-                            }
-                        }, 2000);
-                    }, 1500);
+                }
+            });
+        }
+        document.getElementById('changeInput').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value) {
+                value = parseFloat(value) / 100;
+                e.target.value = value.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
                 });
             }
+        });
+        document.getElementById('addressInput').addEventListener('input', (e) => {
+            e.target.style.borderColor = e.target.value.trim() ? '' : '#dc3545';
+        });
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        images.forEach(img => imageObserver.observe(img));
 
-            function showNotification(message, type = 'success') {
-                document.querySelectorAll('.notification').forEach(n => n.remove());
-                const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                requestAnimationFrame(() => {
-                    notification.classList.add('show');
+        function trackEvent(eventName, data = {}) {
+            console.log('Analytics Event:', eventName, data);
+        }
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                trackEvent('add_to_cart', {
+                    item: btn.dataset.item
                 });
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 400);
-                }, 4000);
+            });
+        });
+        document.getElementById('sendOrder').addEventListener('click', () => {
+            if (cart.length > 0) {
+                trackEvent('order_completed', {
+                    total: total,
+                    items: cart.length
+                });
             }
+        });
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+            showNotification('Ops! Encontramos um erro. Tente novamente.', 'error');
+        });
+        console.log('🌟 DêGusto Premium App loaded successfully! Ready for orders! 🚀');
 
-            function copyPixCode() {
-                const pixCode = '10738419605';
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(pixCode).then(() => {
-                        showNotification('✅ Chave PIX copiada!', 'success');
-                    }).catch(() => {
-                        fallbackCopyTextToClipboard(pixCode);
-                    });
+        function initializeScrollTop() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollTopBtn.classList.add('visible');
                 } else {
-                    fallbackCopyTextToClipboard(pixCode);
-                }
-            }
-
-            function fallbackCopyTextToClipboard(text) {
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showNotification('✅ Chave PIX copiada!', 'success');
-                } catch (err) {
-                    showNotification('Erro ao copiar. Tente novamente.', 'error');
-                }
-                document.body.removeChild(textArea);
-            }
-
-            function initializeKeyboardShortcuts() {
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        const cartModal = document.getElementById('cartModal');
-                        const helpModal = document.getElementById('helpModal');
-                        if (cartModal.classList.contains('active')) {
-                            cartModal.classList.remove('active');
-                            document.body.style.overflow = 'auto';
-                        } else if (helpModal.classList.contains('active')) {
-                            helpModal.classList.remove('active');
-                            document.body.style.overflow = 'auto';
-                        }
-                    }
-                    if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
-                        e.preventDefault();
-                        document.getElementById('cartModal').classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
-                    if (e.key.toLowerCase() === 'h' && !e.ctrlKey && !e.metaKey) {
-                        e.preventDefault();
-                        document.getElementById('helpModal').classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
-                });
-            }
-            document.getElementById('changeInput').addEventListener('input', (e) => {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value) {
-                    value = parseFloat(value) / 100;
-                    e.target.value = value.toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL'
-                    });
+                    scrollTopBtn.classList.remove('visible');
                 }
             });
-            document.getElementById('addressInput').addEventListener('input', (e) => {
-                e.target.style.borderColor = e.target.value.trim() ? '' : '#dc3545';
-            });
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js').catch(() => {});
-                });
-            }
-            const images = document.querySelectorAll('img[loading="lazy"]');
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src || img.src;
-                        img.classList.remove('lazy');
-                        observer.unobserve(img);
-                    }
+            scrollTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             });
-            images.forEach(img => imageObserver.observe(img));
+        }
+    </script>
 
-            function trackEvent(eventName, data = {}) {
-                console.log('Analytics Event:', eventName, data);
-            }
-            document.querySelectorAll('.add-to-cart').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    trackEvent('add_to_cart', {
-                        item: btn.dataset.item
-                    });
-                });
-            });
-            document.getElementById('sendOrder').addEventListener('click', () => {
-                if (cart.length > 0) {
-                    trackEvent('order_completed', {
-                        total: total,
-                        items: cart.length
-                    });
-                }
-            });
-            window.addEventListener('error', (e) => {
-                console.error('Global error:', e.error);
-                showNotification('Ops! Encontramos um erro. Tente novamente.', 'error');
-            });
-            console.log('🌟 DêGusto Premium App loaded successfully! Ready for orders! 🚀');
-
-            function initializeScrollTop() {
-                const scrollTopBtn = document.getElementById('scrollTopBtn');
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 300) {
-                        scrollTopBtn.classList.add('visible');
-                    } else {
-                        scrollTopBtn.classList.remove('visible');
-                    }
-                });
-                scrollTopBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        </script>
-
-        <body>
-            <!-- Inicio codigo Contador -->
-            <div align="center">
-                <a title="contador de dias" href="https://www.calendario.cnt.br/ferramentas/contador-de-dias-calculadora-prazo-entre-datas">
-                    <img src="https://contador-gratis.com/contadores-de-visitas/270925094630737.gif" style="width: 3%; height: 3%;">
-                </a>
-            </div>
-            <!-- Fim do codigo Contador -->
-        </body>
+    <body>
+        <!-- Inicio codigo Contador -->
+        <div align="center">
+            <a title="contador de dias" href="https://www.calendario.cnt.br/ferramentas/contador-de-dias-calculadora-prazo-entre-datas">
+                <img src="https://contador-gratis.com/contadores-de-visitas/270925094630737.gif" style="width: 3%; height: 3%;">
+            </a>
+        </div>
+        <!-- Fim do codigo Contador -->
+    </body>
 
 </html>
