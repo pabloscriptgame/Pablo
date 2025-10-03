@@ -202,8 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         orderDetails += `Endereço: Rua ${rua}, Nº ${numero} - Bairro ${bairro}${referencia ? `, Ref: ${referencia}` : ''}\n`;
         orderDetails += `Pagamento: ${metodo}${metodo === 'Dinheiro' && troco ? ` (Troco para R$ ${troco})` : ''}${metodo === 'PIX' ? '\nPIX Chave: 10738419605' : ''}`;
 
-        const whatsappUrl = `https://wa.me/34999537698?text=${encodeURIComponent(orderDetails)}`;
-        window.open(whatsappUrl, '_blank');
+        const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(orderDetails)}`;
+window.open(whatsappUrl, '_blank');
 
         cart.length = 0;
         localStorage.setItem('cart', JSON.stringify(cart));
