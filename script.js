@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderDetails += `Pagamento: ${metodo}${metodo === 'Dinheiro' && troco ? ` (Troco para R$ ${troco})` : ''}${metodo === 'PIX' ? '\nPIX Chave: 10738419605' : ''}`;
 
         const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(orderDetails)}`;
-window.open(whatsappUrl, '_blank');
+        window.open(whatsappUrl, '_blank');
 
         cart.length = 0;
         localStorage.setItem('cart', JSON.stringify(cart));

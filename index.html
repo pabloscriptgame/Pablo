@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DêGusto Lanchonete</title>
+    <title>DêGusto Lanchonete Premium</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <div class="header-container">
-            <a href="#inicio" class="logo-link">
+            <a href="#" class="logo-link">
                 <div class="logo">
-                    <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="DêGusto Lanchonete Logo" class="logo-image">
+                    <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="DêGusto Logo" class="logo-image">
+                    <p>Lanchonete Premium</p>
                 </div>
             </a>
             <nav class="main-nav">
@@ -41,10 +43,11 @@
 
     <section id="promocoes" class="promotions">
         <h2>HOJE!</h2>
-        <div class="promo-special" style="border: 2px solid #ffcc00; background: linear-gradient(to bottom, #000000, #1a1a1a); box-shadow: 0 8px 30px rgba(255, 204, 0, 0.3);">
-            <h3 style="color: #ffcc00; text-shadow: 0 0 10px #ffcc00;">2 marmitas de macarrão 500g</h3>
+        <div class="promo-special">
+            <img src="https://i.ibb.co/TxgVnp5q/20251003-214604-1.jpg" alt="MACARRAO" class="item-image">
+            <h3>2 marmitas de macarrão 500g</h3>
             <p>Somente espaguete</p>
-            <span style="color: #ffcc00; text-shadow: 0 0 10px #ffcc00;">R$30,00</span>
+            <span>R$30,00</span>
             <p>Molhos: Bolonhesa - Molho branco / Acompanhamentos: Palmito - Azeitona - Presunto e mussarela - Bacon e calabresa - Milho.</p>
         </div>
     </section>
@@ -63,11 +66,11 @@
         <div id="macarrao" class="tab-panel active">
             <h3>🍜 MACARRÃO</h3>
             <div class="menu-grid">
-                <div class="item" data-name="2 marmitas de macarrão (500 g cada)" data-price="30">
+                <img src="https://i.ibb.co/8LSQ3m97/20251003-214134-1.jpg" alt="MACARRAO" class="item-image">
+                <div class="item" data-name="2 marmitas de macarrão (500 g cada)" data-price="30.00">
                     <h3>2 marmitas de macarrão (500 g cada)</h3>
                     <p>Macarrão: Somente espaguete / 2 marmitas de macarrão (500 g cada)</p>
                     <span>R$ 30,00</span>
-                    <p>Molhos:- Bolonhesa - Molho branco / Acompanhamentos:- Palmito - Azeitona - Presunto e mussarela - Bacon e calabresa - Milho.</p>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
             </div>
@@ -76,103 +79,121 @@
         <div id="hamburgueres" class="tab-panel">
             <h3>🍔 Hambúrgueres</h3>
             <div class="menu-grid">
-                <div class="item" data-name="X-COSTELA" data-price="30">
+                <div class="item" data-name="X-COSTELA" data-price="30.00">
+                    <img src="https://images.pexels.com/photos/28872601/pexels-photo-28872601/free-photo-of-delicioso-hamburguer-de-carne-de-porco-desfiada-com-guacamole.jpeg" alt="X-COSTELA" class="item-image">
                     <h3>X-COSTELA</h3>
                     <p>Pão artesanal, costela desfiada suculenta, queijo cheddar derretido, anéis de cebola crocantes, molho barbecue especial, cebola caramelizada, bacon crocante e milho doce.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ESPECIAL TILÁPIA" data-price="30">
+                <div class="item" data-name="ESPECIAL TILÁPIA" data-price="30.00">
+                    <img src="https://i.ibb.co/bjbvfNmk/hamburguer-mordido-em-uma-caixa-de-papelao-close-up.jpg" alt="ESPECIAL TILÁPIA" class="item-image">
                     <h3>ESPECIAL TILÁPIA</h3>
                     <p>Hambúrguer de tilápia grelhada, anéis de cebola empanados, queijo muçarela, molho de picles caseiro, milho fresco e salada crocante.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ARTESANAL GOIABADA" data-price="30">
+                <div class="item" data-name="ARTESANAL GOIABADA" data-price="30.00">
+                    <img src="https://images.pexels.com/photos/3764353/pexels-photo-3764353.jpeg" alt="ARTESANAL GOIABADA" class="item-image">
                     <h3>ARTESANAL GOIABADA</h3>
                     <p>Hambúrguer artesanal de carne bovina, molho de goiabada especial, cebola caramelizada, milho, bacon crocante, presunto, muçarela e salada fresca.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ESPECIAL STEAK" data-price="30">
+                <div class="item" data-name="ESPECIAL STEAK" data-price="30.00">
+                    <img src="https://images.pexels.com/photos/19897908/pexels-photo-19897908.jpeg" alt="ESPECIAL STEAK" class="item-image">
                     <h3>ESPECIAL STEAK</h3>
                     <p>Steak de frango grelhado, anéis de cebola, molho barbecue, maionese de churrasco, presunto, muçarela, bacon, milho e salada.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-DÊ-GUSTO" data-price="28">
+                <div class="item" data-name="X-DÊ-GUSTO" data-price="28.00">
+                    <img src="https://i.ibb.co/kgFzqrg0/vista-lateral-duplo-cheeseburger-com-rissois-de-carne-grelhada-queijo-e-folha-de-alface-entre-bolos.jpg" alt="X-DÊ-GUSTO" class="item-image">
                     <h3>X-DÊ-GUSTO</h3>
                     <p>Pão premium, 2 hambúrgueres de picanha, ovo frito, salsicha artesanal, presunto, muçarela, bacon, milho, cheddar, Catupiry e batata palha.</p>
                     <span>R$ 28,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ARTESANAL CLÁSSICO" data-price="28">
+                <div class="item" data-name="ARTESANAL CLÁSSICO" data-price="28.00">
+                    <img src="https://images.pexels.com/photos/30500750/pexels-photo-30500750.jpeg" alt="ARTESANAL CLÁSSICO" class="item-image">
                     <h3>ARTESANAL CLÁSSICO</h3>
                     <p>Pão artesanal, hambúrguer artesanal, bacon crocante, cheddar, cebola caramelizada, presunto, muçarela, milho, batata palha e salada.</p>
                     <span>R$ 28,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ARTESANAL DORITOS" data-price="30">
+                <div class="item" data-name="ARTESANAL DORITOS" data-price="30.00">
+                    <img src="https://s2-g1.glbimg.com/kN0Wh_R__Ka37szlXNE0DJsy2Sw=/0x0:898x1280/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/z/p/nfylZyQACpAU1QFWIS3w/flash.jpeg" alt="ARTESANAL DORITOS"
+                        class="item-image">
                     <h3>ARTESANAL DORITOS</h3>
                     <p>Pão artesanal, hambúrguer artesanal, bacon, cheddar, cebola caramelizada, milho, presunto, muçarela, Doritos e salada.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="ARTESANAL DUPLO" data-price="35">
+                <div class="item" data-name="ARTESANAL DUPLO" data-price="35.00">
+                    <img src="https://images.pexels.com/photos/14994656/pexels-photo-14994656.jpeg" alt="ARTESANAL DUPLO" class="item-image">
                     <h3>ARTESANAL DUPLO</h3>
                     <p>Pão artesanal, 2 hambúrgueres artesanais, bacon, cheddar, cebola caramelizada, presunto, muçarela, milho e batata palha.</p>
                     <span>R$ 35,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-BOLO GIGANTE" data-price="42">
+                <div class="item" data-name="X-BOLO GIGANTE" data-price="42.00">
+                    <img src="https://images.pexels.com/photos/19345991/pexels-photo-19345991.jpeg" alt="X-BOLO GIGANTE" class="item-image">
                     <h3>X-BOLO GIGANTE</h3>
                     <p>Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, calabresa, muçarela. Finalizado com muito cheddar e batata frita.</p>
                     <span>R$ 42,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-TUDO" data-price="24">
+                <div class="item" data-name="X-TUDO" data-price="24.00">
+                    <img src="https://images.pexels.com/photos/2702674/pexels-photo-2702674.jpeg" alt="X-TUDO" class="item-image">
                     <h3>X-TUDO</h3>
                     <p>Pão artesanal, hambúrguer de picanha, ovo frito, presunto, muçarela, milho, bacon, Catupiry e salada crocante.</p>
                     <span>R$ 24,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-BACON" data-price="22">
+                <div class="item" data-name="X-BACON" data-price="22.00">
+                    <img src="https://images.pexels.com/photos/15010289/pexels-photo-15010289.jpeg" alt="X-BACON" class="item-image">
                     <h3>X-BACON</h3>
                     <p>Pão, hambúrguer de picanha, ovo, presunto, muçarela, milho, bacon, Catupiry e salada.</p>
                     <span>R$ 22,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-CALABRESA" data-price="22">
+                <div class="item" data-name="X-CALABRESA" data-price="22.00">
+                    <img src="https://imagens.jotaja.com/produtos/a772e7f2-bb32-4686-999a-c45c82424491.jpg" alt="X-CALABRESA" class="item-image">
                     <h3>X-CALABRESA</h3>
                     <p>Pão artesanal, hambúrguer de picanha, ovo, presunto, muçarela, milho, calabresa, cheddar e salada.</p>
                     <span>R$ 22,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-CHEDDAR" data-price="22">
+                <div class="item" data-name="X-CHEDDAR" data-price="22.00">
+                    <img src="https://images.pexels.com/photos/5836842/pexels-photo-5836842.jpeg" alt="X-CHEDDAR" class="item-image">
                     <h3>X-CHEDDAR</h3>
                     <p>Pão, hambúrguer de picanha, presunto, muçarela, salsicha, milho, bacon, cheddar e salada.</p>
                     <span>R$ 22,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-SALADA" data-price="16">
+                <div class="item" data-name="X-SALADA" data-price="16.00">
+                    <img src="https://www.receiteria.com.br/wp-content/uploads/Receitas-de-x-salada-1.jpg" alt="X-SALADA" class="item-image">
                     <h3>X-SALADA</h3>
                     <p>Pão artesanal, hambúrguer de picanha, presunto, muçarela, Catupiry, milho e salada crocante.</p>
                     <span>R$ 16,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-STEAK" data-price="20">
+                <div class="item" data-name="X-STEAK" data-price="20.00">
+                    <img src="https://fenixsp.com.br/wp-content/uploads/2021/09/3-Steak-600x600.jpg" alt="X-STEAK" class="item-image">
                     <h3>X-STEAK</h3>
                     <p>Pão, steak de frango, presunto, muçarela, milho, molho verde, molho barbecue, batata palha e salada.</p>
                     <span>R$ 20,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-DOBRO PODEROSO" data-price="30">
+                <div class="item" data-name="X-DOBRO PODEROSO" data-price="30.00">
+                    <img src="https://imagens.jotaja.com/produtos/48f4e16c-61d9-4ce4-8ac0-6b836a586970.jpg" alt="X-DOBRO PODEROSO" class="item-image">
                     <h3>X-DOBRO PODEROSO</h3>
                     <p>Pão artesanal, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, cheddar, Catupiry, presunto, muçarela, milho e batata palha.</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="X-BAGUNÇA" data-price="33">
+                <div class="item" data-name="X-BAGUNÇA" data-price="33.00">
+                    <img src="https://menudireto.com/ed-burguer-acaiteria-e-hamburgueria/images/2440.jpg" alt="X-BAGUNÇA" class="item-image">
                     <h3>X-BAGUNÇA</h3>
                     <p>Pão, hambúrguer de picanha, steak de frango, bacon, salsicha, presunto, muçarela, Catupiry, cheddar, milho, batata palha e salada.</p>
                     <span>R$ 33,00</span>
@@ -184,67 +205,67 @@
         <div id="combos" class="tab-panel">
             <h3>🎁 Combos Irresistíveis</h3>
             <div class="menu-grid">
-                <div class="item" data-name="COMBO DUPLO TUDO" data-price="42">
+                <div class="item" data-name="COMBO DUPLO TUDO" data-price="42.00">
                     <h3>COMBO DUPLO TUDO</h3>
                     <p>2 hambúrgueres X-Tudo Premium - Perfeito para compartilhar!</p>
                     <span>R$ 42,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO FAMÍLIA" data-price="45">
+                <div class="item" data-name="COMBO FAMÍLIA" data-price="45.00">
                     <h3>COMBO FAMÍLIA</h3>
                     <p>2 hambúrgueres X-Tudo + 2 refrigerantes 200ml - Combo completo!</p>
                     <span>R$ 45,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO DUPLO PODER" data-price="46">
+                <div class="item" data-name="COMBO DUPLO PODER" data-price="46.00">
                     <h3>COMBO DUPLO PODER</h3>
                     <p>2 hambúrgueres X-Dobro Poderoso - Para quem tem muita fome!</p>
                     <span>R$ 46,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO X-TUDO COMPLETO" data-price="25">
+                <div class="item" data-name="COMBO X-TUDO COMPLETO" data-price="25.00">
                     <h3>COMBO X-TUDO COMPLETO</h3>
                     <p>1 X-Tudo + Batata tamanho P + Refrigerante 200ml - Combo individual perfeito!</p>
                     <span>R$ 25,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO LEVE E SAUDÁVEL" data-price="23">
+                <div class="item" data-name="COMBO LEVE E SAUDÁVEL" data-price="23.00">
                     <h3>COMBO LEVE E SAUDÁVEL</h3>
                     <p>1 X-Salada Fresca + Batata tamanho P + Refrigerante 200ml - Opção mais leve!</p>
                     <span>R$ 23,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO TRIO TUDO" data-price="70">
+                <div class="item" data-name="COMBO TRIO TUDO" data-price="70.00">
                     <h3>COMBO TRIO TUDO</h3>
                     <p>3 hambúrgueres X-Tudo + 3 refrigerantes 200ml - Para 3 pessoas!</p>
                     <span>R$ 70,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO COMPLETO FAMÍLIA" data-price="50">
+                <div class="item" data-name="COMBO COMPLETO FAMÍLIA" data-price="50.00">
                     <h3>COMBO COMPLETO FAMÍLIA</h3>
                     <p>2 X-Tudo + 2 refrigerantes + Batata tamanho P - Combo familiar completo!</p>
                     <span>R$ 50,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO SUPREMO DÊ-GUSTO" data-price="30">
+                <div class="item" data-name="COMBO SUPREMO DÊ-GUSTO" data-price="30.00">
                     <h3>COMBO SUPREMO DÊ-GUSTO</h3>
                     <p>1 X-Dê-Gusto Supremo + Batata tamanho P + Refrigerante 200ml - O melhor!</p>
                     <span>R$ 30,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO TRIO PURO" data-price="60">
+                <div class="item" data-name="COMBO TRIO PURO" data-price="60.00">
                     <h3>COMBO TRIO PURO</h3>
                     <p>3 hambúrgueres X-Tudo - Para quem quer só hambúrguer!</p>
                     <span>R$ 60,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO DUPLO ARTESANAL" data-price="52">
+                <div class="item" data-name="COMBO DUPLO ARTESANAL" data-price="52.00">
                     <h3>COMBO DUPLO ARTESANAL</h3>
                     <p>2 hambúrgueres Artesanal Clássico - Qualidade premium em dobro!</p>
                     <span>R$ 52,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COMBO ARTESANAL + REFRIGERANTE" data-price="30">
+                <div class="item" data-name="COMBO ARTESANAL + REFRIGERANTE" data-price="30.00">
                     <h3>COMBO ARTESANAL + REFRIGERANTE</h3>
                     <p>1 Artesanal Clássico + Refrigerante 200ml - Combinação perfeita!</p>
                     <span>R$ 30,00</span>
@@ -256,79 +277,79 @@
         <div id="molhos" class="tab-panel">
             <h3>🧂 Molhos Especiais</h3>
             <div class="menu-grid">
-                <div class="item" data-name="MOLHO CHURRASCO" data-price="3">
+                <div class="item" data-name="MOLHO CHURRASCO" data-price="3.00">
                     <h3>MOLHO CHURRASCO</h3>
                     <p>Molho barbecue caseiro com toque defumado - Perfeito para carnes!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO DE ALHO" data-price="3">
+                <div class="item" data-name="MOLHO DE ALHO" data-price="3.00">
                     <h3>MOLHO DE ALHO</h3>
                     <p>Cremoso molho de alho com ervas frescas - Clássico irresistível!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO VERDE" data-price="3">
+                <div class="item" data-name="MOLHO VERDE" data-price="3.00">
                     <h3>MOLHO VERDE</h3>
                     <p>Molho verde refrescante com ervas e limão - Leve e saboroso!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO GOIABADA" data-price="3">
+                <div class="item" data-name="MOLHO GOIABADA" data-price="3.00">
                     <h3>MOLHO GOIABADA</h3>
                     <p>Molho exclusivo de goiabada com especiarias - Nossas especialidade!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO PICLES" data-price="3">
+                <div class="item" data-name="MOLHO PICLES" data-price="3.00">
                     <h3>MOLHO PICLES</h3>
                     <p>Molho de picles caseiro com toque de mostarda - Crocante e ácido!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO CHEDDAR" data-price="3">
+                <div class="item" data-name="MOLHO CHEDDAR" data-price="3.00">
                     <h3>MOLHO CHEDDAR</h3>
                     <p>Queijo cheddar cremoso derretido - Para os amantes de queijo!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO CATUPIRY" data-price="3">
+                <div class="item" data-name="MOLHO CATUPIRY" data-price="3.00">
                     <h3>MOLHO CATUPIRY</h3>
                     <p>Clássico Catupiry cremoso - Nobreza no sabor!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO BARBECUE" data-price="3">
+                <div class="item" data-name="MOLHO BARBECUE" data-price="3.00">
                     <h3>MOLHO BARBECUE</h3>
                     <p>Molho barbecue tradicional com mel - Doce e defumado!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="CEBOLA CARAMELIZADA" data-price="3">
+                <div class="item" data-name="CEBOLA CARAMELIZADA" data-price="3.00">
                     <h3>CEBOLA CARAMELIZADA</h3>
                     <p>Cebola caramelizada com toque de balsâmico - Doçura perfeita!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO PIMENTA" data-price="3">
+                <div class="item" data-name="MOLHO PIMENTA" data-price="3.00">
                     <h3>MOLHO PIMENTA</h3>
                     <p>Molho de pimenta habanero com mel - Picante com equilíbrio!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOSTARDA MEL" data-price="3">
+                <div class="item" data-name="MOSTARDA MEL" data-price="3.00">
                     <h3>MOSTARDA MEL</h3>
                     <p>Mostarda Dijon com mel puro - Doce e picante na medida!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO MARACUJÁ" data-price="3">
+                <div class="item" data-name="MOLHO MARACUJÁ" data-price="3.00">
                     <h3>MOLHO MARACUJÁ</h3>
                     <p>Molho de maracujá com toque apimentado - Tropical e ousado!</p>
                     <span>R$ 3,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MOLHO ABACAXI" data-price="3">
+                <div class="item" data-name="MOLHO ABACAXI" data-price="3.00">
                     <h3>MOLHO ABACAXI</h3>
                     <p>Molho de abacaxi grelhado com curry - Exótico e surpreendente!</p>
                     <span>R$ 3,00</span>
@@ -340,19 +361,19 @@
         <div id="batatas" class="tab-panel">
             <h3>🍟 Porções Crocantes</h3>
             <div class="menu-grid">
-                <div class="item" data-name="BATATA PETIT" data-price="10">
+                <div class="item" data-name="BATATA PETIT" data-price="10.00">
                     <h3>BATATA PETIT</h3>
                     <p>200g de batata frita crocante com bacon e cheddar derretido - Porção individual perfeita!</p>
                     <span>R$ 10,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="BATATA MÉDIA" data-price="20">
+                <div class="item" data-name="BATATA MÉDIA" data-price="20.00">
                     <h3>BATATA MÉDIA</h3>
                     <p>400g de batata frita com bacon crocante e cheddar - Para compartilhar!</p>
                     <span>R$ 20,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="BATATA GIGANTE" data-price="35">
+                <div class="item" data-name="BATATA GIGANTE" data-price="35.00">
                     <h3>BATATA GIGANTE</h3>
                     <p>300g de batata frita completa com salsicha, hambúrguer, calabresa, bacon, salada, muçarela, cheddar e Catupiry - A maior porção!</p>
                     <span>R$ 35,00</span>
@@ -364,49 +385,49 @@
         <div id="bebidas" class="tab-panel">
             <h3>🥤 Bebidas Geladas</h3>
             <div class="menu-grid">
-                <div class="item" data-name="COCA-COLA 2L" data-price="14">
+                <div class="item" data-name="COCA-COLA 2L" data-price="14.00">
                     <h3>COCA-COLA 2L</h3>
                     <p>Coca-Cola 2L geladinha - Perfeita para compartilhar com a família!</p>
                     <span>R$ 14,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COCA-COLA 1L" data-price="10">
+                <div class="item" data-name="COCA-COLA 1L" data-price="10.00">
                     <h3>COCA-COLA 1L</h3>
                     <p>Coca-Cola 1L bem gelada - Ideal para acompanhar seu hambúrguer!</p>
                     <span>R$ 10,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="COCA-COLA LATA" data-price="6">
+                <div class="item" data-name="COCA-COLA LATA" data-price="6.00">
                     <h3>COCA-COLA LATA</h3>
                     <p>Coca-Cola lata gelada 350ml - Clássico sempre!</p>
                     <span>R$ 6,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="FANTA LARANJA 2L" data-price="12">
+                <div class="item" data-name="FANTA LARANJA 2L" data-price="12.00">
                     <h3>FANTA LARANJA 2L</h3>
                     <p>Fanta Laranja 2L - Sabor cítrico refrescante para toda família!</p>
                     <span>R$ 12,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="FANTA LARANJA 1L" data-price="10">
+                <div class="item" data-name="FANTA LARANJA 1L" data-price="10.00">
                     <h3>FANTA LARANJA 1L</h3>
                     <p>Fanta Laranja 1L gelada - Perfeita para um hambúrguer leve!</p>
                     <span>R$ 10,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="KUAT 2L" data-price="10">
+                <div class="item" data-name="KUAT 2L" data-price="10.00">
                     <h3>KUAT 2L</h3>
                     <p>Kuat Guaraná 2L - Sabor brasileiro autêntico e refrescante!</p>
                     <span>R$ 10,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="MINEIRO 2L" data-price="12">
+                <div class="item" data-name="MINEIRO 2L" data-price="12.00">
                     <h3>MINEIRO 2L</h3>
                     <p>Guaraná Mineiro 2L - Orgulho mineiro em cada gole!</p>
                     <span>R$ 12,00</span>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
-                <div class="item" data-name="PITHULÁ" data-price="3">
+                <div class="item" data-name="PITHULÁ" data-price="3.00">
                     <h3>PITHULÁ</h3>
                     <p>Pithulá 200ml - Bebida regional geladinha para acompanhar!</p>
                     <span>R$ 3,00</span>
@@ -433,42 +454,42 @@
         </div>
     </section>
 
-    <section class="parceiros-section">
+    <section id="parceiros" class="parceiros-section">
         <h2>🤝 Parceiros</h2>
         <p>Anuncie seu negócio conosco!</p>
         <div class="parceiros-grid">
             <div class="parceiro">
                 <img src="https://i.ibb.co/F4x3hVXW/1756485793445.png" alt="Pablo LogoMarcas">
-                <h3>Pablo LogoMarcas</h3>
+                <p>Pablo LogoMarcas</p>
                 <a href="https://www.pablologomarcas.online">Saiba mais</a>
             </div>
             <div class="parceiro">
-                <img src="https://i.ibb.co/XxCPZqGs/20250922-113651.jpg" alt="Lorrayne Oliveira - NAIL DESIGNER">
-                <h3>Lorrayne Oliveira - NAIL DESIGNER</h3>
+                <img src="https://i.ibb.co/XxCPZqGs/20250922-113651.jpg" alt="Lorrayne Oliveira">
+                <p>Lorrayne Oliveira - NAIL DESIGNER</p>
                 <a href="https://wa.me/5535992661378">Saiba mais</a>
             </div>
         </div>
     </section>
 
     <div class="cart-fixed">
-        <button id="open-cart-modal" class="cta-button">🛒 Meu Carrinho (<span id="cart-count">0</span>)</button>
+        <button id="open-cart-modal">🛒 Meu Carrinho (<span id="cart-count">0</span>)</button>
     </div>
 
     <button id="help-button" class="help-fixed-button">Ajuda</button>
 
-    <!-- Modal do Carrinho -->
+    <!-- Modal Carrinho -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h3>Seu Carrinho</h3>
             <div id="modal-cart-items"></div>
             <div id="modal-total">Total: R$ 0,00</div>
-            <button id="checkout-button" style="display: none;">Finalizar Pedido</button>
+            <button id="checkout-button">Finalizar Pedido</button>
             <button id="clear-cart">Limpar Carrinho</button>
         </div>
     </div>
 
-    <!-- Modal de Checkout -->
+    <!-- Modal Checkout -->
     <div id="checkout-form" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -490,8 +511,7 @@
                 </div>
 
                 <div id="troco-div" style="display: none;">
-                    <label>Precisa de troco?</label>
-                    <input type="text" id="troco" placeholder="Ex: R$ 50,00">
+                    <input type="number" id="troco" placeholder="Precisa de troco? (valor aproximado)">
                 </div>
 
                 <div id="pix-details" style="display: none;">
@@ -506,28 +526,26 @@
         </div>
     </div>
 
-    <!-- Modal de Ajuda -->
+    <!-- Modal Ajuda -->
     <div id="help-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h3>Como Comprar na DêGusto Lanchonete</h3>
-            <div style="text-align: left; font-size: 16px; line-height: 1.8; color: #ffffff;">
-                <ol>
-                    <li><strong>Escolha seus itens:</strong> Navegue pelo cardápio, selecione os hambúrgueres, combos, molhos, batatas ou bebidas que deseja e clique em "Adicionar ao Carrinho".</li>
-                    <li><strong>Veja seu carrinho:</strong> Clique no botão "Meu Carrinho" no rodapé ou no header para visualizar os itens adicionados. Você pode remover itens se quiser.</li>
-                    <li><strong>Finalize o pedido:</strong> No carrinho, clique em "Finalizar Pedido". Preencha seu endereço de entrega e selecione a forma de pagamento (Dinheiro, Crédito, Débito ou PIX).</li>
-                    <li><strong>Envie o pedido:</strong> Clique em "Enviar Pedido" e o pedido será enviado diretamente para o WhatsApp da lanchonete. Aguarde a confirmação!</li>
-                    <li><strong>Dicas extras:</strong> Aproveite as promoções diárias! Delivery em até 30 minutos. Atendimento a partir das 19h.</li>
-                </ol>
-                <p style="text-align: center; margin-top: 20px;"><em>Precisa de mais ajuda? Entre em contato via WhatsApp!</em></p>
-            </div>
+            <ol>
+                <li>Escolha seus itens: Navegue pelo cardápio, selecione os hambúrgueres, combos, molhos, batatas ou bebidas que deseja e clique em "Adicionar ao Carrinho".</li>
+                <li>Veja seu carrinho: Clique no botão "Meu Carrinho" no rodapé ou no header para visualizar os itens adicionados. Você pode remover itens se quiser.</li>
+                <li>Finalize o pedido: No carrinho, clique em "Finalizar Pedido". Preencha seu endereço de entrega e selecione a forma de pagamento (Dinheiro, Crédito, Débito ou PIX).</li>
+                <li>Envie o pedido: Clique em "Enviar Pedido" e o pedido será enviado diretamente para o WhatsApp da lanchonete. Aguarde a confirmação!</li>
+                <li>Dicas extras: Aproveite as promoções diárias! Delivery em até 30 minutos. Atendimento a partir das 19h.</li>
+            </ol>
+            <p>Precisa de mais ajuda? Entre em contato via WhatsApp!</p>
         </div>
     </div>
 
     <div id="notification" class="notification"></div>
 
     <footer>
-        <p>&copy; 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️</p>
+        <p>© 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️</p>
         <p>Entregamos sabor e qualidade em cada mordida! 🛵✨</p>
     </footer>
 
