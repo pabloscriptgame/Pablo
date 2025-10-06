@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const closeHelpModal = document.querySelector('#help-modal .close-modal');
             const checkoutTotal = document.getElementById('checkout-total');
 
+            // radio player
+            const radio = document.getElementById("radio-audio");
+            const playBtn = document.getElementById("play-btn");
+            const pauseBtn = document.getElementById("pause-btn");
+            const vuMeter = document.getElementById("vu-meter");
+
             // Função para formatar moeda brasileira
             function formatCurrency(value) {
                 return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
@@ -264,4 +270,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicialização
     updateCartButton();
     populateModal();
+
+    // radio simple controls - CORRIGIDO
+    (function(){
+        if(!radio || !playBtn || !pauseBtn || !vuMeter) {
+            console.warn('Elementos do player de rádio não encontrados.');
+            return;
+        }
+        playBtn.addEventListener('click', () => {
+            radio.play().then(() => {
+                vuMeter.style.display = 'flex';
+                console.log('Rádio tocando.');
+            }).catch(error => {
+                console.error('Erro ao reproduzir áudio:', error);
+                showNotification('Erro ao iniciar o player. Verifique a conexão.', 'error');
+            });
+        });
+        pauseBtn.addEventListener('click', () => {
+            radio.pause();
+            vuMeter.style.display = 'none';
+            console.log('Rádio pausado.');
+        });
+        radio.pause();
+        vuMeter.style.display = 'none';
+        console.log('Player de rádio inicializado.');
+    })();
 });
