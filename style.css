@@ -3,6 +3,8 @@
 :root {
     --primary-black: #000000;
     --accent-gold: #ffcc00;
+    --accent-gold-2: #ffd700;
+    /* Adicionado para o player de rádio */
     --accent-orange: #ff5722;
     --primary-red: #e63946;
     --dark-bg: #000000;
@@ -10,6 +12,8 @@
     --light-text: #ffffff;
     --medium-text: #cccccc;
     --success-green: #4caf50;
+    --muted: #cccccc;
+    /* Adicionado para o player de rádio */
 }
 
 body {
@@ -745,6 +749,303 @@ header:hover {
     box-shadow: 0 0 20px var(--accent-gold);
 }
 
+
+/* Responsivo para mobile */
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .main-nav {
+        display: none;
+        width: 100%;
+        order: 2;
+    }
+    .main-nav.active {
+        display: block;
+    }
+    .main-nav ul {
+        flex-direction: column;
+    }
+    .main-nav li {
+        margin: 10px 0;
+    }
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        order: 4;
+    }
+    .logo-image {
+        width: 100px;
+    }
+    .banner-content h2 {
+        font-size: 40px;
+    }
+    .marquee-text {
+        font-size: 18px;
+    }
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    .tab-button {
+        margin: 10px 0;
+        width: 80%;
+    }
+    .cart-fixed {
+        padding: 15px;
+    }
+    .modal {
+        align-items: flex-start;
+        padding: 10px;
+        justify-content: flex-start;
+    }
+    .modal-content {
+        padding: 20px;
+        margin: 0;
+        width: 100%;
+        height: 90vh;
+        max-height: none;
+        max-width: none;
+        border-radius: 20px 20px 0 0;
+    }
+    #modal-cart-items {
+        max-height: 50vh;
+        font-size: 16px;
+    }
+    .cart-item-modal {
+        font-size: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .cart-item-modal button {
+        align-self: flex-end;
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+    .payment-options {
+        gap: 15px;
+    }
+    .payment-options label {
+        font-size: 16px;
+        padding: 10px;
+        background: var(--dark-gray);
+        border-radius: 5px;
+    }
+    #checkout-form input {
+        font-size: 18px;
+        padding: 18px;
+    }
+    #checkout-form button {
+        font-size: 20px;
+        padding: 18px;
+    }
+    .app-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .app-buttons .cta-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    .help-fixed-button {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    /* Responsivo para o player de rádio em mobile */
+    .radio-player {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+        transform: none;
+    }
+    .controls {
+        bottom: 60px;
+        gap: 15px;
+    }
+    .btn-3d {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+    .speaker-grill {
+        width: 80%;
+        left: 10%;
+    }
+}
+
+
+/* Radio Section (3D player dourado) */
+
+.radio-section {
+    padding: 40px 20px;
+    background: linear-gradient(180deg, #000, #070707);
+    border-top: 2px solid rgba(255, 204, 0, 0.06);
+    margin-top: 28px;
+    text-align: center;
+}
+
+.radio-section h2 {
+    color: var(--accent-gold);
+    font-size: 36px;
+    margin-bottom: 6px;
+    text-shadow: 0 0 10px var(--accent-gold);
+    font-family: 'Baloo 2', cursive;
+}
+
+.radio-description {
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 18px;
+    font-family: 'Fredoka', sans-serif;
+}
+
+
+/* Player styles */
+
+.radio-player {
+    width: 360px;
+    height: 240px;
+    background: linear-gradient(145deg, #151515, #000);
+    border-radius: 18px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px;
+    transform: rotateX(8deg) rotateY(-6deg);
+    transition: transform 0.4s;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-gold);
+}
+
+.radio-player:hover {
+    transform: rotateX(0) rotateY(0) scale(1.02);
+    box-shadow: 0 0 40px rgba(255, 204, 0, 0.06);
+}
+
+.radio-logo {
+    width: 100px;
+    position: absolute;
+    top: 16px;
+    left: 130px;
+    filter: drop-shadow(0 6px 10px rgba(255, 204, 0, 0.12));
+    border-radius: 50%;
+    border: 1px solid var(--accent-gold);
+}
+
+.controls {
+    position: absolute;
+    bottom: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-3d {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-2));
+    color: #000;
+    box-shadow: -6px -6px 14px rgba(255, 255, 180, 0.06), 6px 6px 14px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.btn-3d:hover {
+    box-shadow: -4px -4px 10px rgba(255, 255, 180, 0.1), 4px 4px 10px rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+}
+
+.btn-3d:active {
+    transform: translateY(3px);
+}
+
+.speaker-grill {
+    position: absolute;
+    bottom: 18px;
+    left: 30px;
+    width: 300px;
+    height: 26px;
+    background: repeating-linear-gradient(90deg, #222, #222 4px, #555 4px, #555 8px);
+    border-radius: 10px;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.03);
+}
+
+.vu-meter {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    height: 40px;
+}
+
+.bar {
+    width: 8px;
+    background: var(--accent-gold);
+    border-radius: 4px;
+    animation: bounce 1s infinite ease-in-out;
+}
+
+.bar:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.bar:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.bar:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.bar:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.bar:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.bar:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+.bar:nth-child(8) {
+    animation-delay: 0.7s;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        height: 12px;
+        background: var(--accent-gold);
+    }
+    50% {
+        height: 44px;
+        background: #fff899;
+    }
+}
+
 .help-fixed-button {
     position: fixed;
     bottom: 20px;
@@ -1083,118 +1384,4 @@ footer {
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
     border-top: 2px solid var(--accent-gold);
     font-family: 'Fredoka', sans-serif;
-}
-
-
-/* Responsivo para mobile */
-
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .main-nav {
-        display: none;
-        width: 100%;
-        order: 2;
-    }
-    .main-nav.active {
-        display: block;
-    }
-    .main-nav ul {
-        flex-direction: column;
-    }
-    .main-nav li {
-        margin: 10px 0;
-    }
-    .mobile-menu-toggle {
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        order: 4;
-    }
-    .logo-image {
-        width: 100px;
-    }
-    .banner-content h2 {
-        font-size: 40px;
-    }
-    .marquee-text {
-        font-size: 18px;
-    }
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
-    .tabs {
-        flex-direction: column;
-        align-items: center;
-    }
-    .tab-button {
-        margin: 10px 0;
-        width: 80%;
-    }
-    .cart-fixed {
-        padding: 15px;
-    }
-    .modal {
-        align-items: flex-start;
-        padding: 10px;
-        justify-content: flex-start;
-    }
-    .modal-content {
-        padding: 20px;
-        margin: 0;
-        width: 100%;
-        height: 90vh;
-        max-height: none;
-        max-width: none;
-        border-radius: 20px 20px 0 0;
-    }
-    #modal-cart-items {
-        max-height: 50vh;
-        font-size: 16px;
-    }
-    .cart-item-modal {
-        font-size: 16px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .cart-item-modal button {
-        align-self: flex-end;
-        font-size: 16px;
-        padding: 8px 15px;
-    }
-    .payment-options {
-        gap: 15px;
-    }
-    .payment-options label {
-        font-size: 16px;
-        padding: 10px;
-        background: var(--dark-gray);
-        border-radius: 5px;
-    }
-    #checkout-form input {
-        font-size: 18px;
-        padding: 18px;
-    }
-    #checkout-form button {
-        font-size: 20px;
-        padding: 18px;
-    }
-    .app-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    .app-buttons .cta-button {
-        width: 100%;
-        max-width: 300px;
-    }
-    .help-fixed-button {
-        bottom: 10px;
-        right: 10px;
-        padding: 8px 12px;
-        font-size: 12px;
-    }
 }

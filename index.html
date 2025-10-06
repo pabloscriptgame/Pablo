@@ -15,7 +15,7 @@
             <a href="#" class="logo-link">
                 <div class="logo">
                     <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="DêGusto Logo" class="logo-image">
-                    <p>Lanchonete Premium</p>
+                    <p>Atedimento Apartir das 19H!</p>
                 </div>
             </a>
             <nav class="main-nav">
@@ -24,7 +24,7 @@
                     <li><a href="#promocoes">Promoções</a></li>
                     <li><a href="#cardapio">Cardápio</a></li>
                     <li><a href="#radio">Radio</a></li>
-                    <li><a href="#app">App</a></li>
+                    <li><a href="#app">App (Em Breve)</a></li>
                 </ul>
             </nav>
             <div class="mobile-menu-toggle">☰</div>
@@ -33,9 +33,9 @@
 
     <section id="inicio" class="hero-banner">
         <div class="banner-content">
-            <h2>Bem-vindo</h2>
+            <h2>Bem-vindo(a)</h2>
             <div class="marquee">
-                <div class="marquee-text">Promoções diárias • Delivery em 30min • Peça agora!</div>
+                <div class="marquee-text">⚠️ Aviso: Hoje estamos fechados (terça-feira). Reabrimos amanhã! ⚠️</div>
             </div>
             <a href="#cardapio" class="cta-button">Ver Cardápio</a>
         </div>
@@ -425,22 +425,34 @@
         </div>
     </section>
 
-    <section id="radio" class="app-section">
-        <h2>▶️ Radio</h2>
-        <audio controls>
-            <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
-            Seu navegador não suporta o elemento de áudio.
-        </audio>
-    </section>
+    <!-- RÁDIO -->
+    <section id="radio" class="radio-section">
+        <h2>📻 Rádio DêGusto</h2>
+        <p class="radio-description">Ouça nossa seleção especial enquanto saboreia seu lanche!</p>
 
-    <section id="app" class="app-section">
-        <h2>Baixe nosso App</h2>
-        <p>Peça pelo app e ganhe descontos exclusivos!</p>
-        <div class="app-buttons">
-            <a href="#" class="cta-button">Download para Android</a>
-            <a href="#" class="cta-button">Download para iOS</a>
+        <div class="radio-player" aria-hidden="false">
+            <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="Logo Rádio" class="radio-logo">
+            <div class="controls">
+                <button class="btn-3d" id="play-btn" aria-label="Tocar rádio">▶</button>
+                <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio">⏸</button>
+            </div>
+            <div class="vu-meter" id="vu-meter" aria-hidden="true">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="speaker-grill"></div>
+            <audio id="radio-audio">
+            <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
+          </audio>
         </div>
     </section>
+    </main>
 
     <section id="parceiros" class="parceiros-section">
         <h2>🤝 Parceiros</h2>
