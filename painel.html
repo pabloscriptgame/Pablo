@@ -4,13 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DêGusto Lanchonete Premium - Painel de Controle</title>
+    <title>DêGusto Lanchonete Premium</title>
     <style>
-        /* Adicione estilos existentes se houver, mas assumindo minimal para o painel */
-        
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        header {
+            background-color: #ff6b35;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .menu-section {
             margin: 20px;
+        }
+        
+        .item {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+        }
+        
+        .item button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        .cart-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff6b35;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
         }
         
         .modal {
@@ -46,228 +94,272 @@
             cursor: pointer;
         }
         
-        #orderList {
-            list-style: none;
-            padding: 0;
-        }
-        
-        #orderList li {
-            border: 1px solid #ddd;
-            margin: 10px 0;
+        input,
+        select {
+            width: 100%;
             padding: 10px;
+            margin: 5px 0;
         }
         
         button {
-            margin: 5px;
-            padding: 8px 12px;
-        }
-        
-        input[type="file"] {
-            margin: 5px;
+            padding: 10px;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
         }
     </style>
 </head>
 
 <body>
     <header>
-        🛵 DêGusto Lanchonete Premium - Painel de Controle
+        <h1>🛵 DêGusto Lanchonete Premium</h1>
+        <h2>Atendimento a partir das 19h!</h2>
         <nav>
-            <a href="index.html">Cardápio</a>
-            <a href="#parceiros">Parceiros</a>
-            <a href="#" onclick="openModal()">Ver Pedidos</a>
-            <a href="#" onclick="exportOrders()">Exportar Pedidos (JSON)</a>
+            <a href="#inicio">Início</a>
+            <a href="#promocoes">Promoções</a>
+            <a href="#cardapio">Cardápio</a>
+            <a href="#radio">Radio</a>
+            <a href="#app">App (Em Breve)</a>
         </nav>
     </header>
 
     <main>
-        <section id="cardapio">
-            <h2>🍔 Hambúrgueres</h2>
-            <!-- Conteúdo do cardápio vazio ou placeholder -->
+        <section id="inicio">
+            <h2>Bem-vindo(a)</h2>
+            <p>Promoções diárias • Delivery em 30min • Peça agora!</p>
+            <button onclick="document.getElementById('cardapio').scrollIntoView()">Ver Cardápio</button>
         </section>
 
-        <section id="combos">
-            <h2>🎁 Combos Irresistíveis</h2>
-            <!-- Placeholder -->
+        <section id="cardapio" class="menu-section">
+            <h2>Cardápio</h2>
+
+            <h3>🍔 Hambúrgueres</h3>
+            <div class="item" data-name="X-COSTELA" data-price="30.00">
+                <h4>X-COSTELA</h4>
+                <p>Pão artesanal, costela desfiada suculenta, queijo cheddar derretido, anéis de cebola crocantes, molho barbecue especial, cebola caramelizada, bacon crocante e milho doce.</p>
+                <p>R$ 30,00</p>
+                <button onclick="addToCart('X-COSTELA', 30.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- Adicione outros itens de hambúrgueres similarmente -->
+            <div class="item" data-name="ESPECIAL TILÁPIA" data-price="30.00">
+                <h4>ESPECIAL TILÁPIA</h4>
+                <p>Hambúrguer de tilápia grelhada, anéis de cebola empanados, queijo muçarela, molho de picles caseiro, milho fresco e salada crocante.</p>
+                <p>R$ 30,00</p>
+                <button onclick="addToCart('ESPECIAL TILÁPIA', 30.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- ... Continue com todos os hambúrgueres do documento original ... -->
+
+            <h3>🎁 Combos Irresistíveis</h3>
+            <div class="item" data-name="COMBO DUPLO TUDO" data-price="42.00">
+                <h4>COMBO DUPLO TUDO</h4>
+                <p>2 hambúrgueres X-Tudo Premium - Perfeito para compartilhar!</p>
+                <p>R$ 42,00</p>
+                <button onclick="addToCart('COMBO DUPLO TUDO', 42.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- ... Adicione todos os combos ... -->
+
+            <h3>🧂 Molhos Especiais</h3>
+            <div class="item" data-name="MOLHO CHURRASCO" data-price="3.00">
+                <h4>MOLHO CHURRASCO</h4>
+                <p>Molho barbecue caseiro com toque defumado - Perfeito para carnes!</p>
+                <p>R$ 3,00</p>
+                <button onclick="addToCart('MOLHO CHURRASCO', 3.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- ... Todos os molhos ... -->
+
+            <h3>🍟 Porções Crocantes</h3>
+            <div class="item" data-name="BATATA PETIT" data-price="10.00">
+                <h4>BATATA PETIT</h4>
+                <p>200g de batata frita crocante com bacon e cheddar derretido - Porção individual perfeita!</p>
+                <p>R$ 10,00</p>
+                <button onclick="addToCart('BATATA PETIT', 10.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- ... Batatas ... -->
+
+            <h3>🥤 Bebidas Geladas</h3>
+            <div class="item" data-name="COCA-COLA 2L" data-price="14.00">
+                <h4>COCA-COLA 2L</h4>
+                <p>Coca-Cola 2L geladinha - Perfeita para compartilhar com a família!</p>
+                <p>R$ 14,00</p>
+                <button onclick="addToCart('COCA-COLA 2L', 14.00)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- ... Todas as bebidas ... -->
         </section>
 
-        <section id="molhos">
-            <h2>🧂 Molhos Especiais</h2>
-            <!-- Placeholder -->
-        </section>
-
-        <section id="batatas">
-            <h2>🍟 Porções Crocantes</h2>
-            <!-- Placeholder -->
-        </section>
-
-        <section id="bebidas">
-            <h2>🥤 Bebidas Geladas</h2>
-            <!-- Placeholder -->
-        </section>
-
+        <!-- Outras seções como Radio e Parceiros podem ser adicionadas aqui -->
         <section id="parceiros">
             <h2>🤝 Parceiros</h2>
             <p>Anuncie seu negócio conosco!</p>
             <ul>
-                <li>Pablo LogoMarcas - <a href="#">Saiba mais</a></li>
-                <li>Lorrayne Oliveira - NAIL DESIGNER - <a href="#">Saiba mais</a></li>
+                <li>Pablo LogoMarcas - Saiba mais</li>
+                <li>Lorrayne Oliveira - NAIL DESIGNER - Saiba mais</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        © 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️ por PabloLogoMarcas
+        <div class="cart-btn" onclick="openCart()">🛒 Meu Carrinho (<span id="cartCount">0</span>)</div>
+        Entregamos sabor e qualidade em cada mordida! 🛵✨ © 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️ © criado por PabloLogoMarcas
     </footer>
 
-    <!-- Modal para Painel de Pedidos -->
-    <div id="ordersModal" class="modal">
+    <!-- Modal Carrinho -->
+    <div id="cartModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>📋 Painel de Pedidos - Todos os Pedidos Realizados</h2>
-
-            <div id="adminLogin" style="display: block;">
-                <p>Senha Admin: <input type="password" id="adminPass" placeholder="Digite a senha"></p>
-                <button onclick="loginAdmin()">Entrar</button>
-            </div>
-
-            <div id="ordersSection" style="display: none;">
-                <h3>Lista de Pedidos (Total: <span id="totalOrders">0</span>)</h3>
-                <button onclick="displayOrders()">Atualizar Manual</button>
-                <br>
-                <input type="file" id="importFile" accept=".json" onchange="importOrders(event)">
-                <label for="importFile">Importar Pedidos (JSON)</label>
-                <br>
-                <button onclick="exportOrders()">Exportar Pedidos (JSON)</button>
-                <br>
-                <button onclick="clearAllOrders()" style="background: red; color: white;">Limpar Todos os Pedidos</button>
-
-                <ul id="orderList"></ul>
-            </div>
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Seu Carrinho</h2>
+            <ul id="cartItems"></ul>
+            <p>Total: R$ <span id="cartTotal">0,00</span></p>
+            <button onclick="clearCart()">Limpar Carrinho</button>
+            <button onclick="openCheckout()">Finalizar Pedido</button>
         </div>
     </div>
 
-    <!-- Notificação de Novo Pedido -->
-    <div id="newOrderNotification" style="position: fixed; bottom: 20px; right: 20px; background: green; color: white; padding: 10px; display: none; cursor: pointer;" onclick="openModal()">
-        Novo Pedido Recebido! Clique para ver.
+    <!-- Modal Checkout -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCheckout()">&times;</span>
+            <h2>Delivery Rápido</h2>
+            <p>Entrega em todo Monte Carmelo</p>
+            <label>Endereço de Entrega:</label>
+            <input type="text" id="address" placeholder="Seu endereço completo">
+            <label>Forma de Pagamento:</label>
+            <select id="payment">
+                <option>Dinheiro</option>
+                <option>Crédito</option>
+                <option>Débito</option>
+                <option>PIX</option>
+            </select>
+            <p>Chave PIX: 10738419605</p>
+            <button onclick="copyPix()">📋 Copiar Chave PIX</button>
+            <p>Total: R$ <span id="checkoutTotal">0,00</span></p>
+            <button onclick="submitOrder()">Enviar Pedido</button>
+        </div>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'admin123'; // Defina uma senha aqui
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        let lastOrderCount = orders.length;
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        function openModal() {
-            document.getElementById('ordersModal').style.display = 'block';
-            if (document.getElementById('ordersSection').style.display !== 'none') {
-                displayOrders();
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('ordersModal').style.display = 'none';
-        }
-
-        function loginAdmin() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === ADMIN_PASSWORD) {
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('ordersSection').style.display = 'block';
-                displayOrders();
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity += 1;
             } else {
-                alert('Senha incorreta!');
+                cart.push({
+                    name,
+                    price,
+                    quantity: 1
+                });
             }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            alert(`${name} adicionado ao carrinho!`);
         }
 
-        function displayOrders() {
-            const list = document.getElementById('orderList');
-            const totalSpan = document.getElementById('totalOrders');
-            list.innerHTML = '';
+        function updateCartDisplay() {
+            document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
 
-            orders.forEach((order, index) => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `
-                    <strong>Pedido #${index + 1} - ${new Date(order.timestamp).toLocaleString('pt-BR')}</strong><br>
-                    Total: R$ ${order.total.toFixed(2)}<br>
-                    Endereço: ${order.address}<br>
-                    Pagamento: ${order.payment}<br>
-                    Itens: ${order.items.map(item => `${item.name} (x${item.quantity})`).join(', ')}
-                    <br><button onclick="removeOrder(${index})">Remover</button>
-                `;
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            displayCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function displayCart() {
+            const list = document.getElementById('cartItems');
+            const totalSpan = document.getElementById('cartTotal');
+            list.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.name} (x${item.quantity}) - R$ ${(item.price * item.quantity).toFixed(2)} 
+                    <button onclick="removeFromCart('${item.name}')">Remover</button>`;
                 list.appendChild(li);
+                total += item.price * item.quantity;
             });
 
-            totalSpan.textContent = orders.length;
-            lastOrderCount = orders.length;
+            totalSpan.textContent = total.toFixed(2);
+            document.getElementById('checkoutTotal').textContent = total.toFixed(2);
         }
 
-        function removeOrder(index) {
-            orders.splice(index, 1);
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+            updateCartDisplay();
+        }
+
+        function clearCart() {
+            if (confirm('Limpar carrinho?')) {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+                updateCartDisplay();
+            }
+        }
+
+        function openCheckout() {
+            closeCart();
+            document.getElementById('checkoutModal').style.display = 'block';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function copyPix() {
+            navigator.clipboard.writeText('10738419605').then(() => alert('Chave PIX copiada!'));
+        }
+
+        function submitOrder() {
+            const address = document.getElementById('address').value;
+            const payment = document.getElementById('payment').value;
+            const total = parseFloat(document.getElementById('checkoutTotal').textContent.replace(',', '.'));
+
+            if (!address) {
+                alert('Preencha o endereço!');
+                return;
+            }
+
+            // Salvar pedido no localStorage para o painel
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push({
+                timestamp: new Date().toISOString(),
+                total: total,
+                address: address,
+                payment: payment,
+                items: cart.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity
+                }))
+            });
             localStorage.setItem('orders', JSON.stringify(orders));
-            displayOrders();
+
+            // Limpar carrinho após envio
+            clearCart();
+            closeCheckout();
+
+            alert('Pedido enviado! Aguarde a confirmação via WhatsApp. (Simulado: Pedido salvo no painel.)');
+            // Aqui você pode redirecionar para WhatsApp ou enviar real
+            // window.open('https://wa.me/5510738419605?text=Pedido: ' + JSON.stringify({address, payment, items: cart, total}));
         }
 
-        function exportOrders() {
-            const dataStr = JSON.stringify(orders, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'pedidos.json';
-            link.click();
-        }
+        // Inicializar
+        updateCartDisplay();
 
-        function importOrders(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const importedOrders = JSON.parse(e.target.result);
-                        orders = [...orders, ...importedOrders];
-                        localStorage.setItem('orders', JSON.stringify(orders));
-                        displayOrders();
-                        alert('Pedidos importados com sucesso!');
-                    } catch (err) {
-                        alert('Erro ao importar JSON: ' + err.message);
-                    }
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        function clearAllOrders() {
-            if (confirm('Tem certeza que deseja limpar todos os pedidos?')) {
-                orders = [];
-                localStorage.setItem('orders', JSON.stringify(orders));
-                displayOrders();
-            }
-        }
-
-        // Auto-update a cada 10s
-        setInterval(() => {
-            const currentOrders = JSON.parse(localStorage.getItem('orders')) || [];
-            if (currentOrders.length > lastOrderCount) {
-                lastOrderCount = currentOrders.length;
-                orders = currentOrders;
-                // Mostrar notificação se modal fechado
-                if (document.getElementById('ordersModal').style.display === 'none') {
-                    document.getElementById('newOrderNotification').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('newOrderNotification').style.display = 'none';
-                    }, 5000);
-                }
-                if (document.getElementById('ordersSection').style.display !== 'none') {
-                    displayOrders();
-                }
-            }
-        }, 10000);
-
-        // Fechar modal ao clicar fora
+        // Fechar modais ao clicar fora
         window.onclick = function(event) {
-            const modal = document.getElementById('ordersModal');
-            if (event.target == modal) {
-                closeModal();
-            }
+            const cartModal = document.getElementById('cartModal');
+            const checkoutModal = document.getElementById('checkoutModal');
+            if (event.target == cartModal) closeCart();
+            if (event.target == checkoutModal) closeCheckout();
         }
     </script>
 </body>
