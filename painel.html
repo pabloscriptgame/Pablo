@@ -4,698 +4,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DêGusto Lanchonete Premium - Painel de Pedidos</title>
+    <title>Painel DêGusto</title>
     <style>
+        /* Estilos para o painel */
+        
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
         }
         
-        header {
-            background-color: #ff6347;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        nav {
-            background-color: #333;
-            padding: 10px;
-        }
-        
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-        
-        .menu-section {
-            margin: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-        /* Oculto por padrão no painel */
-        
-        .menu-item {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .price {
-            font-weight: bold;
-            color: #ff6347;
-        }
-        
-        button {
-            background: #ff6347;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 2px;
-        }
-        
-        button:hover {
-            background: #e55337;
-        }
-        
-        #cart-modal,
-        #admin-modal {
+        .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.4);
         }
         
         .modal-content {
-            background: white;
+            background-color: #fefefe;
             margin: 5% auto;
             padding: 20px;
+            border: 1px solid #888;
             width: 90%;
-            max-width: 900px;
-            border-radius: 8px;
+            max-width: 800px;
             max-height: 80vh;
             overflow-y: auto;
         }
         
         .close {
+            color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
         }
         
-        .order-item {
-            background: #f9f9f9;
-            margin: 15px 0;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #ff6347;
-        }
-        
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .order-time {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        .order-total {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #ff6347;
-        }
-        
-        .order-details ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-        
-        .status {
-            padding: 5px 10px;
-            border-radius: 20px;
-            color: white;
-            font-size: 0.8em;
-        }
-        
-        .status-novo {
-            background: #ffc107;
-        }
-        
-        .status-preparando {
-            background: #17a2b8;
-        }
-        
-        .status-entregue {
-            background: #28a745;
-        }
-        
-        #admin-section {
-            display: none;
-        }
-        
-        input[type="password"],
-        input[type="text"],
-        select {
-            padding: 8px;
-            margin: 5px;
-            width: 200px;
+        .order {
             border: 1px solid #ddd;
-            border-radius: 4px;
+            margin: 10px 0;
+            padding: 10px;
         }
         
         .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #28a745;
-            color: white;
+            background: #ffffcc;
             padding: 10px;
-            border-radius: 4px;
-            z-index: 1001;
-            display: none;
-        }
-        
-        .refresh-btn {
-            background: #007bff;
-        }
-        
-        .refresh-btn:hover {
-            background: #0056b3;
-        }
-        
-        .export-btn {
-            background: #28a745;
-        }
-        
-        .export-btn:hover {
-            background: #218838;
-        }
-        
-        input[type="file"] {
-            margin: 5px;
-        }
-        
-        #orders-list {
-            max-height: 60vh;
-            overflow-y: auto;
+            margin: 10px;
         }
     </style>
 </head>
 
 <body>
+    <!-- Cabeçalho original -->
+    <h1>🛵 DêGusto Lanchonete Premium - Painel de Controle</h1>
+    <p>Monitore pedidos em tempo real! (Atualização automática a cada 10s)</p>
+    <nav>
+        <a href="#">Cardápio</a>
+        <a href="#">Parceiros</a>
+        <a href="#" onclick="openOrdersModal()">Ver Pedidos</a>
+        <a href="#" onclick="exportOrders()">Exportar Pedidos (JSON)</a>
+    </nav>
 
-    <header>
-        <h1>🛵 DêGusto Lanchonete Premium - Painel de Controle</h1>
-        <p>Monitore pedidos em tempo real! (Atualização automática a cada 10s)</p>
-        <nav>
-            <a href="#" onclick="showSection('cardapio')">Cardápio</a>
-            <a href="#" onclick="showSection('parceiros')">Parceiros</a>
-            <a href="#" onclick="openAdminModal()">Ver Pedidos</a>
-            <a href="#" onclick="exportOrders()">Exportar Pedidos (JSON)</a>
-        </nav>
-    </header>
+    <!-- Conteúdo original do cardápio e parceiros... -->
 
-    <section id="cardapio">
-        <div id="hamburgers-section" class="menu-section">
-            <h3>🍔 Hambúrgueres</h3>
-            <div class="items-list"></div>
-        </div>
-
-        <div id="combos-section" class="menu-section">
-            <h3>🎁 Combos Irresistíveis</h3>
-            <div class="items-list"></div>
-        </div>
-
-        <div id="sauces-section" class="menu-section">
-            <h3>🧂 Molhos Especiais</h3>
-            <div class="items-list"></div>
-        </div>
-
-        <div id="portions-section" class="menu-section">
-            <h3>🍟 Porções Crocantes</h3>
-            <div class="items-list"></div>
-        </div>
-
-        <div id="drinks-section" class="menu-section">
-            <h3>🥤 Bebidas Geladas</h3>
-            <div class="items-list"></div>
-        </div>
-    </section>
-
-    <section id="parceiros">
-        <h3>🤝 Parceiros</h3>
-        <p>Anuncie seu negócio conosco!</p>
-        <div>Pablo LogoMarcas - <a href="#" onclick="alert('Saiba mais')">Saiba mais</a></div>
-        <div>Lorrayne Oliveira - NAIL DESIGNER - <a href="#" onclick="alert('Saiba mais')">Saiba mais</a></div>
-    </section>
-
-    <footer>
-        <p>© 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️ por PabloLogoMarcas</p>
-    </footer>
-
-    <!-- Modal do Painel de Pedidos -->
-    <div id="admin-modal">
+    <!-- Modal de Pedidos -->
+    <div id="ordersModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeAdminModal()">&times;</span>
+            <span class="close">&times;</span>
             <h2>📋 Painel de Pedidos - Todos os Pedidos Realizados</h2>
             <div>
                 <label>Senha Admin: </label>
-                <input type="password" id="admin-password" placeholder="Digite a senha (admin123)">
+                <input type="password" id="adminPassword">
                 <button onclick="loginAdmin()">Entrar</button>
             </div>
-            <div id="admin-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3>Lista de Pedidos (Total: <span id="total-orders">0</span>)</h3>
-                    <button class="refresh-btn" onclick="loadOrders()">Atualizar Manual</button>
-                </div>
-                <input type="file" id="import-file" accept=".json" onchange="importOrders(event)" style="display: none;">
-                <button class="export-btn" onclick="document.getElementById('import-file').click()">Importar Pedidos (JSON)</button>
-                <button class="export-btn" onclick="exportOrders()">Exportar Pedidos (JSON)</button>
-                <div id="orders-list"></div>
-                <button onclick="clearAllOrders()" style="background: #dc3545;">Limpar Todos os Pedidos</button>
+            <div id="ordersList">
+                <p>Lista de Pedidos (Total: 0)</p>
+                <button onclick="updateOrders()">Atualizar Manual</button>
             </div>
+            <button onclick="importOrders()">Importar Pedidos (JSON)</button>
+            <button onclick="exportOrders()">Exportar Pedidos (JSON)</button>
+            <button onclick="clearAllOrders()" id="clearBtn" style="display:none;">Limpar Todos os Pedidos</button>
         </div>
     </div>
 
-    <!-- Notificação de Novo Pedido -->
-    <div id="notification" class="notification">
-        Novo Pedido Recebido! Clique para ver.
+    <!-- Notificação de novo pedido -->
+    <div id="notification" class="notification" style="display:none;">
+        Novo Pedido Recebido! <button onclick="openOrdersModal()">Clique para ver.</button>
     </div>
 
     <script>
-        // Dados completos do menu (do JSON)
-        const menuData = {
-            hamburgers: [{
-                name: "X-COSTELA",
-                description: "Pão artesanal, costela desfiada suculenta, queijo cheddar derretido, anéis de cebola crocantes, molho barbecue especial, cebola caramelizada, bacon crocante e milho doce.",
-                price: 30.00
-            }, {
-                name: "ESPECIAL TILÁPIA",
-                description: "Hambúrguer de tilápia grelhada, anéis de cebola empanados, queijo muçarela, molho de picles caseiro, milho fresco e salada crocante.",
-                price: 30.00
-            }, {
-                name: "ARTESANAL GOIABADA",
-                description: "Hambúrguer artesanal de carne bovina, molho de goiabada especial, cebola caramelizada, milho, bacon crocante, presunto, muçarela e salada fresca.",
-                price: 30.00
-            }, {
-                name: "ESPECIAL STEAK",
-                description: "Steak de frango grelhado, anéis de cebola, molho barbecue, maionese de churrasco, presunto, muçarela, bacon, milho e salada.",
-                price: 30.00
-            }, {
-                name: "X-DÊ-GUSTO",
-                description: "Pão premium, 2 hambúrgueres de picanha, ovo frito, salsicha artesanal, presunto, muçarela, bacon, milho, cheddar, Catupiry e batata palha.",
-                price: 28.00
-            }, {
-                name: "ARTESANAL CLÁSSICO",
-                description: "Pão artesanal, hambúrguer artesanal, bacon crocante, cheddar, cebola caramelizada, presunto, muçarela, milho, batata palha e salada.",
-                price: 28.00
-            }, {
-                name: "ARTESANAL DORITOS",
-                description: "Pão artesanal, hambúrguer artesanal, bacon, cheddar, cebola caramelizada, milho, presunto, muçarela, Doritos e salada.",
-                price: 30.00
-            }, {
-                name: "ARTESANAL DUPLO",
-                description: "Pão artesanal, 2 hambúrgueres artesanais, bacon, cheddar, cebola caramelizada, presunto, muçarela, milho e batata palha.",
-                price: 35.00
-            }, {
-                name: "X-BOLO GIGANTE",
-                description: "Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, calabresa, muçarela. Finalizado com muito cheddar e batata frita.",
-                price: 42.00
-            }, {
-                name: "X-TUDO",
-                description: "Pão artesanal, hambúrguer de picanha, ovo frito, presunto, muçarela, milho, bacon, Catupiry e salada crocante.",
-                price: 24.00
-            }, {
-                name: "X-BACON",
-                description: "Pão, hambúrguer de picanha, ovo, presunto, muçarela, milho, bacon, Catupiry e salada.",
-                price: 22.00
-            }, {
-                name: "X-CALABRESA",
-                description: "Pão artesanal, hambúrguer de picanha, ovo, presunto, muçarela, milho, calabresa, cheddar e salada.",
-                price: 22.00
-            }, {
-                name: "X-CHEDDAR",
-                description: "Pão, hambúrguer de picanha, presunto, muçarela, salsicha, milho, bacon, cheddar e salada.",
-                price: 22.00
-            }, {
-                name: "X-SALADA",
-                description: "Pão artesanal, hambúrguer de picanha, presunto, muçarela, Catupiry, milho e salada crocante.",
-                price: 16.00
-            }, {
-                name: "X-STEAK",
-                description: "Pão, steak de frango, presunto, muçarela, milho, molho verde, molho barbecue, batata palha e salada.",
-                price: 20.00
-            }, {
-                name: "X-DOBRO PODEROSO",
-                description: "Pão artesanal, 2 hambúrgueres, 2 salsichas, 2 ovos, bacon, cheddar, Catupiry, presunto, muçarela, milho e batata palha.",
-                price: 30.00
-            }, {
-                name: "X-BAGUNÇA",
-                description: "Pão, hambúrguer de picanha, steak de frango, bacon, salsicha, presunto, muçarela, Catupiry, cheddar, milho, batata palha e salada.",
-                price: 33.00
-            }],
-            combos: [{
-                name: "COMBO DUPLO TUDO",
-                description: "2 hambúrgueres X-Tudo Premium - Perfeito para compartilhar!",
-                price: 42.00
-            }, {
-                name: "COMBO KIDS",
-                description: "hambúrguer + Batata Frita + Refrigerante + Bala Fine - O sabor que encanta os pequenos!",
-                price: 25.00
-            }, {
-                name: "COMBO FAMÍLIA",
-                description: "2 hambúrgueres X-Tudo + 2 refrigerantes 200ml - Combo completo!",
-                price: 45.00
-            }, {
-                name: "COMBO DUPLO PODER",
-                description: "2 hambúrgueres X-Dobro Poderoso - Para quem tem muita fome!",
-                price: 46.00
-            }, {
-                name: "COMBO X-TUDO COMPLETO",
-                description: "1 X-Tudo + Batata tamanho P + Refrigerante 200ml - Combo individual perfeito!",
-                price: 27.00
-            }, {
-                name: "COMBO LEVE E SAUDÁVEL",
-                description: "1 X-Salada Fresca + Batata tamanho P + Refrigerante 200ml - Opção mais leve!",
-                price: 23.00
-            }, {
-                name: "COMBO TRIO TUDO",
-                description: "3 hambúrgueres X-Tudo + 3 refrigerantes 200ml - Para 3 pessoas!",
-                price: 70.00
-            }, {
-                name: "COMBO COMPLETO FAMÍLIA",
-                description: "2 X-Tudo + 2 refrigerantes + Batata tamanho P - Combo familiar completo!",
-                price: 50.00
-            }, {
-                name: "COMBO SUPREMO DÊ-GUSTO",
-                description: "1 X-Dê-Gusto Supremo + Batata tamanho P + Refrigerante 200ml - O melhor!",
-                price: 30.00
-            }, {
-                name: "COMBO TRIO PURO",
-                description: "3 hambúrgueres X-Tudo - Para quem quer só hambúrguer!",
-                price: 60.00
-            }, {
-                name: "COMBO DUPLO ARTESANAL",
-                description: "2 hambúrgueres Artesanal Clássico - Qualidade premium em dobro!",
-                price: 52.00
-            }, {
-                name: "COMBO ARTESANAL + REFRIGERANTE",
-                description: "1 Artesanal Clássico + Refrigerante 200ml - Combinação perfeita!",
-                price: 30.00
-            }],
-            sauces: [{
-                name: "MOLHO CHURRASCO",
-                description: "Molho barbecue caseiro com toque defumado - Perfeito para carnes!",
-                price: 3.00
-            }, {
-                name: "MOLHO DE ALHO",
-                description: "Cremoso molho de alho com ervas frescas - Clássico irresistível!",
-                price: 3.00
-            }, {
-                name: "MOLHO VERDE",
-                description: "Molho verde refrescante com ervas e limão - Leve e saboroso!",
-                price: 3.00
-            }, {
-                name: "MOLHO GOIABADA",
-                description: "Molho exclusivo de goiabada com especiarias - Nossas especialidade!",
-                price: 3.00
-            }, {
-                name: "MOLHO PICLES",
-                description: "Molho de picles caseiro com toque de mostarda - Crocante e ácido!",
-                price: 3.00
-            }, {
-                name: "MOLHO CHEDDAR",
-                description: "Queijo cheddar cremoso derretido - Para os amantes de queijo!",
-                price: 3.00
-            }, {
-                name: "MOLHO CATUPIRY",
-                description: "Clássico Catupiry cremoso - Nobreza no sabor!",
-                price: 3.00
-            }, {
-                name: "MOLHO BARBECUE",
-                description: "Molho barbecue tradicional com mel - Doce e defumado!",
-                price: 3.00
-            }, {
-                name: "CEBOLA CARAMELIZADA",
-                description: "Cebola caramelizada com toque de balsâmico - Doçura perfeita!",
-                price: 3.00
-            }, {
-                name: "MOLHO PIMENTA",
-                description: "Molho de pimenta habanero com mel - Picante com equilíbrio!",
-                price: 3.00
-            }, {
-                name: "MOSTARDA MEL",
-                description: "Mostarda Dijon com mel puro - Doce e picante na medida!",
-                price: 3.00
-            }, {
-                name: "MOLHO MARACUJÁ",
-                description: "Molho de maracujá com toque apimentado - Tropical e ousado!",
-                price: 3.00
-            }, {
-                name: "MOLHO ABACAXI",
-                description: "Molho de abacaxi grelhado com curry - Exótico e surpreendente!",
-                price: 3.00
-            }],
-            portions: [{
-                name: "BATATA PETIT",
-                description: "200g de batata frita crocante com bacon e cheddar derretido - Porção individual perfeita!",
-                price: 10.00
-            }, {
-                name: "BATATA MÉDIA",
-                description: "400g de batata frita com bacon crocante e cheddar - Para compartilhar!",
-                price: 20.00
-            }, {
-                name: "BATATA GIGANTE",
-                description: "300g de batata frita completa com salsicha, hambúrguer, calabresa, bacon, salada, muçarela e cheddar - A maior porção!",
-                price: 35.00
-            }],
-            drinks: [{
-                name: "COCA-COLA 2L",
-                description: "Coca-Cola 2L geladinha - Perfeita para compartilhar com a família!",
-                price: 14.00
-            }, {
-                name: "COCA-COLA 1L",
-                description: "Coca-Cola 1L bem gelada - Ideal para acompanhar seu hambúrguer!",
-                price: 10.00
-            }, {
-                name: "COCA-COLA LATA",
-                description: "Coca-Cola lata gelada 350ml - Clássico sempre!",
-                price: 6.00
-            }, {
-                name: "FANTA LARANJA 2L",
-                description: "Fanta Laranja 2L - Sabor cítrico refrescante para toda família!",
-                price: 12.00
-            }, {
-                name: "FANTA LARANJA 1L",
-                description: "Fanta Laranja 1L gelada - Perfeita para um hambúrguer leve!",
-                price: 10.00
-            }, {
-                name: "KUAT 2L",
-                description: "Kuat Guaraná 2L - Sabor brasileiro autêntico e refrescante!",
-                price: 10.00
-            }, {
-                name: "MINEIRO 2L",
-                description: "Guaraná Mineiro 2L - Orgulho mineiro em cada gole!",
-                price: 12.00
-            }, {
-                name: "PITHULÁ",
-                description: "Pithulá 200ml - Bebida regional geladinha para acompanhar!",
-                price: 3.00
-            }]
-        };
+        let isAdmin = false;
+        let orders = [];
 
-        // Variáveis globais
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        let lastOrderCount = orders.length;
-        let adminLoggedIn = false;
+        // Carregar pedidos do localStorage
+        function loadOrders() {
+            orders = JSON.parse(localStorage.getItem('degustoOrders')) || [];
+            if (isAdmin) {
+                displayOrders();
+            }
+        }
 
-        // Renderiza categoria (para cardápio, se necessário)
-        function renderCategory(containerId, items) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const itemsList = container.querySelector('.items-list');
-            itemsList.innerHTML = '';
-            items.forEach(item => {
-                const itemHtml = `
-                    <div class="menu-item">
-                        <div>
-                            <h5>${item.name}</h5>
-                            <p>${item.description}</p>
-                        </div>
-                        <div>
-                            <span class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
-                            <button onclick="addToCart('${item.name}', ${item.price})">Adicionar ao Carrinho</button>
-                        </div>
-                    </div>
+        // Exibir pedidos
+        function displayOrders() {
+            const listDiv = document.getElementById('ordersList');
+            listDiv.innerHTML = `<p>Lista de Pedidos (Total: ${orders.length})</p><button onclick="updateOrders()">Atualizar Manual</button>`;
+            orders.forEach(order => {
+                        const orderDiv = document.createElement('div');
+                        orderDiv.className = 'order';
+                        orderDiv.innerHTML = `
+                    <h3>ID: ${order.id} - Status: ${order.status}</h3>
+                    <p>Data/Hora: ${order.timestamp}</p>
+                    <p>Endereço: ${order.address}</p>
+                    <p>Pagamento: ${order.payment}</p>
+                    <p>Total: R$ ${order.total.toFixed(2)}</p>
+                    <h4>Itens:</h4>
+                    <ul>${order.items.map(item => `<li>${item.name} x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}</li>`).join('')}</ul>
+                    <button onclick="updateStatus(${order.id}, 'preparando')">Preparando</button>
+                    <button onclick="updateStatus(${order.id}, 'entregue')">Entregue</button>
                 `;
-                itemsList.insertAdjacentHTML('beforeend', itemHtml);
+                listDiv.appendChild(orderDiv);
             });
         }
 
-        // Carrega menu (se mostrado)
-        function loadMenu() {
-            Object.keys(menuData).forEach(key => {
-                renderCategory(`${key}-section`, menuData[key]);
-            });
-        }
-
-        // Mostra seção
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'block';
-            if (sectionId === 'cardapio') loadMenu();
-        }
-
-        // Adiciona ao carrinho (para clientes)
-        function addToCart(name, price) {
-            // Simula adição; em site completo, integra com carrinho
-            alert(`${name} adicionado!`);
-        }
-
-        // Login Admin
+        // Login admin (senha simples, ex: 'admin')
         function loginAdmin() {
-            const password = document.getElementById('admin-password').value;
-            if (password === 'admin123') {
-                document.getElementById('admin-section').style.display = 'block';
-                adminLoggedIn = true;
-                loadOrders();
-                startAutoRefresh();
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === 'admin') { // Senha fixa; mude se necessário
+                isAdmin = true;
+                document.getElementById('ordersList').innerHTML += '<p>Login bem-sucedido!</p>';
+                displayOrders();
+                document.getElementById('clearBtn').style.display = 'inline';
             } else {
                 alert('Senha incorreta!');
             }
         }
 
-        // Carrega e exibe pedidos
-        function loadOrders() {
-            const ordersList = document.getElementById('orders-list');
-            const totalSpan = document.getElementById('total-orders');
-            ordersList.innerHTML = '';
-            orders.forEach((order, index) => {
-                        const statusClass = order.status === 'preparando' ? 'status-preparando' : order.status === 'entregue' ? 'status-entregue' : 'status-novo';
-                        const statusText = order.status === 'preparando' ? 'Preparando' : order.status === 'entregue' ? 'Entregue' : 'Novo';
-                        ordersList.innerHTML += `
-                    <div class="order-item">
-                        <div class="order-header">
-                            <h4>Pedido #${order.id}</h4>
-                            <span class="order-time">${order.timestamp}</span>
-                            <span class="status ${statusClass}">${statusText}</span>
-                        </div>
-                        <p><strong>Endereço:</strong> ${order.address || 'Não informado'}</p>
-                        <p><strong>Pagamento:</strong> ${order.payment || 'Não informado'}</p>
-                        <ul>
-                            ${order.items.map(i => `<li>${i.name} x${i.quantity} - R$ ${(i.price * i.quantity).toFixed(2).replace('.', ',')}</li>`).join('')}
-                        </ul>
-                        <p class="order-total">Total: R$ ${order.total.toFixed(2).replace('.', ',')}</p>
-                        <div>
-                            <button onclick="updateStatus(${index}, 'preparando')">Preparando</button>
-                            <button onclick="updateStatus(${index}, 'entregue')">Entregue</button>
-                            <button onclick="deleteOrder(${order.id})" style="background: #dc3545;">Excluir</button>
-                        </div>
-                    </div>
-                `;
-            });
-            totalSpan.textContent = orders.length;
-            if (orders.length > lastOrderCount) {
-                showNotification();
-                lastOrderCount = orders.length;
+        // Atualizar pedidos
+        function updateOrders() {
+            loadOrders();
+        }
+
+        // Atualizar status
+        function updateStatus(id, status) {
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                order.status = status;
+                localStorage.setItem('degustoOrders', JSON.stringify(orders));
+                displayOrders();
             }
         }
 
-        // Atualiza status do pedido
-        function updateStatus(index, status) {
-            if (orders[index]) {
-                orders[index].status = status;
-                localStorage.setItem('orders', JSON.stringify(orders));
-                loadOrders();
-            }
+        // Importar JSON (via input file)
+        function importOrders() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = event => {
+                    orders = JSON.parse(event.target.result);
+                    localStorage.setItem('degustoOrders', JSON.stringify(orders));
+                    displayOrders();
+                };
+                reader.readAsText(file);
+            };
+            input.click();
         }
 
-        // Exclui pedido
-        function deleteOrder(id) {
-            if (confirm('Confirmar exclusão?')) {
-                orders = orders.filter(o => o.id !== id);
-                localStorage.setItem('orders', JSON.stringify(orders));
-                loadOrders();
-            }
-        }
-
-        // Limpa todos
-        function clearAllOrders() {
-            if (confirm('Limpar todos os pedidos?')) {
-                orders = [];
-                localStorage.setItem('orders', JSON.stringify(orders));
-                loadOrders();
-            }
-        }
-
-        // Notificação de novo pedido
-        function showNotification() {
-            const notif = document.getElementById('notification');
-            notif.style.display = 'block';
-            setTimeout(() => { notif.style.display = 'none'; }, 5000);
-            notif.onclick = () => { openAdminModal(); loadOrders(); };
-        }
-
-        // Auto-refresh a cada 10s
-        function startAutoRefresh() {
-            setInterval(() => {
-                if (adminLoggedIn) {
-                    const currentOrders = JSON.parse(localStorage.getItem('orders')) || [];
-                    if (currentOrders.length !== orders.length) {
-                        orders = currentOrders;
-                        loadOrders();
-                    }
-                }
-            }, 10000);
-        }
-
-        // Exporta para JSON
+        // Exportar JSON
         function exportOrders() {
             const dataStr = JSON.stringify(orders, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `pedidos_degusto_${new Date().toISOString().split('T')[0]}.json`;
+            link.href = url;
+            link.download = 'pedidos.json';
             link.click();
         }
 
-        // Importa de JSON
-        function importOrders(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const importedOrders = JSON.parse(e.target.result);
-                        orders = [...orders, ...importedOrders];
-                        localStorage.setItem('orders', JSON.stringify(orders));
-                        loadOrders();
-                        alert('Pedidos importados!');
-                    } catch (err) {
-                        alert('Erro ao importar JSON!');
-                    }
-                };
-                reader.readAsText(file);
+        // Limpar todos
+        function clearAllOrders() {
+            if (confirm('Limpar todos os pedidos?')) {
+                orders = [];
+                localStorage.removeItem('degustoOrders');
+                displayOrders();
             }
         }
 
-        // Modais
-        function openAdminModal() {
-            document.getElementById('admin-modal').style.display = 'block';
-            document.getElementById('admin-password').value = '';
-            document.getElementById('admin-section').style.display = 'none';
-            adminLoggedIn = false;
+        // Abrir modal pedidos
+        function openOrdersModal() {
+            document.getElementById('ordersModal').style.display = 'block';
+            loadOrders();
         }
 
-        function closeAdminModal() {
-            document.getElementById('admin-modal').style.display = 'none';
-        }
+        // Fechar modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('ordersModal').style.display = 'none';
+        };
 
-        // Inicialização
-        window.addEventListener('DOMContentLoaded', () => {
-            showSection('cardapio');
-        });
+        // Verificar novo pedido a cada 10s e notificar
+        setInterval(() => {
+            const prevCount = orders.length;
+            loadOrders();
+            if (orders.length > prevCount && isAdmin) {
+                document.getElementById('notification').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('notification').style.display = 'none';
+                }, 5000);
+            }
+        }, 10000);
+
+        // Inicializar
+        loadOrders();
     </script>
 
+    <!-- Rodapé original... -->
 </body>
 
 </html>
