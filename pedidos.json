@@ -1,0 +1,45 @@
+[{
+        "timestamp": "2025-10-07T14:30:00",
+        "total": 35.50,
+        "address": "Rua das Flores, 456 - Monte Carmelo",
+        "payment": "PIX",
+        "items": [{
+                "name": "X-COSTELA",
+                "quantity": 1
+            },
+            {
+                "name": "BATATA MÉDIA",
+                "quantity": 1
+            },
+            {
+                "name": "COCA-COLA LATA",
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-10-07T15:45:00",
+        "total": 28.00,
+        "address": "Avenida Principal, 789 - Monte Carmelo",
+        "payment": "Dinheiro",
+        "items": [{
+                "name": "ARTESANAL CLÁSSICO",
+                "quantity": 1
+            },
+            {
+                "name": "MOLHO BARBECUE",
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-10-07T18:20:00",
+        "total": 52.00,
+        "address": "Travessa Secundária, 101 - Monte Carmelo",
+        "payment": "Crédito",
+        "items": [{
+            "name": "COMBO DUPLO ARTESANAL",
+            "quantity": 1
+        }]
+    }
+]
