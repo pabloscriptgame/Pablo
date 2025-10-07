@@ -1,0 +1,78 @@
+{
+    "orders": [{
+            "id": 1728300000000,
+            "items": [{
+                    "name": "X-TUDO",
+                    "price": 24.00,
+                    "quantity": 1
+                },
+                {
+                    "name": "COCA-COLA LATA",
+                    "price": 6.00,
+                    "quantity": 1
+                }
+            ],
+            "total": 30.00,
+            "timestamp": "07/10/2025 18:45:23",
+            "address": "Rua das Flores, 123, Monte Carmelo - MG",
+            "payment": "PIX",
+            "status": "novo"
+        },
+        {
+            "id": 1728301000000,
+            "items": [{
+                    "name": "ARTESANAL DUPLO",
+                    "price": 35.00,
+                    "quantity": 1
+                },
+                {
+                    "name": "BATATA MÉDIA",
+                    "price": 20.00,
+                    "quantity": 1
+                }
+            ],
+            "total": 55.00,
+            "timestamp": "07/10/2025 19:12:45",
+            "address": "Av. Principal, 456, Centro - Monte Carmelo",
+            "payment": "Dinheiro",
+            "status": "preparando"
+        },
+        {
+            "id": 1728302000000,
+            "items": [{
+                "name": "COMBO FAMÍLIA",
+                "price": 45.00,
+                "quantity": 1
+            }],
+            "total": 45.00,
+            "timestamp": "07/10/2025 20:05:12",
+            "address": "Bairro Novo, 789, Monte Carmelo - MG",
+            "payment": "Crédito",
+            "status": "entregue"
+        },
+        {
+            "id": 1728303000000,
+            "items": [{
+                    "name": "X-BAGUNÇA",
+                    "price": 33.00,
+                    "quantity": 1
+                },
+                {
+                    "name": "MOLHO BARBECUE",
+                    "price": 3.00,
+                    "quantity": 2
+                },
+                {
+                    "name": "KUAT 2L",
+                    "price": 10.00,
+                    "quantity": 1
+                }
+            ],
+            "total": 49.00,
+            "timestamp": "07/10/2025 21:30:08",
+            "address": "Travessa das Acácias, 101, Monte Carmelo",
+            "payment": "Débito",
+            "status": "novo"
+        }
+    ]
+}
