@@ -19,51 +19,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const helpModal = document.getElementById('help-modal');
             const closeHelpModal = document.querySelector('#help-modal .close-modal');
             const checkoutTotal = document.getElementById('checkout-total');
-
-            // radio player
             const radio = document.getElementById("radio-audio");
             const playBtn = document.getElementById("play-btn");
             const pauseBtn = document.getElementById("pause-btn");
             const vuMeter = document.getElementById("vu-meter");
 
-            // Função para formatar moeda brasileira
             function formatCurrency(value) {
                 return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
             }
 
-            // Atualizar botão do carrinho
-            function updateCartButton() {
-                cartCount.textContent = cart.length;
-            }
+            function updateCartButton() { cartCount.textContent = cart.length; }
 
-            // Função para calcular total
-            function calculateTotal() {
-                return cart.reduce((sum, i) => sum + parseFloat(i.price), 0);
-            }
+            function calculateTotal() { return cart.reduce((sum, i) => sum + parseFloat(i.price), 0); }
 
-            // Atualizar total no checkout
             function updateCheckoutTotal() {
                 const total = calculateTotal();
                 checkoutTotal.textContent = `Total: ${formatCurrency(total)}`;
                 modalTotal.textContent = `Total: ${formatCurrency(total)}`;
             }
 
-            // Função para popular modal com itens do carrinho
             function populateModal() {
                 modalCartItems.innerHTML = '';
                 const total = calculateTotal();
                 if (cart.length === 0) {
-                    modalCartItems.innerHTML = '<p style="text-align: center; color: #cccccc; padding: 20px;">🛒 Seu carrinho está vazio<br>Adicione alguns hambúrgueres deliciosos para começar seu pedido!</p>';
+                    modalCartItems.innerHTML = '<p style="text-align:center;color:#ccc;padding:20px;">🛒 Carrinho vazio!</p>';
                     modalTotal.textContent = 'R$ 0,00';
                     checkoutButton.style.display = 'none';
                 } else {
                     cart.forEach((item, index) => {
                         const div = document.createElement('div');
                         div.classList.add('cart-item-modal');
-                        div.innerHTML = `
-                    <span>${item.name} - ${formatCurrency(item.price)}</span>
-                    <button onclick="removeFromCart(${index})">Remover</button>
-                `;
+                        div.innerHTML = `<span>${item.name} - ${formatCurrency(item.price)}</span>
+                                 <button onclick="removeFromCart(${index})">Remover</button>`;
                         modalCartItems.appendChild(div);
                     });
                     modalTotal.textContent = `Total: ${formatCurrency(total)}`;
@@ -72,9 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateCheckoutTotal();
             }
 
-            // Adicionar ao carrinho
             document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', (e) => {
+                button.addEventListener('click', e => {
                     const item = e.target.closest('.item');
                     const name = item.dataset.name;
                     const price = item.dataset.price;
@@ -82,30 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('cart', JSON.stringify(cart));
                     updateCartButton();
                     updateCheckoutTotal();
-                    showNotification(`${name} adicionado ao carrinho!`, 'success');
-                    button.classList.add('added');
-                    button.textContent = 'Adicionado!';
-                    button.disabled = true;
-                    setTimeout(() => {
-                        button.classList.remove('added');
-                        button.textContent = 'Adicionar ao Carrinho';
-                        button.disabled = false;
-                    }, 2000);
+                    showNotification(`${name} adicionado!`, 'success');
                 });
             });
 
-            // Remover do carrinho
-            window.removeFromCart = (index) => {
+            window.removeFromCart = index => {
                 cart.splice(index, 1);
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartButton();
                 populateModal();
-                showNotification('Item removido do carrinho!');
+                showNotification('Item removido.');
             };
 
-            // Limpar carrinho
             clearCartBtn.addEventListener('click', () => {
-                if (confirm('Tem certeza que deseja limpar o carrinho?')) {
+                if (confirm('Limpar o carrinho?')) {
                     cart.length = 0;
                     localStorage.setItem('cart', JSON.stringify(cart));
                     updateCartButton();
@@ -114,185 +90,119 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Mostrar notificação
             function showNotification(message, type = '') {
                 notification.textContent = message;
                 notification.className = `notification ${type}`;
                 notification.style.display = 'block';
-                notification.style.opacity = '1';
-                notification.style.transform = 'translateX(0)';
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => {
-                        notification.style.display = 'none';
-                        notification.className = 'notification';
-                    }, 300);
-                }, 3000);
+                setTimeout(() => notification.style.display = 'none', 3000);
             }
 
-            // Abrir modal do carrinho
             openModalBtn.addEventListener('click', () => {
                 populateModal();
                 modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
             });
-
-            // Fechar modal do carrinho
-            closeModal.addEventListener('click', () => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-
-            // Checkout button
+            closeModal.addEventListener('click', () => modal.style.display = 'none');
             checkoutButton.addEventListener('click', () => {
                 modal.style.display = 'none';
                 checkoutForm.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
                 updateCheckoutTotal();
             });
 
-            // Fechar checkout form
             document.querySelector('#checkout-form .close-modal').addEventListener('click', () => {
                 checkoutForm.style.display = 'none';
-                document.body.style.overflow = 'auto';
             });
 
-            // Pagamento radio buttons
-            pagamentoRadios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    trocoDiv.style.display = radio.value === 'Dinheiro' ? 'block' : 'none';
-                    pixDetails.style.display = radio.value === 'PIX' ? 'block' : 'none';
+            pagamentoRadios.forEach(radioBtn => {
+                radioBtn.addEventListener('change', () => {
+                    trocoDiv.style.display = radioBtn.value === 'Dinheiro' ? 'block' : 'none';
+                    pixDetails.style.display = radioBtn.value === 'PIX' ? 'block' : 'none';
                 });
             });
 
-            // Copiar PIX
             window.copyPix = () => {
-                navigator.clipboard.writeText('10738419605').then(() => {
-                    showNotification('Chave PIX copiada!');
-                }).catch(() => {
-                    showNotification('Erro ao copiar PIX. Copie manualmente: 10738419605');
-                });
+                navigator.clipboard.writeText('10738419605')
+                    .then(() => showNotification('PIX copiado!'))
+                    .catch(() => showNotification('Erro ao copiar PIX.'));
             };
 
-            // Enviar pedido
-            checkoutForm.addEventListener('submit', (e) => {
+            // 🧾 Enviar pedido + salvar no GitHub
+            checkoutForm.addEventListener('submit', async(e) => {
                         e.preventDefault();
-                        if (cart.length === 0) {
-                            showNotification('Carrinho vazio!');
-                            return;
-                        }
-
-                        const selectedPagamento = document.querySelector('input[name="pagamento"]:checked');
-                        if (!selectedPagamento) {
-                            showNotification('Selecione um método de pagamento!');
-                            return;
-                        }
+                        if (cart.length === 0) return showNotification('Carrinho vazio!');
+                        const pagamento = document.querySelector('input[name="pagamento"]:checked');
+                        if (!pagamento) return showNotification('Selecione pagamento!');
 
                         const rua = document.getElementById('rua').value;
                         const numero = document.getElementById('numero').value;
                         const bairro = document.getElementById('bairro').value;
                         const referencia = document.getElementById('referencia').value;
-                        const metodo = selectedPagamento.value;
+                        const metodo = pagamento.value;
                         const troco = document.getElementById('troco').value || '';
+                        if (!rua || !numero || !bairro) return showNotification('Endereço incompleto!');
 
-                        if (!rua || !numero || !bairro) {
-                            showNotification('Preencha o endereço completo!');
-                            return;
-                        }
+                        const total = calculateTotal();
+                        const pedidoTxt = `
+🧾 NOVO PEDIDO DÊGUSTO
+----------------------------
+${cart.map(i => `• ${i.name} - ${formatCurrency(i.price)}`).join('\n')}
+----------------------------
+💰 Total: ${formatCurrency(total)}
+📍 Rua ${rua}, Nº ${numero}, Bairro ${bairro}
+Ref: ${referencia || '---'}
+💳 Pagamento: ${metodo}${metodo === 'Dinheiro' && troco ? ` (Troco para R$ ${troco})` : ''}
+📅 ${new Date().toLocaleString('pt-BR')}
+----------------------------
+`;
 
-                        let total = calculateTotal();
-                        let orderDetails = `Novo Pedido - DêGusto Lanchonete\n\nItens:\n`;
-                        cart.forEach(item => orderDetails += `- ${item.name} (${formatCurrency(item.price)})\n`);
-                        orderDetails += `\nTotal: ${formatCurrency(total)}\n`;
-                        orderDetails += `Endereço: Rua ${rua}, Nº ${numero} - Bairro ${bairro}${referencia ? `, Ref: ${referencia}` : ''}\n`;
-        orderDetails += `Pagamento: ${metodo}${metodo === 'Dinheiro' && troco ? ` (Troco para R$ ${troco})` : ''}${metodo === 'PIX' ? '\nPIX Chave: 10738419605' : ''}`;
-
-        const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(orderDetails)}`;
+        // Abre WhatsApp
+        const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(pedidoTxt)}`;
         window.open(whatsappUrl, '_blank');
 
+        // Salva local e envia pro GitHub
+        let pedidosSalvos = localStorage.getItem("pedidosTexto") || "";
+        pedidosSalvos += `\n\n${pedidoTxt}`;
+        localStorage.setItem("pedidosTexto", pedidosSalvos);
+
+        try {
+            const resp = await fetch("https://api.github.com/repos/pabloscriptgame/Pablo/contents/pedidos.txt", {
+                method: "PUT",
+                headers: {
+                    "Authorization": "token SEU_TOKEN_GITHUB_AQUI",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Novo pedido adicionado",
+                    content: btoa(pedidosSalvos),
+                    sha: localStorage.getItem("shaArquivoPedidos") || undefined
+                })
+            });
+            const data = await resp.json();
+            if (data.content?.sha) localStorage.setItem("shaArquivoPedidos", data.content.sha);
+            showNotification('Pedido salvo no GitHub!', 'success');
+        } catch (err) {
+            console.error(err);
+            showNotification('Erro ao salvar no GitHub.');
+        }
+
+        // Limpa tudo
         cart.length = 0;
         localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartButton();
         checkoutForm.reset();
-        trocoDiv.style.display = 'none';
-        pixDetails.style.display = 'none';
         checkoutForm.style.display = 'none';
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        showNotification('Pedido enviado para WhatsApp!', 'success');
         populateModal();
+        updateCartButton();
     });
 
-    // Botão Ajuda - Abrir modal de ajuda
-    helpButton.addEventListener('click', () => {
-        helpModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    });
-
-    // Fechar modal de ajuda
-    closeHelpModal.addEventListener('click', () => {
-        helpModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        if (e.target === checkoutForm) {
-            checkoutForm.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        if (e.target === helpModal) {
-            helpModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Menu mobile
+    helpButton.addEventListener('click', () => helpModal.style.display = 'flex');
+    closeHelpModal.addEventListener('click', () => helpModal.style.display = 'none');
     mobileToggle.addEventListener('click', () => mainNav.classList.toggle('active'));
-
-    // Tabs
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabPanels = document.querySelectorAll('.tab-panel');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            tabPanels.forEach(panel => panel.classList.remove('active'));
-            document.getElementById(button.dataset.tab).classList.add('active');
-        });
-    });
-
-    // Inicialização
     updateCartButton();
     populateModal();
 
-    // radio simple controls - CORRIGIDO
-    (function(){
-        if(!radio || !playBtn || !pauseBtn || !vuMeter) {
-            console.warn('Elementos do player de rádio não encontrados.');
-            return;
-        }
-        playBtn.addEventListener('click', () => {
-            radio.play().then(() => {
-                vuMeter.style.display = 'flex';
-                console.log('Rádio tocando.');
-            }).catch(error => {
-                console.error('Erro ao reproduzir áudio:', error);
-                showNotification('Erro ao iniciar o player. Verifique a conexão.', 'error');
-            });
-        });
-        pauseBtn.addEventListener('click', () => {
-            radio.pause();
-            vuMeter.style.display = 'none';
-            console.log('Rádio pausado.');
-        });
-        radio.pause();
-        vuMeter.style.display = 'none';
-        console.log('Player de rádio inicializado.');
+    (function () {
+        if (!radio || !playBtn || !pauseBtn || !vuMeter) return;
+        playBtn.addEventListener('click', () => { radio.play(); vuMeter.style.display = 'flex'; });
+        pauseBtn.addEventListener('click', () => { radio.pause(); vuMeter.style.display = 'none'; });
+        radio.pause(); vuMeter.style.display = 'none';
     })();
 });
