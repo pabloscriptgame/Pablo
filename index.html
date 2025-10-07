@@ -558,6 +558,35 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Mostra pedidos salvos em texto simples
+        function mostrarPedidosTexto() {
+            const container = document.createElement('div');
+            container.id = 'pedidosTextoContainer';
+            container.style.whiteSpace = 'pre-wrap';
+            container.style.background = '#f9f9f9';
+            container.style.border = '1px solid #ccc';
+            container.style.padding = '15px';
+            container.style.margin = '15px 0';
+            container.style.fontFamily = 'monospace';
+            container.style.fontSize = '14px';
+
+            const pedidosTexto = localStorage.getItem('pedidosTexto') || 'Nenhum pedido salvo ainda.';
+            container.textContent = pedidosTexto;
+
+            const main = document.querySelector('main');
+            const titulo = document.createElement('h2');
+            titulo.textContent = '🧾 Pedidos Salvos em Texto';
+            main.prepend(titulo);
+            main.prepend(container);
+        }
+
+        // Carrega pedidos de texto ao abrir painel
+        window.addEventListener('DOMContentLoaded', () => {
+            mostrarPedidosTexto();
+        });
+    </script>
+
 </body>
 
 </html>
