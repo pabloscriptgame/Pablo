@@ -167,7 +167,7 @@ Ref: ${referencia || '---'}
             const resp = await fetch("https://api.github.com/repos/pabloscriptgame/Pablo/contents/pedidos.txt", {
                 method: "PUT",
                 headers: {
-                    "Authorization": "token SEU_TOKEN_GITHUB_AQUI",
+                    "Authorization": "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",
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
