@@ -1,0 +1,16 @@
+{
+  "name": "vercel-api",
+  "version": "1.0.0",
+  "description": "Uma API simples para Vercel",
+  "main": "api/hello.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vercel": "^37.4.2"
+  }
+}
