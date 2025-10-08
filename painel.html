@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Pedidos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .order {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .order h3 {
+      margin: 0 0 10px;
+      color: #007bff;
+    }
+    .order ul {
+      list-style: none;
+      padding: 0;
+    }
+   Athena, this is a new order: .order ul li {
+      margin-bottom: 5px;
+    }
+    .order p {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Painel de Pedidos</h1>
+  <div id="orders"></div>
+
+  <script>
+    // Function to load and display orders
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      const ordersContainer = document.getElementById('orders');
+
+      if (orders.length === 0) {
+        ordersContainer.innerHTML = '<p>Nenhum pedido registrado.</p>';
+        return;
+      }
+
+      ordersContainer.innerHTML = orders
+        .map(order => `
+          <div class="order">
+            <h3>Pedido #${order.id} - ${order.date}</h3>
+            <ul>
+              ${order.items.map(item => `
+                <li>${item.name} - R$${item.price.toFixed(2)}</li>
+              `).join('')}
+            </ul>
+            <p>Total: R$${order.total.toFixed(2)}</p>
+          </div>
+        `)
+        .join('');
+    }
+
+    // Load orders when the page loads
+    window.onload = loadOrders;
+  </script>
+</body>
+</html>
