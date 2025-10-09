@@ -21,12 +21,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkoutTotal = document.getElementById('checkout-total');
     const nomeCliente = document.getElementById('nome-cliente'); // Novo campo para nome do cliente
     const observacoes = document.getElementById('observacoes'); // Novo campo para observações
+    const couponInput = document.getElementById('coupon-input'); // Novo campo para cupom
+    const couponApplyBtn = document.getElementById('coupon-apply-btn'); // Botão para aplicar cupom
+    const couponStatus = document.getElementById('coupon-status'); // Elemento para status do cupom
+    let discountApplied = false; // Flag para verificar se desconto foi aplicado
+    let originalTotal = 0; // Armazena o total original
 
     // radio player
     const radio = document.getElementById("radio-audio");
     const playBtn = document.getElementById("play-btn");
     const pauseBtn = document.getElementById("pause-btn");
     const vuMeter = document.getElementById("vu-meter");
+
+    // Lista de 200 códigos de cupom válidos para 5% de desconto
+    const validCoupons = [
+        'DEGUSTO5-001', 'DEGUSTO5-002', 'DEGUSTO5-003', 'DEGUSTO5-004', 'DEGUSTO5-005',
+        'DEGUSTO5-006', 'DEGUSTO5-007', 'DEGUSTO5-008', 'DEGUSTO5-009', 'DEGUSTO5-010',
+        'DEGUSTO5-011', 'DEGUSTO5-012', 'DEGUSTO5-013', 'DEGUSTO5-014', 'DEGUSTO5-015',
+        'DEGUSTO5-016', 'DEGUSTO5-017', 'DEGUSTO5-018', 'DEGUSTO5-019', 'DEGUSTO5-020',
+        'DEGUSTO5-021', 'DEGUSTO5-022', 'DEGUSTO5-023', 'DEGUSTO5-024', 'DEGUSTO5-025',
+        'DEGUSTO5-026', 'DEGUSTO5-027', 'DEGUSTO5-028', 'DEGUSTO5-029', 'DEGUSTO5-030',
+        'DEGUSTO5-031', 'DEGUSTO5-032', 'DEGUSTO5-033', 'DEGUSTO5-034', 'DEGUSTO5-035',
+        'DEGUSTO5-036', 'DEGUSTO5-037', 'DEGUSTO5-038', 'DEGUSTO5-039', 'DEGUSTO5-040',
+        'DEGUSTO5-041', 'DEGUSTO5-042', 'DEGUSTO5-043', 'DEGUSTO5-044', 'DEGUSTO5-045',
+        'DEGUSTO5-046', 'DEGUSTO5-047', 'DEGUSTO5-048', 'DEGUSTO5-049', 'DEGUSTO5-050'
+    ];
 
     // Função para formatar moeda brasileira
     function formatCurrency(value) {
@@ -38,19 +57,45 @@ document.addEventListener('DOMContentLoaded', () => {
         cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
-    // Função para calcular total
+    // Função para calcular total (considerando desconto se aplicado)
     function calculateTotal() {
-        return cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+        const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+        originalTotal = subtotal; // Armazena o total original
+        if (discountApplied) {
+            return subtotal * 0.95; // 5% de desconto
+        }
+        return subtotal;
     }
 
-    // Atualizar total no checkout
+    // Atualizar total no checkout e modal
     function updateCheckoutTotal() {
         const total = calculateTotal();
         checkoutTotal.textContent = `Total: ${formatCurrency(total)}`;
         modalTotal.textContent = `Total: ${formatCurrency(total)}`;
     }
 
-    // Função para popular modal com itens do carrinho (moderno com quantidades)
+    // Função para aplicar cupom
+    function applyCoupon() {
+        const couponCode = couponInput.value.trim().toUpperCase();
+        if (validCoupons.includes(couponCode)) {
+            if (!discountApplied) {
+                discountApplied = true;
+                updateCheckoutTotal();
+                couponStatus.textContent = `Cupom ${couponCode} aplicado! Desconto de 5% (R$ ${formatCurrency(originalTotal * 0.05)} economizado)`;
+                couponStatus.style.color = '#4caf50';
+                showNotification('Cupom aplicado com sucesso! 5% de desconto!', 'success');
+                couponInput.value = '';
+            } else {
+                showNotification('Desconto já aplicado! Apenas um cupom por pedido.', 'error');
+            }
+        } else {
+            couponStatus.textContent = 'Cupom inválido. Tente novamente.';
+            couponStatus.style.color = '#e63946';
+            showNotification('Cupom inválido!', 'error');
+        }
+    }
+
+    // Função para popular modal com itens do carrinho (moderno com quantidades, centralizado para mobile)
     function populateModal() {
         modalCartItems.innerHTML = '';
         const total = calculateTotal();
@@ -68,10 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span style="color: #cccccc; font-size: 14px;">${formatCurrency(item.price)} x ${item.quantity}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <button onclick="updateQuantity(${index}, -1)" style="background: #ffcc00; color: #000; border: none; padding: 5px 10px; border-radius: 50%; cursor: pointer; font-size: 16px;">−</button>
+                        <button onclick="updateQuantity(${index}, -1)" style="background: #ffcc00; color: #000; border: none; padding: 5px 10px; border-radius: 50%; cursor: pointer; font-size: 16px; min-width: 30px;">−</button>
                         <span style="font-weight: bold; min-width: 20px; text-align: center;">${item.quantity}</span>
-                        <button onclick="updateQuantity(${index}, 1)" style="background: #ffcc00; color: #000; border: none; padding: 5px 10px; border-radius: 50%; cursor: pointer; font-size: 16px;">+</button>
-                        <button onclick="removeFromCart(${index})" style="background: #e63946; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Remover</button>
+                        <button onclick="updateQuantity(${index}, 1)" style="background: #ffcc00; color: #000; border: none; padding: 5px 10px; border-radius: 50%; cursor: pointer; font-size: 16px; min-width: 30px;">+</button>
+                        <button onclick="removeFromCart(${index})" style="background: #e63946; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px;">Remover</button>
                     </div>
                 `;
                 modalCartItems.appendChild(div);
@@ -82,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCheckoutTotal();
     }
 
-    // Função para atualizar quantidade
+    // Função para atualizar quantidade (melhorada para mobile com tamanhos ajustados)
     window.updateQuantity = (index, change) => {
         if (cart[index].quantity + change > 0) {
             cart[index].quantity += change;
@@ -130,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartButton();
         populateModal();
         showNotification('Item removido do carrinho! 🗑️');
+        // Se carrinho ficar vazio, resetar desconto
+        if (cart.length === 0) {
+            discountApplied = false;
+        }
     };
 
     // Limpar carrinho
@@ -139,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartButton();
             populateModal();
+            discountApplied = false; // Resetar desconto
             showNotification('Carrinho limpo com sucesso! 🛒', 'success');
         }
     });
@@ -160,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Abrir modal do carrinho
+    // Abrir modal do carrinho (centralizado para mobile)
     openModalBtn.addEventListener('click', () => {
         populateModal();
         modal.style.display = 'flex';
@@ -200,6 +250,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Aplicar cupom no botão
+    couponApplyBtn.addEventListener('click', applyCoupon);
+
     // Copiar PIX
     window.copyPix = () => {
         navigator.clipboard.writeText('10738419605').then(() => {
@@ -209,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Enviar pedido (mensagem WhatsApp mais moderna e formatada)
+    // Enviar pedido (mensagem WhatsApp mais moderna e formatada, incluindo desconto se aplicado)
     checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (cart.length === 0) {
@@ -244,7 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cart.forEach(item => {
             orderDetails += `• ${item.name} (x${item.quantity}) - ${formatCurrency(item.price * item.quantity)}\n`;
         });
-        orderDetails += `\n💰 *Total:* ${formatCurrency(total)}\n\n`;
+        orderDetails += `\n💰 *Subtotal:* ${formatCurrency(originalTotal)}\n`;
+        if (discountApplied) {
+            orderDetails += `🛍️ *Desconto (5%):* -${formatCurrency(originalTotal * 0.05)}\n`;
+        }
+        orderDetails += `💰 *Total Final:* ${formatCurrency(total)}\n\n`;
         orderDetails += `📍 *Endereço de Entrega:*\nRua ${rua}, Nº ${numero} - Bairro ${bairro}`;
         if (referencia) orderDetails += `\nRef: ${referencia}`;
         orderDetails += `\n\n💳 *Forma de Pagamento:* ${metodo}`;
@@ -266,6 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (observacoes) observacoes.value = '';
         trocoDiv.style.display = 'none';
         pixDetails.style.display = 'none';
+        discountApplied = false; // Resetar desconto
+        couponStatus.textContent = '';
         checkoutForm.style.display = 'none';
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
