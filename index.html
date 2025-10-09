@@ -498,11 +498,11 @@
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h3>Seu Carrinho</h3>
+            <h3>🛒 Seu Carrinho</h3>
             <div id="modal-cart-items"></div>
             <div id="modal-total">Total: R$ 0,00</div>
-            <button id="checkout-button">Finalizar Pedido</button>
-            <button id="clear-cart">Limpar Carrinho</button>
+            <button id="checkout-button">Finalizar Pedido 📲</button>
+            <button id="clear-cart">Limpar Carrinho 🗑️</button>
         </div>
     </div>
 
@@ -510,21 +510,24 @@
     <div id="checkout-form" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h3>Delivery Rápido</h3>
+            <h3>🚀 Delivery Rápido</h3>
             <p>Entrega em todo Monte Carmelo</p>
             <form>
-                <h4>Endereço de Entrega</h4>
+                <h4>👤 Seu Nome</h4>
+                <input type="text" id="nome-cliente" placeholder="Digite seu nome completo" required>
+
+                <h4>📍 Endereço de Entrega</h4>
                 <input type="text" id="rua" placeholder="Rua" required>
                 <input type="text" id="numero" placeholder="Número" required>
                 <input type="text" id="bairro" placeholder="Bairro" required>
                 <input type="text" id="referencia" placeholder="Referência (opcional)">
 
-                <h4>Forma de Pagamento</h4>
+                <h4>💳 Forma de Pagamento</h4>
                 <div class="payment-options">
-                    <label><input type="radio" name="pagamento" value="Dinheiro"> Dinheiro</label>
-                    <label><input type="radio" name="pagamento" value="Crédito"> Crédito</label>
-                    <label><input type="radio" name="pagamento" value="Débito"> Débito</label>
-                    <label><input type="radio" name="pagamento" value="PIX"> PIX</label>
+                    <label><input type="radio" name="pagamento" value="Dinheiro"> 💵 Dinheiro</label>
+                    <label><input type="radio" name="pagamento" value="Crédito"> 💳 Crédito</label>
+                    <label><input type="radio" name="pagamento" value="Débito"> 🪪 Débito</label>
+                    <label><input type="radio" name="pagamento" value="PIX"> 📱 PIX</label>
                 </div>
 
                 <div id="troco-div" style="display: none;">
@@ -537,8 +540,11 @@
                     <p>Envie o comprovante após o pedido para confirmarmos!</p>
                 </div>
 
+                <h4>📝 Observações</h4>
+                <textarea id="observacoes" placeholder="Alguma observação especial? (ex: sem cebola, urgente)" rows="3"></textarea>
+
                 <div id="checkout-total">Total: R$ 0,00</div>
-                <button type="submit">Enviar Pedido</button>
+                <button type="submit">Enviar Pedido para WhatsApp 📲</button>
             </form>
         </div>
     </div>

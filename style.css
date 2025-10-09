@@ -1,4 +1,4 @@
-/* CSS atualizado para tema dark premium: tudo em preto com bordas e acentos neon dourado (#ffcc00). Fundo com imagem de churrasco para visibilidade da imagem de fundo. Textos em branco para visibilidade, bordas com glow neon dourado em elementos chave. Efeitos de neon via box-shadow com blur. Animações, transições e responsividade preservadas. Fontes Baloo 2 e Fredoka adicionadas. Adicionado efeitos de fumaça, brasas e faixas de chama churrasco chamativas no fundo. Seções com fundo semi-transparente escuro para mostrar a imagem de fundo. */
+/* CSS atualizado para tema dark premium: tudo em preto com bordas e acentos neon dourado (#ffcc00). Fundo com imagem de churrasco para visibilidade da imagem de fundo. Textos em branco para visibilidade, bordas com glow neon dourado em elementos chave. Efeitos de neon via box-shadow com blur. Animações, transições e responsividade preservadas. Fontes Baloo 2 e Fredoka adicionadas. Adicionado efeitos de fumaça, brasas e faixas de chama churrasco chamativas no fundo. Seções com fundo semi-transparente escuro para mostrar a imagem de fundo. Carrinho moderno com botões de quantidade e estilos atualizados. */
 
 :root {
     --primary-black: #000000;
@@ -1033,7 +1033,8 @@ header:hover {
         background: rgba(17, 17, 17, 0.8);
         border-radius: 5px;
     }
-    #checkout-form input {
+    #checkout-form input,
+    #checkout-form textarea {
         font-size: 18px;
         padding: 18px;
     }
@@ -1480,6 +1481,7 @@ header:hover {
 }
 
 #checkout-form input,
+#checkout-form textarea,
 #checkout-form select {
     width: 100%;
     padding: 15px;
@@ -1493,9 +1495,11 @@ header:hover {
     transition: border-color 0.3s ease;
     box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
     font-family: 'Fredoka', sans-serif;
+    resize: vertical;
 }
 
-#checkout-form input:focus {
+#checkout-form input:focus,
+#checkout-form textarea:focus {
     border-color: var(--accent-gold);
     outline: none;
     box-shadow: 0 0 10px var(--accent-gold);
