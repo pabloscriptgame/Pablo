@@ -828,7 +828,7 @@ header:hover {
 
 .controls {
     position: absolute;
-    bottom: 80px;
+    bottom: 120px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1428,7 +1428,7 @@ footer {
         transform: none;
     }
     .controls {
-        bottom: 60px;
+        bottom: 90px;
         gap: 15px;
     }
     .btn-3d {
