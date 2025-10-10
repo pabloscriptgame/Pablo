@@ -1,5 +1,43 @@
+// script.js atualizado com integração ao MongoDB via API backend (assumindo server.js rodando em localhost:3000)
 document.addEventListener('DOMContentLoaded', () => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const API_BASE = 'http://localhost:3000/api/cart?AqBVeBOlSfejm7zu'; // Ajuste para o URL do seu backend
+    let userId = localStorage.getItem('userId') || generateUserId();
+    localStorage.setItem('userId', userId);
+
+    function generateUserId() {
+        return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    async function saveToDB(endpoint, data) {
+        try {
+            const response = await fetch(`${API_BASE}/${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, ...data })
+            });
+            if (!response.ok) throw new Error('Erro ao salvar');
+        } catch (error) {
+            console.error('Erro ao salvar no DB:', error);
+            // Fallback para localStorage em caso de erro
+            localStorage.setItem(endpoint, JSON.stringify(data));
+        }
+    }
+
+    async function loadFromDB(endpoint) {
+        try {
+            const response = await fetch(`${API_BASE}/${endpoint}?userId=${userId}`);
+            if (response.ok) {
+                const data = await response.json();
+                return data || {};
+            }
+        } catch (error) {
+            console.error('Erro ao carregar do DB:', error);
+        }
+        // Fallback para localStorage
+        return JSON.parse(localStorage.getItem(endpoint)) || {};
+    }
+
+    const cart = [];
     const cartCount = document.getElementById('cart-count');
     const notification = document.getElementById('notification');
     const pagamentoRadios = document.querySelectorAll('input[name="pagamento"]');
@@ -19,21 +57,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const helpModal = document.getElementById('help-modal');
     const closeHelpModal = document.querySelector('#help-modal .close-modal');
     const checkoutTotal = document.getElementById('checkout-total');
-    const nomeCliente = document.getElementById('nome-cliente'); // Novo campo para nome do cliente
-    const observacoes = document.getElementById('observacoes'); // Novo campo para observações
-    const couponInput = document.getElementById('coupon-input'); // Novo campo para cupom
-    const couponApplyBtn = document.getElementById('coupon-apply-btn'); // Botão para aplicar cupom
-    const couponStatus = document.getElementById('coupon-status'); // Elemento para status do cupom
-    let discountApplied = false; // Flag para verificar se desconto foi aplicado
-    let originalTotal = 0; // Armazena o total original
+    const nomeCliente = document.getElementById('nome-cliente');
+    const observacoes = document.getElementById('observacoes');
+    const couponInput = document.getElementById('coupon-input');
+    const couponApplyBtn = document.getElementById('coupon-apply-btn');
+    const couponStatus = document.getElementById('coupon-status');
+    let discountApplied = false;
+    let originalTotal = 0;
 
-    // radio player
+    // Carregar cart do DB no init
+    async function initCart() {
+        const savedCart = await loadFromDB('cart');
+        Object.assign(cart, savedCart);
+        updateCartButton();
+    }
+
+    // Sistema de Gamificação - carregado do DB
+    let gamificationData = {};
+
+    async function initGamification() {
+        gamificationData = await loadFromDB('gamification');
+        if (Object.keys(gamificationData).length === 0) {
+            gamificationData = {
+                points: 0,
+                level: 1,
+                ordersCompleted: 0,
+                combosOrdered: 0,
+                badges: {
+                    primeiroPedido: false,
+                    fieis: false,
+                    gourmet: false,
+                    comboMaster: false
+                }
+            };
+            await saveGamification();
+        }
+        updateGamificationUI();
+    }
+
+    async function saveGamification() {
+        await saveToDB('gamification', gamificationData);
+    }
+
+    const POINTS_PER_ITEM = 10;
+    const POINTS_PER_ORDER = 50;
+    const POINTS_PER_LEVEL = 100;
+    const userLevelEl = document.getElementById('user-level');
+    const userPointsEl = document.getElementById('user-points');
+    const nextLevelPointsEl = document.getElementById('next-level-points');
+    const progressFillEl = document.getElementById('progress-fill');
+
+    function updateGamificationUI() {
+        userLevelEl.textContent = gamificationData.level;
+        userPointsEl.textContent = gamificationData.points;
+        nextLevelPointsEl.textContent = gamificationData.level * POINTS_PER_LEVEL;
+        const progress = (gamificationData.points % POINTS_PER_LEVEL) / POINTS_PER_LEVEL * 100;
+        progressFillEl.style.width = progress + '%';
+
+        // Atualizar badges
+        Object.keys(gamificationData.badges).forEach(badgeKey => {
+            const badgeEl = document.getElementById(`badge-${badgeKey.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
+            if (gamificationData.badges[badgeKey]) {
+                badgeEl.classList.add('unlocked');
+                badgeEl.classList.remove('locked');
+            } else {
+                badgeEl.classList.add('locked');
+                badgeEl.classList.remove('unlocked');
+            }
+        });
+    }
+
+    async function addPoints(points) {
+        gamificationData.points += points;
+        let newLevel = Math.floor(gamificationData.points / POINTS_PER_LEVEL) + 1;
+        if (newLevel > gamificationData.level) {
+            gamificationData.level = newLevel;
+            showNotification(`Parabéns! Você subiu para o Nível ${newLevel}! 🎉`, 'success');
+        }
+        await saveGamification();
+        updateGamificationUI();
+    }
+
+    async function checkBadges() {
+        if (!gamificationData.badges.primeiroPedido && gamificationData.ordersCompleted >= 1) {
+            gamificationData.badges.primeiroPedido = true;
+            showNotification('Badge desbloqueado: Primeiro Pedido! 🍔', 'success');
+            await saveGamification();
+        }
+        if (!gamificationData.badges.fieis && gamificationData.ordersCompleted >= 3) {
+            gamificationData.badges.fieis = true;
+            showNotification('Badge desbloqueado: Cliente Fiel! ⭐', 'success');
+            await saveGamification();
+        }
+        if (!gamificationData.badges.gourmet && gamificationData.points >= 500) {
+            gamificationData.badges.gourmet = true;
+            showNotification('Badge desbloqueado: Gourmet! 👑', 'success');
+            await saveGamification();
+        }
+        if (!gamificationData.badges.comboMaster && gamificationData.combosOrdered >= 5) {
+            gamificationData.badges.comboMaster = true;
+            showNotification('Badge desbloqueado: Combo Master! 🎁', 'success');
+            await saveGamification();
+        }
+        updateGamificationUI();
+    }
+
+    // Player de rádio (sem mudanças)
     const radio = document.getElementById("radio-audio");
     const playBtn = document.getElementById("play-btn");
     const pauseBtn = document.getElementById("pause-btn");
     const vuMeter = document.getElementById("vu-meter");
 
-    // Lista de 200 códigos de cupom válidos para 5% de desconto
+    // Cupons (sem mudanças)
     const validCoupons = [
         'DEGUSTO5-001', 'DEGUSTO5-002', 'DEGUSTO5-003', 'DEGUSTO5-004', 'DEGUSTO5-005',
         'DEGUSTO5-006', 'DEGUSTO5-007', 'DEGUSTO5-008', 'DEGUSTO5-009', 'DEGUSTO5-010',
@@ -47,34 +182,30 @@ document.addEventListener('DOMContentLoaded', () => {
         'DEGUSTO5-046', 'DEGUSTO5-047', 'DEGUSTO5-048', 'DEGUSTO5-049', 'DEGUSTO5-050'
     ];
 
-    // Função para formatar moeda brasileira
     function formatCurrency(value) {
         return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
     }
 
-    // Atualizar botão do carrinho
-    function updateCartButton() {
+    async function updateCartButton() {
+        await saveToDB('cart', cart);
         cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
-    // Função para calcular total (considerando desconto se aplicado)
     function calculateTotal() {
         const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
-        originalTotal = subtotal; // Armazena o total original
+        originalTotal = subtotal;
         if (discountApplied) {
-            return subtotal * 0.95; // 5% de desconto
+            return subtotal * 0.95;
         }
         return subtotal;
     }
 
-    // Atualizar total no checkout e modal
     function updateCheckoutTotal() {
         const total = calculateTotal();
         checkoutTotal.textContent = `Total: ${formatCurrency(total)}`;
         modalTotal.textContent = `Total: ${formatCurrency(total)}`;
     }
 
-    // Função para aplicar cupom
     function applyCoupon() {
         const couponCode = couponInput.value.trim().toUpperCase();
         if (validCoupons.includes(couponCode)) {
@@ -95,8 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Função para popular modal com itens do carrinho (moderno com quantidades, centralizado para mobile)
-    function populateModal() {
+    async function populateModal() {
         modalCartItems.innerHTML = '';
         const total = calculateTotal();
         if (cart.length === 0) {
@@ -127,23 +257,21 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCheckoutTotal();
     }
 
-    // Função para atualizar quantidade (melhorada para mobile com tamanhos ajustados)
-    window.updateQuantity = (index, change) => {
+    window.updateQuantity = async(index, change) => {
         if (cart[index].quantity + change > 0) {
             cart[index].quantity += change;
             if (cart[index].quantity === 0) {
                 cart.splice(index, 1);
             }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartButton();
+            await updateCartButton();
             populateModal();
             showNotification(`${change > 0 ? 'Quantidade aumentada' : 'Quantidade diminuída'}!`);
         }
     };
 
-    // Adicionar ao carrinho (com quantidade inicial 1)
+    // Adicionar ao carrinho com gamificação
     document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', async(e) => {
             const item = e.target.closest('.item');
             const name = item.dataset.name;
             const price = item.dataset.price;
@@ -153,10 +281,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 cart.push({ name, price, quantity: 1 });
             }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartButton();
+            await updateCartButton();
             updateCheckoutTotal();
-            showNotification(`${name} adicionado ao carrinho!`, 'success');
+
+            // Gamificação
+            await addPoints(POINTS_PER_ITEM);
+            showNotification(`${name} adicionado ao carrinho! +${POINTS_PER_ITEM} pts!`, 'success');
             button.classList.add('added');
             button.textContent = 'Adicionado! ✓';
             button.disabled = true;
@@ -168,32 +298,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Remover do carrinho
-    window.removeFromCart = (index) => {
+    window.removeFromCart = async(index) => {
         cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartButton();
+        await updateCartButton();
         populateModal();
         showNotification('Item removido do carrinho! 🗑️');
-        // Se carrinho ficar vazio, resetar desconto
         if (cart.length === 0) {
             discountApplied = false;
         }
     };
 
-    // Limpar carrinho
-    clearCartBtn.addEventListener('click', () => {
+    clearCartBtn.addEventListener('click', async() => {
         if (confirm('Tem certeza que deseja limpar o carrinho? Todos os itens serão removidos.')) {
             cart.length = 0;
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartButton();
+            await updateCartButton();
             populateModal();
-            discountApplied = false; // Resetar desconto
+            discountApplied = false;
             showNotification('Carrinho limpo com sucesso! 🛒', 'success');
         }
     });
 
-    // Mostrar notificação (melhorada com ícones e animações)
     function showNotification(message, type = '') {
         notification.innerHTML = `<span>${type === 'success' ? '✅' : 'ℹ️'} ${message}</span>`;
         notification.className = `notification ${type}`;
@@ -210,16 +334,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Abrir modal do carrinho (centralizado para mobile)
     openModalBtn.addEventListener('click', () => {
         populateModal();
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        // Animação suave
         modal.style.animation = 'fadeIn 0.3s ease-out';
     });
 
-    // Fechar modal do carrinho
     closeModal.addEventListener('click', () => {
         modal.style.animation = 'fadeOut 0.3s ease-in';
         setTimeout(() => {
@@ -228,7 +349,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     });
 
-    // Checkout button
     checkoutButton.addEventListener('click', () => {
         modal.style.display = 'none';
         checkoutForm.style.display = 'flex';
@@ -236,13 +356,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCheckoutTotal();
     });
 
-    // Fechar checkout form
     document.querySelector('#checkout-form .close-modal').addEventListener('click', () => {
         checkoutForm.style.display = 'none';
         document.body.style.overflow = 'auto';
     });
 
-    // Pagamento radio buttons
     pagamentoRadios.forEach(radio => {
         radio.addEventListener('change', () => {
             trocoDiv.style.display = radio.value === 'Dinheiro' ? 'block' : 'none';
@@ -250,10 +368,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Aplicar cupom no botão
     couponApplyBtn.addEventListener('click', applyCoupon);
 
-    // Copiar PIX
     window.copyPix = () => {
         navigator.clipboard.writeText('10738419605').then(() => {
             showNotification('Chave PIX copiada para a área de transferência! 📋', 'success');
@@ -262,8 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Enviar pedido (mensagem WhatsApp mais moderna e formatada, incluindo desconto se aplicado)
-    checkoutForm.addEventListener('submit', (e) => {
+    // Enviar pedido com gamificação e salvar no DB
+    checkoutForm.addEventListener('submit', async(e) => {
         e.preventDefault();
         if (cart.length === 0) {
             showNotification('Seu carrinho está vazio! Adicione itens antes de finalizar.', 'error');
@@ -276,14 +392,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const nome = nomeCliente ? nomeCliente.value.trim() : 'Cliente'; // Nome do cliente se disponível
+        const nome = nomeCliente ? nomeCliente.value.trim() : 'Cliente';
         const rua = document.getElementById('rua').value;
         const numero = document.getElementById('numero').value;
         const bairro = document.getElementById('bairro').value;
         const referencia = document.getElementById('referencia').value;
         const metodo = selectedPagamento.value;
         const troco = document.getElementById('troco').value || '';
-        const obs = observacoes ? observacoes.value.trim() : ''; // Observações se disponível
+        const obs = observacoes ? observacoes.value.trim() : '';
 
         if (!rua || !numero || !bairro) {
             showNotification('Preencha todos os campos do endereço!', 'error');
@@ -296,6 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
         orderDetails += `*🛒 Itens do Pedido:*\n`;
         cart.forEach(item => {
             orderDetails += `• ${item.name} (x${item.quantity}) - ${formatCurrency(item.price * item.quantity)}\n`;
+            if (item.name.includes('COMBO')) {
+                gamificationData.combosOrdered += item.quantity;
+            }
         });
         orderDetails += `\n💰 *Subtotal:* ${formatCurrency(originalTotal)}\n`;
         if (discountApplied) {
@@ -314,31 +433,48 @@ document.addEventListener('DOMContentLoaded', () => {
         const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(orderDetails)}`;
         window.open(whatsappUrl, '_blank');
 
-        // Limpar carrinho e form
+        // Salvar pedido no DB
+        const orderData = {
+            userId,
+            nome,
+            itens: cart,
+            subtotal: originalTotal,
+            desconto: discountApplied ? originalTotal * 0.05 : 0,
+            total,
+            endereco: { rua, numero, bairro, referencia },
+            pagamento: { metodo, troco },
+            observacoes: obs,
+            data: new Date().toISOString()
+        };
+        await saveToDB('orders', orderData);
+
+        // Gamificação
+        gamificationData.ordersCompleted += 1;
+        await addPoints(POINTS_PER_ORDER);
+        await checkBadges();
+
+        // Limpar
         cart.length = 0;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartButton();
+        await updateCartButton();
         checkoutForm.reset();
         if (nomeCliente) nomeCliente.value = '';
         if (observacoes) observacoes.value = '';
         trocoDiv.style.display = 'none';
         pixDetails.style.display = 'none';
-        discountApplied = false; // Resetar desconto
+        discountApplied = false;
         couponStatus.textContent = '';
         checkoutForm.style.display = 'none';
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        showNotification('Pedido enviado com sucesso para o WhatsApp! 📲🚀', 'success');
+        showNotification('Pedido enviado com sucesso para o WhatsApp! +50 pts! 📲🚀', 'success');
         populateModal();
     });
 
-    // Botão Ajuda - Abrir modal de ajuda
     helpButton.addEventListener('click', () => {
         helpModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     });
 
-    // Fechar modal de ajuda
     closeHelpModal.addEventListener('click', () => {
         helpModal.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -359,10 +495,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Menu mobile
     mobileToggle.addEventListener('click', () => mainNav.classList.toggle('active'));
 
-    // Tabs
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
@@ -376,15 +510,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicialização
-    updateCartButton();
+    initCart();
+    initGamification();
     populateModal();
 
-    // radio simple controls - CORRIGIDO
-    (function() {
-        if (!radio || !playBtn || !pauseBtn || !vuMeter) {
-            console.warn('Elementos do player de rádio não encontrados.');
-            return;
-        }
+    // Controles de rádio (corrigido para garantir cliques no play/pause)
+    if (radio && playBtn && pauseBtn && vuMeter) {
+        // Garante que os botões fiquem acessíveis, trazendo-os para frente
+        playBtn.style.position = 'relative';
+        playBtn.style.zIndex = '999';
+        pauseBtn.style.position = 'relative';
+        pauseBtn.style.zIndex = '999';
+        playBtn.style.pointerEvents = 'auto';
+        pauseBtn.style.pointerEvents = 'auto';
+
         playBtn.addEventListener('click', () => {
             radio.play().then(() => {
                 vuMeter.style.display = 'flex';
@@ -402,5 +541,5 @@ document.addEventListener('DOMContentLoaded', () => {
         radio.pause();
         vuMeter.style.display = 'none';
         console.log('Player de rádio inicializado.');
-    })();
+    }
 });
