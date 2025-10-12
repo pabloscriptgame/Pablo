@@ -1,4 +1,4 @@
-/* style.css permanece o mesmo, sem alterações para DB */
+/* style.css */
 
 :root {
     --primary-black: #000000;
@@ -435,19 +435,22 @@ body::after {
 
 header {
     background: rgba(0, 0, 0, 0.9);
-    padding: 15px 20px;
+    padding: 5px 20px;
+    /* Ainda mais fino */
     text-align: center;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.1);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.1);
+    /* Shadow mais sutil */
     position: sticky;
     top: 0;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-bottom: 2px solid var(--accent-gold);
+    border-bottom: 1px solid var(--accent-gold);
+    /* Mantido fino */
 }
 
 header:hover {
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.15);
+    transform: translateY(-1px);
 }
 
 .header-container {
@@ -475,23 +478,27 @@ header:hover {
 }
 
 .logo-image {
-    width: 120px;
+    width: 80px;
+    /* Logo ainda menor */
     height: auto;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
+    /* Margin ainda menor */
     border-radius: 50%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-gold);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
+    /* Shadow ajustado */
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: 2px solid var(--accent-gold);
 }
 
 .logo-image:hover {
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-gold);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-gold);
     transform: rotate(2deg) scale(1.02);
 }
 
 .logo p {
     margin: 0;
-    font-size: 14px;
+    font-size: 10px;
+    /* Fonte ainda menor */
     color: var(--accent-gold);
     text-shadow: 0 0 10px var(--accent-gold);
     font-style: italic;
@@ -507,14 +514,16 @@ header:hover {
 }
 
 .main-nav li {
-    margin: 0 20px;
+    margin: 0 10px;
+    /* Espaçamento ainda menor */
 }
 
 .main-nav a {
     color: var(--accent-gold);
     text-decoration: none;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 14px;
+    /* Fonte do menu ainda menor */
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
@@ -526,7 +535,8 @@ header:hover {
     content: '';
     position: absolute;
     width: 0;
-    height: 2px;
+    height: 0;
+    /* Sem barrinha */
     bottom: -4px;
     left: 50%;
     background-color: var(--accent-gold);
@@ -535,7 +545,8 @@ header:hover {
 }
 
 .main-nav a:hover::after {
-    width: 100%;
+    width: 0;
+    /* Sem barrinha no hover */
     left: 0;
 }
 
