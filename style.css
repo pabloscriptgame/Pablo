@@ -2,9 +2,9 @@
 
 :root {
     --primary-black: #000000;
-    --accent-gold: #ffcc00;
-    --accent-gold-2: #ffd700;
-    --accent-orange: #ff5722;
+    --accent-pink: #FF1493;
+    --accent-orange: #FF4500;
+    --accent-blue: #1E90FF;
     --primary-red: #e63946;
     --dark-bg: #000000;
     --dark-gray: #111111;
@@ -18,7 +18,7 @@ body {
     font-family: 'Fredoka', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #F65247, #F0AD28, #F4DC39, #A5CB43, #008DCB, #6A4C93, #FF69B4);
+    background: linear-gradient(135deg, #FF1493, #FF4500, #1E90FF, #FF1493, #FF4500, #1E90FF);
     background-size: 400% 400%;
     animation: rainbowShift 15s ease infinite;
     background-position: center;
@@ -49,7 +49,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(255, 204, 0, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 204, 0, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, rgba(255, 20, 147, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
     z-index: -1;
     animation: pulse 10s ease-in-out infinite alternate;
 }
@@ -100,7 +100,7 @@ body::after {
     position: fixed;
     width: 4px;
     height: 4px;
-    background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
     border-radius: 50%;
     z-index: -1;
     pointer-events: none;
@@ -187,10 +187,10 @@ body::after {
 
 @keyframes flicker {
     0% {
-        box-shadow: 0 0 2px var(--accent-gold);
+        box-shadow: 0 0 2px var(--accent-orange);
     }
     100% {
-        box-shadow: 0 0 8px var(--accent-gold), 0 0 12px var(--accent-gold);
+        box-shadow: 0 0 8px var(--accent-orange), 0 0 12px var(--accent-orange);
     }
 }
 
@@ -202,7 +202,7 @@ body::after {
     bottom: 0;
     width: 100%;
     height: 150px;
-    background: linear-gradient(to top, transparent 0%, rgba(255, 69, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(255, 215, 0, 0.4) 60%, transparent 100%);
+    background: linear-gradient(to top, transparent 0%, rgba(255, 69, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(255, 20, 147, 0.4) 60%, transparent 100%);
     z-index: -1;
     pointer-events: none;
     animation: flameWave 3s ease-in-out infinite alternate;
@@ -376,7 +376,7 @@ body::after {
 
 .star {
     position: absolute;
-    background: radial-gradient(circle, #FFD700 0%, #FFA500 50%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-pink) 0%, var(--accent-orange) 50%, transparent 70%);
     border-radius: 50% 0;
     opacity: 0;
     animation: twinkle 3s ease-in-out infinite alternate;
@@ -433,23 +433,199 @@ body::after {
     }
 }
 
+
+/* Balões flutuantes animados para Dia das Crianças */
+
+.balloons {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -100px;
+    width: 40px;
+    height: 50px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatUp 10s ease-in-out infinite;
+    opacity: 0;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 25px;
+    background: #333;
+    border-radius: 0 0 2px 2px;
+}
+
+.balloon:nth-child(1) {
+    left: 10%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-orange) 70%);
+    animation-delay: 0s;
+}
+
+.balloon:nth-child(2) {
+    left: 20%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--accent-blue) 70%);
+    animation-delay: 2s;
+    width: 35px;
+    height: 45px;
+}
+
+.balloon:nth-child(3) {
+    left: 30%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-blue) 0%, var(--accent-pink) 70%);
+    animation-delay: 4s;
+    width: 45px;
+    height: 55px;
+}
+
+.balloon:nth-child(4) {
+    left: 60%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-blue) 70%);
+    animation-delay: 1s;
+}
+
+.balloon:nth-child(5) {
+    left: 70%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--accent-pink) 70%);
+    animation-delay: 3s;
+    width: 30px;
+    height: 40px;
+}
+
+.balloon:nth-child(6) {
+    left: 80%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-blue) 0%, var(--accent-orange) 70%);
+    animation-delay: 5s;
+}
+
+.balloon:nth-child(7) {
+    left: 90%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-orange) 70%);
+    animation-delay: 6s;
+    width: 50px;
+    height: 60px;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) scale(1.1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) rotate(360deg) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10vh) rotate(360deg) scale(0.8);
+    }
+}
+
+
+/* Doces saltitantes */
+
+.candies {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.candy {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    animation: bounce 4s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+.candy:nth-child(1) {
+    top: 20%;
+    left: 15%;
+    background: var(--accent-pink);
+    animation-delay: 0s;
+}
+
+.candy:nth-child(2) {
+    top: 30%;
+    left: 85%;
+    background: var(--accent-orange);
+    animation-delay: 1s;
+}
+
+.candy:nth-child(3) {
+    top: 50%;
+    left: 25%;
+    background: var(--accent-blue);
+    animation-delay: 2s;
+}
+
+.candy:nth-child(4) {
+    top: 60%;
+    left: 75%;
+    background: var(--accent-pink);
+    animation-delay: 0.5s;
+}
+
+.candy:nth-child(5) {
+    top: 70%;
+    left: 45%;
+    background: var(--accent-orange);
+    animation-delay: 3s;
+    width: 25px;
+    height: 25px;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-30px) scale(1.2);
+    }
+}
+
 header {
     background: rgba(0, 0, 0, 0.9);
     padding: 5px 20px;
     /* Ainda mais fino */
     text-align: center;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.1);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-orange), inset 0 1px 0 rgba(255, 69, 0, 0.1);
     /* Shadow mais sutil */
     position: sticky;
     top: 0;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-bottom: 1px solid var(--accent-gold);
+    border-bottom: 1px solid var(--accent-orange);
     /* Mantido fino */
 }
 
 header:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-gold), inset 0 1px 0 rgba(255, 204, 0, 0.15);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 69, 0, 0.15);
     transform: translateY(-1px);
 }
 
@@ -484,14 +660,14 @@ header:hover {
     margin-bottom: 1px;
     /* Margin ainda menor */
     border-radius: 50%;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-orange);
     /* Shadow ajustado */
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
 }
 
 .logo-image:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-gold);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-orange);
     transform: rotate(2deg) scale(1.02);
 }
 
@@ -499,8 +675,8 @@ header:hover {
     margin: 0;
     font-size: 10px;
     /* Fonte ainda menor */
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     font-style: italic;
     font-weight: 500;
     font-family: 'Baloo 2', cursive;
@@ -519,7 +695,7 @@ header:hover {
 }
 
 .main-nav a {
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     text-decoration: none;
     font-weight: 700;
     font-size: 14px;
@@ -527,7 +703,7 @@ header:hover {
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -539,9 +715,9 @@ header:hover {
     /* Sem barrinha */
     bottom: -4px;
     left: 50%;
-    background-color: var(--accent-gold);
+    background-color: var(--accent-orange);
     transition: width 0.3s ease, left 0.3s ease;
-    box-shadow: 0 0 5px var(--accent-gold);
+    box-shadow: 0 0 5px var(--accent-orange);
 }
 
 .main-nav a:hover::after {
@@ -552,16 +728,16 @@ header:hover {
 
 .main-nav a:hover {
     color: #ffffff;
-    text-shadow: 0 0 15px var(--accent-gold);
+    text-shadow: 0 0 15px var(--accent-orange);
     transform: translateY(-1px);
 }
 
 .mobile-menu-toggle {
     display: none;
     font-size: 28px;
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     cursor: pointer;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
     transition: transform 0.3s ease;
     font-family: 'Fredoka', sans-serif;
 }
@@ -577,8 +753,8 @@ header:hover {
     color: var(--light-text);
     position: relative;
     overflow: hidden;
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .hero-banner::before {
@@ -608,7 +784,7 @@ header:hover {
 .banner-content h2 {
     font-size: 60px;
     margin-bottom: 20px;
-    text-shadow: 0 0 20px var(--accent-gold);
+    text-shadow: 0 0 20px var(--accent-orange);
     animation: fadeInUp 1s ease-out;
     font-family: 'Baloo 2', cursive;
     font-weight: 700;
@@ -632,17 +808,17 @@ header:hover {
     width: 100%;
     margin: 30px 0;
     background: rgba(17, 17, 17, 0.8);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 0 15px var(--accent-gold), inset 0 0 10px rgba(255, 204, 0, 0.1);
+    box-shadow: 0 0 15px var(--accent-orange), inset 0 0 10px rgba(255, 69, 0, 0.1);
 }
 
 .marquee-text {
     display: inline-block;
     font-size: 20px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     animation: scroll 25s linear infinite;
     padding-left: 100%;
     font-family: 'Fredoka', sans-serif;
@@ -659,16 +835,16 @@ header:hover {
 
 .cta-button {
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     padding: 20px 40px;
     text-decoration: none;
     font-weight: bold;
     font-size: 24px;
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 50px;
     transition: all 0.3s ease;
     display: inline-block;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
     position: relative;
     overflow: hidden;
     font-family: 'Baloo 2', cursive;
@@ -681,7 +857,7 @@ header:hover {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 69, 0, 0.2), transparent);
     transition: left 0.5s;
 }
 
@@ -690,10 +866,10 @@ header:hover {
 }
 
 .cta-button:hover {
-    background-color: var(--accent-gold);
+    background-color: var(--accent-orange);
     color: var(--primary-black);
     transform: scale(1.05);
-    box-shadow: 0 0 25px var(--accent-gold);
+    box-shadow: 0 0 25px var(--accent-orange);
 }
 
 .promotions {
@@ -701,8 +877,8 @@ header:hover {
     background: rgba(17, 17, 17, 0.8);
     text-align: center;
     position: relative;
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .promotions::before {
@@ -712,34 +888,34 @@ header:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 204, 0, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 69, 0, 0.05) 0%, transparent 70%);
     z-index: -1;
 }
 
 .promotions h2 {
     font-size: 48px;
     margin-bottom: 20px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 15px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .promo-special {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 20px;
     padding: 40px;
     margin-bottom: 40px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
     transition: transform 0.3s ease;
 }
 
 .promo-special:hover {
     transform: translateY(-10px);
-    box-shadow: 0 0 30px var(--accent-gold);
+    box-shadow: 0 0 30px var(--accent-orange);
 }
 
 .promo-special h3 {
@@ -759,16 +935,16 @@ header:hover {
 .menu-section {
     padding: 80px 40px;
     background: rgba(17, 17, 17, 0.8);
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .menu-section h2 {
     font-size: 48px;
     text-align: center;
     margin-bottom: 40px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 15px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -782,8 +958,8 @@ header:hover {
 
 .tab-button {
     background: rgba(0, 0, 0, 0.8);
-    color: var(--accent-gold);
-    border: 2px solid var(--accent-gold);
+    color: var(--accent-orange);
+    border: 2px solid var(--accent-orange);
     padding: 15px 25px;
     font-size: 18px;
     border-radius: 10px;
@@ -794,9 +970,9 @@ header:hover {
 
 .tab-button.active,
 .tab-button:hover {
-    background: var(--accent-gold);
+    background: var(--accent-orange);
     color: var(--primary-black);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .tab-panel {
@@ -817,17 +993,17 @@ header:hover {
 
 .item {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 20px;
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
 }
 
 .item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 0 25px var(--accent-gold);
+    box-shadow: 0 0 25px var(--accent-orange);
 }
 
 .item-image {
@@ -839,10 +1015,10 @@ header:hover {
 }
 
 .item h3 {
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     font-size: 24px;
     margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -862,7 +1038,7 @@ header:hover {
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-2));
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
     color: var(--primary-black);
     border: none;
     padding: 12px 24px;
@@ -871,13 +1047,13 @@ header:hover {
     font-size: 16px;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .add-to-cart:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .add-to-cart.added {
@@ -889,15 +1065,15 @@ header:hover {
     padding: 80px 40px;
     background: rgba(17, 17, 17, 0.8);
     text-align: center;
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .gamification-section h2 {
     font-size: 48px;
     margin-bottom: 40px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 15px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -907,10 +1083,10 @@ header:hover {
 }
 
 .stat-item h3 {
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     font-size: 24px;
     margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
 }
 
 .progress-bar {
@@ -919,14 +1095,14 @@ header:hover {
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid var(--accent-orange);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-gold), var(--success-green));
+    background: linear-gradient(90deg, var(--accent-orange), var(--success-green));
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-orange);
 }
 
 .stat-item p {
@@ -944,7 +1120,7 @@ header:hover {
 
 .badge {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 15px;
     padding: 20px;
     transition: all 0.3s ease;
@@ -965,7 +1141,7 @@ header:hover {
 }
 
 .badge h4 {
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     margin-bottom: 5px;
     font-family: 'Baloo 2', cursive;
 }
@@ -986,15 +1162,15 @@ header:hover {
     padding: 80px 40px;
     background: rgba(17, 17, 17, 0.8);
     text-align: center;
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .radio-section h2 {
     font-size: 48px;
     margin-bottom: 20px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 15px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1012,7 +1188,7 @@ header:hover {
     background: linear-gradient(135deg, #333, #111);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-gold);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-orange);
     transform: perspective(1000px) rotateX(5deg);
     transition: transform 0.3s ease;
 }
@@ -1027,7 +1203,7 @@ header:hover {
     border-radius: 50%;
     margin: 0 auto 20px;
     display: block;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .controls {
@@ -1047,7 +1223,7 @@ header:hover {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-2));
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
     color: var(--primary-black);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease;
@@ -1086,10 +1262,10 @@ header:hover {
 
 .bar {
     flex: 1;
-    background: linear-gradient(to top, var(--accent-gold), var(--success-green));
+    background: linear-gradient(to top, var(--accent-orange), var(--success-green));
     border-radius: 10px 10px 0 0;
     animation: vuPulse 0.2s ease-in-out infinite alternate;
-    box-shadow: 0 0 5px var(--accent-gold);
+    box-shadow: 0 0 5px var(--accent-orange);
 }
 
 @keyframes vuPulse {
@@ -1126,15 +1302,15 @@ header:hover {
     padding: 60px 40px;
     background: rgba(17, 17, 17, 0.8);
     text-align: center;
-    border: 2px solid var(--accent-gold);
-    box-shadow: 0 0 20px var(--accent-gold);
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .parceiros-section h2 {
     font-size: 36px;
     margin-bottom: 20px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1148,11 +1324,11 @@ header:hover {
 
 .parceiro {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
 }
 
 .parceiro img {
@@ -1171,15 +1347,15 @@ header:hover {
 }
 
 .parceiro a {
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     text-decoration: none;
     font-weight: bold;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px var(--accent-orange);
 }
 
 .parceiro:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--accent-gold);
+    box-shadow: 0 0 25px var(--accent-orange);
 }
 
 .cart-fixed {
@@ -1191,19 +1367,19 @@ header:hover {
 
 .cart-fixed button {
     background: rgba(0, 0, 0, 0.9);
-    color: var(--accent-gold);
-    border: 2px solid var(--accent-gold);
+    color: var(--accent-orange);
+    border: 2px solid var(--accent-orange);
     padding: 15px 20px;
     font-size: 18px;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .cart-fixed button:hover {
-    background: var(--accent-gold);
+    background: var(--accent-orange);
     color: var(--primary-black);
     transform: scale(1.05);
 }
@@ -1213,24 +1389,24 @@ header:hover {
     bottom: 20px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-gold);
-    border: 2px solid var(--accent-gold);
+    color: var(--accent-orange);
+    border: 2px solid var(--accent-orange);
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 30px;
     cursor: pointer;
     z-index: 1001;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-gold);
-    text-shadow: 0 0 5px var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-orange);
+    text-shadow: 0 0 5px var(--accent-orange);
     font-family: 'Fredoka', sans-serif;
 }
 
 .help-fixed-button:hover {
-    background-color: var(--accent-gold);
+    background-color: var(--accent-orange);
     color: var(--primary-black);
     transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .modal {
@@ -1251,14 +1427,14 @@ header:hover {
 
 .modal-content {
     background: rgba(17, 17, 17, 0.95);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid var(--accent-orange);
     border-radius: 24px;
     padding: 32px;
     max-width: 520px;
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 0 30px var(--accent-gold);
+    box-shadow: 0 0 30px var(--accent-orange);
     color: var(--light-text);
     position: relative;
     backdrop-filter: blur(20px);
@@ -1269,10 +1445,10 @@ header:hover {
     margin: 0 0 24px 0;
     font-size: 28px;
     font-weight: 700;
-    color: var(--accent-gold);
+    color: var(--accent-orange);
     text-align: center;
     letter-spacing: -0.5px;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1282,8 +1458,8 @@ header:hover {
     position: absolute;
     top: 20px;
     right: 24px;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     transition: all 0.3s ease;
     opacity: 0.8;
     font-family: 'Fredoka', sans-serif;
@@ -1304,7 +1480,7 @@ header:hover {
     border-radius: 16px;
     background: transparent;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-gold) transparent;
+    scrollbar-color: var(--accent-orange) transparent;
 }
 
 #modal-cart-items::-webkit-scrollbar {
@@ -1316,7 +1492,7 @@ header:hover {
 }
 
 #modal-cart-items::-webkit-scrollbar-thumb {
-    background: var(--accent-gold);
+    background: var(--accent-orange);
     border-radius: 3px;
 }
 
@@ -1331,10 +1507,10 @@ header:hover {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 16px;
     transition: all 0.3s ease;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid var(--accent-orange);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -1345,14 +1521,14 @@ header:hover {
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(to bottom, var(--accent-gold), var(--primary-red));
-    box-shadow: 0 0 5px var(--accent-gold);
+    background: linear-gradient(to bottom, var(--accent-orange), var(--primary-red));
+    box-shadow: 0 0 5px var(--accent-orange);
 }
 
 .cart-item-modal:hover {
-    background: rgba(255, 204, 0, 0.1);
+    background: rgba(255, 69, 0, 0.1);
     transform: translateX(4px);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .cart-item-modal span {
@@ -1362,7 +1538,7 @@ header:hover {
 }
 
 .cart-item-modal button {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-gold));
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
     color: var(--light-text);
     border: none;
     padding: 8px 16px;
@@ -1377,25 +1553,25 @@ header:hover {
 }
 
 .cart-item-modal button:hover {
-    background: linear-gradient(135deg, var(--accent-gold), var(--primary-red));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 #modal-total {
     font-size: 24px;
     font-weight: 700;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     margin-bottom: 24px;
     text-align: center;
-    background: linear-gradient(135deg, var(--accent-gold), var(--primary-red));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     padding: 12px;
     border-radius: 12px;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1428,21 +1604,21 @@ header:hover {
 }
 
 #clear-cart {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-gold));
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
     color: var(--light-text);
     box-shadow: 0 0 15px var(--primary-red);
 }
 
 #clear-cart:hover {
-    background: linear-gradient(135deg, var(--accent-gold), var(--primary-red));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     transform: translateY(-2px);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 #checkout-form h3,
 #checkout-form h4 {
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
     margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
 }
@@ -1453,29 +1629,29 @@ header:hover {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid var(--accent-orange);
     border-radius: 10px;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--light-text);
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 5px rgba(255, 69, 0, 0.3);
     font-family: 'Fredoka', sans-serif;
     resize: vertical;
 }
 
 #checkout-form input:focus,
 #checkout-form textarea:focus {
-    border-color: var(--accent-gold);
+    border-color: var(--accent-orange);
     outline: none;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-orange);
 }
 
 #checkout-form button {
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-gold);
-    border: 2px solid var(--accent-gold);
+    color: var(--accent-orange);
+    border: 2px solid var(--accent-orange);
     padding: 20px;
     font-size: 24px;
     border-radius: 30px;
@@ -1483,16 +1659,16 @@ header:hover {
     width: 100%;
     margin-bottom: 10px;
     transition: all 0.3s ease;
-    text-shadow: 0 0 5px var(--accent-gold);
-    box-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 5px var(--accent-orange);
+    box-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
     font-weight: 700;
 }
 
 #checkout-form button:hover {
-    background-color: var(--accent-gold);
+    background-color: var(--accent-orange);
     color: var(--primary-black);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 #pix-details {
@@ -1524,14 +1700,14 @@ header:hover {
     position: fixed;
     top: 30px;
     right: 30px;
-    background: linear-gradient(to right, var(--primary-red), var(--accent-gold));
+    background: linear-gradient(to right, var(--primary-red), var(--accent-orange));
     color: var(--primary-black);
     padding: 20px 40px;
     border-radius: 10px;
     font-size: 20px;
     display: none;
     z-index: 1002;
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-orange);
     font-weight: bold;
     animation: slideIn 0.3s ease;
     font-family: 'Fredoka', sans-serif;
@@ -1560,9 +1736,9 @@ footer {
     text-align: center;
     padding: 40px;
     font-size: 20px;
-    text-shadow: 0 0 10px var(--accent-gold);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
-    border-top: 2px solid var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-orange);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-orange);
+    border-top: 2px solid var(--accent-orange);
     font-family: 'Fredoka', sans-serif;
 }
 
