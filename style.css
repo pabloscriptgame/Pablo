@@ -642,189 +642,88 @@ header:hover {
 .logo-link {
     display: block;
     text-decoration: none;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.logo-link:hover {
-    transform: scale(1.03);
 }
 
 .logo {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--light-text);
+    font-family: 'Baloo 2', cursive;
 }
 
 .logo-image {
-    width: 80px;
-    /* Logo ainda menor */
-    height: auto;
-    margin-bottom: 1px;
-    /* Margin ainda menor */
-    border-radius: 50%;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-orange);
-    /* Shadow ajustado */
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 2px solid var(--accent-orange);
-}
-
-.logo-image:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-orange);
-    transform: rotate(2deg) scale(1.02);
+    height: 40px;
+    width: auto;
 }
 
 .logo p {
     margin: 0;
-    font-size: 10px;
-    /* Fonte ainda menor */
+    font-size: 12px;
     color: var(--accent-orange);
-    text-shadow: 0 0 10px var(--accent-orange);
-    font-style: italic;
-    font-weight: 500;
-    font-family: 'Baloo 2', cursive;
 }
 
 .main-nav ul {
-    list-style: none;
     display: flex;
+    list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.main-nav li {
-    margin: 0 10px;
-    /* Espaçamento ainda menor */
+    gap: 20px;
 }
 
 .main-nav a {
-    color: var(--accent-orange);
+    color: var(--light-text);
     text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    /* Fonte do menu ainda menor */
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    position: relative;
-    text-shadow: 0 0 10px var(--accent-orange);
+    font-weight: bold;
+    transition: color 0.3s;
     font-family: 'Baloo 2', cursive;
 }
 
-.main-nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    /* Sem barrinha */
-    bottom: -4px;
-    left: 50%;
-    background-color: var(--accent-orange);
-    transition: width 0.3s ease, left 0.3s ease;
-    box-shadow: 0 0 5px var(--accent-orange);
-}
-
-.main-nav a:hover::after {
-    width: 0;
-    /* Sem barrinha no hover */
-    left: 0;
-}
-
 .main-nav a:hover {
-    color: #ffffff;
-    text-shadow: 0 0 15px var(--accent-orange);
-    transform: translateY(-1px);
+    color: var(--accent-orange);
 }
 
 .mobile-menu-toggle {
     display: none;
-    font-size: 28px;
-    color: var(--accent-orange);
+    font-size: 24px;
     cursor: pointer;
-    text-shadow: 0 0 10px var(--accent-orange);
-    transition: transform 0.3s ease;
-    font-family: 'Fredoka', sans-serif;
-}
-
-.mobile-menu-toggle:hover {
-    transform: rotate(90deg);
+    color: var(--light-text);
 }
 
 .hero-banner {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 100px 40px;
     text-align: center;
-    color: var(--light-text);
+    padding: 80px 40px;
+    background: rgba(0, 0, 0, 0.5);
     position: relative;
-    overflow: hidden;
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
-}
-
-.hero-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://images.unsplash.com/photo-1550258987-190a2d61a8ba?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb') no-repeat center/cover;
-    opacity: 0.05;
-    z-index: -1;
-    filter: blur(2px);
-    animation: zoom 20s ease-in-out infinite;
-}
-
-@keyframes zoom {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
 }
 
 .banner-content h2 {
-    font-size: 60px;
+    font-size: 48px;
     margin-bottom: 20px;
-    text-shadow: 0 0 20px var(--accent-orange);
-    animation: fadeInUp 1s ease-out;
+    color: var(--accent-orange);
     font-family: 'Baloo 2', cursive;
-    font-weight: 700;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    text-shadow: 0 0 10px var(--accent-orange);
 }
 
 .marquee {
     overflow: hidden;
     white-space: nowrap;
-    position: relative;
-    width: 100%;
-    margin: 30px 0;
-    background: rgba(17, 17, 17, 0.8);
-    border: 2px solid var(--accent-orange);
-    border-radius: 10px;
+    margin-bottom: 30px;
+    background: rgba(0, 0, 0, 0.7);
     padding: 10px;
-    box-shadow: 0 0 15px var(--accent-orange), inset 0 0 10px rgba(255, 165, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid var(--accent-orange);
 }
 
 .marquee-text {
     display: inline-block;
+    animation: marquee 10s linear infinite;
     font-size: 20px;
-    color: var(--accent-orange);
-    text-shadow: 0 0 10px var(--accent-orange);
-    animation: scroll 25s linear infinite;
+    color: var(--light-text);
     padding-left: 100%;
-    font-family: 'Fredoka', sans-serif;
 }
 
-@keyframes scroll {
+@keyframes marquee {
     0% {
         transform: translateX(0);
     }
@@ -834,117 +733,83 @@ header:hover {
 }
 
 .cta-button {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-orange);
-    padding: 20px 40px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 24px;
-    border: 2px solid var(--accent-orange);
-    border-radius: 50px;
-    transition: all 0.3s ease;
     display: inline-block;
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+    color: var(--primary-black);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    transition: transform 0.3s;
     box-shadow: 0 0 15px var(--accent-orange);
-    position: relative;
-    overflow: hidden;
     font-family: 'Baloo 2', cursive;
 }
 
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 165, 0, 0.2), transparent);
-    transition: left 0.5s;
-}
-
-.cta-button:hover::before {
-    left: 100%;
-}
-
 .cta-button:hover {
-    background-color: var(--accent-orange);
-    color: var(--primary-black);
     transform: scale(1.05);
-    box-shadow: 0 0 25px var(--accent-orange);
 }
 
 .promotions {
-    padding: 80px 40px;
-    background: rgba(17, 17, 17, 0.8);
+    padding: 60px 40px;
     text-align: center;
-    position: relative;
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
-}
-
-.promotions::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 165, 0, 0.05) 0%, transparent 70%);
-    z-index: -1;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .promotions h2 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    color: var(--accent-orange);
-    text-shadow: 0 0 15px var(--accent-orange);
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: var(--accent-pink);
     font-family: 'Baloo 2', cursive;
 }
 
 .promo-special {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-orange);
-    border-radius: 20px;
-    padding: 40px;
-    margin-bottom: 40px;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 0 20px var(--accent-orange);
-    transition: transform 0.3s ease;
+    margin: 0 auto;
+    background: rgba(17, 17, 17, 0.8);
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid var(--accent-pink);
+    box-shadow: 0 0 20px var(--accent-pink);
 }
 
-.promo-special:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 30px var(--accent-orange);
+.item-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .promo-special h3 {
-    font-size: 32px;
-    color: var(--primary-red);
-    text-shadow: 0 0 10px var(--primary-red);
-    font-family: 'Fredoka', sans-serif;
+    font-size: 28px;
+    color: var(--accent-pink);
+    margin-bottom: 15px;
+    font-family: 'Baloo 2', cursive;
+}
+
+.promo-special p {
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .promo-special span {
-    font-size: 28px;
-    color: var(--success-green);
+    font-size: 24px;
     font-weight: bold;
+    color: var(--success-green);
     text-shadow: 0 0 10px var(--success-green);
 }
 
 .menu-section {
-    padding: 80px 40px;
-    background: rgba(17, 17, 17, 0.8);
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
+    padding: 60px 40px;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .menu-section h2 {
-    font-size: 48px;
     text-align: center;
+    font-size: 36px;
     margin-bottom: 40px;
-    color: var(--accent-orange);
-    text-shadow: 0 0 15px var(--accent-orange);
+    color: var(--accent-blue);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -952,27 +817,27 @@ header:hover {
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
-    flex-wrap: wrap;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .tab-button {
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--accent-orange);
-    border: 2px solid var(--accent-orange);
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--light-text);
+    border: 2px solid var(--accent-blue);
     padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 10px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 18px;
+    transition: all 0.3s;
     font-family: 'Baloo 2', cursive;
 }
 
 .tab-button.active,
 .tab-button:hover {
-    background: var(--accent-orange);
+    background: var(--accent-blue);
     color: var(--primary-black);
-    box-shadow: 0 0 15px var(--accent-orange);
+    box-shadow: 0 0 15px var(--accent-blue);
 }
 
 .tab-panel {
@@ -981,6 +846,14 @@ header:hover {
 
 .tab-panel.active {
     display: block;
+}
+
+.tab-panel h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--accent-orange);
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
 }
 
 .menu-grid {
@@ -992,88 +865,80 @@ header:hover {
 }
 
 .item {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-orange);
+    background: rgba(17, 17, 17, 0.9);
     border-radius: 20px;
     padding: 20px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--accent-orange);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
 }
 
 .item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 25px var(--accent-orange);
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .item-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 15px;
 }
 
 .item h3 {
-    color: var(--accent-orange);
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--accent-orange);
+    color: var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .item p {
-    color: var(--medium-text);
-    margin-bottom: 15px;
     font-size: 16px;
+    margin-bottom: 15px;
+    color: var(--medium-text);
 }
 
 .item span {
     font-size: 20px;
-    color: var(--success-green);
     font-weight: bold;
+    color: var(--success-green);
     display: block;
     margin-bottom: 15px;
-    text-shadow: 0 0 5px var(--success-green);
 }
 
 .add-to-cart {
     background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
     color: var(--primary-black);
     border: none;
-    padding: 12px 24px;
+    padding: 12px 25px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     box-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
-.add-to-cart:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent-orange);
-}
-
+.add-to-cart:hover,
 .add-to-cart.added {
     background: var(--success-green);
-    color: var(--light-text);
+    box-shadow: 0 0 15px var(--success-green);
+    transform: scale(1.05);
 }
 
 .gamification-section {
-    padding: 80px 40px;
-    background: rgba(17, 17, 17, 0.8);
+    padding: 60px 40px;
     text-align: center;
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .gamification-section h2 {
-    font-size: 48px;
+    font-size: 36px;
     margin-bottom: 40px;
-    color: var(--accent-orange);
-    text-shadow: 0 0 15px var(--accent-orange);
+    color: var(--accent-pink);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1082,32 +947,40 @@ header:hover {
     margin: 0 auto 40px;
 }
 
+.stat-item {
+    background: rgba(17, 17, 17, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid var(--accent-pink);
+}
+
 .stat-item h3 {
-    color: var(--accent-orange);
     font-size: 24px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--accent-orange);
+    margin-bottom: 15px;
+    color: var(--accent-pink);
+    font-family: 'Baloo 2', cursive;
 }
 
 .progress-bar {
+    width: 100%;
+    height: 10px;
     background: rgba(0, 0, 0, 0.5);
-    height: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 10px;
-    border: 1px solid var(--accent-orange);
+    margin-bottom: 15px;
+    border: 1px solid var(--accent-pink);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-orange), var(--success-green));
+    background: linear-gradient(90deg, var(--accent-pink), var(--accent-orange));
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-orange);
+    box-shadow: 0 0 10px var(--accent-pink);
 }
 
 .stat-item p {
-    color: var(--medium-text);
-    font-size: 16px;
+    font-size: 18px;
+    color: var(--light-text);
 }
 
 .badges-grid {
@@ -1115,20 +988,26 @@ header:hover {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 800px;
-    margin: 0 auto 40px;
+    margin: 0 auto 20px;
 }
 
 .badge {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--accent-orange);
-    border-radius: 15px;
+    background: rgba(17, 17, 17, 0.8);
     padding: 20px;
-    transition: all 0.3s ease;
+    border-radius: 15px;
+    transition: all 0.3s;
+    border: 2px solid var(--muted);
+    position: relative;
+}
+
+.badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--muted);
 }
 
 .badge.unlocked {
     border-color: var(--success-green);
-    box-shadow: 0 0 15px var(--success-green);
+    background: rgba(76, 175, 80, 0.1);
 }
 
 .badge.locked {
@@ -1141,36 +1020,37 @@ header:hover {
 }
 
 .badge h4 {
-    color: var(--accent-orange);
+    font-size: 18px;
     margin-bottom: 5px;
+    color: var(--light-text);
     font-family: 'Baloo 2', cursive;
 }
 
 .badge p {
-    color: var(--medium-text);
     font-size: 14px;
+    color: var(--medium-text);
 }
 
 .gamification-note {
-    color: var(--medium-text);
     font-size: 16px;
-    max-width: 600px;
-    margin: 0 auto;
+    margin-top: 20px;
+    color: var(--accent-orange);
+}
+
+.daily-challenge {
+    animation: pulse 2s infinite;
 }
 
 .radio-section {
-    padding: 80px 40px;
-    background: rgba(17, 17, 17, 0.8);
+    padding: 60px 40px;
     text-align: center;
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .radio-section h2 {
-    font-size: 48px;
+    font-size: 36px;
     margin-bottom: 20px;
-    color: var(--accent-orange);
-    text-shadow: 0 0 15px var(--accent-orange);
+    color: var(--accent-blue);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1184,105 +1064,83 @@ header:hover {
     display: inline-block;
     position: relative;
     width: 300px;
-    height: 250px;
-    background: linear-gradient(135deg, #333, #111);
+    height: 200px;
+    background: linear-gradient(135deg, #333, #555);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-orange);
+    box-shadow: 0 0 20px rgba(65, 105, 225, 0.5);
     transform: perspective(1000px) rotateX(5deg);
-    transition: transform 0.3s ease;
-}
-
-.radio-player:hover {
-    transform: perspective(1000px) rotateX(0deg);
 }
 
 .radio-logo {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin: 0 auto 20px;
-    display: block;
-    box-shadow: 0 0 15px var(--accent-orange);
+    margin-bottom: 10px;
 }
 
 .controls {
     position: absolute;
-    bottom: 120px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 20px;
-    z-index: 10;
 }
 
 .btn-3d {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
     border: none;
+    border-radius: 50%;
     font-size: 24px;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
-    color: var(--primary-black);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.2s ease;
-    font-weight: bold;
-    position: relative;
-    z-index: 999;
-    pointer-events: auto;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+    color: var(--light-text);
 }
 
 .btn-3d:hover {
     transform: translateY(-2px);
-    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.btn-3d:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
 }
 
 .vu-meter {
     display: none;
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
-    height: 40px;
+    height: 20px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-    padding: 5px;
-    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-direction: row;
     gap: 2px;
-    align-items: flex-end;
-    z-index: 5;
+    padding: 2px;
 }
 
 .bar {
     flex: 1;
-    background: linear-gradient(to top, var(--accent-orange), var(--success-green));
-    border-radius: 10px 10px 0 0;
-    animation: vuPulse 0.2s ease-in-out infinite alternate;
-    box-shadow: 0 0 5px var(--accent-orange);
+    background: var(--accent-blue);
+    height: 100%;
+    border-radius: 5px;
+    animation: vuPulse 0.5s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(even) {
+    animation-delay: 0.1s;
 }
 
 @keyframes vuPulse {
     0% {
-        height: 10px;
+        height: 20%;
     }
     100% {
-        height: 30px;
+        height: 100%;
     }
-}
-
-.vu-meter .bar:nth-child(odd) {
-    animation-delay: 0.1s;
-}
-
-.vu-meter .bar:nth-child(even) {
-    animation-delay: 0.05s;
 }
 
 .speaker-grill {
@@ -1291,7 +1149,7 @@ header:hover {
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
-    height: 100px;
+    height: 30px;
     background: repeating-linear-gradient(90deg, #222 0px, #222 5px, transparent 5px, transparent 10px);
     border-radius: 0 0 20px 20px;
     pointer-events: none;
@@ -1838,4 +1696,30 @@ footer {
     to {
         opacity: 0;
     }
+}
+
+
+/* Novos estilos para gamificação */
+
+.badge {
+    position: relative;
+}
+
+.badge:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 12px;
+}
+
+.daily-challenge {
+    animation: pulse 2s infinite;
 }
