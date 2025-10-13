@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cupons (sem mudanças)
     const validCoupons = [
-        'DEGUST0',
+        '##',
     ];
 
     function formatCurrency(value) {
@@ -534,3 +534,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Player de rádio inicializado.');
     }
 });
+
