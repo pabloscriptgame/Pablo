@@ -2,9 +2,9 @@
 
 :root {
     --primary-black: #000000;
-    --accent-pink: #FF1493;
-    --accent-orange: #FF4500;
-    --accent-blue: #1E90FF;
+    --accent-pink: #FF69B4;
+    --accent-orange: #FFA500;
+    --accent-blue: #4169E1;
     --primary-red: #e63946;
     --dark-bg: #000000;
     --dark-gray: #111111;
@@ -18,7 +18,7 @@ body {
     font-family: 'Fredoka', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #FF1493, #FF4500, #1E90FF, #FF1493, #FF4500, #1E90FF);
+    background: linear-gradient(135deg, #FF69B4, #FFA500, #4169E1, #FF69B4, #FFA500, #4169E1);
     background-size: 400% 400%;
     animation: rainbowShift 15s ease infinite;
     background-position: center;
@@ -49,7 +49,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(255, 20, 147, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
     z-index: -1;
     animation: pulse 10s ease-in-out infinite alternate;
 }
@@ -202,7 +202,7 @@ body::after {
     bottom: 0;
     width: 100%;
     height: 150px;
-    background: linear-gradient(to top, transparent 0%, rgba(255, 69, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(255, 20, 147, 0.4) 60%, transparent 100%);
+    background: linear-gradient(to top, transparent 0%, rgba(255, 165, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(255, 105, 180, 0.4) 60%, transparent 100%);
     z-index: -1;
     pointer-events: none;
     animation: flameWave 3s ease-in-out infinite alternate;
@@ -614,7 +614,7 @@ header {
     padding: 5px 20px;
     /* Ainda mais fino */
     text-align: center;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-orange), inset 0 1px 0 rgba(255, 69, 0, 0.1);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-orange), inset 0 1px 0 rgba(255, 165, 0, 0.1);
     /* Shadow mais sutil */
     position: sticky;
     top: 0;
@@ -625,7 +625,7 @@ header {
 }
 
 header:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 69, 0, 0.15);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 165, 0, 0.15);
     transform: translateY(-1px);
 }
 
@@ -811,7 +811,7 @@ header:hover {
     border: 2px solid var(--accent-orange);
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 0 15px var(--accent-orange), inset 0 0 10px rgba(255, 69, 0, 0.1);
+    box-shadow: 0 0 15px var(--accent-orange), inset 0 0 10px rgba(255, 165, 0, 0.1);
 }
 
 .marquee-text {
@@ -857,7 +857,7 @@ header:hover {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 69, 0, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 165, 0, 0.2), transparent);
     transition: left 0.5s;
 }
 
@@ -888,7 +888,7 @@ header:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 69, 0, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 165, 0, 0.05) 0%, transparent 70%);
     z-index: -1;
 }
 
@@ -998,7 +998,7 @@ header:hover {
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
 }
 
 .item:hover {
@@ -1328,7 +1328,7 @@ header:hover {
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
 }
 
 .parceiro img {
@@ -1510,7 +1510,7 @@ header:hover {
     border: 1px solid var(--accent-orange);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -1526,7 +1526,7 @@ header:hover {
 }
 
 .cart-item-modal:hover {
-    background: rgba(255, 69, 0, 0.1);
+    background: rgba(255, 165, 0, 0.1);
     transform: translateX(4px);
     box-shadow: 0 0 15px var(--accent-orange);
 }
@@ -1636,7 +1636,7 @@ header:hover {
     color: var(--light-text);
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    box-shadow: 0 0 5px rgba(255, 69, 0, 0.3);
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
     font-family: 'Fredoka', sans-serif;
     resize: vertical;
 }
