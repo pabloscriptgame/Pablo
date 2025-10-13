@@ -170,10 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cupons (sem mudanças)
     const validCoupons = [
-        'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5',
-        'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5',
-        'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5-015',
-        'DEGUSTO5-016', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5', 'DEGUSTO5-020',
+        'DEGUST0',
     ];
 
     function formatCurrency(value) {
