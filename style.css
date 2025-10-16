@@ -2,10 +2,10 @@
 
 :root {
     --primary-black: #000000;
-    --accent-pink: #FF69B4;
-    --accent-orange: #FFA500;
-    --accent-blue: #4169E1;
-    --primary-red: #e63946;
+    --accent-pink: #DC143C;
+    --accent-orange: #FF8C00;
+    --accent-blue: #FF8C00;
+    --primary-red: #DC143C;
     --dark-bg: #000000;
     --dark-gray: #111111;
     --light-text: #ffffff;
@@ -18,7 +18,7 @@ body {
     font-family: 'Fredoka', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #FF69B4, #FFA500, #4169E1, #FF69B4, #FFA500, #4169E1);
+    background: linear-gradient(135deg, #DC143C, #FF8C00, #FF8C00, #DC143C, #FF8C00, #FF8C00);
     background-size: 400% 400%;
     animation: rainbowShift 15s ease infinite;
     background-position: center;
@@ -49,7 +49,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.05) 0%, transparent 50%);
     z-index: -1;
     animation: pulse 10s ease-in-out infinite alternate;
 }
@@ -105,6 +105,7 @@ body::after {
     z-index: -1;
     pointer-events: none;
     animation: float 6s linear infinite, flicker 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 10px var(--accent-orange), 0 0 20px var(--accent-orange);
 }
 
 .ember:nth-child(1) {
@@ -202,11 +203,12 @@ body::after {
     bottom: 0;
     width: 100%;
     height: 150px;
-    background: linear-gradient(to top, transparent 0%, rgba(255, 165, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(255, 105, 180, 0.4) 60%, transparent 100%);
+    background: linear-gradient(to top, transparent 0%, rgba(255, 140, 0, 0.6) 20%, rgba(255, 140, 0, 0.8) 40%, rgba(220, 20, 60, 0.4) 60%, transparent 100%);
     z-index: -1;
     pointer-events: none;
     animation: flameWave 3s ease-in-out infinite alternate;
     opacity: 0.4;
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .flame-stripe:nth-child(1) {
@@ -376,10 +378,11 @@ body::after {
 
 .star {
     position: absolute;
-    background: radial-gradient(circle, var(--accent-pink) 0%, var(--accent-orange) 50%, transparent 70%);
+    background: radial-gradient(circle, var(--primary-red) 0%, var(--accent-orange) 50%, transparent 70%);
     border-radius: 50% 0;
     opacity: 0;
     animation: twinkle 3s ease-in-out infinite alternate;
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .star:nth-child(1) {
@@ -454,6 +457,7 @@ body::after {
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     animation: floatUp 10s ease-in-out infinite;
     opacity: 0;
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .balloon::after {
@@ -470,13 +474,13 @@ body::after {
 
 .balloon:nth-child(1) {
     left: 10%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-orange) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--primary-red) 0%, var(--accent-orange) 70%);
     animation-delay: 0s;
 }
 
 .balloon:nth-child(2) {
     left: 20%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--accent-blue) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--primary-red) 70%);
     animation-delay: 2s;
     width: 35px;
     height: 45px;
@@ -484,7 +488,7 @@ body::after {
 
 .balloon:nth-child(3) {
     left: 30%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-blue) 0%, var(--accent-pink) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--primary-red) 0%, var(--accent-orange) 70%);
     animation-delay: 4s;
     width: 45px;
     height: 55px;
@@ -492,13 +496,13 @@ body::after {
 
 .balloon:nth-child(4) {
     left: 60%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-blue) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--primary-red) 0%, var(--accent-orange) 70%);
     animation-delay: 1s;
 }
 
 .balloon:nth-child(5) {
     left: 70%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--accent-pink) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--accent-orange) 0%, var(--primary-red) 70%);
     animation-delay: 3s;
     width: 30px;
     height: 40px;
@@ -506,13 +510,13 @@ body::after {
 
 .balloon:nth-child(6) {
     left: 80%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-blue) 0%, var(--accent-orange) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--primary-red) 0%, var(--accent-orange) 70%);
     animation-delay: 5s;
 }
 
 .balloon:nth-child(7) {
     left: 90%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-pink) 0%, var(--accent-orange) 70%);
+    background: radial-gradient(circle at 30% 30%, var(--primary-red) 0%, var(--accent-orange) 70%);
     animation-delay: 6s;
     width: 50px;
     height: 60px;
@@ -560,12 +564,13 @@ body::after {
     border-radius: 50%;
     animation: bounce 4s ease-in-out infinite;
     opacity: 0.8;
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .candy:nth-child(1) {
     top: 20%;
     left: 15%;
-    background: var(--accent-pink);
+    background: var(--primary-red);
     animation-delay: 0s;
 }
 
@@ -579,14 +584,14 @@ body::after {
 .candy:nth-child(3) {
     top: 50%;
     left: 25%;
-    background: var(--accent-blue);
+    background: var(--primary-red);
     animation-delay: 2s;
 }
 
 .candy:nth-child(4) {
     top: 60%;
     left: 75%;
-    background: var(--accent-pink);
+    background: var(--primary-red);
     animation-delay: 0.5s;
 }
 
@@ -614,7 +619,7 @@ header {
     padding: 5px 20px;
     /* Ainda mais fino */
     text-align: center;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-orange), inset 0 1px 0 rgba(255, 165, 0, 0.1);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-orange), inset 0 1px 0 rgba(255, 140, 0, 0.1);
     /* Shadow mais sutil */
     position: sticky;
     top: 0;
@@ -625,7 +630,7 @@ header {
 }
 
 header:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 165, 0, 0.15);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 140, 0, 0.15);
     transform: translateY(-1px);
 }
 
@@ -734,7 +739,7 @@ header:hover {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     color: var(--primary-black);
     padding: 15px 30px;
     text-decoration: none;
@@ -759,7 +764,7 @@ header:hover {
 .promotions h2 {
     font-size: 36px;
     margin-bottom: 40px;
-    color: var(--accent-pink);
+    color: var(--primary-red);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -769,8 +774,8 @@ header:hover {
     background: rgba(17, 17, 17, 0.8);
     padding: 30px;
     border-radius: 20px;
-    border: 2px solid var(--accent-pink);
-    box-shadow: 0 0 20px var(--accent-pink);
+    border: 2px solid var(--primary-red);
+    box-shadow: 0 0 20px var(--primary-red);
 }
 
 .item-image {
@@ -783,7 +788,7 @@ header:hover {
 
 .promo-special h3 {
     font-size: 28px;
-    color: var(--accent-pink);
+    color: var(--primary-red);
     margin-bottom: 15px;
     font-family: 'Baloo 2', cursive;
 }
@@ -809,7 +814,7 @@ header:hover {
     text-align: center;
     font-size: 36px;
     margin-bottom: 40px;
-    color: var(--accent-blue);
+    color: var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -824,7 +829,7 @@ header:hover {
 .tab-button {
     background: rgba(0, 0, 0, 0.7);
     color: var(--light-text);
-    border: 2px solid var(--accent-blue);
+    border: 2px solid var(--accent-orange);
     padding: 15px 25px;
     border-radius: 30px;
     cursor: pointer;
@@ -835,9 +840,9 @@ header:hover {
 
 .tab-button.active,
 .tab-button:hover {
-    background: var(--accent-blue);
+    background: var(--accent-orange);
     color: var(--primary-black);
-    box-shadow: 0 0 15px var(--accent-blue);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .tab-panel {
@@ -871,7 +876,7 @@ header:hover {
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     border: 1px solid var(--accent-orange);
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
 }
 
 .item:hover {
@@ -909,7 +914,7 @@ header:hover {
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     color: var(--primary-black);
     border: none;
     padding: 12px 25px;
@@ -938,7 +943,7 @@ header:hover {
 .gamification-section h2 {
     font-size: 36px;
     margin-bottom: 40px;
-    color: var(--accent-pink);
+    color: var(--primary-red);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -951,13 +956,13 @@ header:hover {
     background: rgba(17, 17, 17, 0.9);
     padding: 30px;
     border-radius: 20px;
-    border: 2px solid var(--accent-pink);
+    border: 2px solid var(--primary-red);
 }
 
 .stat-item h3 {
     font-size: 24px;
     margin-bottom: 15px;
-    color: var(--accent-pink);
+    color: var(--primary-red);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -968,14 +973,14 @@ header:hover {
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 15px;
-    border: 1px solid var(--accent-pink);
+    border: 1px solid var(--primary-red);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-pink), var(--accent-orange));
+    background: linear-gradient(90deg, var(--primary-red), var(--accent-orange));
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-pink);
+    box-shadow: 0 0 10px var(--primary-red);
 }
 
 .stat-item p {
@@ -1050,7 +1055,7 @@ header:hover {
 .radio-section h2 {
     font-size: 36px;
     margin-bottom: 20px;
-    color: var(--accent-blue);
+    color: var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1068,7 +1073,7 @@ header:hover {
     background: linear-gradient(135deg, #333, #555);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 0 20px rgba(65, 105, 225, 0.5);
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
     transform: perspective(1000px) rotateX(5deg);
 }
 
@@ -1097,7 +1102,7 @@ header:hover {
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     color: var(--light-text);
 }
 
@@ -1124,7 +1129,7 @@ header:hover {
 
 .bar {
     flex: 1;
-    background: var(--accent-blue);
+    background: var(--accent-orange);
     height: 100%;
     border-radius: 5px;
     animation: vuPulse 0.5s ease-in-out infinite alternate;
@@ -1186,7 +1191,7 @@ header:hover {
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
 }
 
 .parceiro img {
@@ -1368,7 +1373,7 @@ header:hover {
     border: 1px solid var(--accent-orange);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -1384,7 +1389,7 @@ header:hover {
 }
 
 .cart-item-modal:hover {
-    background: rgba(255, 165, 0, 0.1);
+    background: rgba(255, 140, 0, 0.1);
     transform: translateX(4px);
     box-shadow: 0 0 15px var(--accent-orange);
 }
@@ -1494,7 +1499,7 @@ header:hover {
     color: var(--light-text);
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    box-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+    box-shadow: 0 0 5px rgba(255, 140, 0, 0.3);
     font-family: 'Fredoka', sans-serif;
     resize: vertical;
 }
