@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio DêGusto - DêGusto Lanchonete Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.ibb.co/dwtWsHQ6/favicon-32x32.png" type="image/png">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <div class="logo">
+                    <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="DêGusto Logo" class="logo-image">
+                    <p>Atendimento a partir das 19H!</p>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#promocoes">Promoções</a></li>
+                    <li><a href="index.html#cardapio">Cardápio</a></li>
+                    <li><a href="#radio">Radio</a></li>
+                    <li><a href="index.html#gamificacao">Conquistas</a></li>
+                    <li><a href="https://pabloscriptgame.github.io/degustoclube/">DêGusto Clube</a></li>
+                    <li><a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete">App</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">☰</div>
+        </div>
+    </header>
+
+    <section id="radio" class="radio-section">
+        <h2>📻 Rádio DêGusto</h2>
+        <p class="radio-description">Ouça nossa seleção especial enquanto saboreia seu lanche!</p>
+
+        <div class="radio-player" aria-hidden="false">
+            <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="Logo Rádio" class="radio-logo">
+            <div class="controls">
+                <button class="btn-3d" id="play-btn" aria-label="Tocar rádio">▶</button>
+                <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio">⏸</button>
+            </div>
+            <div class="vu-meter" id="vu-meter" aria-hidden="true">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="speaker-grill"></div>
+            <audio id="radio-audio">
+                <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </section>
+
+    <div id="notification" class="notification"></div>
+
+    <footer>
+        <p>Entregamos sabor e qualidade em cada mordida! 🛵✨</p>
+        <p>© 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️</p>
+    </footer>
+
+    <!-- Elementos de brasa (embers) para o efeito de fumaça e brasas -->
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+
+    <!-- Faixas de chama churrasco chamativas no fundo -->
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
