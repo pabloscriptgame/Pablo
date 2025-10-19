@@ -24,7 +24,7 @@
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#promocoes">Promoções</a></li>
                     <li><a href="#cardapio">Cardápio</a></li>
-                    <li><a href="#radio">Radio</a></li>
+                    <li><a href="https://www.degusto.store/radio.html">Rádio</a></li>
                     <li><a href="#gamificacao">Conquistas</a></li>
                     <li><a href="https://pabloscriptgame.github.io/degustoclube/">DêGusto Clube</a></li>
                     <li><a href="https://appsgeyser.io/19134857/De-Gusto-Lanchonete">App</a></li>
@@ -443,6 +443,33 @@
                 </div>
             </div>
         </div>
+
+        <div id="radio" class="tab-panel">
+            <h2>📻 Rádio DêGusto</h2>
+            <p class="radio-description">Ouça nossa seleção especial enquanto saboreia seu lanche!</p>
+
+            <div class="radio-player" aria-hidden="false">
+                <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="Logo Rádio" class="radio-logo">
+                <div class="controls">
+                    <button class="btn-3d" id="play-btn" aria-label="Tocar rádio">▶</button>
+                    <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio">⏸</button>
+                </div>
+                <div class="vu-meter" id="vu-meter" aria-hidden="true">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <div class="speaker-grill"></div>
+                <audio id="radio-audio">
+                    <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
     </section>
 
     <!-- Seção de Gamificação -->
@@ -481,34 +508,6 @@
         </div>
         <p class="gamification-note">🎯 GANHE PONTOS E SUBA DE NÍVEL, adicionando itens ao carrinho (+10 pts) e finalizando pedidos (+50 pts)! Suba de nível para desbloquear recompensas futuras.</p>
         <p class="gamification-note">⚠️ Importante: não limpe o histórico do navegador — isso zera seus pontos e nível!.</p>
-    </section>
-
-    <!-- Seção de Rádio -->
-    <section id="radio" class="radio-section">
-        <h2>📻 Rádio DêGusto</h2>
-        <p class="radio-description">Ouça nossa seleção especial enquanto saboreia seu lanche!</p>
-
-        <div class="radio-player" aria-hidden="false">
-            <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="Logo Rádio" class="radio-logo">
-            <div class="controls">
-                <button class="btn-3d" id="play-btn" aria-label="Tocar rádio">▶</button>
-                <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio">⏸</button>
-            </div>
-            <div class="vu-meter" id="vu-meter" aria-hidden="true">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <div class="speaker-grill"></div>
-            <audio id="radio-audio">
-                <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
-            </audio>
-        </div>
     </section>
 
     <section id="parceiros" class="parceiros-section">
@@ -641,17 +640,3 @@
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
