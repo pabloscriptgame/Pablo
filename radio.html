@@ -5,12 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rádio DêGusto - DêGusto Lanchonete Premium</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="https://i.ibb.co/dwtWsHQ6/favicon-32x32.png" type="image/png">
+    <link rel="stylesheet" href="styleradio.css">
 </head>
 
 <body>
+    <!-- Embers -->
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+
+    <!-- Flame stripes -->
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+    <div class="flame-stripe"></div>
+
     <header>
         <div class="header-container">
             <a href="#" class="logo-link">
@@ -18,13 +37,15 @@
                     <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="DêGusto Logo" class="logo-image">
                     <p>Atendimento a partir das 19H!</p>
                 </div>
-                <div <li><a href="https://www.degusto.store/">Inicio</a></li>
             </a>
             <nav class="main-nav">
                 <ul>
+                    <li><a href="https://www.degusto.store/">Início</a></li>
+                    <li><a href="#radio">Rádio</a></li>
+                    <li><a href="https://www.degusto.store/#menu">Menu</a></li>
                 </ul>
             </nav>
-            </div>
+        </div>
     </header>
 
     <section id="radio" class="radio-section">
@@ -32,12 +53,22 @@
         <p class="radio-description">Ouça nossa seleção especial enquanto saboreia seu lanche!</p>
 
         <div class="radio-player" aria-hidden="false">
+            <div class="player-overlay"></div>
             <img src="https://i.ibb.co/gBM97H1/Background-Eraser-20250817-112249455.png" alt="Logo Rádio" class="radio-logo">
+            <div class="status-indicator" id="status-indicator"></div>
+            <div class="now-playing">Tocando ao vivo... 🎵</div>
             <div class="controls">
+                <button class="btn-3d prev-btn" id="prev-btn" aria-label="Música anterior">⏮</button>
                 <button class="btn-3d" id="play-btn" aria-label="Tocar rádio">▶</button>
-                <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio">⏸</button>
+                <button class="btn-3d" id="pause-btn" aria-label="Pausar rádio" style="display: none;">⏸</button>
+                <button class="btn-3d next-btn" id="next-btn" aria-label="Próxima música">⏭</button>
+            </div>
+            <div class="volume-control">
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.7">
+                <label for="volume-slider" class="volume-label">🔊</label>
             </div>
             <div class="vu-meter" id="vu-meter" aria-hidden="true">
+                <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -60,25 +91,6 @@
         <p>Entregamos sabor e qualidade em cada mordida! 🛵✨</p>
         <p>© 2025/2026 DêGusto Lanchonete Premium — Feito com ❤️</p>
     </footer>
-
-    <!-- Elementos de brasa (embers) para o efeito de fumaça e brasas -->
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-    <div class="ember"></div>
-
-    <!-- Faixas de chama churrasco chamativas no fundo -->
-    <div class="flame-stripe"></div>
-    <div class="flame-stripe"></div>
-    <div class="flame-stripe"></div>
-    <div class="flame-stripe"></div>
-    <div class="flame-stripe"></div>
 
     <script src="scriptradio.js"></script>
 </body>
