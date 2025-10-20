@@ -630,22 +630,18 @@ header {
 }
 
 header:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange), inset 0 1px 0 rgba(255, 140, 0, 0.15);
-    transform: translateY(-1px);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-orange);
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
+    justify-content: space-between;
+    max-width: 1200px;
     margin: 0 auto;
-    flex-wrap: wrap;
-    position: relative;
 }
 
 .logo-link {
-    display: block;
     text-decoration: none;
 }
 
@@ -653,8 +649,6 @@ header:hover {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--light-text);
-    font-family: 'Baloo 2', cursive;
 }
 
 .logo-image {
@@ -664,15 +658,17 @@ header:hover {
 
 .logo p {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--accent-orange);
+    text-shadow: 0 0 10px var(--accent-orange);
+    font-family: 'Baloo 2', cursive;
 }
 
 .main-nav ul {
-    display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
     gap: 20px;
 }
 
@@ -680,7 +676,9 @@ header:hover {
     color: var(--light-text);
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -691,46 +689,50 @@ header:hover {
 .mobile-menu-toggle {
     display: none;
     font-size: 24px;
-    cursor: pointer;
+    background: none;
+    border: none;
     color: var(--light-text);
+    cursor: pointer;
 }
 
 .hero-banner {
     text-align: center;
-    padding: 80px 40px;
-    background: rgba(0, 0, 0, 0.5);
-    position: relative;
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
 }
 
 .banner-content h2 {
-    font-size: 48px;
+    font-size: 60px;
     margin-bottom: 20px;
     color: var(--accent-orange);
+    text-shadow: 0 0 20px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-orange);
 }
 
 .marquee {
     overflow: hidden;
-    white-space: nowrap;
-    margin-bottom: 30px;
     background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--accent-orange);
+    padding: 10px 0;
+    margin-bottom: 30px;
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .marquee-text {
     display: inline-block;
+    white-space: nowrap;
     animation: marquee 10s linear infinite;
-    font-size: 20px;
+    font-size: 24px;
     color: var(--light-text);
-    padding-left: 100%;
+    text-shadow: 0 0 10px var(--accent-orange);
+    font-family: 'Baloo 2', cursive;
+    padding: 0 100%;
 }
 
 @keyframes marquee {
     0% {
-        transform: translateX(0);
+        transform: translateX(100%);
     }
     100% {
         transform: translateX(-100%);
@@ -739,102 +741,58 @@ header:hover {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
-    color: var(--primary-black);
-    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+    color: var(--light-text);
+    padding: 20px 40px;
     text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 20px;
-    transition: transform 0.3s;
-    box-shadow: 0 0 15px var(--accent-orange);
+    font-size: 24px;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--primary-red);
 }
 
 .cta-button:hover {
     transform: scale(1.05);
-}
-
-.promotions {
-    padding: 60px 40px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.promotions h2 {
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: var(--primary-red);
-    font-family: 'Baloo 2', cursive;
-}
-
-.promo-special {
-    max-width: 600px;
-    margin: 0 auto;
-    background: rgba(17, 17, 17, 0.8);
-    padding: 30px;
-    border-radius: 20px;
-    border: 2px solid var(--primary-red);
-    box-shadow: 0 0 20px var(--primary-red);
-}
-
-.item-image {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
-.promo-special h3 {
-    font-size: 28px;
-    color: var(--primary-red);
-    margin-bottom: 15px;
-    font-family: 'Baloo 2', cursive;
-}
-
-.promo-special p {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.promo-special span {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--success-green);
-    text-shadow: 0 0 10px var(--success-green);
+    box-shadow: 0 0 30px var(--primary-red);
 }
 
 .menu-section {
-    padding: 60px 40px;
-    background: rgba(0, 0, 0, 0.5);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-.menu-section h2 {
+.menu-section h2,
+.menu-section h3 {
     text-align: center;
-    font-size: 36px;
-    margin-bottom: 40px;
     color: var(--accent-orange);
+    margin-bottom: 30px;
+    font-size: 32px;
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
     gap: 10px;
+    margin-bottom: 30px;
     flex-wrap: wrap;
 }
 
 .tab-button {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     color: var(--light-text);
     border: 2px solid var(--accent-orange);
     padding: 15px 25px;
-    border-radius: 30px;
     cursor: pointer;
     font-size: 18px;
-    transition: all 0.3s;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -842,6 +800,7 @@ header:hover {
 .tab-button:hover {
     background: var(--accent-orange);
     color: var(--primary-black);
+    transform: translateY(-2px);
     box-shadow: 0 0 15px var(--accent-orange);
 }
 
@@ -853,170 +812,155 @@ header:hover {
     display: block;
 }
 
-.tab-panel h3 {
-    font-size: 28px;
-    margin-bottom: 30px;
-    color: var(--accent-orange);
-    text-align: center;
-    font-family: 'Baloo 2', cursive;
-}
-
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
 
 .item {
-    background: rgba(17, 17, 17, 0.9);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--accent-orange);
     border-radius: 20px;
     padding: 20px;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid var(--accent-orange);
-    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+    font-family: 'Fredoka', sans-serif;
 }
 
 .item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 20px var(--accent-orange);
+    box-shadow: 0 0 25px var(--accent-orange);
 }
 
 .item-image {
-    width: 100%;
-    height: 200px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
+    display: block;
+    border: 3px solid var(--accent-orange);
+    box-shadow: 0 0 10px var(--accent-orange);
 }
 
 .item h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
     color: var(--accent-orange);
+    margin: 10px 0;
+    font-size: 20px;
+    text-shadow: 0 0 10px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .item p {
-    font-size: 16px;
-    margin-bottom: 15px;
     color: var(--medium-text);
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 .item span {
-    font-size: 20px;
+    display: block;
+    font-size: 22px;
     font-weight: bold;
     color: var(--success-green);
-    display: block;
     margin-bottom: 15px;
+    text-shadow: 0 0 5px var(--success-green);
+    font-family: 'Baloo 2', cursive;
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
-    color: var(--primary-black);
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+    color: var(--light-text);
     border: none;
-    padding: 12px 25px;
+    padding: 12px 24px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    transition: all 0.3s;
-    box-shadow: 0 0 10px var(--accent-orange);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--primary-red);
     font-family: 'Baloo 2', cursive;
 }
 
 .add-to-cart:hover,
 .add-to-cart.added {
-    background: var(--success-green);
-    box-shadow: 0 0 15px var(--success-green);
+    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
     transform: scale(1.05);
+    box-shadow: 0 0 15px var(--accent-orange);
 }
 
 .gamification-section {
-    padding: 60px 40px;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--accent-orange);
+    border-radius: 20px;
     text-align: center;
-    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .gamification-section h2 {
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: var(--primary-red);
+    color: var(--accent-orange);
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
 }
 
 .gamification-stats {
-    max-width: 400px;
-    margin: 0 auto 40px;
-}
-
-.stat-item {
-    background: rgba(17, 17, 17, 0.9);
-    padding: 30px;
-    border-radius: 20px;
-    border: 2px solid var(--primary-red);
+    margin-bottom: 30px;
 }
 
 .stat-item h3 {
+    color: var(--light-text);
     font-size: 24px;
-    margin-bottom: 15px;
-    color: var(--primary-red);
+    margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
 }
 
 .progress-bar {
-    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
     height: 10px;
-    background: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 15px;
-    border: 1px solid var(--primary-red);
+    margin-bottom: 10px;
 }
 
 .progress-fill {
+    background: linear-gradient(90deg, var(--accent-orange), var(--primary-red));
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-red), var(--accent-orange));
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--primary-red);
+    box-shadow: 0 0 10px var(--accent-orange);
 }
 
 .stat-item p {
-    font-size: 18px;
-    color: var(--light-text);
+    color: var(--medium-text);
+    font-size: 16px;
 }
 
 .badges-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
-    max-width: 800px;
-    margin: 0 auto 20px;
+    margin-bottom: 20px;
 }
 
 .badge {
-    background: rgba(17, 17, 17, 0.8);
-    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--accent-orange);
     border-radius: 15px;
-    transition: all 0.3s;
-    border: 2px solid var(--muted);
+    padding: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
     position: relative;
 }
 
 .badge:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 15px var(--muted);
-}
-
-.badge.unlocked {
-    border-color: var(--success-green);
-    background: rgba(76, 175, 80, 0.1);
-}
-
-.badge.locked {
-    opacity: 0.6;
+    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .badge-icon {
@@ -1025,156 +969,54 @@ header:hover {
 }
 
 .badge h4 {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: var(--light-text);
+    color: var(--accent-orange);
+    margin: 5px 0;
+    font-size: 16px;
     font-family: 'Baloo 2', cursive;
 }
 
 .badge p {
-    font-size: 14px;
     color: var(--medium-text);
+    font-size: 12px;
+    margin: 0;
+}
+
+.badge.unlocked {
+    border-color: var(--success-green);
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.badge.unlocked .badge-icon {
+    color: var(--success-green);
+    text-shadow: 0 0 10px var(--success-green);
 }
 
 .gamification-note {
-    font-size: 16px;
-    margin-top: 20px;
-    color: var(--accent-orange);
-}
-
-.daily-challenge {
-    animation: pulse 2s infinite;
-}
-
-.radio-section {
-    padding: 60px 40px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.radio-section h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: var(--accent-orange);
-    font-family: 'Baloo 2', cursive;
-}
-
-.radio-description {
-    font-size: 18px;
-    margin-bottom: 40px;
     color: var(--medium-text);
-}
-
-.radio-player {
-    display: inline-block;
-    position: relative;
-    width: 300px;
-    height: 200px;
-    background: linear-gradient(135deg, #333, #555);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
-    transform: perspective(1000px) rotateX(5deg);
-}
-
-.radio-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.controls {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-}
-
-.btn-3d {
-    width: 60px;
-    height: 60px;
-    border: none;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, var(--accent-orange), var(--primary-red));
-    color: var(--light-text);
-}
-
-.btn-3d:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
-}
-
-.vu-meter {
-    display: none;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    overflow: hidden;
-    flex-direction: row;
-    gap: 2px;
-    padding: 2px;
-}
-
-.bar {
-    flex: 1;
-    background: var(--accent-orange);
-    height: 100%;
-    border-radius: 5px;
-    animation: vuPulse 0.5s ease-in-out infinite alternate;
-}
-
-.bar:nth-child(even) {
-    animation-delay: 0.1s;
-}
-
-@keyframes vuPulse {
-    0% {
-        height: 20%;
-    }
-    100% {
-        height: 100%;
-    }
-}
-
-.speaker-grill {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 30px;
-    background: repeating-linear-gradient(90deg, #222 0px, #222 5px, transparent 5px, transparent 10px);
-    border-radius: 0 0 20px 20px;
-    pointer-events: none;
-    z-index: 1;
+    font-size: 14px;
+    margin: 10px 0;
+    font-style: italic;
 }
 
 .parceiros-section {
-    padding: 60px 40px;
-    background: rgba(17, 17, 17, 0.8);
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
     text-align: center;
-    border: 2px solid var(--accent-orange);
-    box-shadow: 0 0 20px var(--accent-orange);
 }
 
 .parceiros-section h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
     color: var(--accent-orange);
-    text-shadow: 0 0 10px var(--accent-orange);
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--accent-orange);
     font-family: 'Baloo 2', cursive;
+}
+
+.parceiros-section p {
+    color: var(--medium-text);
+    margin-bottom: 30px;
+    font-size: 18px;
 }
 
 .parceiros-grid {
@@ -1625,16 +1467,39 @@ footer {
         display: block;
     }
     .hero-banner,
-    .promotions,
     .menu-section,
     .gamification-section {
-        padding: 40px 20px;
+        padding: 30px 20px;
+        /* Reduzido ainda mais para mobile */
     }
     .banner-content h2 {
         font-size: 40px;
     }
     .menu-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    .item {
+        padding: 15px;
+    }
+    .item-image {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+    }
+    .item h3 {
+        font-size: 16px;
+    }
+    .item p {
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    .item span {
+        font-size: 18px;
+    }
+    .add-to-cart {
+        padding: 10px 20px;
+        font-size: 14px;
     }
     .tabs {
         flex-direction: column;
@@ -1727,4 +1592,119 @@ footer {
 
 .daily-challenge {
     animation: pulse 2s infinite;
+}
+
+
+/* Estilos para o player de rádio */
+
+.radio-player {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    margin: 20px auto;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+    transform: perspective(1000px) rotateX(5deg);
+}
+
+.radio-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-orange);
+    box-shadow: 0 0 15px var(--accent-orange);
+}
+
+.controls {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.btn-3d {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff8c00, #e67e22);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-3d:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.vu-meter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    width: 4px;
+}
+
+.bar {
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(to top, var(--accent-orange), var(--primary-red));
+    border-radius: 2px;
+    animation: vuPulse 0.5s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.bar:nth-child(even) {
+    animation-delay: 0.2s;
+}
+
+@keyframes vuPulse {
+    0% {
+        height: 5px;
+        opacity: 0.5;
+    }
+    100% {
+        height: 20px;
+        opacity: 1;
+    }
+}
+
+.speaker-grill {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 80px;
+    background: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.1) 2px, rgba(255, 255, 255, 0.1) 4px);
+    border-radius: 0 0 20px 20px;
+}
+
+.radio-description {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--medium-text);
+    font-style: italic;
+    font-size: 16px;
 }
