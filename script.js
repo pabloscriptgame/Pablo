@@ -1,43 +1,5 @@
-// script.js atualizado com integração ao MongoDB via API backend (assumindo server.js rodando em localhost:3000)
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE = 'http://localhost:3000/api/cart?AqBVeBOlSfejm7zu'; // Ajuste para o URL do seu backend
-    let userId = localStorage.getItem('userId') || generateUserId();
-    localStorage.setItem('userId', userId);
-
-    function generateUserId() {
-        return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    async function saveToDB(endpoint, data) {
-        try {
-            const response = await fetch(`${API_BASE}/${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, ...data })
-            });
-            if (!response.ok) throw new Error('Erro ao salvar');
-        } catch (error) {
-            console.error('Erro ao salvar no DB:', error);
-            // Fallback para localStorage em caso de erro
-            localStorage.setItem(endpoint, JSON.stringify(data));
-        }
-    }
-
-    async function loadFromDB(endpoint) {
-        try {
-            const response = await fetch(`${API_BASE}/${endpoint}?userId=${userId}`);
-            if (response.ok) {
-                const data = await response.json();
-                return data || {};
-            }
-        } catch (error) {
-            console.error('Erro ao carregar do DB:', error);
-        }
-        // Fallback para localStorage
-        return JSON.parse(localStorage.getItem(endpoint)) || {};
-    }
-
-    const cart = [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartCount = document.getElementById('cart-count');
     const notification = document.getElementById('notification');
     const pagamentoRadios = document.querySelectorAll('input[name="pagamento"]');
@@ -57,146 +19,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const helpModal = document.getElementById('help-modal');
     const closeHelpModal = document.querySelector('#help-modal .close-modal');
     const checkoutTotal = document.getElementById('checkout-total');
-    const nomeCliente = document.getElementById('nome-cliente');
-    const observacoes = document.getElementById('observacoes');
-    const couponInput = document.getElementById('coupon-input');
-    const couponApplyBtn = document.getElementById('coupon-apply-btn');
-    const couponStatus = document.getElementById('coupon-status');
-    let discountApplied = false;
-    let originalTotal = 0;
+    const nomeCliente = document.getElementById('nome-cliente'); // Novo campo para nome do cliente
+    const observacoes = document.getElementById('observacoes'); // Novo campo para observações
+    const couponInput = document.getElementById('coupon-input'); // Novo campo para cupom
+    const couponApplyBtn = document.getElementById('coupon-apply-btn'); // Botão para aplicar cupom
+    const couponStatus = document.getElementById('coupon-status'); // Elemento para status do cupom
+    let discountApplied = false; // Flag para verificar se desconto foi aplicado
+    let originalTotal = 0; // Armazena o total original
 
-    // Carregar cart do DB no init
-    async function initCart() {
-        const savedCart = await loadFromDB('cart');
-        Object.assign(cart, savedCart);
-        updateCartButton();
-    }
-
-    // Sistema de Gamificação - carregado do DB
-    let gamificationData = {};
-
-    async function initGamification() {
-        gamificationData = await loadFromDB('gamification');
-        if (Object.keys(gamificationData).length === 0) {
-            gamificationData = {
-                points: 0,
-                level: 1,
-                ordersCompleted: 0,
-                combosOrdered: 0,
-                badges: {
-                    primeiroPedido: false,
-                    fieis: false,
-                    gourmet: false,
-                    comboMaster: false
-                }
-            };
-            await saveGamification();
-        }
-        updateGamificationUI();
-    }
-
-    async function saveGamification() {
-        await saveToDB('gamification', gamificationData);
-    }
-
-    const POINTS_PER_ITEM = 10;
-    const POINTS_PER_ORDER = 50;
-    const POINTS_PER_LEVEL = 100;
-    const userLevelEl = document.getElementById('user-level');
-    const userPointsEl = document.getElementById('user-points');
-    const nextLevelPointsEl = document.getElementById('next-level-points');
-    const progressFillEl = document.getElementById('progress-fill');
-
-    function updateGamificationUI() {
-        userLevelEl.textContent = gamificationData.level;
-        userPointsEl.textContent = gamificationData.points;
-        nextLevelPointsEl.textContent = gamificationData.level * POINTS_PER_LEVEL;
-        const progress = (gamificationData.points % POINTS_PER_LEVEL) / POINTS_PER_LEVEL * 100;
-        progressFillEl.style.width = progress + '%';
-
-        // Atualizar badges
-        Object.keys(gamificationData.badges).forEach(badgeKey => {
-            const badgeEl = document.getElementById(`badge-${badgeKey.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
-            if (gamificationData.badges[badgeKey]) {
-                badgeEl.classList.add('unlocked');
-                badgeEl.classList.remove('locked');
-            } else {
-                badgeEl.classList.add('locked');
-                badgeEl.classList.remove('unlocked');
-            }
-        });
-    }
-
-    async function addPoints(points) {
-        gamificationData.points += points;
-        let newLevel = Math.floor(gamificationData.points / POINTS_PER_LEVEL) + 1;
-        if (newLevel > gamificationData.level) {
-            gamificationData.level = newLevel;
-            showNotification(`Parabéns! Você subiu para o Nível ${newLevel}! 🎉`, 'success');
-        }
-        await saveGamification();
-        updateGamificationUI();
-    }
-
-    async function checkBadges() {
-        if (!gamificationData.badges.primeiroPedido && gamificationData.ordersCompleted >= 1) {
-            gamificationData.badges.primeiroPedido = true;
-            showNotification('Badge desbloqueado: Primeiro Pedido! 🍔', 'success');
-            await saveGamification();
-        }
-        if (!gamificationData.badges.fieis && gamificationData.ordersCompleted >= 3) {
-            gamificationData.badges.fieis = true;
-            showNotification('Badge desbloqueado: Cliente Fiel! ⭐', 'success');
-            await saveGamification();
-        }
-        if (!gamificationData.badges.gourmet && gamificationData.points >= 500) {
-            gamificationData.badges.gourmet = true;
-            showNotification('Badge desbloqueado: Gourmet! 👑', 'success');
-            await saveGamification();
-        }
-        if (!gamificationData.badges.comboMaster && gamificationData.combosOrdered >= 5) {
-            gamificationData.badges.comboMaster = true;
-            showNotification('Badge desbloqueado: Combo Master! 🎁', 'success');
-            await saveGamification();
-        }
-        updateGamificationUI();
-    }
-
-    // Player de rádio (sem mudanças)
+    // radio player
     const radio = document.getElementById("radio-audio");
     const playBtn = document.getElementById("play-btn");
     const pauseBtn = document.getElementById("pause-btn");
     const vuMeter = document.getElementById("vu-meter");
 
-    // Cupons (sem mudanças)
+    // Lista de 200 códigos de cupom válidos para 5% de desconto
     const validCoupons = [
-        '##',
+        'DEGUSTO5-001', 'DEGUSTO5-002', 'DEGUSTO5-003', 'DEGUSTO5-004', 'DEGUSTO5-005',
+        'DEGUSTO5-006', 'DEGUSTO5-007', 'DEGUSTO5-008', 'DEGUSTO5-009', 'DEGUSTO5-010',
+        'DEGUSTO5-011', 'DEGUSTO5-012', 'DEGUSTO5-013', 'DEGUSTO5-014', 'DEGUSTO5-015',
+        'DEGUSTO5-016', 'DEGUSTO5-017', 'DEGUSTO5-018', 'DEGUSTO5-019', 'DEGUSTO5-020',
+        'DEGUSTO5-021', 'DEGUSTO5-022', 'DEGUSTO5-023', 'DEGUSTO5-024', 'DEGUSTO5-025',
+        'DEGUSTO5-026', 'DEGUSTO5-027', 'DEGUSTO5-028', 'DEGUSTO5-029', 'DEGUSTO5-030',
+        'DEGUSTO5-031', 'DEGUSTO5-032', 'DEGUSTO5-033', 'DEGUSTO5-034', 'DEGUSTO5-035',
+        'DEGUSTO5-036', 'DEGUSTO5-037', 'DEGUSTO5-038', 'DEGUSTO5-039', 'DEGUSTO5-040',
+        'DEGUSTO5-041', 'DEGUSTO5-042', 'DEGUSTO5-043', 'DEGUSTO5-044', 'DEGUSTO5-045',
+        'DEGUSTO5-046', 'DEGUSTO5-047', 'DEGUSTO5-048', 'DEGUSTO5-049', 'DEGUSTO5-050'
     ];
 
+    // Função para formatar moeda brasileira
     function formatCurrency(value) {
         return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
     }
 
-    async function updateCartButton() {
-        await saveToDB('cart', cart);
+    // Atualizar botão do carrinho
+    function updateCartButton() {
         cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
+    // Função para calcular total (considerando desconto se aplicado)
     function calculateTotal() {
         const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
-        originalTotal = subtotal;
+        originalTotal = subtotal; // Armazena o total original
         if (discountApplied) {
-            return subtotal * 0.95;
+            return subtotal * 0.95; // 5% de desconto
         }
         return subtotal;
     }
 
+    // Atualizar total no checkout e modal
     function updateCheckoutTotal() {
         const total = calculateTotal();
         checkoutTotal.textContent = `Total: ${formatCurrency(total)}`;
         modalTotal.textContent = `Total: ${formatCurrency(total)}`;
     }
 
+    // Função para aplicar cupom
     function applyCoupon() {
         const couponCode = couponInput.value.trim().toUpperCase();
         if (validCoupons.includes(couponCode)) {
@@ -217,7 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function populateModal() {
+    // Função para popular modal com itens do carrinho (moderno com quantidades, centralizado para mobile)
+    function populateModal() {
         modalCartItems.innerHTML = '';
         const total = calculateTotal();
         if (cart.length === 0) {
@@ -248,21 +127,23 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCheckoutTotal();
     }
 
-    window.updateQuantity = async(index, change) => {
+    // Função para atualizar quantidade (melhorada para mobile com tamanhos ajustados)
+    window.updateQuantity = (index, change) => {
         if (cart[index].quantity + change > 0) {
             cart[index].quantity += change;
             if (cart[index].quantity === 0) {
                 cart.splice(index, 1);
             }
-            await updateCartButton();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartButton();
             populateModal();
             showNotification(`${change > 0 ? 'Quantidade aumentada' : 'Quantidade diminuída'}!`);
         }
     };
 
-    // Adicionar ao carrinho com gamificação
+    // Adicionar ao carrinho (com quantidade inicial 1)
     document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', async(e) => {
+        button.addEventListener('click', (e) => {
             const item = e.target.closest('.item');
             const name = item.dataset.name;
             const price = item.dataset.price;
@@ -272,12 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 cart.push({ name, price, quantity: 1 });
             }
-            await updateCartButton();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartButton();
             updateCheckoutTotal();
-
-            // Gamificação
-            await addPoints(POINTS_PER_ITEM);
-            showNotification(`${name} adicionado ao carrinho! +${POINTS_PER_ITEM} pts!`, 'success');
+            showNotification(`${name} adicionado ao carrinho!`, 'success');
             button.classList.add('added');
             button.textContent = 'Adicionado! ✓';
             button.disabled = true;
@@ -289,26 +168,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    window.removeFromCart = async(index) => {
+    // Remover do carrinho
+    window.removeFromCart = (index) => {
         cart.splice(index, 1);
-        await updateCartButton();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartButton();
         populateModal();
         showNotification('Item removido do carrinho! 🗑️');
+        // Se carrinho ficar vazio, resetar desconto
         if (cart.length === 0) {
             discountApplied = false;
         }
     };
 
-    clearCartBtn.addEventListener('click', async() => {
+    // Limpar carrinho
+    clearCartBtn.addEventListener('click', () => {
         if (confirm('Tem certeza que deseja limpar o carrinho? Todos os itens serão removidos.')) {
             cart.length = 0;
-            await updateCartButton();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartButton();
             populateModal();
-            discountApplied = false;
+            discountApplied = false; // Resetar desconto
             showNotification('Carrinho limpo com sucesso! 🛒', 'success');
         }
     });
 
+    // Mostrar notificação (melhorada com ícones e animações)
     function showNotification(message, type = '') {
         notification.innerHTML = `<span>${type === 'success' ? '✅' : 'ℹ️'} ${message}</span>`;
         notification.className = `notification ${type}`;
@@ -325,13 +210,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    // Abrir modal do carrinho (centralizado para mobile)
     openModalBtn.addEventListener('click', () => {
         populateModal();
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        // Animação suave
         modal.style.animation = 'fadeIn 0.3s ease-out';
     });
 
+    // Fechar modal do carrinho
     closeModal.addEventListener('click', () => {
         modal.style.animation = 'fadeOut 0.3s ease-in';
         setTimeout(() => {
@@ -340,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     });
 
+    // Checkout button
     checkoutButton.addEventListener('click', () => {
         modal.style.display = 'none';
         checkoutForm.style.display = 'flex';
@@ -347,11 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCheckoutTotal();
     });
 
+    // Fechar checkout form
     document.querySelector('#checkout-form .close-modal').addEventListener('click', () => {
         checkoutForm.style.display = 'none';
         document.body.style.overflow = 'auto';
     });
 
+    // Pagamento radio buttons
     pagamentoRadios.forEach(radio => {
         radio.addEventListener('change', () => {
             trocoDiv.style.display = radio.value === 'Dinheiro' ? 'block' : 'none';
@@ -359,8 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Aplicar cupom no botão
     couponApplyBtn.addEventListener('click', applyCoupon);
 
+    // Copiar PIX
     window.copyPix = () => {
         navigator.clipboard.writeText('10738419605').then(() => {
             showNotification('Chave PIX copiada para a área de transferência! 📋', 'success');
@@ -369,8 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Enviar pedido com gamificação e salvar no DB
-    checkoutForm.addEventListener('submit', async(e) => {
+    // Enviar pedido (mensagem WhatsApp mais moderna e formatada, incluindo desconto se aplicado)
+    checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (cart.length === 0) {
             showNotification('Seu carrinho está vazio! Adicione itens antes de finalizar.', 'error');
@@ -383,14 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const nome = nomeCliente ? nomeCliente.value.trim() : 'Cliente';
+        const nome = nomeCliente ? nomeCliente.value.trim() : 'Cliente'; // Nome do cliente se disponível
         const rua = document.getElementById('rua').value;
         const numero = document.getElementById('numero').value;
         const bairro = document.getElementById('bairro').value;
         const referencia = document.getElementById('referencia').value;
         const metodo = selectedPagamento.value;
         const troco = document.getElementById('troco').value || '';
-        const obs = observacoes ? observacoes.value.trim() : '';
+        const obs = observacoes ? observacoes.value.trim() : ''; // Observações se disponível
 
         if (!rua || !numero || !bairro) {
             showNotification('Preencha todos os campos do endereço!', 'error');
@@ -403,9 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
         orderDetails += `*🛒 Itens do Pedido:*\n`;
         cart.forEach(item => {
             orderDetails += `• ${item.name} (x${item.quantity}) - ${formatCurrency(item.price * item.quantity)}\n`;
-            if (item.name.includes('COMBO')) {
-                gamificationData.combosOrdered += item.quantity;
-            }
         });
         orderDetails += `\n💰 *Subtotal:* ${formatCurrency(originalTotal)}\n`;
         if (discountApplied) {
@@ -424,48 +314,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const whatsappUrl = `https://wa.me/+5534999537698?text=${encodeURIComponent(orderDetails)}`;
         window.open(whatsappUrl, '_blank');
 
-        // Salvar pedido no DB
-        const orderData = {
-            userId,
-            nome,
-            itens: cart,
-            subtotal: originalTotal,
-            desconto: discountApplied ? originalTotal * 0.05 : 0,
-            total,
-            endereco: { rua, numero, bairro, referencia },
-            pagamento: { metodo, troco },
-            observacoes: obs,
-            data: new Date().toISOString()
-        };
-        await saveToDB('orders', orderData);
-
-        // Gamificação
-        gamificationData.ordersCompleted += 1;
-        await addPoints(POINTS_PER_ORDER);
-        await checkBadges();
-
-        // Limpar
+        // Limpar carrinho e form
         cart.length = 0;
-        await updateCartButton();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartButton();
         checkoutForm.reset();
         if (nomeCliente) nomeCliente.value = '';
         if (observacoes) observacoes.value = '';
         trocoDiv.style.display = 'none';
         pixDetails.style.display = 'none';
-        discountApplied = false;
+        discountApplied = false; // Resetar desconto
         couponStatus.textContent = '';
         checkoutForm.style.display = 'none';
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        showNotification('Pedido enviado com sucesso para o WhatsApp! +50 pts! 📲🚀', 'success');
+        showNotification('Pedido enviado com sucesso para o WhatsApp! 📲🚀', 'success');
         populateModal();
     });
 
+    // Botão Ajuda - Abrir modal de ajuda
     helpButton.addEventListener('click', () => {
         helpModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     });
 
+    // Fechar modal de ajuda
     closeHelpModal.addEventListener('click', () => {
         helpModal.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -486,8 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Menu mobile
     mobileToggle.addEventListener('click', () => mainNav.classList.toggle('active'));
 
+    // Tabs
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
@@ -501,20 +376,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicialização
-    initCart();
-    initGamification();
+    updateCartButton();
     populateModal();
 
-    // Controles de rádio (corrigido para garantir cliques no play/pause)
-    if (radio && playBtn && pauseBtn && vuMeter) {
-        // Garante que os botões fiquem acessíveis, trazendo-os para frente
-        playBtn.style.position = 'relative';
-        playBtn.style.zIndex = '999';
-        pauseBtn.style.position = 'relative';
-        pauseBtn.style.zIndex = '999';
-        playBtn.style.pointerEvents = 'auto';
-        pauseBtn.style.pointerEvents = 'auto';
-
+    // radio simple controls - CORRIGIDO
+    (function() {
+        if (!radio || !playBtn || !pauseBtn || !vuMeter) {
+            console.warn('Elementos do player de rádio não encontrados.');
+            return;
+        }
         playBtn.addEventListener('click', () => {
             radio.play().then(() => {
                 vuMeter.style.display = 'flex';
@@ -532,5 +402,5 @@ document.addEventListener('DOMContentLoaded', () => {
         radio.pause();
         vuMeter.style.display = 'none';
         console.log('Player de rádio inicializado.');
-    }
+    })();
 });
