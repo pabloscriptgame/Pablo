@@ -308,8 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             message += `\nObservações: ${observacoes || 'Nenhuma'}\n\nAguardando confirmação! 😊`;
 
-            const whatsappNumber = '5510738419605';
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            const whatsappNumber = '5534999537698';
+            const whatsappURL = `https://wa.me/${5534999537698}?text=${encodeURIComponent(message)}`;
             window.open(whatsappURL, '_blank', 'noopener,noreferrer');
 
             showNotification('Pedido enviado! Verifique WhatsApp para confirmação.', 'success');
