@@ -1,29 +1,27 @@
-/* style.css - Tema Natalino: Vermelhos com toques de verde, árvores, neve e luzes. Responsivo para mobile. Sem emojis em desenhos, usa CSS/SVG para elementos reais. */
+/* style.css - Tema único baseado na logomarca: Cores quentes e únicas (laranja profundo #E74C3C, ouro #F39C12, vermelho escuro #C0392B) sem animações no fundo. Otimizado para mobile com menu estruturado para vendas de lanches. Adicionadas classes para ajuda melhorada e SEO acessível. */
 
 :root {
-    --primary-red: #DC143C;
-    /* Vermelho natalino */
-    --accent-green: #228B22;
-    /* Verde árvore */
-    --accent-gold: #FFD700;
-    /* Ouro para luzes */
-    --white-snow: #FFFFFF;
+    --primary-black: #000000;
+    --accent-red: #E74C3C;
+    /* Vermelho único da logomarca */
+    --accent-gold: #F39C12;
+    /* Ouro único da logomarca */
+    --accent-dark-red: #C0392B;
+    /* Vermelho escuro único */
     --dark-bg: #000000;
-    --light-text: #FFFFFF;
-    --medium-text: #F0F8FF;
-    --success-green: #32CD32;
-    --muted: #D3D3D3;
+    --dark-gray: #111111;
+    --light-text: #ffffff;
+    --medium-text: #cccccc;
+    --success-green: #4caf50;
+    --muted: #cccccc;
 }
 
 body {
     font-family: 'Fredoka', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, var(--primary-red), #FF0000, var(--accent-green), #006400, var(--primary-red));
-    background-size: 400% 400%;
-    animation: christmasShift 20s ease infinite;
-    background-position: center;
-    background-attachment: fixed;
+    background: linear-gradient(135deg, #E74C3C, #F39C12, #C0392B);
+    /* Gradiente estático único da logomarca, sem animação */
     color: var(--light-text);
     line-height: 1.6;
     font-size: 18px;
@@ -31,259 +29,22 @@ body {
     overflow-x: hidden;
 }
 
-@keyframes christmasShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    75% {
-        background-position: 0% 100%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
-
-/* Neve caindo */
-
-.snowflakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.snowflake {
-    position: absolute;
-    color: var(--white-snow);
-    font-size: 20px;
-    animation: snowfall linear infinite;
-}
-
-.snowflake:nth-child(1) {
-    left: 10%;
-    animation-duration: 10s;
-}
-
-.snowflake:nth-child(2) {
-    left: 20%;
-    animation-duration: 15s;
-    animation-delay: 2s;
-}
-
-.snowflake:nth-child(3) {
-    left: 30%;
-    animation-duration: 12s;
-    animation-delay: 4s;
-}
-
-.snowflake:nth-child(4) {
-    left: 40%;
-    animation-duration: 18s;
-    animation-delay: 1s;
-}
-
-.snowflake:nth-child(5) {
-    left: 50%;
-    animation-duration: 14s;
-    animation-delay: 3s;
-}
-
-.snowflake:nth-child(6) {
-    left: 60%;
-    animation-duration: 16s;
-    animation-delay: 5s;
-}
-
-.snowflake:nth-child(7) {
-    left: 70%;
-    animation-duration: 11s;
-    animation-delay: 0.5s;
-}
-
-.snowflake:nth-child(8) {
-    left: 80%;
-    animation-duration: 13s;
-    animation-delay: 2.5s;
-}
-
-.snowflake:nth-child(9) {
-    left: 90%;
-    animation-duration: 17s;
-    animation-delay: 4.5s;
-}
-
-.snowflake:nth-child(10) {
-    left: 5%;
-    animation-duration: 9s;
-    animation-delay: 1.5s;
-}
-
-@keyframes snowfall {
-    to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-
-/* Luzes de Natal piscando */
-
-.christmas-lights {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.light {
-    position: absolute;
-    background: var(--accent-gold);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-gold);
-    animation: twinkle 2s ease-in-out infinite alternate;
-}
-
-.light:nth-child(odd) {
-    animation-delay: 0s;
-    background: #FF4500;
-}
-
-.light:nth-child(even) {
-    animation-delay: 1s;
-    background: var(--accent-green);
-}
-
-.light:nth-child(1) {
-    top: 10%;
-    left: 10%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(2) {
-    top: 20%;
-    left: 90%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(3) {
-    top: 40%;
-    left: 20%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(4) {
-    top: 60%;
-    left: 70%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(5) {
-    top: 80%;
-    left: 40%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(6) {
-    top: 15%;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(7) {
-    top: 50%;
-    left: 80%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(8) {
-    top: 70%;
-    left: 10%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(9) {
-    top: 30%;
-    left: 60%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(10) {
-    top: 90%;
-    left: 30%;
-    width: 10px;
-    height: 10px;
-}
-
-@keyframes twinkle {
-    0% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-}
-
-
-/* Árvore de Natal SVG estilizada */
-
-.christmas-tree {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 80px;
-    height: 80px;
-    z-index: 1;
-    opacity: 0.8;
-    animation: sway 3s ease-in-out infinite alternate;
-}
-
-@keyframes sway {
-    0% {
-        transform: rotate(-2deg);
-    }
-    100% {
-        transform: rotate(2deg);
-    }
-}
+/* Removidas todas as animações de fundo (flameShift, pulse, smoke, etc.) e elementos animados (embers, flames, sparks) para simplicidade e performance em mobile */
 
 header {
     background: rgba(0, 0, 0, 0.9);
     padding: 5px 20px;
     text-align: center;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--primary-red);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5), 0 0 10px #E74C3C;
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-bottom: 1px solid var(--primary-red);
+    border-bottom: 1px solid #E74C3C;
 }
 
 header:hover {
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--primary-red);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6), 0 0 15px #E74C3C;
     transform: translateY(-1px);
 }
 
@@ -318,7 +79,7 @@ header:hover {
 .logo p {
     margin: 0;
     font-size: 12px;
-    color: var(--accent-green);
+    color: #F39C12;
 }
 
 .main-nav ul {
@@ -338,7 +99,7 @@ header:hover {
 }
 
 .main-nav a:hover {
-    color: var(--accent-gold);
+    color: #F39C12;
 }
 
 .mobile-menu-toggle {
@@ -353,16 +114,16 @@ header:hover {
     padding: 80px 40px;
     background: rgba(0, 0, 0, 0.5);
     position: relative;
-    border: 2px solid var(--primary-red);
+    border: 2px solid #F39C12;
     border-radius: 10px;
 }
 
 .banner-content h2 {
     font-size: 48px;
     margin-bottom: 20px;
-    color: var(--primary-red);
+    color: #E74C3C;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px #F39C12;
 }
 
 .marquee {
@@ -372,12 +133,13 @@ header:hover {
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid var(--accent-green);
+    border: 1px solid #F39C12;
 }
 
 .marquee-text {
     display: inline-block;
     animation: marquee 15s linear infinite;
+    /* Aumentado para melhor visibilidade */
     font-size: 20px;
     color: var(--light-text);
     padding-left: 100%;
@@ -394,15 +156,15 @@ header:hover {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
+    color: var(--primary-black);
     padding: 15px 30px;
     text-decoration: none;
     border-radius: 30px;
     font-weight: bold;
     font-size: 20px;
     transition: transform 0.3s;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px #C0392B;
     font-family: 'Baloo 2', cursive;
 }
 
@@ -413,17 +175,17 @@ header:hover {
 .menu-section {
     padding: 60px 40px;
     background: rgba(0, 0, 0, 0.6);
-    border-top: 2px solid var(--accent-gold);
-    border-bottom: 2px solid var(--accent-gold);
+    border-top: 2px solid #F39C12;
+    border-bottom: 2px solid #F39C12;
 }
 
 .menu-section h2 {
     text-align: center;
     font-size: 36px;
-    color: var(--primary-red);
-    margin-bottom: 20px;
+    color: #E74C3C;
+    margin-bottom: 40px;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px #F39C12;
 }
 
 .tabs {
@@ -437,20 +199,25 @@ header:hover {
 .tab-button {
     background: rgba(0, 0, 0, 0.7);
     color: var(--light-text);
-    border: 2px solid var(--accent-green);
+    border: 2px solid #F39C12;
     padding: 15px 20px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 18px;
+    font-weight: bold;
     transition: all 0.3s;
     font-family: 'Baloo 2', cursive;
 }
 
-.tab-button.active,
+.tab-button.active {
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
+    color: var(--primary-black);
+    box-shadow: 0 0 15px #C0392B;
+}
+
 .tab-button:hover {
-    background: var(--accent-green);
-    color: var(--dark-bg);
-    box-shadow: 0 0 10px var(--accent-gold);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #F39C12;
 }
 
 .tab-panel {
@@ -459,15 +226,6 @@ header:hover {
 
 .tab-panel.active {
     display: block;
-}
-
-.tab-panel h3 {
-    text-align: center;
-    font-size: 28px;
-    color: var(--primary-red);
-    margin-bottom: 20px;
-    font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 5px var(--accent-gold);
 }
 
 .menu-grid {
@@ -480,17 +238,17 @@ header:hover {
 
 .item {
     background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--primary-red);
+    border: 2px solid #E74C3C;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 10px rgba(220, 20, 60, 0.3);
+    transition: transform 0.3s;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
 }
 
 .item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(220, 20, 60, 0.5), 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 20px #F39C12;
 }
 
 .item-image {
@@ -499,14 +257,13 @@ header:hover {
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;
-    border: 1px solid var(--accent-green);
 }
 
 .item h3 {
-    color: var(--accent-green);
     font-size: 24px;
     margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
+    color: #F39C12;
 }
 
 .item p {
@@ -520,14 +277,14 @@ header:hover {
     display: block;
     font-size: 22px;
     font-weight: bold;
-    color: var(--accent-gold);
+    color: #F39C12;
     margin-bottom: 15px;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px #C0392B;
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
+    color: var(--primary-black);
     border: none;
     padding: 12px 24px;
     border-radius: 25px;
@@ -535,13 +292,15 @@ header:hover {
     font-size: 16px;
     font-weight: bold;
     transition: transform 0.3s;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px #C0392B;
     font-family: 'Baloo 2', cursive;
 }
 
-.add-to-cart:hover {
+.add-to-cart:hover,
+.add-to-cart:focus {
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px #F39C12;
+    outline: none;
 }
 
 .parceiros-section {
@@ -552,10 +311,10 @@ header:hover {
 
 .parceiros-section h2 {
     font-size: 36px;
-    color: var(--primary-red);
+    color: #E74C3C;
     margin-bottom: 40px;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px #F39C12;
 }
 
 .parceiros-grid {
@@ -568,11 +327,11 @@ header:hover {
 
 .parceiro {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--primary-red);
+    border: 2px solid #E74C3C;
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.2);
 }
 
 .parceiro img {
@@ -591,15 +350,15 @@ header:hover {
 }
 
 .parceiro a {
-    color: var(--accent-gold);
+    color: #F39C12;
     text-decoration: none;
     font-weight: bold;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px #C0392B;
 }
 
 .parceiro:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--accent-gold);
+    box-shadow: 0 0 25px #F39C12;
 }
 
 .cart-fixed {
@@ -611,21 +370,23 @@ header:hover {
 
 .cart-fixed button {
     background: rgba(0, 0, 0, 0.9);
-    color: var(--accent-green);
-    border: 2px solid var(--accent-green);
+    color: #F39C12;
+    border: 2px solid #F39C12;
     padding: 15px 20px;
     font-size: 18px;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px #C0392B;
     font-family: 'Baloo 2', cursive;
 }
 
-.cart-fixed button:hover {
-    background: var(--accent-green);
-    color: var(--dark-bg);
+.cart-fixed button:hover,
+.cart-fixed button:focus {
+    background: #F39C12;
+    color: var(--primary-black);
     transform: scale(1.05);
+    outline: none;
 }
 
 .help-fixed-button {
@@ -633,24 +394,26 @@ header:hover {
     bottom: 20px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--primary-red);
-    border: 2px solid var(--primary-red);
+    color: #E74C3C;
+    border: 2px solid #E74C3C;
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 30px;
     cursor: pointer;
     z-index: 1001;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-gold);
-    text-shadow: 0 0 5px var(--accent-gold);
+    box-shadow: 0 0 10px #F39C12;
+    text-shadow: 0 0 5px #C0392B;
     font-family: 'Fredoka', sans-serif;
 }
 
-.help-fixed-button:hover {
-    background-color: var(--primary-red);
-    color: var(--light-text);
+.help-fixed-button:hover,
+.help-fixed-button:focus {
+    background-color: #E74C3C;
+    color: var(--primary-black);
     transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px #F39C12;
+    outline: none;
 }
 
 .modal {
@@ -669,16 +432,20 @@ header:hover {
     animation: fadeIn 0.3s ease-out;
 }
 
+.modal[aria-hidden="false"] {
+    display: flex;
+}
+
 .modal-content {
     background: rgba(17, 17, 17, 0.95);
-    border: 2px solid var(--accent-gold);
+    border: 2px solid #F39C12;
     border-radius: 24px;
     padding: 32px;
     max-width: 520px;
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 0 30px var(--accent-gold);
+    box-shadow: 0 0 30px #F39C12;
     color: var(--light-text);
     position: relative;
     backdrop-filter: blur(20px);
@@ -689,10 +456,10 @@ header:hover {
     margin: 0 0 24px 0;
     font-size: 28px;
     font-weight: 700;
-    color: var(--primary-red);
+    color: #E74C3C;
     text-align: center;
     letter-spacing: -0.5px;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px #F39C12;
     font-family: 'Baloo 2', cursive;
 }
 
@@ -702,21 +469,68 @@ header:hover {
     position: absolute;
     top: 20px;
     right: 24px;
-    color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: #F39C12;
+    text-shadow: 0 0 10px #C0392B;
     transition: all 0.3s ease;
     opacity: 0.8;
     font-family: 'Fredoka', sans-serif;
 }
 
-.close-modal:hover {
+.close-modal:hover,
+.close-modal:focus {
     color: var(--light-text);
     transform: rotate(90deg) scale(1.1);
     opacity: 1;
+    outline: none;
 }
 
 
-/* Estilos para itens do carrinho, total, botões adaptados com cores natalinas */
+/* Estilos para Modal de Ajuda Melhorado */
+
+.help-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.help-section {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #F39C12;
+}
+
+.help-section h4 {
+    color: #E74C3C;
+    margin-bottom: 10px;
+    font-family: 'Baloo 2', cursive;
+    text-shadow: 0 0 5px #F39C12;
+}
+
+.help-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.help-section li {
+    margin-bottom: 5px;
+    color: var(--light-text);
+}
+
+.help-section a {
+    color: #F39C12;
+    text-decoration: underline;
+}
+
+.help-footer {
+    text-align: center;
+    font-style: italic;
+    color: var(--medium-text);
+    border-top: 1px solid #F39C12;
+    padding-top: 10px;
+}
 
 #modal-cart-items {
     max-height: 300px;
@@ -727,7 +541,7 @@ header:hover {
     border-radius: 16px;
     background: transparent;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-gold) transparent;
+    scrollbar-color: #F39C12 transparent;
 }
 
 #modal-cart-items::-webkit-scrollbar {
@@ -739,7 +553,7 @@ header:hover {
 }
 
 #modal-cart-items::-webkit-scrollbar-thumb {
-    background: var(--accent-gold);
+    background: #F39C12;
     border-radius: 3px;
 }
 
@@ -754,10 +568,10 @@ header:hover {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 16px;
     transition: all 0.3s ease;
-    border: 1px solid var(--primary-red);
+    border: 1px solid #F39C12;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(220, 20, 60, 0.2);
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.2);
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -768,14 +582,14 @@ header:hover {
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(to bottom, var(--primary-red), var(--accent-green));
-    box-shadow: 0 0 5px var(--accent-gold);
+    background: linear-gradient(to bottom, #E74C3C, #F39C12);
+    box-shadow: 0 0 5px #C0392B;
 }
 
 .cart-item-modal:hover {
-    background: rgba(220, 20, 60, 0.1);
+    background: rgba(243, 156, 18, 0.1);
     transform: translateX(4px);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px #F39C12;
 }
 
 .cart-item-modal span {
@@ -785,7 +599,7 @@ header:hover {
 }
 
 .cart-item-modal button {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
     color: var(--light-text);
     border: none;
     padding: 8px 16px;
@@ -794,31 +608,33 @@ header:hover {
     font-size: 14px;
     font-weight: 700;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--primary-red);
+    box-shadow: 0 0 10px #E74C3C;
     min-width: 80px;
     font-family: 'Baloo 2', cursive;
 }
 
-.cart-item-modal button:hover {
-    background: linear-gradient(135deg, var(--accent-green), var(--primary-red));
+.cart-item-modal button:hover,
+.cart-item-modal button:focus {
+    background: linear-gradient(135deg, #F39C12, #E74C3C);
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px #C0392B;
+    outline: none;
 }
 
 #modal-total {
     font-size: 24px;
     font-weight: 700;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: #F39C12;
+    text-shadow: 0 0 10px #C0392B;
     margin-bottom: 24px;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     padding: 12px;
     border-radius: 12px;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid #F39C12;
     font-family: 'Baloo 2', cursive;
 }
 
@@ -839,33 +655,37 @@ header:hover {
 }
 
 #checkout-button {
-    background: linear-gradient(135deg, var(--success-green), #228B22);
+    background: linear-gradient(135deg, var(--success-green), #45a049);
     color: var(--light-text);
     box-shadow: 0 0 15px var(--success-green);
 }
 
-#checkout-button:hover {
-    background: linear-gradient(135deg, #228B22, #006400);
+#checkout-button:hover,
+#checkout-button:focus {
+    background: linear-gradient(135deg, #45a049, #388e3c);
     transform: translateY(-2px);
-    box-shadow: 0 0 20px #32CD32;
+    box-shadow: 0 0 20px #45a049;
+    outline: none;
 }
 
 #clear-cart {
-    background: linear-gradient(135deg, var(--primary-red), #FF0000);
+    background: linear-gradient(135deg, #E74C3C, #F39C12);
     color: var(--light-text);
-    box-shadow: 0 0 15px var(--primary-red);
+    box-shadow: 0 0 15px #E74C3C;
 }
 
-#clear-cart:hover {
-    background: linear-gradient(135deg, #FF0000, var(--primary-red));
+#clear-cart:hover,
+#clear-cart:focus {
+    background: linear-gradient(135deg, #F39C12, #E74C3C);
     transform: translateY(-2px);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px #C0392B;
+    outline: none;
 }
 
 #checkout-form h3,
 #checkout-form h4 {
-    color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: #F39C12;
+    text-shadow: 0 0 10px #C0392B;
     margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
 }
@@ -876,56 +696,68 @@ header:hover {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid var(--accent-gold);
+    border: 1px solid #F39C12;
     border-radius: 10px;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--light-text);
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 5px rgba(243, 156, 18, 0.3);
     font-family: 'Fredoka', sans-serif;
     resize: vertical;
 }
 
 #checkout-form input:focus,
 #checkout-form textarea:focus {
-    border-color: var(--primary-red);
+    border-color: #E74C3C;
     outline: none;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px #F39C12;
 }
 
-#checkout-form button {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-green);
-    border: 2px solid var(--accent-green);
-    padding: 20px;
-    font-size: 24px;
-    border-radius: 30px;
+#checkout-form input:invalid,
+#checkout-form textarea:invalid {
+    border-color: #ff4500;
+    box-shadow: 0 0 5px rgba(255, 69, 0, 0.5);
+}
+
+#checkout-form button[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#coupon-apply-btn {
+    background: #F39C12;
+    color: var(--primary-black);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%;
     margin-bottom: 10px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px var(--accent-gold);
-    box-shadow: 0 0 10px var(--accent-gold);
     font-family: 'Baloo 2', cursive;
-    font-weight: 700;
+    transition: background 0.3s;
 }
 
-#checkout-form button:hover {
-    background-color: var(--accent-green);
-    color: var(--dark-bg);
-    box-shadow: 0 0 20px var(--accent-gold);
+#coupon-apply-btn:hover,
+#coupon-apply-btn:focus {
+    background: #E74C3C;
+    outline: none;
 }
 
-#pix-details {
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid var(--success-green);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    box-shadow: 0 0 15px var(--success-green);
+#pix-details button {
+    background: var(--success-green);
+    color: var(--light-text);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#pix-details button:hover,
+#pix-details button:focus {
+    background: #45a049;
+    outline: none;
 }
 
 .payment-options {
@@ -941,24 +773,37 @@ header:hover {
     background: rgba(17, 17, 17, 0.8);
     border-radius: 5px;
     cursor: pointer;
-    border: 1px solid var(--primary-red);
+    border: 1px solid #E74C3C;
+    transition: background 0.3s;
+}
+
+.payment-options label:hover {
+    background: rgba(243, 156, 18, 0.2);
+}
+
+small {
+    color: var(--muted);
+    font-size: 14px;
+    display: block;
+    margin-top: -5px;
 }
 
 .notification {
     position: fixed;
     top: 30px;
     right: 30px;
-    background: linear-gradient(to right, var(--primary-red), #FF0000);
-    color: var(--light-text);
+    background: linear-gradient(to right, #E74C3C, #F39C12);
+    color: var(--primary-black);
     padding: 20px 40px;
     border-radius: 10px;
     font-size: 20px;
     display: none;
     z-index: 1002;
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px #C0392B;
     font-weight: bold;
     animation: slideIn 0.3s ease;
     font-family: 'Fredoka', sans-serif;
+    max-width: 300px;
 }
 
 @keyframes slideIn {
@@ -973,9 +818,15 @@ header:hover {
 }
 
 .notification.success {
-    background: linear-gradient(to right, var(--success-green), #228B22);
+    background: linear-gradient(to right, var(--success-green), #45a049);
     color: var(--light-text);
     box-shadow: 0 0 20px var(--success-green);
+}
+
+.notification.error {
+    background: linear-gradient(to right, #ff4500, #ff6347);
+    color: var(--light-text);
+    box-shadow: 0 0 20px #ff4500;
 }
 
 footer {
@@ -984,14 +835,14 @@ footer {
     text-align: center;
     padding: 40px;
     font-size: 20px;
-    text-shadow: 0 0 10px var(--accent-gold);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
-    border-top: 2px solid var(--accent-green);
+    text-shadow: 0 0 10px #F39C12;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px #C0392B;
+    border-top: 2px solid #F39C12;
     font-family: 'Fredoka', sans-serif;
 }
 
 
-/* Responsivo para Mobile */
+/* Responsivo otimizado para mobile: Menu próprio para vendas de lanches com tabs verticais em telas pequenas, grid de 1 coluna para itens */
 
 @media (max-width: 768px) {
     .header-container {
@@ -1015,7 +866,7 @@ footer {
         padding: 40px 20px;
     }
     .banner-content h2 {
-        font-size: 32px;
+        font-size: 40px;
     }
     .menu-grid {
         grid-template-columns: 1fr;
@@ -1023,23 +874,28 @@ footer {
     }
     .tabs {
         flex-direction: column;
+        align-items: center;
     }
     .tab-button {
         font-size: 16px;
         padding: 12px;
+        width: 100%;
+        max-width: 300px;
     }
     .payment-options label {
-        font-size: 14px;
-        padding: 8px;
+        font-size: 16px;
+        padding: 10px;
+        background: rgba(17, 17, 17, 0.8);
+        border-radius: 5px;
     }
     #checkout-form input,
     #checkout-form textarea {
-        font-size: 16px;
-        padding: 12px;
+        font-size: 18px;
+        padding: 18px;
     }
     #checkout-form button {
-        font-size: 18px;
-        padding: 15px;
+        font-size: 20px;
+        padding: 18px;
     }
     .help-fixed-button {
         bottom: 10px;
@@ -1047,14 +903,24 @@ footer {
         padding: 8px 12px;
         font-size: 12px;
     }
-    .christmas-tree {
-        width: 60px;
-        height: 60px;
-        bottom: 10px;
-        left: 10px;
+    .parceiros-grid {
+        grid-template-columns: 1fr;
     }
-    .snowflake {
+    .help-sections {
+        gap: 15px;
+    }
+    .help-section {
+        padding: 12px;
+    }
+    .notification {
+        max-width: 90%;
+        right: 5%;
+        left: 5%;
         font-size: 16px;
+        padding: 15px 20px;
+    }
+    .logo p {
+        font-size: 10px;
     }
 }
 
@@ -1065,4 +931,23 @@ footer {
     to {
         opacity: 1;
     }
+}
+
+
+/* Estilos para mensagens de erro de validação */
+
+.error-message {
+    color: #ff4500;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+
+/* Acessibilidade: Foco visível */
+
+*:focus {
+    outline: 2px solid #F39C12;
+    outline-offset: 2px;
 }
