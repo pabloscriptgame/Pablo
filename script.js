@@ -1,7 +1,7 @@
-// script.js - Funcionalidades para DêGusto Lanchonete (versão corrigida e atualizada). Corrigidos bugs de modal ajuda e add to cart. Adicionadas validações extras, SEO via ARIA e notificações melhoradas.
+// script.js - Funcionalidades para DêGusto Lanchonete (versão corrigida e atualizada). Corrigidos bugs de modal ajuda e add to cart. Adicionadas validações extras, SEO via ARIA e notificações melhoradas. Novo: Compartilhar site.
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Site DêGusto carregado - Versão Atualizada 26/10/2025'); // Debug para confirmar carregamento
+    console.log('Site DêGusto carregado - Versão Atualizada 26/10/2025 - Tema Natal 2025'); // Debug para confirmar carregamento
 
     // Função de sanitização básica para prevenir XSS
     function sanitizeInput(input) {
@@ -385,6 +385,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Novo: Funcionalidade de Compartilhar Site
+    const shareButton = document.getElementById('share-button');
+    if (shareButton) {
+        shareButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const siteUrl = 'https://www.degusto.store/';
+            const shareText = 'Confira o site da DêGusto Lanchonete: Hambúrgueres incríveis em Monte Carmelo! 🎄🍔';
+
+            if (navigator.share) {
+                // Web Share API (moderno)
+                navigator.share({
+                    title: 'DêGusto Lanchonete',
+                    text: shareText,
+                    url: siteUrl
+                }).then(() => {
+                    console.log('Compartilhado via Share API');
+                    showNotification('Site compartilhado com sucesso! 🎉', 'success');
+                }).catch((error) => {
+                    console.log('Erro no Share API:', error);
+                    fallbackShare(siteUrl, shareText);
+                });
+            } else {
+                // Fallback para WhatsApp
+                fallbackShare(siteUrl, shareText);
+            }
+        });
+    }
+
+    function fallbackShare(url, text) {
+        const whatsappMessage = encodeURIComponent(`${text} ${url}`);
+        const whatsappUrl = `https://wa.me/?text=${whatsappMessage}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        showNotification('Abrindo WhatsApp para compartilhar! 📱', 'success');
+    }
+
     // Fechar modais com ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
@@ -414,5 +449,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicialização - Garantir que tudo carregue
     updateCartCount();
     renderCart();
-    console.log('Inicialização completa - Carrinho pronto, modais testados.'); // Debug final
+    console.log('Inicialização completa - Carrinho pronto, modais testados, compartilhar ativo.'); // Debug final
 });
