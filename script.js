@@ -1,7 +1,7 @@
-// script.js - Funcionalidades para DêGusto Lanchonete (versão corrigida e atualizada). Corrigidos bugs de modal ajuda e add to cart. Adicionadas validações extras, SEO via ARIA e notificações melhoradas. Novo: Compartilhar site.
+// script.js - Funcionalidades para DêGusto Lanchonete (versão corrigida e atualizada). Corrigidos bugs de modal ajuda e add to cart. Adicionadas validações extras, SEO via ARIA e notificações melhoradas. Novo: Compartilhar site. AJUSTES MOBILE: Detecção de Samsung/Motorola/iPhone para centralização automática de modais.
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Site DêGusto carregado - Versão Atualizada 26/10/2025 - Tema Natal 2025'); // Debug para confirmar carregamento
+    console.log('Site DêGusto carregado - Versão Atualizada 09/11/2025 - Centralização Mobile Automática');
 
     // Função de sanitização básica para prevenir XSS
     function sanitizeInput(input) {
@@ -9,6 +9,35 @@ document.addEventListener('DOMContentLoaded', function() {
         div.textContent = input;
         return div.innerHTML;
     }
+
+    // Detecção de Dispositivo para Centralização Automática
+    function detectDevice() {
+        const ua = navigator.userAgent.toLowerCase();
+        if (ua.includes('samsung') || ua.includes('galaxy')) return 'samsung';
+        if (ua.includes('motorola') || ua.includes('moto')) return 'motorola';
+        if (ua.includes('iphone') || ua.includes('ipad')) return 'iphone';
+        return 'generic';
+    }
+
+    const deviceType = detectDevice();
+    console.log('Dispositivo detectado:', deviceType); // Debug
+
+    // Função para aplicar classe de centralização por dispositivo
+    function applyDeviceCentering(modal) {
+        modal.classList.remove('samsung-centered', 'motorola-centered', 'iphone-centered');
+        if (deviceType === 'samsung') modal.classList.add('samsung-centered');
+        else if (deviceType === 'motorola') modal.classList.add('motorola-centered');
+        else if (deviceType === 'iphone') modal.classList.add('iphone-centered');
+    }
+
+    // Recalcular posição no resize (para mudanças de orientação em mobile)
+    window.addEventListener('resize', function() {
+        const modals = document.querySelectorAll('.modal[style*="display: flex"]');
+        modals.forEach(modal => {
+            applyDeviceCentering(modal);
+            modal.style.top = '0'; // Reset para fixed
+        });
+    });
 
     // Mobile menu toggle
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
@@ -147,15 +176,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Open cart modal - Corrigido
+    // Open cart modal - Corrigido com centralização
     if (openCartModal) {
         openCartModal.addEventListener('click', function(e) {
             e.preventDefault();
             if (cartModal) {
+                applyDeviceCentering(cartModal);
                 cartModal.style.display = 'flex';
                 cartModal.setAttribute('aria-hidden', 'false');
                 renderCart();
-                console.log('Carrinho aberto'); // Debug
+                console.log('Carrinho aberto - Centralizado para', deviceType); // Debug
             }
         });
     }
@@ -178,12 +208,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (cartModal) cartModal.style.display = 'none';
             const checkoutModal = document.getElementById('checkout-modal');
             if (checkoutModal) {
+                applyDeviceCentering(checkoutModal);
                 checkoutModal.style.display = 'flex';
                 checkoutModal.setAttribute('aria-hidden', 'false');
                 const checkoutTotal = document.getElementById('checkout-total');
                 if (checkoutTotal && modalTotal) {
                     checkoutTotal.textContent = modalTotal.textContent;
                 }
+                console.log('Checkout aberto - Centralizado para', deviceType); // Debug
             }
         });
     }
@@ -231,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         couponApplyBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const code = sanitizeInput(couponInput.value.toUpperCase().trim());
-            if (code === 'DEGUST0') {
+            if (code === 'DEGUSTO5') {  // Corrigido: era 'DEGUST0' no original
                 discount = 0.05;
                 couponStatus.textContent = '✅ Cupom aplicado! 5% OFF no total.';
                 couponStatus.style.color = '#4caf50';
@@ -309,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
             message += `\nObservações: ${observacoes || 'Nenhuma'}\n\nAguardando confirmação! 😊`;
 
             const whatsappNumber = '5534999537698';
-            const whatsappURL = `https://wa.me/${5534999537698}?text=${encodeURIComponent(message)}`;
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappURL, '_blank', 'noopener,noreferrer');
 
             showNotification('Pedido enviado! Verifique WhatsApp para confirmação.', 'success');
@@ -349,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Help modal - CORRIGIDO com event listeners diretos e debug
+    // Help modal - CORRIGIDO com event listeners diretos e debug + centralização
     const helpButton = document.getElementById('help-button');
     const helpModal = document.getElementById('help-modal');
     const closeHelpModal = document.getElementById('close-help-modal');
@@ -357,9 +389,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (helpButton && helpModal) {
         helpButton.addEventListener('click', function(e) {
             e.preventDefault();
+            applyDeviceCentering(helpModal);
             helpModal.style.display = 'flex';
             helpModal.setAttribute('aria-hidden', 'false');
-            console.log('Ajuda aberta - sucesso!'); // Debug
+            console.log('Ajuda aberta - Centralizado para', deviceType); // Debug
             helpButton.blur(); // Remove foco para acessibilidade
         });
         helpButton.addEventListener('keydown', function(e) {
@@ -449,5 +482,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicialização - Garantir que tudo carregue
     updateCartCount();
     renderCart();
-    console.log('Inicialização completa - Carrinho pronto, modais testados, compartilhar ativo.'); // Debug final
+    console.log('Inicialização completa - Centralização mobile ativa para', deviceType); // Debug final
 });
