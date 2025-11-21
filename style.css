@@ -2,17 +2,17 @@
 
 :root {
     --primary-red: #FF0000;
-    /* Vermelho mais forte */
+    /* Vermelho puro */
     --primary-yellow: #FFFF00;
-    /* Amarelo mais forte */
+    /* Amarelo puro */
     --dark-bg: #000000;
     --light-text: #FFFFFF;
     --medium-text: #F0F8FF;
     --success-green: #32CD32;
     /* Mantido temporariamente, mas pode ser ajustado */
     --muted: #D3D3D3;
-    --christmas-border: 2px dashed #FF0000;
-    /* Bordas de Natal: vermelhas tracejadas */
+    --professional-border: 2px solid #FF0000;
+    /* Bordas profissionais: vermelhas sólidas */
 }
 
 body {
@@ -31,9 +31,6 @@ body {
 }
 
 
-/* Removidas animações e elementos natalinos como neve, luzes, estrelas cadentes e árvore */
-
-
 /* Resto dos estilos mantidos, ajustando cores para amarelo e vermelho */
 
 header {
@@ -45,7 +42,7 @@ header {
     top: 0;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-bottom: var(--christmas-border);
+    border-bottom: var(--professional-border);
 }
 
 header:hover {
@@ -121,7 +118,7 @@ header:hover {
     padding: 80px 40px;
     background: rgba(0, 0, 0, 0.5);
     position: relative;
-    border: var(--christmas-border);
+    border: var(--professional-border);
     border-radius: 10px;
 }
 
@@ -140,7 +137,7 @@ header:hover {
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 10px;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .marquee-text {
@@ -172,7 +169,7 @@ header:hover {
     transition: transform 0.3s;
     box-shadow: 0 0 15px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .cta-button:hover {
@@ -182,8 +179,8 @@ header:hover {
 .menu-section {
     padding: 60px 40px;
     background: rgba(0, 0, 0, 0.6);
-    border-top: var(--christmas-border);
-    border-bottom: var(--christmas-border);
+    border-top: var(--professional-border);
+    border-bottom: var(--professional-border);
 }
 
 .menu-section h2 {
@@ -206,7 +203,7 @@ header:hover {
 .tab-button {
     background: rgba(0, 0, 0, 0.7);
     color: var(--light-text);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     padding: 15px 20px;
     border-radius: 25px;
     cursor: pointer;
@@ -249,7 +246,7 @@ header:hover {
 
 .item {
     background: rgba(0, 0, 0, 0.8);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -272,7 +269,7 @@ header:hover {
     /* Imagens redondas */
     margin: 0 auto 15px;
     display: block;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .item h3 {
@@ -309,7 +306,7 @@ header:hover {
     transition: all 0.3s;
     box-shadow: 0 0 10px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .add-to-cart:hover {
@@ -321,8 +318,8 @@ header:hover {
     padding: 60px 40px;
     text-align: center;
     background: rgba(0, 0, 0, 0.6);
-    border-top: var(--christmas-border);
-    border-bottom: var(--christmas-border);
+    border-top: var(--professional-border);
+    border-bottom: var(--professional-border);
 }
 
 .parceiros-section h2 {
@@ -343,7 +340,7 @@ header:hover {
 
 .parceiro {
     background: rgba(0, 0, 0, 0.9);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
@@ -360,7 +357,7 @@ header:hover {
     /* Imagens redondas */
     margin: 0 auto 10px;
     display: block;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .parceiro p {
@@ -392,7 +389,7 @@ header:hover {
 .cart-fixed button {
     background: rgba(0, 0, 0, 0.9);
     color: var(--primary-red);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     padding: 15px 20px;
     font-size: 18px;
     border-radius: 30px;
@@ -431,7 +428,7 @@ header:hover {
     align-items: center;
     justify-content: center;
     font-family: 'Baloo 2', cursive;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .share-fixed-button:hover {
@@ -445,7 +442,7 @@ header:hover {
     right: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--primary-red);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 30px;
@@ -490,7 +487,7 @@ header:hover {
 
 .modal-content {
     background: rgba(17, 17, 17, 0.95);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     border-radius: 24px;
     padding: 32px;
     max-width: 520px;
@@ -600,7 +597,7 @@ header:hover {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 16px;
     transition: all 0.3s ease;
-    border: var(--christmas-border);
+    border: var(--professional-border);
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(255, 255, 0, 0.2);
@@ -645,7 +642,7 @@ header:hover {
     box-shadow: 0 0 10px var(--primary-red);
     min-width: 80px;
     font-family: 'Baloo 2', cursive;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .cart-item-modal button:hover {
@@ -667,7 +664,7 @@ header:hover {
     background-clip: text;
     padding: 12px;
     border-radius: 12px;
-    border: var(--christmas-border);
+    border: var(--professional-border);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -685,7 +682,7 @@ header:hover {
     position: relative;
     overflow: hidden;
     font-family: 'Baloo 2', cursive;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 #checkout-button {
@@ -727,7 +724,7 @@ header:hover {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
-    border: var(--christmas-border);
+    border: var(--professional-border);
     border-radius: 10px;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.8);
@@ -749,7 +746,7 @@ header:hover {
 #checkout-form button {
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--primary-red);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     padding: 20px;
     font-size: 24px;
     border-radius: 30px;
@@ -771,7 +768,7 @@ header:hover {
 
 #pix-details {
     background: rgba(0, 0, 0, 0.9);
-    border: var(--christmas-border);
+    border: var(--professional-border);
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -792,7 +789,7 @@ header:hover {
     background: rgba(17, 17, 17, 0.8);
     border-radius: 5px;
     cursor: pointer;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 .notification {
@@ -810,7 +807,7 @@ header:hover {
     font-weight: bold;
     animation: slideIn 0.3s ease;
     font-family: 'Fredoka', sans-serif;
-    border: var(--christmas-border);
+    border: var(--professional-border);
 }
 
 @keyframes slideIn {
@@ -839,12 +836,9 @@ footer {
     font-size: 20px;
     text-shadow: 0 0 10px var(--primary-yellow);
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--primary-yellow);
-    border-top: var(--christmas-border);
+    border-top: var(--professional-border);
     font-family: 'Fredoka', sans-serif;
 }
-
-
-/* Removido glow para ano no footer */
 
 
 /* Responsivo para Mobile - Reforçado para Centralização */
