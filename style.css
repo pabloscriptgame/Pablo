@@ -1,29 +1,26 @@
-/* style.css - Tema Natalino 2025: Vermelhos com toques de verde, árvores, neve e luzes aprimoradas. Responsivo para mobile. Sem emojis em desenhos, usa CSS/SVG para elementos reais. Adicionado suporte a compartilhar. AJUSTES MOBILE: Centralização reforçada para Samsung, Motorola e iPhone. */
+/* style.css - Tema Amarelo e Vermelho: Removido elementos natalinos, mantendo apenas amarelos e vermelhos. Responsivo para mobile. Sem emojis em desenhos, usa CSS/SVG para elementos reais. Adicionado suporte a compartilhar. AJUSTES MOBILE: Centralização reforçada para Samsung, Motorola e iPhone. */
 
 :root {
-    --primary-red: #DC143C;
-    /* Vermelho natalino */
-    --accent-green: #228B22;
-    /* Verde árvore */
-    --accent-gold: #FFD700;
-    /* Ouro para luzes */
-    --white-snow: #FFFFFF;
+    --primary-red: #FF0000;
+    /* Vermelho mais forte */
+    --primary-yellow: #FFFF00;
+    /* Amarelo mais forte */
     --dark-bg: #000000;
     --light-text: #FFFFFF;
     --medium-text: #F0F8FF;
     --success-green: #32CD32;
+    /* Mantido temporariamente, mas pode ser ajustado */
     --muted: #D3D3D3;
-    --natal-blue: #1E90FF;
-    /* Azul natalino para 2025 */
+    --christmas-border: 2px dashed #FF0000;
+    /* Bordas de Natal: vermelhas tracejadas */
 }
 
 body {
     font-family: 'Fredoka', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, var(--primary-red), #FF0000, var(--accent-green), #006400, var(--primary-red));
+    background: linear-gradient(135deg, var(--primary-red), #FF0000, var(--primary-yellow), #FFFF00, var(--primary-red));
     background-size: 400% 400%;
-    animation: christmasShift 20s ease infinite;
     background-position: center;
     background-attachment: fixed;
     color: var(--light-text);
@@ -33,423 +30,11 @@ body {
     overflow-x: hidden;
 }
 
-@keyframes christmasShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    75% {
-        background-position: 0% 100%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
+/* Removidas animações e elementos natalinos como neve, luzes, estrelas cadentes e árvore */
 
-/* Neve caindo - Aprimorada para 2025 com 20 flocos e variações de tamanho */
 
-.snowflakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.snowflake {
-    position: absolute;
-    color: var(--white-snow);
-    font-size: 20px;
-    animation: snowfall linear infinite;
-    opacity: 0.8;
-}
-
-.snowflake:nth-child(odd) {
-    font-size: 16px;
-    /* Variação de tamanho para realismo */
-    animation-duration: 12s;
-}
-
-.snowflake:nth-child(1) {
-    left: 10%;
-    animation-duration: 10s;
-}
-
-.snowflake:nth-child(2) {
-    left: 20%;
-    animation-duration: 15s;
-    animation-delay: 2s;
-}
-
-.snowflake:nth-child(3) {
-    left: 30%;
-    animation-duration: 12s;
-    animation-delay: 4s;
-}
-
-.snowflake:nth-child(4) {
-    left: 40%;
-    animation-duration: 18s;
-    animation-delay: 1s;
-}
-
-.snowflake:nth-child(5) {
-    left: 50%;
-    animation-duration: 14s;
-    animation-delay: 3s;
-}
-
-.snowflake:nth-child(6) {
-    left: 60%;
-    animation-duration: 16s;
-    animation-delay: 5s;
-}
-
-.snowflake:nth-child(7) {
-    left: 70%;
-    animation-duration: 11s;
-    animation-delay: 0.5s;
-}
-
-.snowflake:nth-child(8) {
-    left: 80%;
-    animation-duration: 13s;
-    animation-delay: 2.5s;
-}
-
-.snowflake:nth-child(9) {
-    left: 90%;
-    animation-duration: 17s;
-    animation-delay: 4.5s;
-}
-
-.snowflake:nth-child(10) {
-    left: 5%;
-    animation-duration: 9s;
-    animation-delay: 1.5s;
-}
-
-.snowflake:nth-child(11) {
-    left: 15%;
-    animation-duration: 16s;
-    animation-delay: 6s;
-    font-size: 24px;
-}
-
-.snowflake:nth-child(12) {
-    left: 25%;
-    animation-duration: 11s;
-    animation-delay: 3.5s;
-}
-
-.snowflake:nth-child(13) {
-    left: 35%;
-    animation-duration: 14s;
-    animation-delay: 7s;
-    font-size: 18px;
-}
-
-.snowflake:nth-child(14) {
-    left: 45%;
-    animation-duration: 19s;
-    animation-delay: 2s;
-}
-
-.snowflake:nth-child(15) {
-    left: 55%;
-    animation-duration: 13s;
-    animation-delay: 5.5s;
-}
-
-.snowflake:nth-child(16) {
-    left: 65%;
-    animation-duration: 17s;
-    animation-delay: 1s;
-    font-size: 22px;
-}
-
-.snowflake:nth-child(17) {
-    left: 75%;
-    animation-duration: 10s;
-    animation-delay: 4s;
-}
-
-.snowflake:nth-child(18) {
-    left: 85%;
-    animation-duration: 15s;
-    animation-delay: 6.5s;
-}
-
-.snowflake:nth-child(19) {
-    left: 95%;
-    animation-duration: 12s;
-    animation-delay: 3s;
-}
-
-.snowflake:nth-child(20) {
-    left: 0%;
-    animation-duration: 18s;
-    animation-delay: 8s;
-    font-size: 14px;
-}
-
-@keyframes snowfall {
-    to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-
-/* Luzes de Natal piscando - Aprimoradas com 15 luzes e cor azul 2025 */
-
-.christmas-lights {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.light {
-    position: absolute;
-    background: var(--accent-gold);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-gold);
-    animation: twinkle 2s ease-in-out infinite alternate;
-}
-
-.light:nth-child(3n+1) {
-    animation-delay: 0s;
-    background: #FF4500;
-}
-
-.light:nth-child(3n+2) {
-    animation-delay: 0.67s;
-    background: var(--accent-green);
-}
-
-.light:nth-child(3n) {
-    animation-delay: 1.33s;
-    background: var(--natal-blue);
-}
-
-
-/* Azul para 2025 */
-
-.light:nth-child(1) {
-    top: 10%;
-    left: 10%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(2) {
-    top: 20%;
-    left: 90%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(3) {
-    top: 40%;
-    left: 20%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(4) {
-    top: 60%;
-    left: 70%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(5) {
-    top: 80%;
-    left: 40%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(6) {
-    top: 15%;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(7) {
-    top: 50%;
-    left: 80%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(8) {
-    top: 70%;
-    left: 10%;
-    width: 8px;
-    height: 8px;
-}
-
-.light:nth-child(9) {
-    top: 30%;
-    left: 60%;
-    width: 12px;
-    height: 12px;
-}
-
-.light:nth-child(10) {
-    top: 90%;
-    left: 30%;
-    width: 10px;
-    height: 10px;
-}
-
-.light:nth-child(11) {
-    top: 25%;
-    left: 85%;
-    width: 9px;
-    height: 9px;
-}
-
-.light:nth-child(12) {
-    top: 55%;
-    left: 15%;
-    width: 11px;
-    height: 11px;
-}
-
-.light:nth-child(13) {
-    top: 75%;
-    left: 65%;
-    width: 7px;
-    height: 7px;
-}
-
-.light:nth-child(14) {
-    top: 5%;
-    left: 45%;
-    width: 13px;
-    height: 13px;
-}
-
-.light:nth-child(15) {
-    top: 85%;
-    left: 5%;
-    width: 10px;
-    height: 10px;
-}
-
-@keyframes twinkle {
-    0% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-}
-
-
-/* Estrelas cadentes natalinas - Nova para 2025 */
-
-.shooting-stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--accent-gold);
-    box-shadow: 0 0 5px var(--accent-gold);
-    animation: shoot 3s linear infinite;
-}
-
-.shooting-star::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, var(--accent-gold));
-    transform: translateX(-100%) translateY(-50%) rotate(45deg);
-    animation: tail 3s linear infinite;
-}
-
-@keyframes shoot {
-    0% {
-        transform: translateX(0) translateY(-100vh) rotate(45deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100vw) translateY(100vh) rotate(45deg);
-        opacity: 0;
-    }
-}
-
-@keyframes tail {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 50px;
-    }
-}
-
-
-/* Árvore de Natal SVG estilizada - Aprimorada com enfeites e estrela */
-
-.christmas-tree {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 80px;
-    height: 80px;
-    z-index: 1;
-    opacity: 0.8;
-    animation: sway 3s ease-in-out infinite alternate;
-}
-
-@keyframes sway {
-    0% {
-        transform: rotate(-2deg);
-    }
-    100% {
-        transform: rotate(2deg);
-    }
-}
-
-.ornament {
-    animation: twinkle 1.5s ease-in-out infinite alternate;
-}
-
-.star {
-    animation: twinkle 1s ease-in-out infinite alternate;
-}
-
-
-/* Resto dos estilos mantidos idênticos ao original... (header, hero-banner, etc.) */
+/* Resto dos estilos mantidos, ajustando cores para amarelo e vermelho */
 
 header {
     background: rgba(0, 0, 0, 0.9);
@@ -460,7 +45,7 @@ header {
     top: 0;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-bottom: 1px solid var(--primary-red);
+    border-bottom: var(--christmas-border);
 }
 
 header:hover {
@@ -494,12 +79,14 @@ header:hover {
 .logo-image {
     height: 40px;
     width: auto;
+    border-radius: 50%;
+    /* Imagem do logo redonda */
 }
 
 .logo p {
     margin: 0;
     font-size: 12px;
-    color: var(--accent-green);
+    color: var(--primary-red);
 }
 
 .main-nav ul {
@@ -519,7 +106,7 @@ header:hover {
 }
 
 .main-nav a:hover {
-    color: var(--accent-gold);
+    color: var(--primary-yellow);
 }
 
 .mobile-menu-toggle {
@@ -534,7 +121,7 @@ header:hover {
     padding: 80px 40px;
     background: rgba(0, 0, 0, 0.5);
     position: relative;
-    border: 2px solid var(--primary-red);
+    border: var(--christmas-border);
     border-radius: 10px;
 }
 
@@ -543,7 +130,7 @@ header:hover {
     margin-bottom: 20px;
     color: var(--primary-red);
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--primary-yellow);
 }
 
 .marquee {
@@ -553,7 +140,7 @@ header:hover {
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid var(--accent-green);
+    border: var(--christmas-border);
 }
 
 .marquee-text {
@@ -575,16 +162,17 @@ header:hover {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+    color: var(--dark-bg);
     padding: 15px 30px;
     text-decoration: none;
     border-radius: 30px;
     font-weight: bold;
     font-size: 20px;
     transition: transform 0.3s;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
+    border: var(--christmas-border);
 }
 
 .cta-button:hover {
@@ -594,8 +182,8 @@ header:hover {
 .menu-section {
     padding: 60px 40px;
     background: rgba(0, 0, 0, 0.6);
-    border-top: 2px solid var(--accent-gold);
-    border-bottom: 2px solid var(--accent-gold);
+    border-top: var(--christmas-border);
+    border-bottom: var(--christmas-border);
 }
 
 .menu-section h2 {
@@ -604,7 +192,7 @@ header:hover {
     color: var(--primary-red);
     margin-bottom: 20px;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--primary-yellow);
 }
 
 .tabs {
@@ -618,7 +206,7 @@ header:hover {
 .tab-button {
     background: rgba(0, 0, 0, 0.7);
     color: var(--light-text);
-    border: 2px solid var(--accent-green);
+    border: var(--christmas-border);
     padding: 15px 20px;
     border-radius: 25px;
     cursor: pointer;
@@ -629,9 +217,9 @@ header:hover {
 
 .tab-button.active,
 .tab-button:hover {
-    background: var(--accent-green);
-    color: var(--dark-bg);
-    box-shadow: 0 0 10px var(--accent-gold);
+    background: var(--primary-red);
+    color: var(--primary-yellow);
+    box-shadow: 0 0 10px var(--primary-yellow);
 }
 
 .tab-panel {
@@ -648,7 +236,7 @@ header:hover {
     color: var(--primary-red);
     margin-bottom: 20px;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px var(--primary-yellow);
 }
 
 .menu-grid {
@@ -661,30 +249,34 @@ header:hover {
 
 .item {
     background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--primary-red);
+    border: var(--christmas-border);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 10px rgba(220, 20, 60, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+    /* Ajustado para amarelo */
 }
 
 .item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(220, 20, 60, 0.5), 0 0 15px var(--accent-gold);
+    box-shadow: 0 5px 20px rgba(255, 255, 0, 0.5), 0 0 15px var(--primary-yellow);
 }
 
 .item-image {
-    width: 100%;
+    width: 200px;
+    /* Ajustado para quadrado para ficar redondo */
     height: 200px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    border: 1px solid var(--accent-green);
+    border-radius: 50%;
+    /* Imagens redondas */
+    margin: 0 auto 15px;
+    display: block;
+    border: var(--christmas-border);
 }
 
 .item h3 {
-    color: var(--accent-green);
+    color: var(--primary-red);
     font-size: 24px;
     margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
@@ -700,14 +292,14 @@ header:hover {
     display: block;
     font-size: 20px;
     font-weight: bold;
-    color: var(--accent-gold);
+    color: var(--primary-yellow);
     margin-bottom: 15px;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px var(--primary-yellow);
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+    color: var(--dark-bg);
     border: none;
     padding: 12px 24px;
     border-radius: 25px;
@@ -715,19 +307,22 @@ header:hover {
     font-size: 16px;
     font-weight: bold;
     transition: all 0.3s;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
+    border: var(--christmas-border);
 }
 
 .add-to-cart:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
 }
 
 .parceiros-section {
     padding: 60px 40px;
     text-align: center;
     background: rgba(0, 0, 0, 0.6);
+    border-top: var(--christmas-border);
+    border-bottom: var(--christmas-border);
 }
 
 .parceiros-section h2 {
@@ -735,7 +330,7 @@ header:hover {
     color: var(--primary-red);
     margin-bottom: 20px;
     font-family: 'Baloo 2', cursive;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--primary-yellow);
 }
 
 .parceiros-grid {
@@ -748,19 +343,24 @@ header:hover {
 
 .parceiro {
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--primary-red);
+    border: var(--christmas-border);
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+    /* Ajustado para amarelo */
 }
 
 .parceiro img {
-    width: 100%;
+    width: 150px;
+    /* Ajustado para quadrado */
     height: 150px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 50%;
+    /* Imagens redondas */
+    margin: 0 auto 10px;
+    display: block;
+    border: var(--christmas-border);
 }
 
 .parceiro p {
@@ -771,15 +371,15 @@ header:hover {
 }
 
 .parceiro a {
-    color: var(--accent-gold);
+    color: var(--primary-yellow);
     text-decoration: none;
     font-weight: bold;
-    text-shadow: 0 0 5px var(--accent-gold);
+    text-shadow: 0 0 5px var(--primary-yellow);
 }
 
 .parceiro:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--accent-gold);
+    box-shadow: 0 0 25px var(--primary-yellow);
 }
 
 .cart-fixed {
@@ -791,32 +391,32 @@ header:hover {
 
 .cart-fixed button {
     background: rgba(0, 0, 0, 0.9);
-    color: var(--accent-green);
-    border: 2px solid var(--accent-green);
+    color: var(--primary-red);
+    border: var(--christmas-border);
     padding: 15px 20px;
     font-size: 18px;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
 }
 
 .cart-fixed button:hover {
-    background: var(--accent-green);
-    color: var(--dark-bg);
+    background: var(--primary-red);
+    color: var(--primary-yellow);
     transform: scale(1.05);
 }
 
 
-/* Novo Estilo para Botão de Compartilhar - Fixo, natalino */
+/* Novo Estilo para Botão de Compartilhar - Fixo, ajustado para amarelo e vermelho */
 
 .share-fixed-button {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+    color: var(--dark-bg);
     border: none;
     padding: 15px;
     font-size: 16px;
@@ -824,28 +424,19 @@ header:hover {
     cursor: pointer;
     z-index: 1001;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
     width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Baloo 2', cursive;
-    animation: shareBounce 2s ease-in-out infinite alternate;
+    border: var(--christmas-border);
 }
 
 .share-fixed-button:hover {
     transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 0 25px var(--accent-gold);
-}
-
-@keyframes shareBounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-3px);
-    }
+    box-shadow: 0 0 25px var(--primary-yellow);
 }
 
 .help-fixed-button {
@@ -854,15 +445,15 @@ header:hover {
     right: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--primary-red);
-    border: 2px solid var(--primary-red);
+    border: var(--christmas-border);
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 30px;
     cursor: pointer;
     z-index: 1001;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--accent-gold);
-    text-shadow: 0 0 5px var(--accent-gold);
+    box-shadow: 0 0 10px var(--primary-yellow);
+    text-shadow: 0 0 5px var(--primary-yellow);
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -870,7 +461,7 @@ header:hover {
     background-color: var(--primary-red);
     color: var(--light-text);
     transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--primary-yellow);
 }
 
 
@@ -899,14 +490,14 @@ header:hover {
 
 .modal-content {
     background: rgba(17, 17, 17, 0.95);
-    border: 2px solid var(--accent-gold);
+    border: var(--christmas-border);
     border-radius: 24px;
     padding: 32px;
     max-width: 520px;
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 0 30px var(--accent-gold);
+    box-shadow: 0 0 30px var(--primary-yellow);
     color: var(--light-text);
     position: relative;
     backdrop-filter: blur(20px);
@@ -922,7 +513,7 @@ header:hover {
     color: var(--primary-red);
     text-align: center;
     letter-spacing: -0.5px;
-    text-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 10px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -932,8 +523,8 @@ header:hover {
     position: absolute;
     top: 20px;
     right: 24px;
-    color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--primary-red);
+    text-shadow: 0 0 10px var(--primary-yellow);
     transition: all 0.3s ease;
     opacity: 0.8;
     font-family: 'Fredoka', sans-serif;
@@ -971,7 +562,7 @@ header:hover {
 }
 
 
-/* Estilos para itens do carrinho, total, botões adaptados com cores natalinas */
+/* Estilos para itens do carrinho, total, botões adaptados com cores amarelo e vermelho */
 
 #modal-cart-items {
     max-height: 300px;
@@ -982,7 +573,7 @@ header:hover {
     border-radius: 16px;
     background: transparent;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-gold) transparent;
+    scrollbar-color: var(--primary-yellow) transparent;
 }
 
 #modal-cart-items::-webkit-scrollbar {
@@ -994,7 +585,7 @@ header:hover {
 }
 
 #modal-cart-items::-webkit-scrollbar-thumb {
-    background: var(--accent-gold);
+    background: var(--primary-yellow);
     border-radius: 3px;
 }
 
@@ -1009,10 +600,11 @@ header:hover {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 16px;
     transition: all 0.3s ease;
-    border: 1px solid var(--primary-red);
+    border: var(--christmas-border);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(220, 20, 60, 0.2);
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.2);
+    /* Ajustado para amarelo */
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -1023,14 +615,15 @@ header:hover {
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(to bottom, var(--primary-red), var(--accent-green));
-    box-shadow: 0 0 5px var(--accent-gold);
+    background: linear-gradient(to bottom, var(--primary-red), var(--primary-yellow));
+    box-shadow: 0 0 5px var(--primary-yellow);
 }
 
 .cart-item-modal:hover {
-    background: rgba(220, 20, 60, 0.1);
+    background: rgba(255, 255, 0, 0.1);
+    /* Ajustado para amarelo */
     transform: translateX(4px);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
 }
 
 .cart-item-modal span {
@@ -1040,8 +633,8 @@ header:hover {
 }
 
 .cart-item-modal button {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
-    color: var(--light-text);
+    background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+    color: var(--dark-bg);
     border: none;
     padding: 8px 16px;
     border-radius: 12px;
@@ -1052,28 +645,29 @@ header:hover {
     box-shadow: 0 0 10px var(--primary-red);
     min-width: 80px;
     font-family: 'Baloo 2', cursive;
+    border: var(--christmas-border);
 }
 
 .cart-item-modal button:hover {
-    background: linear-gradient(135deg, var(--accent-green), var(--primary-red));
+    background: linear-gradient(135deg, var(--primary-yellow), var(--primary-red));
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--accent-gold);
+    box-shadow: 0 0 15px var(--primary-yellow);
 }
 
 #modal-total {
     font-size: 24px;
     font-weight: 700;
-    color: var(--accent-gold);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--primary-yellow);
+    text-shadow: 0 0 10px var(--primary-yellow);
     margin-bottom: 24px;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-green));
+    background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     padding: 12px;
     border-radius: 12px;
-    border: 1px solid var(--accent-gold);
+    border: var(--christmas-border);
     font-family: 'Baloo 2', cursive;
 }
 
@@ -1091,10 +685,12 @@ header:hover {
     position: relative;
     overflow: hidden;
     font-family: 'Baloo 2', cursive;
+    border: var(--christmas-border);
 }
 
 #checkout-button {
     background: linear-gradient(135deg, var(--success-green), #228B22);
+    /* Ajustar se necessário */
     color: var(--light-text);
     box-shadow: 0 0 15px var(--success-green);
 }
@@ -1114,13 +710,13 @@ header:hover {
 #clear-cart:hover {
     background: linear-gradient(135deg, #FF0000, var(--primary-red));
     transform: translateY(-2px);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--primary-yellow);
 }
 
 #checkout-form h3,
 #checkout-form h4 {
-    color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-gold);
+    color: var(--primary-red);
+    text-shadow: 0 0 10px var(--primary-yellow);
     margin-bottom: 10px;
     font-family: 'Baloo 2', cursive;
 }
@@ -1131,14 +727,14 @@ header:hover {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid var(--accent-gold);
+    border: var(--christmas-border);
     border-radius: 10px;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--light-text);
     box-sizing: border-box;
     transition: border-color 0.3s ease;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
     font-family: 'Fredoka', sans-serif;
     resize: vertical;
 }
@@ -1147,13 +743,13 @@ header:hover {
 #checkout-form textarea:focus {
     border-color: var(--primary-red);
     outline: none;
-    box-shadow: 0 0 10px var(--accent-gold);
+    box-shadow: 0 0 10px var(--primary-yellow);
 }
 
 #checkout-form button {
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--accent-green);
-    border: 2px solid var(--accent-green);
+    color: var(--primary-red);
+    border: var(--christmas-border);
     padding: 20px;
     font-size: 24px;
     border-radius: 30px;
@@ -1161,26 +757,26 @@ header:hover {
     width: 100%;
     margin-bottom: 10px;
     transition: all 0.3s ease;
-    text-shadow: 0 0 5px var(--accent-gold);
-    box-shadow: 0 0 10px var(--accent-gold);
+    text-shadow: 0 0 5px var(--primary-yellow);
+    box-shadow: 0 0 10px var(--primary-yellow);
     font-family: 'Baloo 2', cursive;
     font-weight: 700;
 }
 
 #checkout-form button:hover {
-    background-color: var(--accent-green);
+    background-color: var(--primary-red);
     color: var(--dark-bg);
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--primary-yellow);
 }
 
 #pix-details {
     background: rgba(0, 0, 0, 0.9);
-    border: 1px solid var(--success-green);
+    border: var(--christmas-border);
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
     text-align: center;
-    box-shadow: 0 0 15px var(--success-green);
+    box-shadow: 0 0 15px var(--primary-red);
 }
 
 .payment-options {
@@ -1196,7 +792,7 @@ header:hover {
     background: rgba(17, 17, 17, 0.8);
     border-radius: 5px;
     cursor: pointer;
-    border: 1px solid var(--primary-red);
+    border: var(--christmas-border);
 }
 
 .notification {
@@ -1210,10 +806,11 @@ header:hover {
     font-size: 20px;
     display: none;
     z-index: 1002;
-    box-shadow: 0 0 20px var(--accent-gold);
+    box-shadow: 0 0 20px var(--primary-yellow);
     font-weight: bold;
     animation: slideIn 0.3s ease;
     font-family: 'Fredoka', sans-serif;
+    border: var(--christmas-border);
 }
 
 @keyframes slideIn {
@@ -1229,6 +826,7 @@ header:hover {
 
 .notification.success {
     background: linear-gradient(to right, var(--success-green), #228B22);
+    /* Ajustar se necessário */
     color: var(--light-text);
     box-shadow: 0 0 20px var(--success-green);
 }
@@ -1239,20 +837,14 @@ footer {
     text-align: center;
     padding: 40px;
     font-size: 20px;
-    text-shadow: 0 0 10px var(--accent-gold);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-gold);
-    border-top: 2px solid var(--accent-green);
+    text-shadow: 0 0 10px var(--primary-yellow);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--primary-yellow);
+    border-top: var(--christmas-border);
     font-family: 'Fredoka', sans-serif;
 }
 
 
-/* Glow para ano 2025 no footer */
-
-.year-glow {
-    animation: twinkle 2s ease-in-out infinite alternate;
-    color: var(--accent-gold) !important;
-    text-shadow: 0 0 10px var(--accent-gold);
-}
+/* Removido glow para ano no footer */
 
 
 /* Responsivo para Mobile - Reforçado para Centralização */
@@ -1318,15 +910,6 @@ footer {
         height: 50px;
         font-size: 14px;
     }
-    .christmas-tree {
-        width: 60px;
-        height: 60px;
-        bottom: 10px;
-        left: 10px;
-    }
-    .snowflake {
-        font-size: 16px;
-    }
     /* Centralização extra em mobile pequeno */
     .modal {
         padding: 10px;
@@ -1335,6 +918,15 @@ footer {
         width: 95%;
         max-height: 90vh;
         padding: 20px;
+    }
+    .item-image {
+        width: 150px;
+        /* Ajuste para mobile */
+        height: 150px;
+    }
+    .parceiro img {
+        width: 120px;
+        height: 120px;
     }
 }
 
