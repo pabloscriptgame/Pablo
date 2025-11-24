@@ -8,20 +8,66 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* LOGOMARCA PERFEITAMENTE AJUSTADA */
+        
+        .navbar-logo {
+            background: rgb(255, 255, 255);
+            padding: 12px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-img {
+            height: 72px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+        }
+        
+        @media (max-width: 992px) {
+            .logo-img {
+                height: 62px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 50px;
+            }
+        }
+        
+        header {
+            background: linear-gradient(135deg, #dc3545, #a11717);
+            padding: 2.5rem 0 !important;
+            margin-top: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Botões Flutuantes MODERNOS -->
+    <!-- LOGO CENTRALIZADA E RESPONSIVA -->
+    <nav class="navbar-logo">
+        <a href="index.html">
+            <img src="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" alt="DêGusto Lanchonete Premium" class="logo-img">
+        </a>
+    </nav>
+
+    <!-- Botões Flutuantes -->
     <button class="float-btn cart-float" id="cart-button">
         <i class="bi bi-cart4"></i>
         <span class="badge" id="cartCount">0</span>
     </button>
-
     <button class="float-btn share-float" id="share-button">
         <i class="bi bi-share-fill"></i>
     </button>
-
     <button class="float-btn help-float" id="help-button">
         <i class="bi bi-question-circle-fill"></i>
     </button>
@@ -30,6 +76,7 @@
         <h1 class="display-4 fw-bold">DêGusto Lanchonete Premium</h1>
         <p class="lead">Monte Carmelo • Delivery a partir das 19h</p>
     </header>
+
     <main class="container my-5">
         <h2 class="text-center mb-5 display-5">Cardápio</h2>
 
@@ -42,7 +89,6 @@
             <button class="tab-btn active btn btn-lg btn-outline-danger" data-tab="hamburgueres">Hambúrgueres</button>
             <button class="tab-btn btn btn-lg btn-outline-danger" data-tab="combos">Combos</button>
             <button class="tab-btn btn btn-lg btn-outline-danger" data-tab="batatas">Batatas</button>
-            <button class="tab-btn btn btn-lg btn-outline-danger" data-tab="molhos">Molhos</button>
             <button class="tab-btn btn btn-lg btn-outline-danger" data-tab="bebidas">Bebidas</button>
         </div>
 
@@ -400,32 +446,31 @@
             </div>
         </div>
     </main>
-    <center>
+    <!-- Botão Rádio -->
+    <center class="my-5">
         <button class="tab-btn btn btn-lg btn-outline-danger" onclick="window.location.href='http://degusto.store/radio.html'">
-          Rádio DêGusto 24H
-        </button>
+                Rádio DêGusto 24H
+            </button>
     </center>
-    <!-- Modal do Carrinho -->
+
+    <!-- Modal Carrinho e Checkout (mantidos exatamente como você enviou) -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('cartModal')">×</span>
             <h2 class="text-center mb-4">Seu Carrinho</h2>
             <div id="cartItems"></div>
-
             <div class="pix-box text-center p-4 bg-light rounded mt-4">
                 <p class="fw-bold text-success mb-3">Pague com PIX e receba mais rápido!</p>
                 <button id="copy-pix-cart" class="btn btn-success btn-lg">
-                    <i class="bi bi-copy"></i> Copiar Chave PIX: 10738419605
-                </button>
+                        <i class="bi bi-copy"></i> Copiar Chave PIX: 10738419605
+                    </button>
             </div>
-
             <div class="text-center mt-4">
                 <button class="btn btn-success btn-lg px-5" onclick="openCheckout()">Finalizar Pedido</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Checkout -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('checkout-modal')">×</span>
@@ -438,20 +483,16 @@
                     <div class="col-8"><input type="text" id="bairro" class="form-control" placeholder="Bairro" required></div>
                 </div>
                 <input type="text" id="referencia" class="form-control mb-3" placeholder="Referência (opcional)">
-
                 <div class="mb-3">
                     <label class="form-label fw-bold">Pagamento</label><br>
                     <label><input type="radio" name="pagamento" value="Dinheiro" required> Dinheiro</label> &nbsp;
                     <label><input type="radio" name="pagamento" value="PIX"> PIX</label> &nbsp;
                     <label><input type="radio" name="pagamento" value="Cartão"> Cartão</label>
                 </div>
-
                 <div id="troco-div" class="mb-3" style="display:none;">
                     <input type="number" id="troco" class="form-control" placeholder="Troco para quanto? (ex: 50)">
                 </div>
-
                 <textarea id="observacoes" class="form-control mb-4" rows="3" placeholder="Observações"></textarea>
-
                 <div class="text-center">
                     <h4 id="checkout-total" class="text-danger fw-bold mb-3">Total: R$ 0,00</h4>
                     <button type="submit" class="btn btn-success btn-lg px-5">Enviar no WhatsApp</button>
