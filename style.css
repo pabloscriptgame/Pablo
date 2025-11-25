@@ -21,11 +21,11 @@ header {
 }
 
 .item {
-    background: white;
+    background: #fff;
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
+    transition: 0.3s;
     text-align: center;
 }
 
@@ -46,7 +46,7 @@ header {
     margin: 15px 10px 5px;
 }
 
-.price {
+.item span {
     font-size: 1.6rem;
     font-weight: bold;
     color: #d32f2f;
@@ -60,27 +60,27 @@ header {
 
 .tab-panel.active {
     display: block;
-    animation: fadeIn 0.5s;
+    animation: fadeIn .5s;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px)
     }
     to {
         opacity: 1;
-        transform: none;
+        transform: none
     }
 }
 
 .tab-btn.active {
     background: #d32f2f !important;
-    color: white !important;
+    color: #fff !important;
 }
 
 
-/* BOTÕES FLUTUANTES MODERNOS */
+/* Botões flutuantes */
 
 .float-btn {
     position: fixed;
@@ -89,11 +89,11 @@ header {
     height: 66px;
     border-radius: 50%;
     border: none;
-    color: white;
+    color: #fff;
     font-size: 28px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    transition: all 0.3s;
+    transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,7 +123,7 @@ header {
     top: -8px;
     right: -8px;
     background: #ff0000;
-    color: white;
+    color: #fff;
     border-radius: 50%;
     width: 28px;
     height: 28px;
@@ -152,7 +152,7 @@ header {
 }
 
 .modal-content {
-    background: white;
+    background: #fff;
     border-radius: 20px;
     max-width: 500px;
     width: 100%;
@@ -181,7 +181,7 @@ header {
     left: 50%;
     transform: translateX(-50%);
     background: #333;
-    color: white;
+    color: #fff;
     padding: 15px 30px;
     border-radius: 50px;
     font-weight: bold;

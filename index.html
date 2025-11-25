@@ -10,10 +10,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" type="image/png">
     <style>
-        /* LOGOMARCA PERFEITAMENTE AJUSTADA */
-        
         .navbar-logo {
-            background: rgb(255, 255, 255);
+            background: #fff;
             padding: 12px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -22,8 +20,8 @@
         .logo-img {
             height: 72px;
             width: auto;
-            transition: all 0.3s ease;
             filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+            transition: 0.3s;
         }
         
         @media (max-width: 992px) {
@@ -47,31 +45,23 @@
         header {
             background: linear-gradient(135deg, #dc3545, #a11717);
             padding: 2.5rem 0 !important;
-            margin-top: 0 !important;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- LOGO CENTRALIZADA E RESPONSIVA -->
+    <!-- LOGO -->
     <nav class="navbar-logo">
         <a href="index.html">
-            <img src="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" alt="DêGusto Lanchonete Premium" class="logo-img">
+            <img src="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" alt="DêGusto" class="logo-img">
         </a>
     </nav>
 
-    <!-- Botões Flutuantes -->
-    <button class="float-btn cart-float" id="cart-button">
-        <i class="bi bi-cart4"></i>
-        <span class="badge" id="cartCount">0</span>
-    </button>
-    <button class="float-btn share-float" id="share-button">
-        <i class="bi bi-share-fill"></i>
-    </button>
-    <button class="float-btn help-float" id="help-button">
-        <i class="bi bi-question-circle-fill"></i>
-    </button>
+    <!-- BOTÕES FLUTUANTES -->
+    <button class="float-btn cart-float" id="cart-button"><i class="bi bi-cart4"></i><span class="badge" id="cartCount">0</span></button>
+    <button class="float-btn share-float" id="share-button"><i class="bi bi-share-fill"></i></button>
+    <button class="float-btn help-float" id="help-button"><i class="bi bi-question-circle-fill"></i></button>
 
     <header class="text-white text-center py-5">
         <h1 class="display-4 fw-bold">DêGusto Lanchonete Premium</h1>
@@ -85,7 +75,7 @@
             <input type="text" id="searchInput" class="form-control w-75 mx-auto" placeholder="Buscar no cardápio...">
         </div>
 
-        <!-- Abas -->
+        <!-- ABAS -->
         <div class="d-flex justify-content-center flex-wrap gap-3 mb-5">
             <button class="tab-btn active btn btn-lg btn-outline-danger" data-tab="hamburgueres">Hambúrgueres</button>
             <button class="tab-btn btn btn-lg btn-outline-danger" data-tab="combos">Combos</button>
@@ -388,7 +378,7 @@
             </div>
         </div>
 
-        <!-- HOT DOGS (NOVA ABA) -->
+        <!-- HOT DOGS -->
         <div id="hotdogs" class="tab-panel">
             <h3 class="text-center mb-4">Hot Dogs Deliciosos</h3>
             <div class="menu-grid">
@@ -399,7 +389,6 @@
                     <span>R$ 10,00</span>
                     <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
                 </div>
-
                 <div class="item" data-name="Hot Dog 2" data-price="14.00">
                     <img src="https://i.ibb.co/hJph2sSL/dog-2-2.png" alt="Hot Dog 2" loading="lazy">
                     <h3>Hot Dog 2</h3>
@@ -407,7 +396,6 @@
                     <span>R$ 14,00</span>
                     <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
                 </div>
-
                 <div class="item" data-name="Hot Dog Especial" data-price="18.00">
                     <img src="https://i.ibb.co/Z6TSQVKx/dog-especial-degusto.png" alt="Hot Dog Especial" loading="lazy">
                     <h3>Hot Dog Especial</h3>
@@ -418,98 +406,32 @@
             </div>
         </div>
 
-        <!-- CHOCOLATES (NOVA ABA) -->
+        <!-- CHOCOLATES -->
         <div id="chocolates" class="tab-panel">
             <h3 class="text-center mb-4">Chocolates & Doces</h3>
             <div class="menu-grid">
-                <div class="item" data-name="Sonho de Valsa" data-price="3.00">
-                    <img src="https://i.ibb.co/8D5KSnxs/Sonho-de-Valsa.jpg" alt="Sonho de Valsa" loading="lazy">
-                    <h3>Sonho de Valsa</h3>
-                    <span>R$ 3,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Ouro Branco" data-price="3.00">
-                    <img src="https://i.ibb.co/2GPfKvj/Ouro-branco.jpg" alt="Ouro Branco" loading="lazy">
-                    <h3>Ouro Branco</h3>
-                    <span>R$ 3,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Caribe" data-price="4.00">
-                    <img src="https://i.ibb.co/XfYhYL0w/Caribe.jpg" alt="Caribe" loading="lazy">
-                    <h3>Caribe</h3>
-                    <span>R$ 4,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Trento Massimo Banofrree" data-price="4.00">
-                    <img src="https://i.ibb.co/VW8TpqpB/Trento-Massimo-Banofrree.jpg" alt="Trento Massimo Banofrree" loading="lazy">
-                    <h3>Trento Massimo Banofrree</h3>
-                    <span>R$ 4,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Hershey's + Choco Tubes" data-price="4.00">
-                    <img src="https://i.ibb.co/RkYmhv92/Hershey-s-Choco-Tubes.jpg" alt="Hershey's + Choco Tubes" loading="lazy">
-                    <h3>Hershey's + Choco Tubes</h3>
-                    <span>R$ 4,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Twix" data-price="6.00">
-                    <img src="https://i.ibb.co/5CX2tKs/Twix.jpg" alt="Twix" loading="lazy">
-                    <h3>Twix</h3>
-                    <span>R$ 6,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="5Star" data-price="6.00">
-                    <img src="https://i.ibb.co/2Y3kXMzK/5Star.jpg" alt="5Star" loading="lazy">
-                    <h3>5Star</h3>
-                    <span>R$ 6,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
-                <div class="item" data-name="Charge" data-price="6.00">
-                    <img src="https://i.ibb.co/zhmbQVSP/Charge.jpg" alt="Charge" loading="lazy">
-                    <h3>Charge</h3>
-                    <span>R$ 6,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                <div class="item" data-name="Diamante Negro" data-price="6.00">
-                    <img src="https://i.ibb.co/sppd4VXm/Lacta-Diamante-Negro.jpg" alt="Diamante Negro" loading="lazy">
-                    <h3>Diamante Negro</h3>
-                    <span>R$ 6,00</span>
-                    <button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar ao Carrinho</button>
-                </div>
+                <div class="item" data-name="Sonho de Valsa" data-price="3.00"><img src="https://i.ibb.co/8D5KSnxs/Sonho-de-Valsa.jpg" alt="" loading="lazy">
+                    <h3>Sonho de Valsa</h3><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Ouro Branco" data-price="3.00"><img src="https://i.ibb.co/2GPfKvj/Ouro-branco.jpg" alt="" loading="lazy">
+                    <h3>Ouro Branco</h3><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Caribe" data-price="4.00"><img src="https://i.ibb.co/XfYhYL0w/Caribe.jpg" alt="" loading="lazy">
+                    <h3>Caribe</h3><span>R$ 4,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Trento Massimo Banoffee" data-price="4.00"><img src="https://i.ibb.co/VW8TpqpB/Trento-Massimo-Banofrree.jpg" alt="" loading="lazy">
+                    <h3>Trento Massimo Banoffee</h3><span>R$ 4,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Hershey's + Choco Tubes" data-price="4.00"><img src="https://i.ibb.co/RkYmhv92/Hershey-s-Choco-Tubes.jpg" alt="" loading="lazy">
+                    <h3>Hershey's + Choco Tubes</h3><span>R$ 4,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Twix" data-price="6.00"><img src="https://i.ibb.co/5CX2tKs/Twix.jpg" alt="" loading="lazy">
+                    <h3>Twix</h3><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="5Star" data-price="6.00"><img src="https://i.ibb.co/2Y3kXMzK/5Star.jpg" alt="" loading="lazy">
+                    <h3>5Star</h3><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Charge" data-price="6.00"><img src="https://i.ibb.co/zhmbQVSP/Charge.jpg" alt="" loading="lazy">
+                    <h3>Charge</h3><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                <div class="item" data-name="Diamante Negro" data-price="6.00"><img src="https://i.ibb.co/sppd4VXm/Lacta-Diamante-Negro.jpg" alt="" loading="lazy">
+                    <h3>Diamante Negro</h3><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
             </div>
         </div>
 
-        <!-- ABA: MOLHOS -->
-        <div id="molhos" class="tab-panel">
-            <h3 class="text-center mb-4">Molhos Exclusivos</h3>
-            <div class="menu-grid">
-                <div class="item" data-name="MOLHO CATUPIRY" data-price="3.00">
-                    <h3>MOLHO CATUPIRY</h3>
-                    <p>Clássico Catupiry cremoso</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOLHO BARBECUE" data-price="3.00">
-                    <h3>MOLHO BARBECUE</h3>
-                    <p>Molho barbecue tradicional com mel</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="CEBOLA CARAMELIZADA" data-price="3.00">
-                    <h3>CEBOLA CARAMELIZADA</h3>
-                    <p>Cebola caramelizada com toque de balsâmico</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOLHO PIMENTA" data-price="3.00">
-                    <h3>MOLHO PIMENTA</h3>
-                    <p>Molho de pimenta habanero com mel</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOSTARDA MEL" data-price="3.00">
-                    <h3>MOSTARDA MEL</h3>
-                    <p>Mostarda Dijon com mel puro</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOLHO MARACUJÁ" data-price="3.00">
-                    <h3>MOLHO MARACUJÁ</h3>
-                    <p>Molho de maracujá com toque apimentado</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOLHO ABACAXI" data-price="3.00">
-                    <h3>MOLHO ABACAXI</h3>
-                    <p>Molho de abacaxi grelhado com curry</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-                <div class="item" data-name="MOLHO MORANGO" data-price="3.00">
-                    <h3>MOLHO MORANGO</h3>
-                    <p>Molho de morango NOVO</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
-            </div>
-        </div>
-
-        <!-- ABA: BEBIDAS -->
+        <!-- BEBIDAS -->
         <div id="bebidas" class="tab-panel">
             <h3 class="text-center mb-4">Bebidas Geladas</h3>
             <div class="menu-grid">
@@ -521,43 +443,40 @@
                     <p>Coca-Cola 1L bem gelada</p><span>R$ 10,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="COCA-COLA LATA" data-price="6.00">
                     <h3>COCA-COLA LATA</h3>
-                    <p>Coca-Cola lata gelada 350ml</p><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                    <p>350ml gelada</p><span>R$ 6,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="FANTA LARANJA 2L" data-price="12.00">
-                    <h3>FANTA LARANJA 2L</h3>
-                    <p>Fanta Laranja 2L</p><span>R$ 12,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                    <h3>FANTA LARANJA 2L</h3><span>R$ 12,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="FANTA LARANJA 1L" data-price="10.00">
-                    <h3>FANTA LARANJA 1L</h3>
-                    <p>Fanta Laranja 1L gelada</p><span>R$ 10,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                    <h3>FANTA LARANJA 1L</h3><span>R$ 10,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="KUAT 2L" data-price="10.00">
                     <h3>KUAT 2L</h3>
-                    <p>Kuat Guaraná 2L</p><span>R$ 10,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                    <p>Guaraná Kuat 2L</p><span>R$ 10,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="MINEIRO 2L" data-price="12.00">
                     <h3>MINEIRO 2L</h3>
                     <p>Guaraná Mineiro 2L</p><span>R$ 12,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
                 <div class="item" data-name="PITHULÁ" data-price="3.00">
                     <h3>PITHULÁ</h3>
-                    <p>Pithulá 200ml</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
+                    <p>200ml</p><span>R$ 3,00</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button></div>
             </div>
         </div>
+
     </main>
-    <!-- Botão Rádio -->
+
     <center class="my-5">
         <button class="tab-btn btn btn-lg btn-outline-danger" onclick="window.location.href='http://degusto.store/radio.html'">
-                Rádio DêGusto 24H
-            </button>
+            Rádio DêGusto 24H
+        </button>
     </center>
 
-    <!-- Modal Carrinho e Checkout (mantidos exatamente como você enviou) -->
+    <!-- MODAIS (Carrinho e Checkout) -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('cartModal')">×</span>
+            <span class="close" onclick="closeModal('cartModal')">x</span>
             <h2 class="text-center mb-4">Seu Carrinho</h2>
             <div id="cartItems"></div>
             <div class="pix-box text-center p-4 bg-light rounded mt-4">
                 <p class="fw-bold text-success mb-3">Pague com PIX e receba mais rápido!</p>
-                <button id="copy-pix-cart" class="btn btn-success btn-lg">
-                        <i class="bi bi-copy"></i> Copiar Chave PIX: 10738419605
-                    </button>
+                <button id="copy-pix-cart" class="btn btn-success btn-lg">Copiar Chave PIX: 10738419605</button>
             </div>
             <div class="text-center mt-4">
                 <button class="btn btn-success btn-lg px-5" onclick="openCheckout()">Finalizar Pedido</button>
@@ -567,7 +486,7 @@
 
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('checkout-modal')">×</span>
+            <span class="close" onclick="closeModal('checkout-modal')">x</span>
             <form id="checkout-form">
                 <h3 class="text-center mb-4">Finalizar Pedido</h3>
                 <input type="text" id="nome-cliente" class="form-control mb-3" placeholder="Seu nome" required>
@@ -579,8 +498,8 @@
                 <input type="text" id="referencia" class="form-control mb-3" placeholder="Referência (opcional)">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Pagamento</label><br>
-                    <label><input type="radio" name="pagamento" value="Dinheiro" required> Dinheiro</label> &nbsp;
-                    <label><input type="radio" name="pagamento" value="PIX"> PIX</label> &nbsp;
+                    <label><input type="radio" name="pagamento" value="Dinheiro" required> Dinheiro</label>
+                    <label><input type="radio" name="pagamento" value="PIX"> PIX</label>
                     <label><input type="radio" name="pagamento" value="Cartão"> Cartão</label>
                 </div>
                 <div id="troco-div" class="mb-3" style="display:none;">
@@ -600,6 +519,4 @@
     <script src="script.js"></script>
 </body>
 
-
 </html>
-
