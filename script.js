@@ -1,5 +1,5 @@
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
-const phoneNumber = "55349999537698";
+const phoneNumber = "5534999537698";
 const pixKey = "10738419605";
 
 function saveCart() {
@@ -133,3 +133,4 @@ document.querySelectorAll('input[name="pagamento"]').forEach(radio => {
 
 
 updateCartCount();
+
