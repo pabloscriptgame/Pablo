@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DêGusto Lanchonete - Em breve</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .background {
+            background: url('https://i.ibb.co/LD2rmSjM/Design-sem-nome.png') center center / cover no-repeat;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            filter: brightness(0.4); /* escurece um pouco a imagem para o texto ficar legível */
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 6rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.9);
+        }
+
+        p {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .coming-soon {
+            font-size: 2.2rem;
+            font-style: italic;
+            color: #ffcc00;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 4rem; }
+            p { font-size: 1.5rem; }
+            .coming-soon { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.3rem; }
+            h2 { font-size: 3.2rem; }
+            p { font-size: 1.2rem; }
+            .coming-soon { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <div class="container">
+        <h1>DêGusto Lanchonete</h1>
+        <h2>Temporariamente Fora do Ar</h2>
+        <p>Estamos trabalhando para trazer o melhor para você!</p>
+        <p class="coming-soon">Em breve ficaremos online</p>
+    </div>
+
+</body>
+</html>
