@@ -5,11 +5,17 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f8f9fa;
+    color: #333;
     overflow-x: hidden;
-    width: 100vw;
-    height: auto;
+    transition: background 0.5s ease, color 0.5s ease;
+    min-height: 100vh;
+}
+
+body.dark-mode {
+    background: #121212;
+    color: #f0f0f0;
 }
 
 
@@ -66,7 +72,7 @@ header {
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
+    transition: all 0.3s ease;
     text-align: center;
 }
 
@@ -96,6 +102,19 @@ header {
 }
 
 
+/* DARK MODE - ITENS */
+
+.dark-mode .item {
+    background: #1e1e1e;
+    color: #f0f0f0;
+}
+
+.dark-mode .item h3,
+.dark-mode .item span {
+    color: #ff5252;
+}
+
+
 /* ABAS */
 
 .tab-panel {
@@ -104,18 +123,6 @@ header {
 
 .tab-panel.active {
     display: block;
-    animation: fadeIn .5s;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
 }
 
 .tab-btn.active {
@@ -128,7 +135,6 @@ header {
 
 .float-btn {
     position: fixed;
-    bottom: 20px;
     width: 66px;
     height: 66px;
     border-radius: 50%;
@@ -137,7 +143,7 @@ header {
     font-size: 28px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,17 +155,26 @@ header {
 
 .cart-float {
     right: 20px;
+    bottom: 20px;
     background: #28a745;
 }
 
 .share-float {
     right: 96px;
+    bottom: 20px;
     background: #25d366;
 }
 
 .help-float {
     right: 172px;
+    bottom: 20px;
     background: #007bff;
+}
+
+.theme-float {
+    right: 248px;
+    bottom: 20px;
+    background: #6c757d;
 }
 
 .badge {
@@ -179,7 +194,34 @@ header {
 }
 
 
-/* MODAIS NORMAIS (carrinho, checkout) */
+/* RESPONSIVO MOBILE - EMPILHA BOTÕES */
+
+@media (max-width: 768px) {
+    .float-btn {
+        width: 58px;
+        height: 58px;
+        font-size: 24px;
+    }
+    .cart-float {
+        right: 20px;
+        bottom: 20px;
+    }
+    .share-float {
+        right: 20px;
+        bottom: 90px;
+    }
+    .help-float {
+        right: 20px;
+        bottom: 160px;
+    }
+    .theme-float {
+        right: 20px;
+        bottom: 230px;
+    }
+}
+
+
+/* MODAIS */
 
 .modal {
     display: none;
@@ -198,12 +240,16 @@ header {
 .modal-content {
     background: #fff;
     border-radius: 20px;
-    max-width: 500px;
+    max-width: 520px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
     padding: 30px;
     position: relative;
+}
+
+.dark-mode .modal-content {
+    background: #1e1e1e;
 }
 
 .close {
@@ -220,27 +266,10 @@ header {
 }
 
 
-/* NOTIFICAÇÃO */
+/* INTRO MODAL */
 
-.notification {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #333;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 50px;
-    font-weight: bold;
-    z-index: 3000;
-    display: none;
-}
-
-
-/* MODAL DE INTRO (vídeo de 10 segundos) */
-
-#introModal {
-    display: none;
+.modal-intro {
+    display: flex;
     position: fixed;
     z-index: 999999;
     left: 0;
@@ -250,10 +279,9 @@ header {
     background: rgba(0, 0, 0, 0.98);
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.5s;
 }
 
-#introModal iframe {
+.modal-intro iframe {
     width: 90%;
     height: 80%;
     max-width: 800px;
@@ -272,23 +300,51 @@ header {
     border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    z-index: 1;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 #skipIntro:hover {
     background: #b71c1c;
 }
 
+@media (max-width: 576px) {
+    .modal-intro iframe {
+        width: 95%;
+        height: 70%;
+    }
+}
 
-/* SEÇÃO DE PROMOÇÕES EM DESTAQUE */
+
+/* NOTIFICAÇÃO */
+
+.notification {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 3000;
+    display: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+
+/* SEÇÃO PROMOÇÕES */
 
 #promocoes {
     background: linear-gradient(135deg, #fff, #f1f3f5);
-    padding: 30px 15px;
-    margin: 20px 0;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 40px 20px;
+    margin: 30px 0;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode #promocoes {
+    background: linear-gradient(135deg, #1a1a1a, #242424);
 }
 
 .promo-item {
@@ -296,26 +352,24 @@ header {
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    transition: 0.3s;
+    transition: all 0.4s ease;
     text-align: center;
     position: relative;
 }
 
+.dark-mode .promo-item {
+    background: #1e1e1e;
+}
+
 .promo-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(40, 167, 69, 0.3);
 }
 
 .promo-item img {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
-}
-
-.promo-item h4 {
-    color: #d32f2f;
-    margin: 12px 0 8px;
-    font-weight: bold;
 }
 
 .promo-badge {
@@ -326,71 +380,43 @@ header {
     color: white;
     padding: 8px 15px;
     border-radius: 30px;
-    font-size: 0.85rem;
     font-weight: bold;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 
-/* ANIMAÇÃO DE NEVE DE NATAL */
+/* ESTILOS DO CARRINHO (itens no modal) */
 
-.snow-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99999;
-    pointer-events: none;
+#cartItems .d-flex {
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 12px;
 }
 
-.snowflake {
-    position: absolute;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    pointer-events: none;
-}
-
-@keyframes fall {
-    0% {
-        opacity: 0;
-        transform: translateY(0);
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.5;
-        transform: translateY(100vh);
-    }
-}
-
-@keyframes diagonal-fall {
-    0% {
-        opacity: 0;
-        transform: translate(0, 0);
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.25;
-        transform: translate(10vw, 100vh);
-    }
+.dark-mode #cartItems .d-flex {
+    background: #2a2a2a;
 }
 
 
-/* RESPONSIVIDADE EXTRA */
+/* PIX BOX */
 
-@media (max-width: 576px) {
-    #introModal iframe {
-        width: 95%;
-        height: 70%;
-    }
-    #skipIntro {
-        padding: 10px 18px;
-        font-size: 0.9rem;
-    }
+.pix-box {
+    background: #f0fff4;
+    border: 2px dashed #28a745;
+}
+
+.dark-mode .pix-box {
+    background: #163d2a;
+    border-color: #28a745;
+}
+
+
+/* AJUSTES GERAIS DARK MODE */
+
+.dark-mode .navbar-logo {
+    background: #000;
+}
+
+.dark-mode .text-danger {
+    color: #ff5252 !important;
 }

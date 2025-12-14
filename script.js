@@ -10,53 +10,84 @@ function saveCart() {
 
 function updateCartCount() {
     const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById('cartCount').textContent = total;
+    document.getElementById('cartCount').textContent = total || 0;
 }
 
 function renderCart() {
     const el = document.getElementById('cartItems');
-    if (!el) return;
     if (cart.length === 0) {
         el.innerHTML = '<p class="text-center text-muted fs-4">Carrinho vazio</p>';
         return;
     }
+
     let html = '';
     let total = 0;
     cart.forEach((item, i) => {
         const subtotal = item.price * item.quantity;
         total += subtotal;
-        html += `<div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-            <div><strong>${item.quantity}× ${item.name}</strong><br><small class="text-success">R$ ${item.price.toFixed(2)} cada</small></div>
-            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${i})">Remover</button>
+        html += `
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <div>
+                <strong>${item.quantity}× ${item.name}</strong><br>
+                <small class="text-success">R$ ${item.price.toFixed(2)} cada</small>
+                <div class="text-danger fw-bold">Subtotal: R$ ${subtotal.toFixed(2)}</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity(${i}, -1)">−</button>
+                <span class="fw-bold">${item.quantity}</span>
+                <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity(${i}, 1)">+</button>
+                <button class="btn btn-danger btn-sm" onclick="removeFromCart(${i})">Remover</button>
+            </div>
         </div>`;
     });
     html += `<div class="text-end mt-3"><h4 class="text-danger fw-bold">Total: R$ ${total.toFixed(2)}</h4></div>`;
     el.innerHTML = html;
 }
 
+function changeQuantity(i, delta) {
+    cart[i].quantity += delta;
+    if (cart[i].quantity <= 0) cart.splice(i, 1);
+    saveCart();
+}
+
+function removeFromCart(i) {
+    cart.splice(i, 1);
+    saveCart();
+}
+
+function clearCart() {
+    if (confirm("Limpar todo o carrinho?")) {
+        cart = [];
+        saveCart();
+    }
+}
+
 function addToCart(name, price) {
     const existing = cart.find(item => item.name === name);
-    if (existing) existing.quantity += 1;
+    if (existing) existing.quantity++;
     else cart.push({ name, price: parseFloat(price), quantity: 1 });
     saveCart();
-    showNotification('Adicionado ao carrinho!');
+    showNotification("Adicionado ao carrinho!");
 }
 
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    saveCart();
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+    if (id === 'cartModal') renderCart();
 }
 
-function openModal(id) { document.getElementById(id).style.display = 'flex'; if (id === 'cartModal') renderCart(); }
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
 
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-// NOVA FUNÇÃO: Fechar Intro
 function closeIntro() {
     document.getElementById('introModal').style.display = 'none';
 }
 
 function openCheckout() {
+    if (cart.length === 0) {
+        showNotification("Carrinho vazio!");
+        return;
+    }
     closeModal('cartModal');
     const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     document.getElementById('checkout-total').textContent = `Total: R$ ${total.toFixed(2)}`;
@@ -70,6 +101,7 @@ function showNotification(msg) {
     setTimeout(() => n.style.display = 'none', 2500);
 }
 
+// Eventos
 document.addEventListener('click', e => {
     if (e.target.closest('.add-to-cart')) {
         const item = e.target.closest('.item');
@@ -85,7 +117,9 @@ document.getElementById('share-button').onclick = () => {
         showNotification('Link copiado!');
     }
 };
+
 document.getElementById('help-button').onclick = () => alert('Horário: a partir das 19h\nWhatsApp: (34) 99953-7698');
+
 document.getElementById('copy-pix-cart').onclick = () => {
     navigator.clipboard.writeText(pixKey);
     showNotification('Chave PIX copiada!');
@@ -139,99 +173,32 @@ document.getElementById('checkout-form').onsubmit = function(e) {
 };
 
 document.querySelectorAll('input[name="pagamento"]').forEach(radio => {
-    radio.onchange = () => document.getElementById('troco-div').style.display = radio.value === 'Dinheiro' ? 'block' : 'none';
+    radio.onchange = () => {
+        document.getElementById('troco-div').style.display = radio.value === 'Dinheiro' ? 'block' : 'none';
+    };
 });
 
-updateCartCount();
+// Tema Claro/Escuro
+document.getElementById('theme-button').onclick = () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    const icon = document.querySelector('#theme-button i');
+    icon.classList.toggle('bi-moon-stars-fill', !isDark);
+    icon.classList.toggle('bi-sun-fill', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+};
 
-// NOVA LÓGICA: Intro de 10s ao carregar
-document.addEventListener("DOMContentLoaded", function() {
-    const introModal = document.getElementById('introModal');
-    introModal.style.display = 'flex'; // Mostrar modal
-
-    // Fechar após 10 segundos
-    setTimeout(() => {
-        closeIntro();
-    }, 10000);
-
-    // Resto do código de neve...
-    const snowContainer = document.querySelector(".snow-container");
-
-    const particlesPerThousandPixels = 0.1;
-    const fallSpeed = 1.25;
-    const pauseWhenNotActive = true;
-    const maxSnowflakes = 200;
-    const snowflakes = [];
-
-    let snowflakeInterval;
-    let isTabActive = true;
-
-    function resetSnowflake(snowflake) {
-        const size = Math.random() * 5 + 1;
-        const viewportWidth = window.innerWidth - size; // Adjust for snowflake size
-        const viewportHeight = window.innerHeight;
-
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        snowflake.style.left = `${Math.random() * viewportWidth}px`; // Constrain within viewport width
-        snowflake.style.top = `-${size}px`;
-
-        const animationDuration = (Math.random() * 3 + 2) / fallSpeed;
-        snowflake.style.animationDuration = `${animationDuration}s`;
-        snowflake.style.animationTimingFunction = "linear";
-        snowflake.style.animationName =
-            Math.random() < 0.5 ? "fall" : "diagonal-fall";
-
-        setTimeout(() => {
-            if (parseInt(snowflake.style.top, 10) < viewportHeight) {
-                resetSnowflake(snowflake);
-            } else {
-                snowflake.remove(); // Remove when it goes off the bottom edge
-            }
-        }, animationDuration * 1000);
+// Carregar tema salvo
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark-mode');
+        document.querySelector('#theme-button i').classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
     }
 
-    function createSnowflake() {
-        if (snowflakes.length < maxSnowflakes) {
-            const snowflake = document.createElement("div");
-            snowflake.classList.add("snowflake");
-            snowflakes.push(snowflake);
-            snowContainer.appendChild(snowflake);
-            resetSnowflake(snowflake);
-        }
-    }
+    // Intro 10s
+    document.getElementById('introModal').style.display = 'flex';
+    setTimeout(closeIntro, 10000);
 
-    function generateSnowflakes() {
-        const numberOfParticles =
-            Math.ceil((window.innerWidth * window.innerHeight) / 1000) *
-            particlesPerThousandPixels;
-        const interval = 5000 / numberOfParticles;
-
-        clearInterval(snowflakeInterval);
-        snowflakeInterval = setInterval(() => {
-            if (isTabActive && snowflakes.length < maxSnowflakes) {
-                requestAnimationFrame(createSnowflake);
-            }
-        }, interval);
-    }
-
-    function handleVisibilityChange() {
-        if (!pauseWhenNotActive) return;
-
-        isTabActive = !document.hidden;
-        if (isTabActive) {
-            generateSnowflakes();
-        } else {
-            clearInterval(snowflakeInterval);
-        }
-    }
-
-    generateSnowflakes();
-
-    window.addEventListener("resize", () => {
-        clearInterval(snowflakeInterval);
-        setTimeout(generateSnowflakes, 1000);
-    });
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    updateCartCount();
 });
