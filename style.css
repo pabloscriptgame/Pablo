@@ -18,7 +18,9 @@ body.dark-mode {
     color: #f0f0f0;
 }
 
+
 /* Header e Logo */
+
 header {
     background: linear-gradient(135deg, #c62828, #d32f2f);
 }
@@ -37,7 +39,9 @@ header {
     transition: 0.3s;
 }
 
+
 /* Grid do Cardápio */
+
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -63,6 +67,7 @@ header {
     width: 100%;
     height: 180px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .item h3 {
@@ -79,7 +84,9 @@ header {
     margin: 10px 0;
 }
 
-/* Dark Mode geral */
+
+/* Dark Mode */
+
 .dark-mode .item {
     background: #1e1e1e;
 }
@@ -89,7 +96,9 @@ header {
     color: #ff5252;
 }
 
+
 /* Abas */
+
 .tab-panel {
     display: none;
 }
@@ -103,7 +112,9 @@ header {
     color: #fff !important;
 }
 
+
 /* Botões Flutuantes */
+
 .float-btn {
     position: fixed;
     width: 66px;
@@ -160,7 +171,9 @@ header {
     justify-content: center;
 }
 
+
 /* Modais */
+
 .modal {
     display: none;
     position: fixed;
@@ -203,7 +216,9 @@ header {
     color: #d32f2f;
 }
 
+
 /* Intro Modal */
+
 .modal-intro {
     display: flex;
     position: fixed;
@@ -239,7 +254,9 @@ header {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
+
 /* Notificação */
+
 .notification {
     position: fixed;
     bottom: 100px;
@@ -255,7 +272,9 @@ header {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+
 /* Promoções */
+
 #promocoes {
     background: linear-gradient(135deg, #fff, #f1f3f5);
     padding: 40px 20px;
@@ -305,7 +324,9 @@ header {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
+
 /* Footer e Player Rádio */
+
 footer {
     background: #1a1a1a;
     border-top: 4px solid #d32f2f;
@@ -334,18 +355,15 @@ footer small {
     font-size: 0.9rem;
 }
 
-/* ================================================
-   CHAT DE ATENDIMENTO - RESPONSIVO (Mobile + Desktop)
-   ================================================ */
+
+/* Chat IA */
 
 .chat-container {
     position: fixed;
-    bottom: 90px; /* espaço acima dos botões flutuantes */
+    bottom: 100px;
     right: 20px;
     width: 380px;
-    max-width: 90vw;
     height: 520px;
-    max-height: 80vh;
     background: white;
     border-radius: 18px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
@@ -353,13 +371,11 @@ footer small {
     z-index: 1100;
     display: none;
     flex-direction: column;
-    transition: all 0.3s ease;
 }
 
 .dark-mode .chat-container {
     background: #1e1e1e;
     color: #f0f0f0;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .chat-header {
@@ -369,7 +385,6 @@ footer small {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-shrink: 0;
 }
 
 .chat-avatar img {
@@ -377,13 +392,6 @@ footer small {
     height: 48px;
     border-radius: 50%;
     border: 3px solid white;
-    object-fit: cover;
-}
-
-.chat-title {
-    flex: 1;
-    font-weight: bold;
-    font-size: 1.1rem;
 }
 
 .chat-body {
@@ -391,9 +399,6 @@ footer small {
     padding: 16px;
     overflow-y: auto;
     background: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .dark-mode .chat-body {
@@ -401,19 +406,17 @@ footer small {
 }
 
 .message {
+    margin-bottom: 12px;
     max-width: 80%;
     padding: 10px 14px;
     border-radius: 18px;
     line-height: 1.4;
-    font-size: 0.95rem;
-    word-wrap: break-word;
 }
 
 .message.bot {
     background: #d32f2f;
     color: white;
     border-bottom-left-radius: 4px;
-    align-self: flex-start;
 }
 
 .message.user {
@@ -425,7 +428,6 @@ footer small {
 
 .dark-mode .message.user {
     background: #333;
-    color: #f0f0f0;
 }
 
 .chat-footer {
@@ -433,7 +435,6 @@ footer small {
     padding: 12px;
     border-top: 1px solid #ddd;
     background: white;
-    flex-shrink: 0;
 }
 
 .dark-mode .chat-footer {
@@ -445,11 +446,10 @@ footer small {
     flex: 1;
     border: none;
     outline: none;
-    padding: 12px 16px;
+    padding: 10px 16px;
     border-radius: 30px;
     background: #f1f1f1;
     margin-right: 8px;
-    font-size: 1rem;
 }
 
 .dark-mode #chat-input {
@@ -461,19 +461,10 @@ footer small {
     background: #d32f2f;
     color: white;
     border: none;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    transition: background 0.2s;
-}
-
-#send-chat:hover {
-    background: #b71c1c;
 }
 
 .quick-suggestions {
@@ -481,7 +472,6 @@ footer small {
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 12px;
-    padding: 0 8px;
 }
 
 .quick-btn {
@@ -491,72 +481,9 @@ footer small {
     border-radius: 20px;
     font-size: 0.85rem;
     cursor: pointer;
-    white-space: nowrap;
 }
 
 .dark-mode .quick-btn {
     background: #444;
     color: white;
-}
-
-.quick-btn:hover {
-    opacity: 0.9;
-}
-
-/* RESPONSIVIDADE PARA CELULAR */
-@media (max-width: 600px) {
-    .chat-container {
-        width: calc(100% - 40px);
-        height: 70vh;
-        max-height: 70vh;
-        bottom: 100px;
-        right: 20px;
-        left: 20px;
-        margin: 0 auto;
-        border-radius: 16px;
-    }
-
-    .chat-header {
-        padding: 12px 14px;
-    }
-
-    .chat-avatar img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .chat-body {
-        padding: 12px;
-    }
-
-    .message {
-        font-size: 0.92rem;
-        max-width: 85%;
-    }
-
-    .chat-footer {
-        padding: 10px;
-    }
-
-    #chat-input {
-        padding: 10px 14px;
-        font-size: 0.95rem;
-    }
-
-    #send-chat {
-        width: 44px;
-        height: 44px;
-    }
-
-    .quick-suggestions {
-        padding: 0 4px;
-    }
-}
-
-@media (max-width: 360px) {
-    .chat-container {
-        width: calc(100% - 20px);
-        right: 10px;
-        left: 10px;
-    }
 }
