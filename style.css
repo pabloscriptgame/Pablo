@@ -105,6 +105,11 @@ header {
 
 .tab-panel.active {
     display: block;
+    /* ou grid, flex, o que você estiver usando */
+}
+
+.tab-panel.active {
+    display: block;
 }
 
 .tab-btn.active {

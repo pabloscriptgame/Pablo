@@ -142,13 +142,25 @@ document.getElementById('searchInput').oninput = function() {
     });
 };
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.onclick = () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).style.display = 'block';
-    };
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove active de todos os botões e painéis
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+        // Adiciona active no botão clicado
+        button.classList.add('active');
+
+        // Mostra o painel correspondente
+        const tabId = button.getAttribute('data-tab');
+        const panel = document.getElementById(tabId);
+
+        if (panel) {
+            panel.classList.add('active');
+        } else {
+            console.error(`Painel não encontrado para data-tab: ${tabId}`);
+        }
+    });
 });
 
 document.getElementById('checkout-form').onsubmit = function(e) {
