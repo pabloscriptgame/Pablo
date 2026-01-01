@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dê Gusto Lanchonete</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Centraliza verticalmente tudo */
+            align-items: center;
+            /* Centraliza horizontalmente */
+            background: linear-gradient(135deg, #1e0e00, #3d1f00, #ff6b00);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        header {
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            color: #ffcc00;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .scene {
+            perspective: 1500px;
+            max-width: 800px;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo-wrapper {
+            position: relative;
+            width: 650px;
+            max-width: 90vw;
+            height: 480px;
+            max-height: 60vw;
+            transform-style: preserve-3d;
+            animation: gentleFloat 15s ease-in-out infinite;
+        }
+        
+        @keyframes gentleFloat {
+            0%,
+            100% {
+                transform: translateY(0px) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-40px) rotateX(8deg);
+            }
+        }
+        
+        .logo-container {
+            width: 100%;
+            height: 100%;
+            background: url('https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png') center/contain no-repeat;
+            background-size: 92%;
+            border-radius: 35px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 100px rgba(255, 107, 0, 0.4), inset 0 0 60px rgba(255, 255, 255, 0.1);
+            transform: translateZ(80px);
+            transition: all 0.5s ease;
+            backface-visibility: hidden;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shine 8s infinite linear;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp 12s infinite linear;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .btn {
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: #ffcc00;
+            color: #1e0e00;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 40px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            background: #ffd700;
+        }
+        
+        .footer-info {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+            max-width: 90%;
+        }
+        
+        .trust-badges img {
+            height: 60px;
+            filter: brightness(1.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .trust-badges img:hover {
+            transform: scale(1.1);
+        }
+        
+        .designer-credit {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        
+        .designer-credit a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .designer-credit a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            .tagline {
+                font-size: 1.1rem;
+            }
+            .logo-wrapper {
+                width: 90vw;
+                height: 60vw;
+            }
+            .trust-badges img {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Dê Gusto</h1>
+        <p class="tagline">Lanchonete • Sabores que conquistam</p>
+    </header>
+
+    <div class="scene">
+        <div class="logo-wrapper" id="logoWrapper">
+            <div class="logo-container"></div>
+            <div class="particles" id="particles"></div>
+        </div>
+    </div>
+
+    <button class="btn" onclick="alert('Bem-vindo à Dê Gusto! 🍔✨')">Cardápio OFF</button>
+
+    <div class="footer-info">
+        © 2025 Dê Gusto Lanchonete • Feito com sabor e carinho
+    </div>
+
+    <!-- Selos de Segurança + Crédito do Designer -->
+    <div class="trust-badges">
+        <img src="https://kinsta.com/wp-content/uploads/2021/10/trustlock-badge.png" alt="SSL Seguro">
+        <img src="https://kinsta.com/wp-content/uploads/2021/10/Untitled-5.png" alt="Norton Secured">
+        <img src="https://kinsta.com/wp-content/uploads/2021/10/Untitled-6.png" alt="McAfee Secure">
+        <img src="https://kinsta.com/wp-content/uploads/2021/10/layout-errors.png" alt="Google Safe Site">
+        <img src="https://kinsta.com/wp-content/uploads/2021/10/Untitled-2.png" alt="Pagamento Seguro">
+    </div>
+
+    <div class="designer-credit">
+        WebDesigner Criador <a href="https://www.pablologomarcas.online" target="_blank">PabloDesigner</a> • www.pablologomarcas.online
+    </div>
+
+    <script>
+        // Interação 3D com o mouse
+        const logoWrapper = document.getElementById('logoWrapper');
+        const scene = document.querySelector('.scene');
+
+        scene.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+            logoWrapper.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        scene.addEventListener('mouseleave', () => {
+            logoWrapper.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+
+        // Partículas animadas
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 6 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 12}s`;
+            particle.style.animationDuration = `${8 + Math.random() * 10}s`;
+
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+
+</body>
+
+</html>
