@@ -258,7 +258,7 @@ function addMsg(t,u=false){
 }
 
 function showSugg(){
-    const s=["Quero X-Costela","Jantinha","Combo Família","Twix","Ver carrinho","Finalizar"];
+    const s=["Quero X-Costela","Ver Cardapio","Combo Família","Twix","Ver carrinho","Finalizar"];
     const d=document.createElement('div'); d.className='quick-suggestions';
     s.forEach(txt=>{
         const b=document.createElement('button');
