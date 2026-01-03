@@ -18,15 +18,12 @@ const menuData = {
     hamburgueres: {
         title: "🍔 Hambúrgueres",
         items: [
-            { name: "X-COSTELA", price: 30.00, img: "https://i.ibb.co/QjhNdtMh/20251009-134607.jpg", desc: "Costela desfiada + cheddar + bacon" },
-            { name: "X-Tudo com Creme de Milho", price: 30.00, img: "https://i.ibb.co/YFwNVZMd/20251031-205644.jpg" },
+            { name: "X-DÊ-GUSTO", price: 28.00, img: "https://i.ibb.co/NgtBB7Nb/20251004-234747", desc: "Destaque 1ª" },
             { name: "X-Cheddar com Anéis", price: 26.00, img: "https://i.ibb.co/LDYypj6Q/20251031-205800.jpg" },
             { name: "X-Bacon Goiabada", price: 26.00, img: "https://i.ibb.co/4n86G96b/20251031-205913.jpg" },
-            { name: "X-Abacaxi", price: 30.00, img: "https://i.ibb.co/QFLZqn5z/20251029-174738.jpg" },
             { name: "ESPECIAL TILÁPIA", price: 30.00, img: "https://i.ibb.co/7cYcLrD/IMG-20250924-WA0010.jpg" },
             { name: "ARTESANAL GOIABADA", price: 30.00, img: "https://i.ibb.co/4nfgvWGn/IMG-20250924-WA0009.jpg" },
             { name: "ESPECIAL STEAK", price: 30.00, img: "https://i.ibb.co/MxtW5hX2/IMG-20250928-WA0026.jpg" },
-            { name: "X-DÊ-GUSTO", price: 28.00, img: "https://i.ibb.co/NgtBB7Nb/20251004-234747.jpg" },
             { name: "ARTESANAL CLÁSSICO", price: 28.00, img: "https://i.ibb.co/0pRMs7CM/20251004-235952.jpg" },
             { name: "ARTESANAL DORITOS", price: 30.00, img: "https://i.ibb.co/ZpvH013t/20251004-235135.jpg" },
             { name: "ARTESANAL DUPLO", price: 35.00, img: "https://i.ibb.co/JR70qRfW/20251004-235417.jpg" },
