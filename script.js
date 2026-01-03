@@ -40,12 +40,16 @@ const menuData = {
     combo: {
         title: "🔥 Combos",
         items: [
-            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 2L" }
+            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 2L" },
+            { name: "COMBO ", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unn22132amed.png", desc: "2 " },
+            { name: "COMBO ", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnam21321ed.png", desc: "2 " }
         ]
     },
     batatas: {
         title: "🍟 Batatas",
         items: [
+            { name: "BATATA GIGANTE", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png" },
+            { name: "BATATA GIGANTE", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png" },
             { name: "BATATA GIGANTE", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png" }
         ]
     },
