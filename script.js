@@ -41,8 +41,17 @@ const menuData = {
         title: "🔥 Combos",
         items: [
             { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 2L" },
-            { name: "COMBO ", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unn22132amed.png", desc: "2 " },
-            { name: "COMBO ", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnam21321ed.png", desc: "2 " }
+            { name: "Combo: 2 X-Saladas", price: 32.00, img: "https://iili.io/fjgXGZN.jpg", desc: "2 X-Saladas" },
+            { name: "Combo: Artesanal Duplo + Batata + Refri", price: 38.00, img: "https://iili.io/fjgjX7s.jpg", desc: "Artesanal Duplo + Batata + Refr" },
+            { name: "Combo: 2 X-Duplo", price: 46.00, img: "https://iili.io/fjgwEwx.jpg", desc: "2 X-Duplo" },
+            { name: "Combo: 2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas", price: 70.00, img: "https://iili.io/fjgNMRs.jpg", desc: "2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas" },
+            { name: "Combo: X-Salada + Batata Frita", price: 20.00, img: "https://iili.io/fjgOiTG.jpg", desc: "X-Salada + Batata Frita" },
+            { name: "Combo: X-Tudo + Batata Frita", price: 24.00, img: "https://iili.io/fjgk7xj.jpg", desc: "X-Tudo + Batata Frita" },
+            { name: "Combo na Caixa: 2 X-tudo + Anel de Cebola + Batata Frita com Cheddar e Bacon + Steak de Frango + Molhos", price: 70.00, img: "https://iili.io/fjg8NSI.jpg", desc: "2 X-tudo + Anel de Cebola + Batata Frita com Cheddar e Bacon + Steak de Frango + Molhos" },
+            { name: "Combo Familia: 3 X-Tudos", price: 60.00, img: "https://iili.io/fjgSYWG.jpg", desc: "Combo Familia: 3 X-Tudos" },
+            { name: "Super Combo: X-Tudo + Batata + Refri", price: 25.00, img: "https://iili.io/fjgU7kP.jpg", desc: "X-Tudo + Batata + Refri" },
+            { name: "Combo: 3 X-Tudos + 3 Refri 200ml", price: 65.00, img: "https://iili.io/fjgrasa.jpg", desc: "3 X-Tudos + 3 Refri 200ml" },
+            { name: "Combo: Artesanal + Batata Frita e Crocantes", price: 20.00, img: "https://iili.io/fjgg5Pf.jpg", desc: "Artesanal + Batata Frita e Crocantes" }
         ]
     },
     batatas: {
