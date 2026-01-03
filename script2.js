@@ -32,7 +32,9 @@ const menuData = {
     batatas: {
         title: "🍟 Batatas",
         items: [
-            { name: "BATATA GIGANTE", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png" }
+            { name: "BATATA P", price: 10.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-442.png" }
+            { name: "BATATA M", price: 15.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-412.png" }
+            { name: "BATATA G", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-24141.png" }
         ]
     },
     hotdogs: {
@@ -88,4 +90,5 @@ function getFullMenu() {
         menuText += '<br>';
     });
     return menuText;
+
 }
