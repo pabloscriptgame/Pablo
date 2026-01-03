@@ -1,4 +1,5 @@
-// script.js - Lógica principal do site
+// script.js - DêGusto Lanchonete Premium 2026 - COMPLETO com Delivery Grátis > R$50
+// Data: 02/01/2026
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -6,37 +7,151 @@ const pixKey = "10738419605";
 const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png";
 const siteUrl = "www.degusto.store";
 
+// CONFIGURAÇÃO DELIVERY GRÁTIS
+const FREE_DELIVERY_MIN = 50.00;
+const DELIVERY_FEE = 5.00;
+
 // =============================================
-// Funções do carrinho
+// MENU DATA (adicione seus itens aqui)
 // =============================================
+const menuData = {
+    hamburgueres: {
+        title: "🍔 Hambúrgueres",
+        items: [
+            { name: "X-COSTELA", price: 30.00, img: "https://i.ibb.co/QjhNdtMh/20251009-134607.jpg", desc: "Costela desfiada + cheddar + bacon" },
+            { name: "X-Tudo com Creme de Milho", price: 30.00, img: "https://i.ibb.co/YFwNVZMd/20251031-205644.jpg" },
+            { name: "X-Cheddar com Anéis", price: 26.00, img: "https://i.ibb.co/LDYypj6Q/20251031-205800.jpg" },
+            { name: "X-Bacon Goiabada", price: 26.00, img: "https://i.ibb.co/4n86G96b/20251031-205913.jpg" },
+            { name: "X-Abacaxi", price: 30.00, img: "https://i.ibb.co/QFLZqn5z/20251029-174738.jpg" },
+            { name: "ESPECIAL TILÁPIA", price: 30.00, img: "https://i.ibb.co/7cYcLrD/IMG-20250924-WA0010.jpg" },
+            { name: "ARTESANAL GOIABADA", price: 30.00, img: "https://i.ibb.co/4nfgvWGn/IMG-20250924-WA0009.jpg" },
+            { name: "ESPECIAL STEAK", price: 30.00, img: "https://i.ibb.co/MxtW5hX2/IMG-20250928-WA0026.jpg" },
+            { name: "X-DÊ-GUSTO", price: 28.00, img: "https://i.ibb.co/NgtBB7Nb/20251004-234747.jpg" },
+            { name: "ARTESANAL CLÁSSICO", price: 28.00, img: "https://i.ibb.co/0pRMs7CM/20251004-235952.jpg" },
+            { name: "ARTESANAL DORITOS", price: 30.00, img: "https://i.ibb.co/ZpvH013t/20251004-235135.jpg" },
+            { name: "ARTESANAL DUPLO", price: 35.00, img: "https://i.ibb.co/JR70qRfW/20251004-235417.jpg" },
+            { name: "X-BOLO GIGANTE", price: 42.00, img: "https://i.ibb.co/23rd6PGY/20251004-235801.jpg" },
+            { name: "X-TUDO", price: 24.00, img: "https://i.ibb.co/Z1d5Q46K/x-tudo.png" },
+            { name: "X-BACON", price: 22.00, img: "https://i.ibb.co/Pv8DLymw/IMG-20251004-WA0057.jpg" },
+            { name: "X-CALABRESA", price: 22.00, img: "https://i.ibb.co/4wFq4fLJ/IMG-20251004-WA0058.jpg" },
+            { name: "X-CHEDDAR", price: 22.00, img: "https://i.ibb.co/TMWKbdX5/IMG-20251004-WA0056.jpg" }
+        ]
+    },
+    combo: {
+        title: "🔥 Combos",
+        items: [
+            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 2L" }
+        ]
+    },
+    batatas: {
+        title: "🍟 Batatas",
+        items: [
+            { name: "BATATA GIGANTE", price: 30.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png" }
+        ]
+    },
+    hotdogs: {
+        title: "🌭 Hot Dogs",
+        items: [
+            { name: "Hot Dog 1", price: 10.00, img: "https://i.ibb.co/wFt4J1r5/dog1.png" },
+            { name: "Hot Dog 2", price: 14.00, img: "https://i.ibb.co/hJph2sSL/dog-2-2.png" },
+            { name: "Hot Dog Especial", price: 18.00, img: "https://i.ibb.co/Z6TSQVKx/dog-especial-degusto.png" }
+        ]
+    },
+    chocolates: {
+        title: "🍫 Chocolates",
+        items: [
+            { name: "Sonho de Valsa", price: 3.00, img: "https://i.ibb.co/8D5KSnxs/Sonho-de-Valsa.jpg" },
+            { name: "Ouro Branco", price: 3.00, img: "https://i.ibb.co/2GPfKvj/Ouro-branco.jpg" },
+            { name: "Caribe", price: 4.00, img: "https://i.ibb.co/XfYhYL0w/Caribe.jpg" },
+            { name: "Trento Banoffee", price: 4.00, img: "https://i.ibb.co/VW8TpqpB/Trento-Massimo-Banofrree.jpg" },
+            { name: "Hershey's Tubes", price: 4.00, img: "https://i.ibb.co/RkYmhv92/Hershey-s-Choco-Tubes.jpg" },
+            { name: "Twix", price: 6.00, img: "https://i.ibb.co/5CX2tKs/Twix.jpg" },
+            { name: "5Star", price: 6.00, img: "https://i.ibb.co/2Y3kXMzK/5Star.jpg" },
+            { name: "Charge", price: 6.00, img: "https://i.ibb.co/zhmbQVSP/Charge.jpg" },
+            { name: "Diamante Negro", price: 6.00, img: "https://i.ibb.co/sppd4VXm/Lacta-Diamante-Negro.jpg" }
+        ]
+    },
+    bebidas: {
+        title: "🥤 Bebidas",
+        items: [
+            { name: "COCA-COLA 2L", price: 14.00 },
+            { name: "COCA-COLA 1L", price: 10.00 },
+            { name: "COCA-COLA LATA", price: 6.00 },
+            { name: "FANTA 2L", price: 12.00 },
+            { name: "FANTA 1L", price: 10.00 },
+            { name: "KUAT 2L", price: 10.00 },
+            { name: "MINEIRO 2L", price: 12.00 },
+            { name: "PITHULÁ", price: 3.00 }
+        ]
+    },
+    jantinha: {
+        title: "🍲 Jantinhas",
+        items: [
+            { name: "Jantinha", price: 12.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png", desc: "Marmita 500g completa" }
+        ]
+    }
+};
+
+// =============================================
+// FUNÇÕES DO CARRINHO COM DELIVERY
+// =============================================
+function getCartSubtotal() {
+    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+}
+
+function getDeliveryFee() {
+    const subtotal = getCartSubtotal();
+    return subtotal >= FREE_DELIVERY_MIN ? 0 : DELIVERY_FEE;
+}
+
+function getCartTotal() {
+    return getCartSubtotal() + getDeliveryFee();
+}
+
 function saveCart() { 
     localStorage.setItem('degusto_cart', JSON.stringify(cart)); 
     updateCartCount(); 
-    renderCart(); 
+    renderCart();
+
+    // Notificação entrega grátis
+    const subtotal = getCartSubtotal();
+    const wasNotified = localStorage.getItem('degusto_free_delivery_notified') === 'true';
+    if (subtotal >= FREE_DELIVERY_MIN && !wasNotified) {
+        showNotification('🎉 ENTREGA GRÁTIS! Você atingiu R$50,00!');
+        localStorage.setItem('degusto_free_delivery_notified', 'true');
+    } else if (subtotal < FREE_DELIVERY_MIN && wasNotified) {
+        localStorage.removeItem('degusto_free_delivery_notified');
+    }
 }
 
 function updateCartCount() { 
-    document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.quantity,0) || 0; 
+    const count = cart.reduce((s,i)=>s+i.quantity,0) || 0;
+    document.getElementById('cartCount').textContent = count;
 }
 
 function renderCart() {
     const el = document.getElementById('cartItems');
     if (cart.length === 0) {
-        el.innerHTML = '<p class="text-center text-muted fs-4 my-5">Seu carrinho está vazio 😔</p>';
+        el.innerHTML = '<p class="text-center text-muted fs-4 my-5">Seu carrinho está vazio 😔<br><small>Adicione itens no cardápio!</small></p>';
         return;
     }
-    let html = '', total = 0;
+    
+    let html = '';
+    let subtotal = 0;
+
     cart.forEach((item, i) => {
         const found = findItemByName(item.name);
-        const img = found?.img ? `<img src="${found.img}" class="cart-item-img" alt="${item.name}">` : '<div class="bg-secondary cart-item-img d-flex align-items-center justify-content-center text-white fs-4">🍔</div>';
-        const sub = item.price * item.quantity; 
-        total += sub;
+        const img = found?.img ? `<img src="${found.img}" class="cart-item-img" alt="${item.name}">` : 
+            '<div class="bg-secondary cart-item-img d-flex align-items-center justify-content-center text-white fs-4">🍔</div>';
+        const subItem = item.price * item.quantity; 
+        subtotal += subItem;
+        
         html += `<div class="cart-item">
             ${img}
             <div class="cart-item-info">
                 <strong>${item.quantity}× ${item.name}</strong><br>
                 <small class="text-success">R$ ${item.price.toFixed(2)} cada</small>
-                <div class="text-danger fw-bold mt-1">Subtotal: R$ ${sub.toFixed(2)}</div>
+                <div class="text-danger fw-bold mt-1">R$ ${subItem.toFixed(2)}</div>
             </div>
             <div class="cart-item-controls">
                 <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity(${i},-1)">−</button>
@@ -46,7 +161,28 @@ function renderCart() {
             </div>
         </div>`;
     });
-    html += `<div class="text-center mt-4 pt-3 border-top"><h3 class="text-danger fw-bold">Total: R$ ${total.toFixed(2)}</h3></div>`;
+
+    const delivery = getDeliveryFee();
+    const total = subtotal + delivery;
+
+    html += `
+    <div class="mt-4 pt-3 border-top">
+        <div class="d-flex justify-content-between mb-2 fs-5"><strong>Subtotal:</strong> <span>R$ ${subtotal.toFixed(2)}</span></div>
+        <div class="d-flex justify-content-between mb-3 p-2 bg-light rounded ${delivery === 0 ? 'border-success border-2 bg-success bg-opacity-10' : 'border-warning border-2 bg-warning bg-opacity-10'}">
+            <strong class="fs-5">🚚 Entrega:</strong> 
+            <span class="fs-5 fw-bold ${delivery === 0 ? 'text-success' : 'text-warning'}">
+                ${delivery === 0 ? 'GRÁTIS 🎉' : 'R$ ' + delivery.toFixed(2)}
+            </span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-danger fw-bold mb-0">TOTAL:</h3>
+            <h2 class="text-danger fw-bold mb-0">R$ ${total.toFixed(2)}</h2>
+        </div>
+        ${delivery > 0 ? `<div class="text-center mt-3 p-3 bg-info bg-opacity-10 border rounded">
+            <small class="text-info fw-bold">🚀 Faltam apenas R$ ${(FREE_DELIVERY_MIN - subtotal).toFixed(2)} para ENTREGA GRÁTIS!</small>
+        </div>` : ''}
+    </div>`;
+
     el.innerHTML = html;
 }
 
@@ -63,79 +199,95 @@ function findItemByName(name) {
 
 function changeQuantity(i,d){
     cart[i].quantity += d;
-    if(cart[i].quantity<=0) cart.splice(i,1);
+    if(cart[i].quantity <= 0) cart.splice(i,1);
     saveCart();
 }
 
 function removeFromCart(i){ cart.splice(i,1); saveCart(); }
-function clearCart(){ if(confirm("Limpar carrinho?")){ cart=[]; saveCart(); } }
+function clearCart(){ if(confirm("Limpar todo o carrinho?")){ cart=[]; saveCart(); } }
+
 function addToCart(n,p,q=1){ 
-    const ex=cart.find(i=>i.name===n); 
-    if(ex) ex.quantity+=q; 
-    else cart.push({name:n,price:parseFloat(p),quantity:q}); 
+    const ex = cart.find(i=>i.name===n); 
+    if(ex) ex.quantity += q; 
+    else cart.push({name:n, price:parseFloat(p), quantity:q}); 
     saveCart(); 
-    showNotification(`Adicionado: ${q}× ${n}`); 
+    showNotification(`✅ ${q}× ${n} adicionado ao carrinho!`);
 }
 
 // =============================================
-// Modais e notificações
+// MODAIS E NOTIFICAÇÕES
 // =============================================
 function openModal(id){ 
-    document.getElementById(id).style.display='flex'; 
-    if(id==='cartModal') renderCart(); 
+    document.getElementById(id).style.display = 'flex'; 
+    if(id === 'cartModal') renderCart(); 
 }
 
-function closeModal(id){ document.getElementById(id).style.display='none'; }
+function closeModal(id){ document.getElementById(id).style.display = 'none'; }
 
 function openCheckout(){
-    if(cart.length===0) return showNotification("Carrinho vazio!");
+    if(cart.length === 0) return showNotification("Carrinho vazio!");
     closeModal('cartModal');
-    const t=cart.reduce((s,i)=>s+i.price*i.quantity,0);
-    document.getElementById('checkout-total').textContent=`Total: R$ ${t.toFixed(2)}`;
+    const total = getCartTotal();
+    const delivery = getDeliveryFee();
+    let text = `TOTAL: R$ ${total.toFixed(2)}`;
+    if (delivery === 0) text += " (ENTREGA GRÁTIS!)";
+    document.getElementById('checkout-total').textContent = text;
     openModal('checkout-modal');
 }
 
-function showNotification(m){
-    const n=document.getElementById('notification');
-    n.textContent=m;
-    n.style.display='block';
-    setTimeout(()=>n.style.display='none',3000);
+function showNotification(msg){
+    const n = document.getElementById('notification');
+    n.textContent = msg;
+    n.style.display = 'block';
+    setTimeout(() => n.style.display = 'none', 4000);
 }
 
 // =============================================
-// Renderização das abas do cardápio
+// RENDERIZAÇÃO DO CARDÁPIO
 // =============================================
 function renderTabs(){
-    const btns=document.getElementById('tab-buttons'), panels=document.getElementById('tab-panels');
-    Object.keys(menuData).forEach((k,idx)=>{
-        const btn=document.createElement('button');
-        btn.className=`tab-btn btn btn-lg btn-outline-danger ${idx===0?'active':''}`;
-        btn.dataset.tab=k;
-        btn.textContent=menuData[k].title.replace(/^[^\s]+ /,'');
+    const btns = document.getElementById('tab-buttons');
+    const panels = document.getElementById('tab-panels');
+    
+    Object.keys(menuData).forEach((k, idx) => {
+        // Botão da aba
+        const btn = document.createElement('button');
+        btn.className = `tab-btn btn btn-lg btn-outline-danger px-4 py-2 ${idx === 0 ? 'active' : ''}`;
+        btn.dataset.tab = k;
+        btn.textContent = menuData[k].title.replace(/^[^\s]+ /, '');
         btns.appendChild(btn);
 
-        const panel=document.createElement('div');
-        panel.id=k;
-        panel.className=`tab-panel ${idx===0?'active':''}`;
-        panel.innerHTML=`<h3 class="text-center mb-4">${menuData[k].title}</h3><div class="menu-grid"></div>`;
-        const grid=panel.querySelector('.menu-grid');
+        // Painel da aba
+        const panel = document.createElement('div');
+        panel.id = k;
+        panel.className = `tab-panel ${idx === 0 ? 'active' : ''}`;
+        panel.innerHTML = `<h3 class="text-center mb-5 fs-2 fw-bold text-danger">${menuData[k].title}</h3><div class="menu-grid"></div>`;
+        const grid = panel.querySelector('.menu-grid');
 
-        menuData[k].items.forEach(it=>{
-            const div=document.createElement('div');
-            div.className='item';
-            div.dataset.name=it.name;
-            div.dataset.price=it.price;
+        menuData[k].items.forEach(it => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.dataset.name = it.name;
+            div.dataset.price = it.price;
 
-            if(it.img){
-                const img=document.createElement('img');
-                img.src=it.img;
-                img.alt=it.name;
-                img.loading='lazy';
-                img.onclick=()=>{ document.getElementById('fullImage').src=it.img; openModal('imageModal'); };
+            if(it.img) {
+                const img = document.createElement('img');
+                img.src = it.img;
+                img.alt = it.name;
+                img.loading = 'lazy';
+                img.onclick = () => { 
+                    document.getElementById('fullImage').src = it.img; 
+                    openModal('imageModal'); 
+                };
                 div.appendChild(img);
             }
 
-            div.innerHTML+=`<h3>${it.name}</h3>${it.desc?`<p>${it.desc}</p>`:''}<span>R$ ${it.price.toFixed(2)}</span><button class="add-to-cart btn btn-danger w-100 mt-2">Adicionar</button>`;
+            div.innerHTML += `
+                <h3 class="mt-2">${it.name}</h3>
+                ${it.desc ? `<p class="text-muted">${it.desc}</p>` : ''}
+                <span class="fs-2 fw-bold text-danger">R$ ${it.price.toFixed(2)}</span>
+                <button class="add-to-cart btn btn-danger w-100 mt-3 py-2 fs-5 fw-bold shadow">➕ Adicionar</button>
+            `;
             grid.appendChild(div);
         });
 
@@ -144,211 +296,285 @@ function renderTabs(){
 }
 
 // =============================================
-// Eventos gerais
+// EVENTOS GERAIS
 // =============================================
-document.addEventListener('click', e=>{
-    if(e.target.closest('.add-to-cart')){
-        const it=e.target.closest('.item');
+document.addEventListener('click', e => {
+    if(e.target.closest('.add-to-cart')) {
+        const it = e.target.closest('.item');
         addToCart(it.dataset.name, it.dataset.price);
     }
-    else if(e.target.closest('.tab-btn')){
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    else if(e.target.closest('.tab-btn')) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
         e.target.closest('.tab-btn').classList.add('active');
-        const p=document.getElementById(e.target.closest('.tab-btn').dataset.tab);
+        const p = document.getElementById(e.target.closest('.tab-btn').dataset.tab);
         if(p) p.classList.add('active');
     }
 });
 
-document.getElementById('cart-button').onclick=()=>openModal('cartModal');
+// Botões flutuantes
+document.getElementById('cart-button').onclick = () => openModal('cartModal');
 
-document.getElementById('share-button').onclick=()=>{
+document.getElementById('share-button').onclick = () => {
     if(navigator.share) {
-        navigator.share({title:'DêGusto Lanchonete', text:'Melhores lanches! Confira em ' + siteUrl + '\nLogo: ' + logoUrl, url:location.href});
+        navigator.share({title: 'DêGusto Lanchonete', text: 'Melhores lanches de Monte Carmelo! Delivery 19h+', url: location.href});
     } else {
-        navigator.clipboard.writeText(location.href + ' - Logo: ' + logoUrl);
-        showNotification('Link e logo copiados!');
+        navigator.clipboard.writeText(`${siteUrl} - WhatsApp: (34)99953-7698`);
+        showNotification('🔗 Link copiado!');
     }
 };
 
-document.getElementById('help-button').onclick=()=>alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n\nComo comprar:\n1. Escolha o item no cardápio.\n2. Clique em "Adicionar" para colocar no carrinho.\n3. Abra o carrinho e finalize no WhatsApp.\n\nDúvidas? Use o chat ao lado!');
+document.getElementById('help-button').onclick = () => {
+    alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n💰 Delivery GRÁTIS acima de R$50!\n\n👉 1. Escolha no cardápio\n👉 2. Adicione no carrinho\n👉 3. Finalize no WhatsApp');
+};
 
-document.getElementById('copy-pix-cart').onclick=()=>{ navigator.clipboard.writeText(pixKey); showNotification('Chave PIX copiada!'); };
+document.getElementById('copy-pix-cart').onclick = () => {
+    navigator.clipboard.writeText(pixKey);
+    showNotification('💳 Chave PIX copiada: 10738419605');
+};
 
-document.getElementById('support-button').onclick=()=>document.getElementById('chat-container').style.display='flex';
+document.getElementById('support-button').onclick = () => {
+    document.getElementById('chat-container').style.display = 'flex';
+};
 
-document.getElementById('top-button').onclick=()=>window.scrollTo({top: 0, behavior: 'smooth'});
+document.getElementById('top-button').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
 // Busca
-let st;
-document.getElementById('searchInput').oninput=function(){
-    clearTimeout(st);
-    st=setTimeout(()=>{
-        const term=this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-        const has=term.length>0;
-        document.querySelectorAll('.tab-panel').forEach(p=>p.style.display=has?'block':'none');
-        if(!has) document.querySelector('.tab-panel.active').style.display='block';
-        document.querySelectorAll('.item').forEach(it=>{
-            const txt=it.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-            it.style.display=txt.includes(term)?'block':'none';
+let searchTimeout;
+document.getElementById('searchInput').oninput = function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        const term = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const hasTerm = term.length > 0;
+        
+        document.querySelectorAll('.tab-panel').forEach(p => p.style.display = hasTerm ? 'block' : 'none');
+        if(!hasTerm) document.querySelector('.tab-panel.active').style.display = 'block';
+        
+        document.querySelectorAll('.item').forEach(it => {
+            const txt = it.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            it.style.display = txt.includes(term) ? 'block' : 'none';
         });
-    },300);
+    }, 300);
 };
 
-// Finalizar pedido (WhatsApp)
-document.getElementById('checkout-form').onsubmit=function(e){
+// =============================================
+// CHECKOUT WHATSAPP COM DELIVERY
+// =============================================
+document.getElementById('checkout-form').onsubmit = function(e) {
     e.preventDefault();
-    if(cart.length===0) return showNotification('Carrinho vazio');
-    
-    const nome=document.getElementById('nome-cliente').value.trim(),
-          rua=document.getElementById('rua').value.trim(),
-          num=document.getElementById('numero').value.trim(),
-          bairro=document.getElementById('bairro').value.trim(),
-          ref=document.getElementById('referencia').value.trim(),
-          pag=document.querySelector('input[name="pagamento"]:checked')?.value,
-          troco=document.getElementById('troco').value,
-          obs=document.getElementById('observacoes').value.trim();
+    if(cart.length === 0) return showNotification('Carrinho vazio!');
 
-    if(!nome||!rua||!num||!bairro||!pag) return showNotification('Preencha todos os campos!');
+    const nome = document.getElementById('nome-cliente').value.trim();
+    const rua = document.getElementById('rua').value.trim();
+    const num = document.getElementById('numero').value.trim();
+    const bairro = document.getElementById('bairro').value.trim();
+    const ref = document.getElementById('referencia').value.trim();
+    const pag = document.querySelector('input[name="pagamento"]:checked')?.value;
+    const troco = document.getElementById('troco').value;
+    const obs = document.getElementById('observacoes').value.trim();
 
-    let msg=`*PEDIDO DÊGUSTO*%0A%0A*Nome:* ${nome}%0A*Endereço:* ${rua}, ${num} - ${bairro}${ref? ' ('+ref+')' : ''}%0A%0A*Itens:*%0A`,
-        total=0;
+    if(!nome || !rua || !num || !bairro || !pag) {
+        return showNotification('❌ Preencha todos os campos obrigatórios!');
+    }
+
+    const subtotal = getCartSubtotal();
+    const delivery = getDeliveryFee();
+    const total = subtotal + delivery;
+
+    let msg = `*🍔 PEDIDO DÊGUSTO - MONTE CARMELO*%0A%0A`;
+    msg += `*👤 Cliente:* ${nome}%0A`;
+    msg += `*📍 Endereço:* ${rua}, ${num} - ${bairro}${ref ? ` (${ref})` : ''}%0A`;
+    msg += `*⏰ Horário:* Delivery após 19h%0A%0A`;
+    msg += `*🛒 ITENS DO PEDIDO:*%0A`;
     
-    cart.forEach(it=>{ 
-        const sub=it.price*it.quantity; 
-        total+=sub; 
-        msg+=`${it.quantity}× ${it.name} - R$ ${sub.toFixed(2)}%0A`; 
+    cart.forEach(it => { 
+        const sub = it.price * it.quantity; 
+        msg += `• ${it.quantity}x ${it.name} .... R$ ${sub.toFixed(2)}%0A`; 
     });
     
-    msg+=`%0A*Total: R$ ${total.toFixed(2)}*%0A*Pagamento:* ${pag}${pag==='Dinheiro'&&troco?` (troco para R$ ${troco})`:''}${obs?`%0A*Obs:* ${obs}`:''}`;
+    msg += `%0A💰 *RESUMO*%0A`;
+    msg += `*Subtotal:* R$ ${subtotal.toFixed(2)}%0A`;
+    msg += `*Entrega:* ${delivery === 0 ? 'GRÁTIS 🎉' : 'R$ ' + delivery.toFixed(2)}%0A`;
+    msg += `*TOTAL:* R$ ${total.toFixed(2)}%0A%0A`;
+    msg += `*💳 Pagamento:* ${pag}`;
+    if(pag === 'Dinheiro' && troco) msg += ` (troco para R$ ${troco})`;
+    if(obs) msg += `%0A*📝 Observações:* ${obs}`;
     
-    window.open(`https://wa.me/${phoneNumber}?text=${msg}`,'_blank');
-    cart=[]; saveCart();
+    msg += `%0A%0A👨‍💻 *PIX 10738419605* (mais rápido!)`;
+
+    window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
+    cart = [];
+    saveCart();
     closeModal('checkout-modal');
-    showNotification('Pedido enviado com sucesso!');
+    showNotification('✅ Pedido enviado pro WhatsApp!');
 };
 
-document.querySelectorAll('input[name="pagamento"]').forEach(r=>{
-    r.onchange=()=>{ document.getElementById('troco-div').style.display=r.value==='Dinheiro'?'block':'none'; };
+// Pagamento troco
+document.querySelectorAll('input[name="pagamento"]').forEach(r => {
+    r.onchange = () => {
+        document.getElementById('troco-div').style.display = r.value === 'Dinheiro' ? 'block' : 'none';
+    };
 });
 
-// Tema claro/escuro
-document.getElementById('theme-button').onclick=()=>{
+// =============================================
+// TEMA DARK/LIGHT
+// =============================================
+document.getElementById('theme-button').onclick = () => {
     document.body.classList.toggle('dark-mode');
-    const dark=document.body.classList.contains('dark-mode');
-    const ic=document.querySelector('#theme-button i');
-    ic.classList.toggle('bi-moon-stars-fill',!dark);
-    ic.classList.toggle('bi-sun-fill',dark);
-    localStorage.setItem('theme',dark?'dark':'light');
+    const isDark = document.body.classList.contains('dark-mode');
+    const icon = document.querySelector('#theme-button i');
+    icon.classList.toggle('bi-moon-stars-fill', !isDark);
+    icon.classList.toggle('bi-sun-fill', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
-// Chat IA simples
-const chatCont=document.getElementById('chat-container'),
-      chatBody=document.getElementById('chat-body'),
-      chatInp=document.getElementById('chat-input'),
-      sendBtn=document.getElementById('send-chat'),
-      closeChat=document.getElementById('close-chat');
+// =============================================
+// CHAT IA
+// =============================================
+const chatCont = document.getElementById('chat-container');
+const chatBody = document.getElementById('chat-body');
+const chatInp = document.getElementById('chat-input');
+const sendBtn = document.getElementById('send-chat');
+const closeChat = document.getElementById('close-chat');
 
-function addMsg(t,u=false){ 
-    const m=document.createElement('div'); 
-    m.className='message '+(u?'user':'bot'); 
-    m.innerHTML=t; 
+function addMsg(text, isUser = false) { 
+    const m = document.createElement('div'); 
+    m.className = `message ${isUser ? 'user' : 'bot'}`; 
+    m.innerHTML = text; 
     chatBody.appendChild(m); 
-    chatBody.scrollTop=chatBody.scrollHeight; 
+    chatBody.scrollTop = chatBody.scrollHeight; 
 }
 
-function showSugg(){
-    const s=["Quero X-Costela","Ver Cardapio","Combo Família","Twix","Ver carrinho","Finalizar"];
-    const d=document.createElement('div'); d.className='quick-suggestions';
-    s.forEach(txt=>{
-        const b=document.createElement('button');
-        b.className='quick-btn';
-        b.textContent=txt;
-        b.onclick=()=>{ chatInp.value=txt; sendMsg(); };
-        d.appendChild(b);
+function showSugg() {
+    const suggestions = ["X-Costela", "Jantinha", "Coca-Cola", "Ver carrinho", "Delivery grátis", "Finalizar"];
+    const div = document.createElement('div');
+    div.className = 'quick-suggestions mt-3';
+    suggestions.forEach(txt => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-btn me-2 mb-2';
+        btn.textContent = txt;
+        btn.onclick = () => { chatInp.value = txt; sendMsg(); };
+        div.appendChild(btn);
     });
-    chatBody.appendChild(d);
+    chatBody.appendChild(div);
 }
 
-function botResp(m){
-    const l=m.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    let q=1;
-    const qm=l.match(/(\d+)/);
-    if(qm) q=parseInt(qm[1]);
+function botResp(msg) {
+    const lowerMsg = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let quantity = 1;
+    const qMatch = lowerMsg.match(/(\d+)/);
+    if (qMatch) quantity = parseInt(qMatch[1]);
 
-    if(l.match(/oi|ola|bom dia/)) return "Olá! 😄 Bem-vindo ao DêGusto! Qual lanche hoje?";
-    if(l.includes('horario')) return "🕖 Delivery a partir das 19h todos os dias!";
-    if(l.includes('cardapio') || l.includes('menu')) return `Aqui está o cardápio completo:<br>${getFullMenu()} O que deseja adicionar?`;
-
-    let found=null;
-    for(const c in menuData){
-        menuData[c].items.forEach(i=>{
-            const normItem=i.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-            if(l.includes(normItem)) found=i;
-        });
+    // Saudações
+    if(lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite/)) {
+        return "👋 Olá! Bem-vindo ao *DêGusto Lanchonete*! 😋<br>Delivery a partir das 19h em Monte Carmelo!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>O que deseja hoje?";
     }
 
-    if(found){
-        if(l.includes('quanto')||l.includes('preco')) return `${found.name} custa R$ ${found.price.toFixed(2)}! Quer adicionar?`;
-        addToCart(found.name,found.price,q);
-        return `${q>1?q+'× ':''}${found.name} adicionado${q>1?'s':''}!`;
+    if(lowerMsg.includes('horario') || lowerMsg.includes('horário')) {
+        return "🕖 *Delivery a partir das 19h* todos os dias!<br>WhatsApp: (34) 99953-7698";
     }
 
-    if(l.includes('carrinho')){ openModal('cartModal'); return "🛒 Abri seu carrinho!"; }
-    if(l.includes('finalizar')){ openCheckout(); return "✅ Indo para finalização!"; }
+    if(lowerMsg.includes('delivery') || lowerMsg.includes('entrega')) {
+        return `🚚 *Delivery GRÁTIS acima de R$50!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
+    }
 
-    return "Me diga o nome do lanche que eu te ajudo 😊";
-}
+    if(lowerMsg.includes('cardapio') || lowerMsg.includes('cardápio') || lowerMsg.includes('menu')) {
+        return `🍔 Veja o cardápio completo no site ou peça:<br>• X-Costela (R$18)<br>• Jantinha 500g (R$12)<br>• Coca 2L (R$8)<br>• Twix (R$6)<br><br>O que quer adicionar?`;
+    }
 
-function sendMsg(){
-    const t=chatInp.value.trim();
-    if(!t) return;
-    addMsg(t,true);
-    chatInp.value='';
-    setTimeout(()=>{ addMsg(botResp(t)); showSugg(); },800);
-}
-
-sendBtn.onclick=sendMsg;
-chatInp.addEventListener('keypress',e=>{if(e.key==='Enter') sendMsg();});
-closeChat.onclick=()=>chatCont.style.display='none';
-
-// Rádio
-const radio=document.getElementById('radioPlayer'),
-      playBtn=document.getElementById('playPauseBtn'),
-      muteBtn=document.getElementById('muteBtn');
-let playing=false;
-
-if(radio){
-    radio.src="https://stream.zeno.fm/si5xey7akartv.mp3";
-    playBtn.onclick=()=>{
-        if(playing){
-            radio.pause();
-            playBtn.innerHTML='<i class="bi bi-play-fill"></i> Play';
-        } else {
-            radio.play().catch(()=>showNotification("Erro na rádio"));
-            playBtn.innerHTML='<i class="bi bi-pause-fill"></i> Pause';
+    // Busca itens
+    let foundItem = null;
+    for(const cat in menuData) {
+        for(const item of menuData[cat].items) {
+            const normItem = item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if(lowerMsg.includes(normItem)) {
+                foundItem = item;
+                break;
+            }
         }
-        playing=!playing;
+        if(foundItem) break;
+    }
+
+    if(foundItem) {
+        if(lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco')) {
+            return `${foundItem.name}: *R$ ${foundItem.price.toFixed(2)}*<br>Quer adicionar ao carrinho?`;
+        }
+        addToCart(foundItem.name, foundItem.price, quantity);
+        return `✅ ${quantity > 1 ? quantity + '× ' : ''}${foundItem.name} adicionado${quantity > 1 ? 's' : ''} ao carrinho! 🎉`;
+    }
+
+    if(lowerMsg.includes('carrinho')) {
+        openModal('cartModal');
+        return "🛒 Carrinho aberto! Veja seu pedido.";
+    }
+
+    if(lowerMsg.includes('finalizar') || lowerMsg.includes('pedido')) {
+        openCheckout();
+        return "✅ Checkout aberto! Preencha seus dados.";
+    }
+
+    return "🍔 Digite o nome do lanche (X-Costela, Jantinha, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima R$50* 😊";
+}
+
+function sendMsg() {
+    const text = chatInp.value.trim();
+    if(!text) return;
+    addMsg(text, true);
+    chatInp.value = '';
+    setTimeout(() => {
+        addMsg(botResp(text));
+        if(chatBody.querySelector('.quick-suggestions') === null) showSugg();
+    }, 800);
+}
+
+sendBtn.onclick = sendMsg;
+chatInp.addEventListener('keypress', e => { if(e.key === 'Enter') sendMsg(); });
+closeChat.onclick = () => chatCont.style.display = 'none';
+
+// =============================================
+// RÁDIO
+// =============================================
+const radio = document.getElementById('radioPlayer');
+const playBtn = document.getElementById('playPauseBtn');
+const muteBtn = document.getElementById('muteBtn');
+let isPlaying = false;
+
+if(radio) {
+    playBtn.onclick = () => {
+        if(isPlaying) {
+            radio.pause();
+            playBtn.innerHTML = '<i class="bi bi-play-fill"></i> Play';
+        } else {
+            radio.play().catch(() => showNotification("Erro na rádio"));
+            playBtn.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
+        }
+        isPlaying = !isPlaying;
     };
-    muteBtn.onclick=()=>{
-        radio.muted=!radio.muted;
-        muteBtn.innerHTML=radio.muted?'<i class="bi bi-volume-mute-fill"></i> Som':'<i class="bi bi-volume-up-fill"></i> Som';
+    
+    muteBtn.onclick = () => {
+        radio.muted = !radio.muted;
+        muteBtn.innerHTML = radio.muted ? '<i class="bi bi-volume-mute-fill"></i> Som' : '<i class="bi bi-volume-up-fill"></i> Som';
     };
 }
 
-// Inicialização
-window.onload=()=>{
-    if(localStorage.getItem('theme')==='dark'){
+// =============================================
+// INICIALIZAÇÃO
+// =============================================
+window.onload = () => {
+    // Tema
+    if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelector('#theme-button i').classList.replace('bi-moon-stars-fill','bi-sun-fill');
+        document.querySelector('#theme-button i').classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
     }
     
+    // Carrinho e cardápio
     updateCartCount();
     renderTabs();
 
-    setTimeout(()=>{
-        chatCont.style.display='flex';
-        addMsg("👋 Olá! Estou online para te atender!<br>Peça seu lanche que eu monto o pedido 😄");
+    // Chat de boas-vindas (após 3s)
+    setTimeout(() => {
+        chatCont.style.display = 'flex';
+        addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>Delivery a partir das 19h 📱 (34)99953-7698");
         showSugg();
-    },6000);
+    }, 3000);
 };
