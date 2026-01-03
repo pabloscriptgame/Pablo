@@ -91,7 +91,7 @@ const menuData = {
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
-            { name: "Jantinha", price: 12.00, img: "https://i.ibb.co/0wxzgcT/Design-sem-nome-2.png", desc: "Marmita 500g completa" }
+            { name: "Jantinha", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "Marmita 500g completa" }
         ]
     }
 };
