@@ -97,7 +97,7 @@ const menuData = {
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
-            { name: "Hoje Não Teremos Jantinha", price: , img: "-Amanha teremos a jantinha-", desc: "Marmita 500g completa" }
+            { name: "", price: , img: "", desc: "" }
         ]
     }
 };
