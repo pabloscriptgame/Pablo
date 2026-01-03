@@ -1,5 +1,5 @@
 // script.js - DêGusto Lanchonete Premium 2026 - COMPLETO com Delivery Grátis > R$50
-// Data: 02/01/2026
+// Data: 03/01/2026 - Versão Mobile Otimizada (iOS + Android)
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -151,7 +151,7 @@ function renderCart() {
 
     cart.forEach((item, i) => {
         const found = findItemByName(item.name);
-        const img = found?.img ? `<img src="${found.img}" class="cart-item-img" alt="${item.name}">` : 
+        const img = found?.img ? `<img src="${found.img}" class="cart-item-img" alt="${item.name}" loading="lazy">` : 
             '<div class="bg-secondary cart-item-img d-flex align-items-center justify-content-center text-white fs-4">🍔</div>';
         const subItem = item.price * item.quantity; 
         subtotal += subItem;
@@ -228,11 +228,15 @@ function addToCart(n,p,q=1){
 // MODAIS E NOTIFICAÇÕES
 // =============================================
 function openModal(id){ 
-    document.getElementById(id).style.display = 'flex'; 
+    const modal = document.getElementById(id);
+    modal.style.display = 'flex'; 
+    modal.scrollTop = 0; // melhora experiência mobile
     if(id === 'cartModal') renderCart(); 
 }
 
-function closeModal(id){ document.getElementById(id).style.display = 'none'; }
+function closeModal(id){ 
+    document.getElementById(id).style.display = 'none'; 
+}
 
 function openCheckout(){
     if(cart.length === 0) return showNotification("Carrinho vazio!");
@@ -249,7 +253,11 @@ function showNotification(msg){
     const n = document.getElementById('notification');
     n.textContent = msg;
     n.style.display = 'block';
-    setTimeout(() => n.style.display = 'none', 4000);
+    n.style.opacity = '1';
+    setTimeout(() => {
+        n.style.opacity = '0';
+        setTimeout(() => n.style.display = 'none', 500);
+    }, 4000);
 }
 
 // =============================================
@@ -258,6 +266,8 @@ function showNotification(msg){
 function renderTabs(){
     const btns = document.getElementById('tab-buttons');
     const panels = document.getElementById('tab-panels');
+    btns.innerHTML = '';
+    panels.innerHTML = '';
     
     Object.keys(menuData).forEach((k, idx) => {
         // Botão da aba
@@ -296,7 +306,7 @@ function renderTabs(){
                 <h3 class="mt-2">${it.name}</h3>
                 ${it.desc ? `<p class="text-muted">${it.desc}</p>` : ''}
                 <span class="fs-2 fw-bold text-danger">R$ ${it.price.toFixed(2)}</span>
-                <button class="add-to-cart btn btn-danger w-100 mt-3 py-2 fs-5 fw-bold shadow">➕ Adicionar</button>
+                <button class="add-to-cart btn btn-danger w-100 mt-3 py-3 fs-5 fw-bold shadow">➕ Adicionar</button>
             `;
             grid.appendChild(div);
         });
@@ -316,8 +326,9 @@ document.addEventListener('click', e => {
     else if(e.target.closest('.tab-btn')) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        e.target.closest('.tab-btn').classList.add('active');
-        const p = document.getElementById(e.target.closest('.tab-btn').dataset.tab);
+        const btn = e.target.closest('.tab-btn');
+        btn.classList.add('active');
+        const p = document.getElementById(btn.dataset.tab);
         if(p) p.classList.add('active');
     }
 });
@@ -450,13 +461,14 @@ const closeChat = document.getElementById('close-chat');
 function addMsg(text, isUser = false) { 
     const m = document.createElement('div'); 
     m.className = `message ${isUser ? 'user' : 'bot'}`; 
-    m.innerHTML = text; 
+    m.innerHTML = text.replace(/\n/g, '<br>'); 
     chatBody.appendChild(m); 
     chatBody.scrollTop = chatBody.scrollHeight; 
 }
 
 function showSugg() {
-    const suggestions = ["X-Costela", "Jantinha", "Coca-Cola", "Ver carrinho", "Delivery grátis", "Finalizar"];
+    if (chatBody.querySelector('.quick-suggestions')) return;
+    const suggestions = ["Jantinha", "X-Tudo", "Coca-Cola 2L", "Ver carrinho", "Delivery grátis", "Finalizar pedido"];
     const div = document.createElement('div');
     div.className = 'quick-suggestions mt-3';
     suggestions.forEach(txt => {
@@ -467,6 +479,7 @@ function showSugg() {
         div.appendChild(btn);
     });
     chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
 }
 
 function botResp(msg) {
@@ -475,8 +488,7 @@ function botResp(msg) {
     const qMatch = lowerMsg.match(/(\d+)/);
     if (qMatch) quantity = parseInt(qMatch[1]);
 
-    // Saudações
-    if(lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite/)) {
+    if(lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite|e ai|ei/)) {
         return "👋 Olá! Bem-vindo ao *DêGusto Lanchonete*! 😋<br>Delivery a partir das 19h em Monte Carmelo!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>O que deseja hoje?";
     }
 
@@ -488,11 +500,6 @@ function botResp(msg) {
         return `🚚 *Delivery GRÁTIS acima de R$50!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
     }
 
-    if(lowerMsg.includes('cardapio') || lowerMsg.includes('cardápio') || lowerMsg.includes('menu')) {
-        return `🍔 Veja o cardápio completo no site ou peça:<br>• X-Costela (R$18)<br>• Jantinha 500g (R$12)<br>• Coca 2L (R$8)<br>• Twix (R$6)<br><br>O que quer adicionar?`;
-    }
-
-    // Busca itens
     let foundItem = null;
     for(const cat in menuData) {
         for(const item of menuData[cat].items) {
@@ -506,24 +513,24 @@ function botResp(msg) {
     }
 
     if(foundItem) {
-        if(lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco')) {
+        if(lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco') || lowerMsg.includes('valor')) {
             return `${foundItem.name}: *R$ ${foundItem.price.toFixed(2)}*<br>Quer adicionar ao carrinho?`;
         }
         addToCart(foundItem.name, foundItem.price, quantity);
         return `✅ ${quantity > 1 ? quantity + '× ' : ''}${foundItem.name} adicionado${quantity > 1 ? 's' : ''} ao carrinho! 🎉`;
     }
 
-    if(lowerMsg.includes('carrinho')) {
+    if(lowerMsg.includes('carrinho') || lowerMsg.includes('ver carrinho')) {
         openModal('cartModal');
-        return "🛒 Carrinho aberto! Veja seu pedido.";
+        return "🛒 Abrindo seu carrinho agora!";
     }
 
-    if(lowerMsg.includes('finalizar') || lowerMsg.includes('pedido')) {
+    if(lowerMsg.includes('finalizar') || lowerMsg.includes('pedido') || lowerMsg.includes('comprar')) {
         openCheckout();
-        return "✅ Checkout aberto! Preencha seus dados.";
+        return "✅ Abrindo checkout para finalizar seu pedido!";
     }
 
-    return "🍔 Digite o nome do lanche (X-Costela, Jantinha, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima R$50* 😊";
+    return "🍔 Digite o nome do lanche (ex: Jantinha, X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$50* 😊";
 }
 
 function sendMsg() {
@@ -533,7 +540,7 @@ function sendMsg() {
     chatInp.value = '';
     setTimeout(() => {
         addMsg(botResp(text));
-        if(chatBody.querySelector('.quick-suggestions') === null) showSugg();
+        showSugg();
     }, 800);
 }
 
@@ -549,13 +556,16 @@ const playBtn = document.getElementById('playPauseBtn');
 const muteBtn = document.getElementById('muteBtn');
 let isPlaying = false;
 
-if(radio) {
+if(radio && playBtn && muteBtn) {
     playBtn.onclick = () => {
         if(isPlaying) {
             radio.pause();
             playBtn.innerHTML = '<i class="bi bi-play-fill"></i> Play';
         } else {
-            radio.play().catch(() => showNotification("Erro na rádio"));
+            radio.play().catch(err => {
+                showNotification("Não foi possível tocar a rádio agora");
+                console.log(err);
+            });
             playBtn.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
         }
         isPlaying = !isPlaying;
@@ -574,14 +584,15 @@ window.onload = () => {
     // Tema
     if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelector('#theme-button i').classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
+        const icon = document.querySelector('#theme-button i');
+        if(icon) icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
     }
     
     // Carrinho e cardápio
     updateCartCount();
     renderTabs();
 
-    // Chat de boas-vindas (após 3s)
+    // Chat boas-vindas (após 3s)
     setTimeout(() => {
         chatCont.style.display = 'flex';
         addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>Delivery a partir das 19h 📱 (34)99953-7698");
