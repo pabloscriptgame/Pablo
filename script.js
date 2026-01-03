@@ -179,7 +179,7 @@ function renderCart() {
     <div class="mt-4 pt-3 border-top">
         <div class="d-flex justify-content-between mb-2 fs-5"><strong>Subtotal:</strong> <span>R$ ${subtotal.toFixed(2)}</span></div>
         <div class="d-flex justify-content-between mb-3 p-2 bg-light rounded ${delivery === 0 ? 'border-success border-2 bg-success bg-opacity-10' : 'border-warning border-2 bg-warning bg-opacity-10'}">
-            <strong class="fs-5">🚚 Entrega:</strong> 
+            <strong class="fs-5">🛵 Entrega:</strong> 
             <span class="fs-5 fw-bold ${delivery === 0 ? 'text-success' : 'text-warning'}">
                 ${delivery === 0 ? 'GRÁTIS 🎉' : 'R$ ' + delivery.toFixed(2)}
             </span>
