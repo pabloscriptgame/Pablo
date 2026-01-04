@@ -8,7 +8,7 @@ const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40
 const siteUrl = "www.degusto.store";
 
 // CONFIGURAÇÃO DELIVERY GRÁTIS
-const FREE_DELIVERY_MIN = 50.00;
+const FREE_DELIVERY_MIN = 25.00;
 const DELIVERY_FEE = 5.00;
 
 // =============================================
