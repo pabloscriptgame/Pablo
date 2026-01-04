@@ -83,7 +83,7 @@ const menuData = {
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
-            { name: "Jantinha ATEÇÃO HOJE NÃO TEREMOS", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "Marmita 300g completa" }
+            { name: "Jantinha ATEÇÃO! De Segunda a Sexta Feira", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "ATEÇÃO! De Segunda a Sexta Feira" }
         ]
     }
 };
