@@ -581,7 +581,7 @@ window.onload = () => {
     // Chat boas-vindas (após 3s)
     setTimeout(() => {
         chatCont.style.display = 'flex';
-        addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$25!*<br>Delivery a partir das 19h 📱 (34)99953-7698 <br>💡 Para Fazer Pedido EX: quero x-tudo, quero x-bacon!<br>");
+        addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$25!*<br>Delivery a partir das 19h 📱 (34)99953-7698 <br><br>💡 Para Fazer Pedido EX: quero x-tudo, quero x-bacon!<br>");
         showSugg();
     }, 3000);
 };
