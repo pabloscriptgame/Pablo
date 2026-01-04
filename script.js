@@ -1,4 +1,4 @@
-// script.js - DêGusto Lanchonete Premium 2026 - COMPLETO com Delivery Grátis > R$50
+// script.js - DêGusto Lanchonete Premium 2026 - COMPLETO com Delivery Grátis > R$25
 // Data: 03/01/2026 - Versão Mobile Otimizada (iOS + Android)
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
@@ -483,7 +483,7 @@ function botResp(msg) {
     }
 
     if(lowerMsg.includes('delivery') || lowerMsg.includes('entrega')) {
-        return `🚚 *Delivery GRÁTIS acima de R$50!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
+        return `🚚 *Delivery GRÁTIS acima de R$25!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
     }
 
     let foundItem = null;
