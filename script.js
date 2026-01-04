@@ -38,7 +38,7 @@ const menuData = {
         title: "🔥 Combos",
         items: [
             { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 200ml" },
-            { name: "Combo: 2 X-Saladas", price: 32.00, img: "https://iili.io/fjgXGZN.jpg", desc: "-" },
+            { name: "Combo: X-Saladas + 1 Batata P", price: 32.00, img: "https://iili.io/fjgXGZN.jpg", desc: "-" },
             { name: "Combo: Artesanal Duplo + Batata + Refri", price: 38.00, img: "https://iili.io/fjgjX7s.jpg", desc: "-" },
             { name: "Combo: 2 X-Duplo", price: 46.00, img: "https://iili.io/fjgwEwx.jpg", desc: "-" },
             { name: "Combo: 2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas", price: 70.00, img: "https://iili.io/fjgNMRs.jpg", desc: "-" },
