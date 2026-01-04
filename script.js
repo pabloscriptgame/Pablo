@@ -67,26 +67,12 @@ const menuData = {
             { name: "Hot Dog Especial", price: 18.00, img: "https://i.ibb.co/Z6TSQVKx/dog-especial-degusto.png" }
         ]
     },
-    chocolates: {
-        title: "🍫 Chocolates",
-        items: [
-            { name: "Sonho de Valsa", price: 3.00, img: "https://i.ibb.co/8D5KSnxs/Sonho-de-Valsa.jpg" },
-            { name: "Ouro Branco", price: 3.00, img: "https://i.ibb.co/2GPfKvj/Ouro-branco.jpg" },
-            { name: "Caribe", price: 4.00, img: "https://i.ibb.co/XfYhYL0w/Caribe.jpg" },
-            { name: "Trento Banoffee", price: 4.00, img: "https://i.ibb.co/VW8TpqpB/Trento-Massimo-Banofrree.jpg" },
-            { name: "Hershey's Tubes", price: 4.00, img: "https://i.ibb.co/RkYmhv92/Hershey-s-Choco-Tubes.jpg" },
-            { name: "Twix", price: 6.00, img: "https://i.ibb.co/5CX2tKs/Twix.jpg" },
-            { name: "5Star", price: 6.00, img: "https://i.ibb.co/2Y3kXMzK/5Star.jpg" },
-            { name: "Charge", price: 6.00, img: "https://i.ibb.co/zhmbQVSP/Charge.jpg" },
-            { name: "Diamante Negro", price: 6.00, img: "https://i.ibb.co/sppd4VXm/Lacta-Diamante-Negro.jpg" }
-        ]
-    },
     bebidas: {
         title: "🥤 Bebidas",
         items: [
             { name: "COCA-COLA 2L", price: 14.00 },
             { name: "COCA-COLA 1L", price: 10.00 },
-            { name: "COCA-COLA LATA", price: 6.00 },
+            { name: "COCA-COLA LATA", price: 5.00 },
             { name: "FANTA 2L", price: 12.00 },
             { name: "FANTA 1L", price: 10.00 },
             { name: "KUAT 2L", price: 10.00 },
