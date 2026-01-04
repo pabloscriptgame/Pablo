@@ -454,7 +454,7 @@ function addMsg(text, isUser = false) {
 
 function showSugg() {
     if (chatBody.querySelector('.quick-suggestions')) return;
-    const suggestions = ["Jantinha", "X-Tudo", "Ver carrinho", "Delivery grátis", "Finalizar pedido"];
+    const suggestions = ["X-Tudo", "Ver carrinho", "Delivery grátis", "Finalizar pedido"];
     const div = document.createElement('div');
     div.className = 'quick-suggestions mt-3';
     suggestions.forEach(txt => {
