@@ -113,7 +113,7 @@ function saveCart() {
     const subtotal = getCartSubtotal();
     const wasNotified = localStorage.getItem('degusto_free_delivery_notified') === 'true';
     if (subtotal >= FREE_DELIVERY_MIN && !wasNotified) {
-        showNotification('🎉 ENTREGA GRÁTIS! Você atingiu R$50,00!');
+        showNotification('🎉 ENTREGA GRÁTIS! Você atingiu R$25,00!');
         localStorage.setItem('degusto_free_delivery_notified', 'true');
     } else if (subtotal < FREE_DELIVERY_MIN && wasNotified) {
         localStorage.removeItem('degusto_free_delivery_notified');
@@ -332,7 +332,7 @@ document.getElementById('share-button').onclick = () => {
 };
 
 document.getElementById('help-button').onclick = () => {
-    alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n💰 Delivery GRÁTIS acima de R$50!\n\n👉 1. Escolha no cardápio\n👉 2. Adicione no carrinho\n👉 3. Finalize no WhatsApp');
+    alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n💰 Delivery GRÁTIS acima de R$25!\n\n👉 1. Escolha no cardápio\n👉 2. Adicione no carrinho\n👉 3. Finalize no WhatsApp');
 };
 
 document.getElementById('copy-pix-cart').onclick = () => {
@@ -475,7 +475,7 @@ function botResp(msg) {
     if (qMatch) quantity = parseInt(qMatch[1]);
 
     if(lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite|e ai|ei/)) {
-        return "👋 Olá! Bem-vindo ao *DêGusto Lanchonete*! 😋<br>Delivery a partir das 19h em Monte Carmelo!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>O que deseja hoje?";
+        return "👋 Olá! Bem-vindo ao *DêGusto Lanchonete*! 😋<br>Delivery a partir das 19h em Monte Carmelo!<br><br>💡 *Delivery GRÁTIS acima de R$25!*<br>O que deseja hoje?";
     }
 
     if(lowerMsg.includes('horario') || lowerMsg.includes('horário')) {
@@ -516,7 +516,7 @@ function botResp(msg) {
         return "✅ Abrindo checkout para finalizar seu pedido!";
     }
 
-    return "🍔 Digite o nome do lanche (ex: Jantinha, X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$50* 😊";
+    return "🍔 Digite o nome do lanche (ex: Jantinha, X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$25* 😊";
 }
 
 function sendMsg() {
@@ -581,7 +581,7 @@ window.onload = () => {
     // Chat boas-vindas (após 3s)
     setTimeout(() => {
         chatCont.style.display = 'flex';
-        addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$50!*<br>Delivery a partir das 19h 📱 (34)99953-7698");
+        addMsg("👋 *Olá! DêGusto Atendimento Online 24h* 😄<br>Estou aqui pra te ajudar com seu pedido!<br><br>💡 *Delivery GRÁTIS acima de R$25!*<br>Delivery a partir das 19h 📱 (34)99953-7698");
         showSugg();
     }, 3000);
 };
