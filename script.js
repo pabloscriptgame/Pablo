@@ -1,5 +1,5 @@
-// script.js - DêGusto Lanchonete Premium 2026 - COMPLETO com Delivery Grátis > R$25
-// Data: 03/01/2026 - Versão Mobile Otimizada (iOS + Android)
+// script.js - DêGusto Lanchonete Premium 2026 - BUSCA 100% CORRIGIDA E ESTÁVEL
+// Data: 05/01/2026 - Agora ao apagar a busca o cardápio volta perfeitamente
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -12,7 +12,7 @@ const FREE_DELIVERY_MIN = 25.00;
 const DELIVERY_FEE = 5.00;
 
 // =============================================
-// MENU DATA (adicione seus itens aqui)
+// MENU DATA
 // =============================================
 const menuData = {
     hamburgueres: {
@@ -89,7 +89,7 @@ const menuData = {
 };
 
 // =============================================
-// FUNÇÕES DO CARRINHO COM DELIVERY
+// FUNÇÕES DO CARRINHO
 // =============================================
 function getCartSubtotal() {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -109,7 +109,6 @@ function saveCart() {
     updateCartCount(); 
     renderCart();
 
-    // Notificação entrega grátis
     const subtotal = getCartSubtotal();
     const wasNotified = localStorage.getItem('degusto_free_delivery_notified') === 'true';
     if (subtotal >= FREE_DELIVERY_MIN && !wasNotified) {
@@ -216,7 +215,7 @@ function addToCart(n,p,q=1){
 function openModal(id){ 
     const modal = document.getElementById(id);
     modal.style.display = 'flex'; 
-    modal.scrollTop = 0; // melhora experiência mobile
+    modal.scrollTop = 0;
     if(id === 'cartModal') renderCart(); 
 }
 
@@ -256,14 +255,12 @@ function renderTabs(){
     panels.innerHTML = '';
     
     Object.keys(menuData).forEach((k, idx) => {
-        // Botão da aba
         const btn = document.createElement('button');
         btn.className = `tab-btn btn btn-lg btn-outline-danger px-4 py-2 ${idx === 0 ? 'active' : ''}`;
         btn.dataset.tab = k;
         btn.textContent = menuData[k].title.replace(/^[^\s]+ /, '');
         btns.appendChild(btn);
 
-        // Painel da aba
         const panel = document.createElement('div');
         panel.id = k;
         panel.className = `tab-panel ${idx === 0 ? 'active' : ''}`;
@@ -288,12 +285,29 @@ function renderTabs(){
                 div.appendChild(img);
             }
 
-            div.innerHTML += `
-                <h3 class="mt-2">${it.name}</h3>
-                ${it.desc ? `<p class="text-muted">${it.desc}</p>` : ''}
-                <span class="fs-2 fw-bold text-danger">R$ ${it.price.toFixed(2)}</span>
-                <button class="add-to-cart btn btn-danger w-100 mt-3 py-3 fs-5 fw-bold shadow">➕ Adicionar</button>
-            `;
+            const h3 = document.createElement('h3');
+            h3.className = 'mt-2';
+            h3.textContent = it.name;
+            h3.dataset.original = it.name;  // Guarda texto original
+            div.appendChild(h3);
+
+            if(it.desc) {
+                const p = document.createElement('p');
+                p.className = 'text-muted';
+                p.textContent = it.desc;
+                div.appendChild(p);
+            }
+
+            const priceSpan = document.createElement('span');
+            priceSpan.className = 'fs-2 fw-bold text-danger';
+            priceSpan.textContent = `R$ ${it.price.toFixed(2)}`;
+            div.appendChild(priceSpan);
+
+            const addBtn = document.createElement('button');
+            addBtn.className = 'add-to-cart btn btn-danger w-100 mt-3 py-3 fs-5 fw-bold shadow';
+            addBtn.innerHTML = '➕ Adicionar';
+            div.appendChild(addBtn);
+
             grid.appendChild(div);
         });
 
@@ -319,9 +333,7 @@ document.addEventListener('click', e => {
     }
 });
 
-// Botões flutuantes
 document.getElementById('cart-button').onclick = () => openModal('cartModal');
-
 document.getElementById('share-button').onclick = () => {
     if(navigator.share) {
         navigator.share({title: 'DêGusto Lanchonete', text: 'Melhores lanches de Monte Carmelo! Delivery 19h+', url: location.href});
@@ -330,42 +342,81 @@ document.getElementById('share-button').onclick = () => {
         showNotification('🔗 Link copiado!');
     }
 };
-
 document.getElementById('help-button').onclick = () => {
     alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n💰 Delivery GRÁTIS acima de R$25!\n\n👉 1. Escolha no cardápio\n👉 2. Adicione no carrinho\n👉 3. Finalize no WhatsApp');
 };
-
 document.getElementById('copy-pix-cart').onclick = () => {
     navigator.clipboard.writeText(pixKey);
     showNotification('💳 Chave PIX copiada: 10738419605');
 };
-
 document.getElementById('support-button').onclick = () => {
     document.getElementById('chat-container').style.display = 'flex';
 };
-
 document.getElementById('top-button').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
-// Busca
-let searchTimeout;
-document.getElementById('searchInput').oninput = function() {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        const term = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const hasTerm = term.length > 0;
-        
-        document.querySelectorAll('.tab-panel').forEach(p => p.style.display = hasTerm ? 'block' : 'none');
-        if(!hasTerm) document.querySelector('.tab-panel.active').style.display = 'block';
-        
-        document.querySelectorAll('.item').forEach(it => {
-            const txt = it.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            it.style.display = txt.includes(term) ? 'block' : 'none';
+// =============================================
+// BUSCA TOTALMENTE CORRIGIDA
+// =============================================
+let searchTimeout = null;
+
+function performSearch() {
+    const input = document.getElementById('searchInput');
+    const term = input.value.trim();
+    const normalizedTerm = term.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const hasTerm = term.length > 0;
+
+    if (!hasTerm) {
+        // VOLTA AO ESTADO ORIGINAL
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+            if (panel.classList.contains('active')) {
+                panel.style.display = 'block';
+            } else {
+                panel.style.display = 'none';
+            }
         });
-    }, 300);
-};
+
+        // Remove todos os highlights
+        document.querySelectorAll('.item h3').forEach(h3 => {
+            h3.innerHTML = h3.dataset.original;
+        });
+
+        document.querySelectorAll('.item').forEach(item => {
+            item.style.display = 'block';
+        });
+
+        return;
+    }
+
+    // BUSCA ATIVA
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.style.display = 'block';
+    });
+
+    document.querySelectorAll('.item').forEach(item => {
+        const fullText = item.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const matches = fullText.includes(normalizedTerm);
+        item.style.display = matches ? 'block' : 'none';
+
+        if (matches) {
+            const h3 = item.querySelector('h3');
+            if (h3) {
+                const original = h3.dataset.original;
+                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                h3.innerHTML = original.replace(regex, '<mark class="bg-warning text-dark rounded px-1">$1</mark>');
+            }
+        }
+    });
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(performSearch, 300);
+});
+
+document.getElementById('searchInput').addEventListener('search', performSearch);
 
 // =============================================
-// CHECKOUT WHATSAPP COM DELIVERY
+// CHECKOUT, TEMA, CHAT, RÁDIO
 // =============================================
 document.getElementById('checkout-form').onsubmit = function(e) {
     e.preventDefault();
@@ -416,16 +467,12 @@ document.getElementById('checkout-form').onsubmit = function(e) {
     showNotification('✅ Pedido enviado pro WhatsApp!');
 };
 
-// Pagamento troco
 document.querySelectorAll('input[name="pagamento"]').forEach(r => {
     r.onchange = () => {
         document.getElementById('troco-div').style.display = r.value === 'Dinheiro' ? 'block' : 'none';
     };
 });
 
-// =============================================
-// TEMA DARK/LIGHT
-// =============================================
 document.getElementById('theme-button').onclick = () => {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
@@ -435,9 +482,6 @@ document.getElementById('theme-button').onclick = () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
-// =============================================
-// CHAT IA
-// =============================================
 const chatCont = document.getElementById('chat-container');
 const chatBody = document.getElementById('chat-body');
 const chatInp = document.getElementById('chat-input');
@@ -534,9 +578,6 @@ sendBtn.onclick = sendMsg;
 chatInp.addEventListener('keypress', e => { if(e.key === 'Enter') sendMsg(); });
 closeChat.onclick = () => chatCont.style.display = 'none';
 
-// =============================================
-// RÁDIO
-// =============================================
 const radio = document.getElementById('radioPlayer');
 const playBtn = document.getElementById('playPauseBtn');
 const muteBtn = document.getElementById('muteBtn');
@@ -546,20 +587,17 @@ if(radio && playBtn && muteBtn) {
     playBtn.onclick = () => {
         if(isPlaying) {
             radio.pause();
-            playBtn.innerHTML = '<i class="bi bi-play-fill"></i> Play';
+            playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
         } else {
-            radio.play().catch(err => {
-                showNotification("Não foi possível tocar a rádio agora");
-                console.log(err);
-            });
-            playBtn.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
+            radio.play().catch(() => {});
+            playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
         }
         isPlaying = !isPlaying;
     };
     
     muteBtn.onclick = () => {
         radio.muted = !radio.muted;
-        muteBtn.innerHTML = radio.muted ? '<i class="bi bi-volume-mute-fill"></i> Som' : '<i class="bi bi-volume-up-fill"></i> Som';
+        muteBtn.innerHTML = radio.muted ? '<i class="bi bi-volume-mute-fill"></i>' : '<i class="bi bi-volume-up-fill"></i>';
     };
 }
 
@@ -567,16 +605,12 @@ if(radio && playBtn && muteBtn) {
 // INICIALIZAÇÃO
 // =============================================
 window.onload = () => {
-    // Tema
     if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
         const icon = document.querySelector('#theme-button i');
         if(icon) icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
     }
     
-    // Carrinho e cardápio
     updateCartCount();
     renderTabs();
-
-    // Chat boas-vindas (após 3s)
 };
