@@ -83,7 +83,7 @@ const menuData = {
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
-            { name: "Jantinha", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "" }
+            { name: "Jantinha", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
         ]
     }
 };
