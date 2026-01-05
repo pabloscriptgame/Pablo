@@ -1,5 +1,5 @@
-// script.js - DêGusto Lanchonete Premium 2026 - BUSCA 100% CORRIGIDA E ESTÁVEL
-// Data: 05/01/2026 - Agora ao apagar a busca o cardápio volta perfeitamente
+// script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
+// Data: 05/01/2026 - Busca corrigida: volta perfeita ao limpar, sem travar, abas escondidas na busca
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -288,7 +288,7 @@ function renderTabs(){
             const h3 = document.createElement('h3');
             h3.className = 'mt-2';
             h3.textContent = it.name;
-            h3.dataset.original = it.name;  // Guarda texto original
+            h3.dataset.original = it.name;
             div.appendChild(h3);
 
             if(it.desc) {
@@ -355,9 +355,10 @@ document.getElementById('support-button').onclick = () => {
 document.getElementById('top-button').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
 // =============================================
-// BUSCA TOTALMENTE CORRIGIDA
+// BUSCA MELHORADA E ESTÁVEL
 // =============================================
 let searchTimeout = null;
+const tabButtons = document.getElementById('tab-buttons');
 
 function performSearch() {
     const input = document.getElementById('searchInput');
@@ -365,44 +366,39 @@ function performSearch() {
     const normalizedTerm = term.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const hasTerm = term.length > 0;
 
+    const panels = document.querySelectorAll('.tab-panel');
+    const items = document.querySelectorAll('.item');
+
     if (!hasTerm) {
-        // VOLTA AO ESTADO ORIGINAL
-        document.querySelectorAll('.tab-panel').forEach(panel => {
-            if (panel.classList.contains('active')) {
-                panel.style.display = 'block';
-            } else {
-                panel.style.display = 'none';
+        // Volta ao estado normal
+        tabButtons.style.display = 'flex';
+        panels.forEach(panel => panel.style.display = '');
+        items.forEach(item => item.style.display = '');
+        document.querySelectorAll('.item h3').forEach(h3 => {
+            if (h3.dataset.original !== undefined) {
+                h3.innerHTML = h3.dataset.original;
             }
         });
-
-        // Remove todos os highlights
-        document.querySelectorAll('.item h3').forEach(h3 => {
-            h3.innerHTML = h3.dataset.original;
-        });
-
-        document.querySelectorAll('.item').forEach(item => {
-            item.style.display = 'block';
-        });
-
         return;
     }
 
-    // BUSCA ATIVA
-    document.querySelectorAll('.tab-panel').forEach(panel => {
-        panel.style.display = 'block';
-    });
+    // Modo busca ativa
+    tabButtons.style.display = 'none';
+    panels.forEach(panel => panel.style.display = 'block');
 
-    document.querySelectorAll('.item').forEach(item => {
+    items.forEach(item => {
         const fullText = item.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const matches = fullText.includes(normalizedTerm);
         item.style.display = matches ? 'block' : 'none';
 
-        if (matches) {
-            const h3 = item.querySelector('h3');
-            if (h3) {
-                const original = h3.dataset.original;
-                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                h3.innerHTML = original.replace(regex, '<mark class="bg-warning text-dark rounded px-1">$1</mark>');
+        const h3 = item.querySelector('h3');
+        if (h3 && h3.dataset.original) {
+            if (matches) {
+                const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escaped})`, 'gi');
+                h3.innerHTML = h3.dataset.original.replace(regex, '<mark class="bg-warning text-dark rounded px-1">$1</mark>');
+            } else {
+                h3.innerHTML = h3.dataset.original;
             }
         }
     });
