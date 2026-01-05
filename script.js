@@ -82,7 +82,7 @@ const menuData = {
     },
     jantinha: {
         title: "🍲 Jantinhas",
-        title: "⚠️ATEÇÃO! De Terça a Sexta Feira",
+        ⚠️ATEÇÃO! De Terça a Sexta Feira ,
         items: [
             { name: "Jantinha", price: 12.00, img: "https://iili.io/fjUDoDQ.png", desc: "" }
         ]
