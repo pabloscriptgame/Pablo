@@ -89,7 +89,7 @@ const menuData = {
     molhos: {
         title: " molhos",
         items: [
-            { name: "molhos", price: 00.50, img: "https://iili.io/fjUDoDQ.png", desc: "" }
+            { name: "molhos", price: 00.50, img: "https://iili.io/fjUDoDQ.png", desc: "" },
         ]
     }
 };
