@@ -37,11 +37,11 @@ const menuData = {
     combo: {
         title: "🔥 Combos",
         items: [
-            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/Tq79qZsF/unnamed.png", desc: "2 X-Tudo + 2 refri 200ml" },
-            { name: "Combo: X-Saladas + 1 Batata P", price: 32.00, img: "https://iili.io/fjgXGZN.jpg", desc: "-" },
-            { name: "Combo: Artesanal Duplo + Batata + Refri", price: 38.00, img: "https://iili.io/fjgjX7s.jpg", desc: "-" },
+            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/d4txStn2/combo-5.png", desc: "2 X-Tudo + 2 refri 200ml" },
+            { name: "Combo: X-Saladas + 1 Batata P", price: 32.00, img: "https://i.ibb.co/dJW3mXxR/combo-3.png", desc: "-" },
+            { name: "Combo: Artesanal Duplo + Batata + Refri", price: 38.00, img: "https://i.ibb.co/KzLhFRrj/combo-1.png", desc: "-" },
             { name: "Combo: 2 X-Duplo", price: 46.00, img: "https://iili.io/fjgwEwx.jpg", desc: "-" },
-            { name: "Combo: 2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas", price: 70.00, img: "https://iili.io/fjgNMRs.jpg", desc: "-" },
+            { name: "Combo: 2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas", price: 70.00, img: "https://i.ibb.co/GvY9F6kP/combo-2.png", desc: "-" },
             { name: "Combo: X-Salada + Batata Frita", price: 20.00, img: "https://iili.io/fjgOiTG.jpg", desc: "-" },
             { name: "Combo: X-Tudo + Batata Frita", price: 24.00, img: "https://iili.io/fjgk7xj.jpg", desc: "-" },
             { name: "Combo na Caixa: 2 X-tudo + Anel de Cebola + Batata Frita com Cheddar e Bacon + Steak de Frango + Molhos", price: 70.00, img: "https://iili.io/fjg8NSI.jpg", desc: "-" },
