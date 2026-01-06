@@ -1,5 +1,5 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
-// Data: 05/01/2026 - Busca corrigida: volta perfeita ao limpar, sem travar, abas escondidas na busca
+// Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -80,17 +80,16 @@ const menuData = {
             { name: "PITHULÁ", price: 3.00 }
         ]
     },
-    molhos: {
-        title: "🧄 Molhos",
-        items: [
-            { name: "Molho de Alho", price: 00.50 },
-            { name: "Molho de Alho", price: 1.00 }
-        ]
-    },
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
             { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
+        ]
+    },
+    molhos: {  // <-- NOVA CATEGORIA ADICIONADA
+        title: "🍯 Molhos",
+        items: [
+            { name: "Molho de Alho", price: 0.50, img: "https://iili.io/fOWUha2.png" }
         ]
     }
 };
