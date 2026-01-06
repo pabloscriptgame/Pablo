@@ -80,16 +80,17 @@ const menuData = {
             { name: "PITHULÁ", price: 3.00 }
         ]
     },
+    molhos: {
+        title: "🧄 Molhos",
+        items: [
+            { name: "Molho de Alho", price: 00.50 },
+            { name: "Molho de Alho", price: 1.00 }
+        ]
+    },
     jantinha: {
         title: "🍲 Jantinhas",
         items: [
-            { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" },
-        ]
-    },
-    molhos: {
-        title: " molhos",
-        items: [
-            { name: "molhos", price: 00.50, img: "https://iili.io/fjUDoDQ.png", desc: "" },
+            { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
         ]
     }
 };
