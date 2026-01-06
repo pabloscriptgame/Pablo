@@ -85,6 +85,12 @@ const menuData = {
         items: [
             { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
         ]
+    },
+    jantinha: {
+        title: "🧄 Molhos",
+        items: [
+            { name: "Molho de Alho", price: 00.50, img: "https://iili.io/fOWUha2.png", desc: "Molho de Álho" }
+        ]
     }
 };
 
