@@ -1,5 +1,6 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
 // Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
+// Atualização: Adicionado categoria "Caldos" com item "2 CALDOS"
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -84,6 +85,17 @@ const menuData = {
         title: "🍲 Jantinhas",
         items: [
             { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
+        ]
+    },
+    caldos: {
+        title: "🥣 Caldos",
+        items: [
+            { 
+                name: "2 CALDOS", 
+                price: 22.00, 
+                img: "https://iili.io/fedo7d7.png", 
+                desc: "Sabores: Frango • Feijão com Bacon • Calabresa<br>Brinde: Torradas crocantes!" 
+            }
         ]
     },
     molhos: {
@@ -620,7 +632,7 @@ function createModernHeader() {
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
             </p>
             <div class="js-free-delivery-badge">
-                <i class="bi bi-bag"></i> Delivey GRÁTIS acima de R$25,00
+                <i class="bi bi-bag"></i> Delivery GRÁTIS acima de R$25,00
             </div>
             <div class="js-scroll-down">
                 <a href="#tab-buttons" class="js-scroll-link">
