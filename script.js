@@ -1,8 +1,9 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
 // Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
-// Atualização: Adicionado categoria Caldos com opção interativa de escolha de sabores
+// Atualização: 07/01/2026 - Seleção de sabores dos Caldos agora com modal bonito e botões (+/-)
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
+let caldosQuantities = {}; // Será inicializado no modal
 const phoneNumber = "5534999537698";
 const pixKey = "10738419605";
 const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png";
@@ -94,7 +95,7 @@ const menuData = {
                 name: "2 CALDOS", 
                 price: 22.00, 
                 img: "https://iili.io/fedo7d7.png", 
-                desc: "2 Caldos por R$22,00<br><strong>Brinde: Torradas crocantes!</strong><br><br>Sabores disponíveis:<br>• Frango<br>• Feijão com Bacon<br>• Calabresa<br><br><em>Clique em \"Escolher Sabores\" para selecionar</em>" 
+                desc: "2 Caldos por R$22,00<br><strong>Brinde: Torradas crocantes!</strong><br><br>Sabores disponíveis:<br>• Frango<br>• Feijão com Bacon<br>• Calabresa<br><br><em>Clique em \"Escolher Sabores e Adicionar\" para selecionar</em>" 
             }
         ]
     },
@@ -107,42 +108,103 @@ const menuData = {
 };
 
 // =============================================
-// FUNÇÃO PARA ESCOLHA DE SABORES DOS CALDOS
+// MODAL DE ESCOLHA DE SABORES DOS CALDOS (COM BOTÕES)
 // =============================================
-function selectCaldosFlavors() {
-    const sabores = ["frango", "feijão com bacon", "calabresa"];
-    const promptText = "🍲 Escolha os sabores para os 2 Caldos (R$22,00 + brinde torradas):\n\n" +
-                       sabores.map((s, i) => `${i+1} - ${s}`).join("\n");
+function createCaldosModal() {
+    const modal = document.createElement('div');
+    modal.id = 'caldosModal';
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content bg-white rounded-4 shadow-lg p-4" style="width: 90%; max-width: 500px;">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <h3 class="fw-bold text-danger">🍲 Escolha os 2 Sabores</h3>
+                <span class="close fs-3" onclick="closeModal('caldosModal')" style="cursor:pointer;">&times;</span>
+            </div>
+            <p class="text-center mb-4 fs-5">Preço fixo: <strong>R$22,00</strong><br>
+                <span class="text-success fw-bold">+ Brinde: Torradas crocantes!</span>
+            </p>
+            <div id="caldos-flavors" class="mb-4"></div>
+            <div class="text-center fw-bold fs-4 mb-4">
+                Selecionados: <span id="caldos-total" class="text-danger">0</span>/2
+            </div>
+            <button id="caldos-add-btn" class="btn btn-lg btn-success w-100 shadow" disabled>
+                <strong>Adicionar ao Carrinho</strong>
+            </button>
+        </div>
+    `;
+    document.body.appendChild(modal);
 
-    const input1 = prompt(promptText + "\n\nDigite o número e o sabor Igual esta Acima:");
-    if (input1 === null) return;
-    const num1 = parseInt(input1);
-    if (isNaN(num1) || num1 < 1 || num1 > 3) {
-        showNotification("❌ Número inválido para o primeiro sabor!");
+    // Evento do botão de adicionar
+    document.getElementById('caldos-add-btn').onclick = addCaldosToCart;
+}
+
+function openCaldosModal() {
+    caldosQuantities = { "Frango": 0, "Feijão com Bacon": 0, "Calabresa": 0 };
+    renderCaldosFlavors();
+    openModal('caldosModal');
+}
+
+function renderCaldosFlavors() {
+    const container = document.getElementById('caldos-flavors');
+    container.innerHTML = '';
+    const flavors = ["Frango", "Feijão com Bacon", "Calabresa"];
+
+    flavors.forEach(flavor => {
+        const key = flavor.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').toLowerCase();
+        const row = document.createElement('div');
+        row.className = 'd-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded shadow-sm';
+        row.innerHTML = `
+            <strong class="fs-5">${flavor}</strong>
+            <div class="btn-group" role="group">
+                <button class="btn btn-outline-danger" onclick="changeCaldosQty('${flavor}', -1)">−</button>
+                <button class="btn btn-light px-4" disabled><span id="qty-${key}">${caldosQuantities[flavor]}</span></button>
+                <button class="btn btn-outline-success" onclick="changeCaldosQty('${flavor}', 1)">+</button>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+    updateCaldosTotal();
+}
+
+function changeCaldosQty(flavor, delta) {
+    const currentTotal = Object.values(caldosQuantities).reduce((a, b) => a + b, 0);
+    if (currentTotal + delta > 2) {
+        showNotification('❌ Máximo de 2 caldos neste combo!');
         return;
     }
+    if (caldosQuantities[flavor] + delta < 0) return;
 
-    const input2 = prompt(promptText + "\n\nDigite o número e o sabor Igual esta Acima:");
-    if (input2 === null) return;
-    const num2 = parseInt(input2);
-    if (isNaN(num2) || num2 < 1 || num2 > 3) {
-        showNotification("❌ Número inválido para o segundo sabor!");
-        return;
-    }
+    caldosQuantities[flavor] += delta;
+    const key = flavor.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').toLowerCase();
+    document.getElementById(`qty-${key}`).textContent = caldosQuantities[flavor];
+    updateCaldosTotal();
+}
 
-    const sabor1 = sabores[num1 - 1];
-    const sabor2 = sabores[num2 - 1];
+function updateCaldosTotal() {
+    const total = Object.values(caldosQuantities).reduce((a, b) => a + b, 0);
+    document.getElementById('caldos-total').textContent = total;
+    document.getElementById('caldos-add-btn').disabled = (total !== 2);
+}
 
-    let itemName = "2 CALDOS";
-    if (sabor1 === sabor2) {
-        itemName += ` (2× ${sabor1})`;
+function addCaldosToCart() {
+    const flavors = ["Frango", "Feijão com Bacon", "Calabresa"];
+    let selected = [];
+    flavors.forEach(f => {
+        for (let i = 0; i < caldosQuantities[f]; i++) selected.push(f);
+    });
+
+    let flavorText;
+    if (selected[0] === selected[1]) {
+        flavorText = `2× ${selected[0]}`;
     } else {
-        itemName += ` (${sabor1} + ${sabor2})`;
+        selected.sort();
+        flavorText = selected.join(' + ');
     }
-    itemName += " + Torradas crocantes!";
 
+    const itemName = `2 CALDOS (${flavorText}) + Torradas crocantes!`;
     addToCart(itemName, 22.00);
     showNotification(`✅ ${itemName} adicionado ao carrinho!`);
+    closeModal('caldosModal');
 }
 
 // =============================================
@@ -351,7 +413,7 @@ function renderTabs(){
             if(it.desc) {
                 const p = document.createElement('p');
                 p.className = 'text-muted small';
-                p.innerHTML = it.desc; // Agora permite <br>, <strong>, <em> etc.
+                p.innerHTML = it.desc;
                 div.appendChild(p);
             }
 
@@ -387,7 +449,7 @@ document.addEventListener('click', e => {
     if(e.target.closest('.add-to-cart')) {
         const it = e.target.closest('.item');
         if (it.dataset.name === "2 CALDOS") {
-            selectCaldosFlavors();
+            openCaldosModal();
         } else {
             addToCart(it.dataset.name, it.dataset.price);
         }
@@ -593,12 +655,12 @@ function botResp(msg) {
         return `🚚 *Delivery GRÁTIS acima de R$25!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
     }
 
-    // Tratamento especial para Caldos (preço ou pedido)
+    // Tratamento especial para Caldos
     if (lowerMsg.includes('caldo') || lowerMsg.includes('caldos')) {
         if (lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco') || lowerMsg.includes('valor')) {
             return "🥣 2 Caldos por apenas *R$22,00* + brinde torradas crocantes!<br>Sabores: Frango • Feijão com Bacon • Calabresa";
         }
-        return "🥣 Para pedir Caldos, vá à seção 🥣 Caldos no cardápio e clique em \"Escolher Sabores e Adicionar\" para selecionar os 2 sabores! 😋<br>(2 Caldos + brinde torradas por R$22,00)";
+        return "🥣 Para pedir Caldos, vá à seção 🥣 Caldos no cardápio e clique em \"Escolher Sabores e Adicionar\" para selecionar os sabores! 😋";
     }
 
     let foundItem = null;
@@ -768,7 +830,7 @@ function createModernHeader() {
             border-radius: 50px;
             font-weight: bold;
             font-size: 1.3rem;
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             animation: pulse 2s infinite, fadeInUp 1.8s ease-out;
             margin: 2rem auto;
             max-width: fit-content;
@@ -832,4 +894,5 @@ window.onload = () => {
     updateCartCount();
     renderTabs();
     createModernHeader();
+    createCaldosModal(); // Novo modal criado aqui
 };
