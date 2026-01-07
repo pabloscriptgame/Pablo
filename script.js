@@ -1,5 +1,5 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
-// Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50
+// Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -86,7 +86,7 @@ const menuData = {
             { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
         ]
     },
-    molhos: {  // <-- NOVA CATEGORIA ADICIONADA
+    molhos: {
         title: "🍯 Molhos",
         items: [
             { name: "Molho de Alho", price: 0.50, img: "https://iili.io/fOWUha2.png" }
@@ -376,7 +376,6 @@ function performSearch() {
     const items = document.querySelectorAll('.item');
 
     if (!hasTerm) {
-        // Volta ao estado normal
         tabButtons.style.display = 'flex';
         panels.forEach(panel => panel.style.display = '');
         items.forEach(item => item.style.display = '');
@@ -388,7 +387,6 @@ function performSearch() {
         return;
     }
 
-    // Modo busca ativa
     tabButtons.style.display = 'none';
     panels.forEach(panel => panel.style.display = 'block');
 
@@ -604,6 +602,157 @@ if(radio && playBtn && muteBtn) {
 }
 
 // =============================================
+// CABEÇALHO MODERNO SUAVE CRIADO VIA JAVASCRIPT
+// =============================================
+function createModernHeader() {
+    // Cria o header
+    const header = document.createElement('header');
+    header.className = 'js-modern-header';
+    header.innerHTML = `
+        <div class="js-header-overlay"></div>
+        <div class="js-header-content">
+            <div class="js-logo-container">
+                <img src="${logoUrl}" alt="DêGusto Lanchonete" class="js-logo-img" />
+            </div>
+            <h1 class="js-main-title">DêGusto Lanchonete Premium</h1>
+            <p class="js-location-text">Monte Carmelo • MG</p>
+            <p class="js-delivery-text">
+                <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
+            </p>
+            <div class="js-free-delivery-badge">
+                <i class="bi bi-truck"></i> Entrega GRÁTIS acima de R$25,00
+            </div>
+            <div class="js-scroll-down">
+                <a href="#tab-buttons" class="js-scroll-link">
+                    Ver Cardápio <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+        </div>
+    `;
+
+    // Insere no topo do body
+    document.body.insertBefore(header, document.body.firstChild);
+
+    // Injeta os estilos
+    const style = document.createElement('style');
+    style.textContent = `
+        .js-modern-header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #330000 100%);
+            overflow: hidden;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .js-header-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        .js-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 1rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .js-logo-container {
+            animation: float 6s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+        .js-logo-img {
+            width: 220px;
+            max-width: 90vw;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(255, 60, 60, 0.3));
+            transition: transform 0.4s ease;
+        }
+        .js-logo-img:hover { transform: scale(1.05); }
+        .js-main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            margin: 0 0 1rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        .js-location-text, .js-delivery-text {
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 1.5s ease-out;
+            margin: 0.5rem 0;
+        }
+        .js-location-text { font-size: 1.8rem; opacity: 0.9; }
+        .js-delivery-text { font-size: 1.6rem; font-weight: 500; }
+        .js-delivery-text i { margin-right: 0.5rem; }
+        .js-free-delivery-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #ff0000, #ff4444);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+            animation: pulse 2s infinite, fadeInUp 1.8s ease-out;
+            margin: 2rem auto;
+            max-width: fit-content;
+        }
+        .js-free-delivery-badge i { margin-right: 0.8rem; font-size: 1.5rem; }
+        .js-scroll-down { margin-top: 3rem; animation: fadeInUp 2s ease-out; }
+        .js-scroll-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .js-scroll-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+            transform: translateY(-5px);
+        }
+        .js-scroll-link i { animation: bounce 2s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @media (max-width: 768px) {
+            .js-main-title { font-size: 2.8rem; }
+            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
+            .js-logo-img { width: 180px; }
+        }
+        @media (max-width: 480px) {
+            .js-main-title { font-size: 2.4rem; }
+            .js-delivery-text { font-size: 1.4rem; }
+            .js-location-text { font-size: 1.6rem; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Rolagem suave ao clicar em "Ver Cardápio"
+    header.addEventListener('click', (e) => {
+        if (e.target.closest('.js-scroll-link')) {
+            e.preventDefault();
+            document.getElementById('tab-buttons')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+}
+
+// =============================================
 // INICIALIZAÇÃO
 // =============================================
 window.onload = () => {
@@ -615,4 +764,5 @@ window.onload = () => {
     
     updateCartCount();
     renderTabs();
+    createModernHeader(); // ← Ativa o novo cabeçalho moderno
 };
