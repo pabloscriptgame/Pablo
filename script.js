@@ -110,7 +110,7 @@ const menuData = {
 // FUNÇÃO PARA ESCOLHA DE SABORES DOS CALDOS
 // =============================================
 function selectCaldosFlavors() {
-    const sabores = ["frango", "feijao com cacon", "calabresa"];
+    const sabores = ["frango", "feijão com bacon", "calabresa"];
     const promptText = "🍲 Escolha os sabores para os 2 Caldos (R$22,00 + brinde torradas):\n\n" +
                        sabores.map((s, i) => `${i+1} - ${s}`).join("\n");
 
