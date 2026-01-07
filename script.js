@@ -614,13 +614,13 @@ function createModernHeader() {
             <div class="js-logo-container">
                 <img src="${logoUrl}" alt="DêGusto Lanchonete" class="js-logo-img" />
             </div>
-            <h1 class="js-main-title">DêGusto Lanchonete Premium</h1>
+            <h1 class="js-main-title"></h1>
             <p class="js-location-text">Monte Carmelo • MG</p>
             <p class="js-delivery-text">
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
             </p>
             <div class="js-free-delivery-badge">
-                <i class="bi bi-motorcycle"></i> Entrega GRÁTIS acima de R$25,00
+                <i class="bi bi-motorcycle"></i> Delivey GRÁTIS acima de R$25,00
             </div>
             <div class="js-scroll-down">
                 <a href="#tab-buttons" class="js-scroll-link">
