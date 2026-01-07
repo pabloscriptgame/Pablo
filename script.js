@@ -114,7 +114,7 @@ function selectCaldosFlavors() {
     const promptText = "🍲 Escolha os sabores para os 2 Caldos (R$22,00 + brinde torradas):\n\n" +
                        sabores.map((s, i) => `${i+1} - ${s}`).join("\n");
 
-    const input1 = prompt(promptText + "\n\nDigite o número do PRIMEIRO sabor:");
+    const input1 = prompt(promptText + "\n\nDigite o número e o sabor Igual esta Acima:");
     if (input1 === null) return;
     const num1 = parseInt(input1);
     if (isNaN(num1) || num1 < 1 || num1 > 3) {
@@ -122,7 +122,7 @@ function selectCaldosFlavors() {
         return;
     }
 
-    const input2 = prompt(promptText + "\n\nDigite o número do SEGUNDO sabor:");
+    const input2 = prompt(promptText + "\n\nDigite o número e o sabor Igual esta Acima:");
     if (input2 === null) return;
     const num2 = parseInt(input2);
     if (isNaN(num2) || num2 < 1 || num2 > 3) {
