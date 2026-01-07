@@ -1,6 +1,6 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
 // Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
-// Atualização: Adicionado categoria "Caldos" com item "2 CALDOS"
+// Atualização: Adicionado categoria Caldos com opção interativa de escolha de sabores
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 const phoneNumber = "5534999537698";
@@ -94,7 +94,7 @@ const menuData = {
                 name: "2 CALDOS", 
                 price: 22.00, 
                 img: "https://iili.io/fedo7d7.png", 
-                desc: "Sabores: Frango • Feijão com Bacon • Calabresa<br>Brinde: Torradas crocantes!" 
+                desc: "2 Caldos por R$22,00<br><strong>Brinde: Torradas crocantes!</strong><br><br>Sabores disponíveis:<br>• Frango<br>• Feijão com Bacon<br>• Calabresa<br><br><em>Clique em \"Escolher Sabores\" para selecionar</em>" 
             }
         ]
     },
@@ -105,6 +105,45 @@ const menuData = {
         ]
     }
 };
+
+// =============================================
+// FUNÇÃO PARA ESCOLHA DE SABORES DOS CALDOS
+// =============================================
+function selectCaldosFlavors() {
+    const sabores = ["Frango", "Feijão com Bacon", "Calabresa"];
+    const promptText = "🍲 Escolha os sabores para os 2 Caldos (R$22,00 + brinde torradas):\n\n" +
+                       sabores.map((s, i) => `${i+1} - ${s}`).join("\n");
+
+    const input1 = prompt(promptText + "\n\nDigite o número do PRIMEIRO sabor:");
+    if (input1 === null) return;
+    const num1 = parseInt(input1);
+    if (isNaN(num1) || num1 < 1 || num1 > 3) {
+        showNotification("❌ Número inválido para o primeiro sabor!");
+        return;
+    }
+
+    const input2 = prompt(promptText + "\n\nDigite o número do SEGUNDO sabor:");
+    if (input2 === null) return;
+    const num2 = parseInt(input2);
+    if (isNaN(num2) || num2 < 1 || num2 > 3) {
+        showNotification("❌ Número inválido para o segundo sabor!");
+        return;
+    }
+
+    const sabor1 = sabores[num1 - 1];
+    const sabor2 = sabores[num2 - 1];
+
+    let itemName = "2 CALDOS";
+    if (sabor1 === sabor2) {
+        itemName += ` (2× ${sabor1})`;
+    } else {
+        itemName += ` (${sabor1} + ${sabor2})`;
+    }
+    itemName += " + Torradas crocantes!";
+
+    addToCart(itemName, 22.00);
+    showNotification(`✅ ${itemName} adicionado ao carrinho!`);
+}
 
 // =============================================
 // FUNÇÕES DO CARRINHO
@@ -311,8 +350,8 @@ function renderTabs(){
 
             if(it.desc) {
                 const p = document.createElement('p');
-                p.className = 'text-muted';
-                p.textContent = it.desc;
+                p.className = 'text-muted small';
+                p.innerHTML = it.desc; // Agora permite <br>, <strong>, <em> etc.
                 div.appendChild(p);
             }
 
@@ -324,6 +363,14 @@ function renderTabs(){
             const addBtn = document.createElement('button');
             addBtn.className = 'add-to-cart btn btn-danger w-100 mt-3 py-3 fs-5 fw-bold shadow';
             addBtn.innerHTML = '➕ Adicionar';
+
+            // Personalização especial para Caldos
+            if (it.name === "2 CALDOS") {
+                addBtn.innerHTML = '🍲 Escolher Sabores e Adicionar';
+                addBtn.classList.remove('btn-danger');
+                addBtn.classList.add('btn-success');
+            }
+
             div.appendChild(addBtn);
 
             grid.appendChild(div);
@@ -339,7 +386,11 @@ function renderTabs(){
 document.addEventListener('click', e => {
     if(e.target.closest('.add-to-cart')) {
         const it = e.target.closest('.item');
-        addToCart(it.dataset.name, it.dataset.price);
+        if (it.dataset.name === "2 CALDOS") {
+            selectCaldosFlavors();
+        } else {
+            addToCart(it.dataset.name, it.dataset.price);
+        }
     }
     else if(e.target.closest('.tab-btn')) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -542,6 +593,14 @@ function botResp(msg) {
         return `🚚 *Delivery GRÁTIS acima de R$25!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
     }
 
+    // Tratamento especial para Caldos (preço ou pedido)
+    if (lowerMsg.includes('caldo') || lowerMsg.includes('caldos')) {
+        if (lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco') || lowerMsg.includes('valor')) {
+            return "🥣 2 Caldos por apenas *R$22,00* + brinde torradas crocantes!<br>Sabores: Frango • Feijão com Bacon • Calabresa";
+        }
+        return "🥣 Para pedir Caldos, vá à seção 🥣 Caldos no cardápio e clique em \"Escolher Sabores e Adicionar\" para selecionar os 2 sabores! 😋<br>(2 Caldos + brinde torradas por R$22,00)";
+    }
+
     let foundItem = null;
     for(const cat in menuData) {
         for(const item of menuData[cat].items) {
@@ -617,7 +676,6 @@ if(radio && playBtn && muteBtn) {
 // CABEÇALHO MODERNO SUAVE CRIADO VIA JAVASCRIPT
 // =============================================
 function createModernHeader() {
-    // Cria o header
     const header = document.createElement('header');
     header.className = 'js-modern-header';
     header.innerHTML = `
@@ -642,10 +700,8 @@ function createModernHeader() {
         </div>
     `;
 
-    // Insere no topo do body
     document.body.insertBefore(header, document.body.firstChild);
 
-    // Injeta os estilos
     const style = document.createElement('style');
     style.textContent = `
         .js-modern-header {
@@ -755,7 +811,6 @@ function createModernHeader() {
     `;
     document.head.appendChild(style);
 
-    // Rolagem suave ao clicar em "Ver Cardápio"
     header.addEventListener('click', (e) => {
         if (e.target.closest('.js-scroll-link')) {
             e.preventDefault();
@@ -776,5 +831,5 @@ window.onload = () => {
     
     updateCartCount();
     renderTabs();
-    createModernHeader(); // ← Ativa o novo cabeçalho moderno
+    createModernHeader();
 };
