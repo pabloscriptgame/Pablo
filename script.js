@@ -82,23 +82,6 @@ const menuData = {
             { name: "PITHULÁ", price: 3.00 }
         ]
     },
-    jantinha: {
-        title: "🍲 Jantinhas",
-        items: [
-            { name: "2 Jantinha", price: 24.00, img: "https://iili.io/fjUDoDQ.png", desc: "Arroz branco, Feijão de Caldo, Meio de asa assada, Salpicaão, Batata frita" }
-        ]
-    },
-    caldos: {
-        title: "🥣 Caldos",
-        items: [
-            { 
-                name: "2 CALDOS", 
-                price: 22.00, 
-                img: "https://iili.io/fedo7d7.png", 
-                desc: "2 Caldos por R$22,00<br><strong>Brinde: Torradas crocantes!</strong><br><br>Sabores disponíveis:<br>• Frango<br>• Feijão com Bacon<br>• Calabresa<br><br><em>Clique em \"Escolher Sabores e Adicionar\" para selecionar</em>" 
-            }
-        ]
-    },
     molhos: {
         title: "🍯 Molhos",
         items: [
