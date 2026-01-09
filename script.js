@@ -4,7 +4,7 @@
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 let caldosQuantities = {}; // Será inicializado no modal
-const phoneNumber = "";
+const phoneNumber = "5534999537698";
 const pixKey = "10738419605";
 const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png";
 const siteUrl = "www.degusto.store";
