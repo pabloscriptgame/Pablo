@@ -1,8 +1,7 @@
-// script.js - DêGusto Lanchonete Premium 2026 - VERSÃO FINAL COMPLETA
-// Todas as funcionalidades: header GIF, cardápio, busca, carrinho, caldos, checkout, rádio, chat inteligente, iOS compatível
+// script.js - DêGusto Lanchonete Premium 2026 - VERSÃO FINAL ATUALIZADA
+// Funcionalidades: header GIF, cardápio, busca, carrinho, checkout, rádio melhorado, chat inteligente, iOS compatível
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
-let caldosQuantities = {};
 const phoneNumber = "5534999537698";
 const pixKey = "10738419605";
 const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png";
@@ -121,13 +120,6 @@ function renderTabs() {
         tabPanels.appendChild(panel);
     });
 
-    // Botão especial Caldinhos
-    //const caldosBtn = document.createElement('button');
-    //caldosBtn.className = 'btn btn-success me-2 mb-2 px-4 fw-bold';
-    //caldosBtn.innerHTML = '🍲 2 Caldinhos + Torradas<br><small>R$ 22,00</small>';
-    //caldosBtn.onclick = openCaldosModal;
-    //tabButtons.appendChild(caldosBtn);
-
     showCategory(Object.keys(menuData)[0]);
 }
 
@@ -146,14 +138,14 @@ function renderItems(catKey) {
     panel.innerHTML = '';
 
     menuData[catKey].items.forEach(item => {
-                const col = document.createElement('div');
-                col.className = 'col-6 col-md-4 col-lg-3';
+        const col = document.createElement('div');
+        col.className = 'col-6 col-md-4 col-lg-3';
 
-                const imgHtml = item.img ?
-                    `<img src="${item.img}" class="card-img-top" alt="${item.name}" loading="lazy" onclick="openImageModal('${item.img}')">` :
-                    `<div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white fs-3" style="height: 220px;">🍔</div>`;
+        const imgHtml = item.img ?
+            `<img src="${item.img}" class="card-img-top" alt="${item.name}" loading="lazy" onclick="openImageModal('${item.img}')">` :
+            `<div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white fs-3" style="height: 220px;">🍔</div>`;
 
-                col.innerHTML = `
+        col.innerHTML = `
             <div class="card h-100 shadow-sm border-0">
                 ${imgHtml}
                 <div class="card-body d-flex flex-column">
@@ -184,98 +176,6 @@ function setupSearch() {
             }
         });
     });
-}
-
-// =============================================
-// MODAL CALDOS
-// =============================================
-function createCaldosModal() {
-    const modal = document.createElement('div');
-    modal.id = 'caldosModal';
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content bg-white rounded-4 shadow-lg p-4" style="width: 90%; max-width: 500px;">
-            <div class="d-flex justify-content-between align-items-start mb-4">
-                <h3 class="fw-bold text-danger">🍲 Escolha os 2 Sabores</h3>
-                <span class="close fs-3" onclick="closeModal('caldosModal')" style="cursor:pointer;">×</span>
-            </div>
-            <p class="text-center mb-4 fs-5">Preço fixo: <strong>R$22,00</strong><br>
-                <span class="text-success fw-bold">+ Brinde: Torradas crocantes!</span>
-            </p>
-            <div id="caldos-flavors" class="mb-4"></div>
-            <div class="text-center fw-bold fs-4 mb-4">
-                Selecionados: <span id="caldos-total" class="text-danger">0</span>/2
-            </div>
-            <button id="caldos-add-btn" class="btn btn-lg btn-success w-100 shadow" disabled>
-                <strong>Adicionar ao Carrinho</strong>
-            </button>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    document.getElementById('caldos-add-btn').onclick = addCaldosToCart;
-}
-
-function openCaldosModal() {
-    caldosQuantities = { "Frango": 0, "Feijão com Bacon": 0, "Calabresa": 0 };
-    renderCaldosFlavors();
-    openModal('caldosModal');
-}
-
-function renderCaldosFlavors() {
-    const container = document.getElementById('caldos-flavors');
-    container.innerHTML = '';
-    const flavors = ["Frango", "Feijão com Bacon", "Calabresa"];
-
-    flavors.forEach(flavor => {
-        const key = flavor.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').toLowerCase();
-        const row = document.createElement('div');
-        row.className = 'd-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded shadow-sm';
-        row.innerHTML = `
-            <strong class="fs-5">${flavor}</strong>
-            <div class="btn-group" role="group">
-                <button class="btn btn-outline-danger" onclick="changeCaldosQty('${flavor}', -1)">−</button>
-                <button class="btn btn-light px-4" disabled><span id="qty-${key}">${caldosQuantities[flavor]}</span></button>
-                <button class="btn btn-outline-success" onclick="changeCaldosQty('${flavor}', 1)">+</button>
-            </div>
-        `;
-        container.appendChild(row);
-    });
-    updateCaldosTotal();
-}
-
-function changeCaldosQty(flavor, delta) {
-    const currentTotal = Object.values(caldosQuantities).reduce((a, b) => a + b, 0);
-    if (currentTotal + delta > 2) {
-        showNotification('❌ Máximo de 2 caldos!');
-        return;
-    }
-    if (caldosQuantities[flavor] + delta < 0) return;
-
-    caldosQuantities[flavor] += delta;
-    const key = flavor.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').toLowerCase();
-    document.getElementById(`qty-${key}`).textContent = caldosQuantities[flavor];
-    updateCaldosTotal();
-}
-
-function updateCaldosTotal() {
-    const total = Object.values(caldosQuantities).reduce((a, b) => a + b, 0);
-    document.getElementById('caldos-total').textContent = total;
-    document.getElementById('caldos-add-btn').disabled = (total !== 2);
-}
-
-function addCaldosToCart() {
-    const flavors = ["Frango", "Feijão com Bacon", "Calabresa"];
-    let selected = [];
-    flavors.forEach(f => {
-        for (let i = 0; i < caldosQuantities[f]; i++) selected.push(f);
-    });
-
-    let flavorText = selected[0] === selected[1] ? `2× ${selected[0]}` : selected.sort().join(' + ');
-
-    const itemName = `2 CALDOS (${flavorText}) + Torradas crocantes!`;
-    addToCart(itemName, 22.00);
-    showNotification(`✅ ${itemName} adicionado!`);
-    closeModal('caldosModal');
 }
 
 // =============================================
@@ -553,7 +453,7 @@ function addChatMsg(text, isUser = false) {
 
 function showSuggestions() {
     if (chatBody.querySelector('.quick-suggestions')) return;
-    const suggestions = ["X-Tudo", "Coca-Cola", "2 Caldinhos", "Ver carrinho", "Finalizar pedido"];
+    const suggestions = ["X-DÊ-GUSTO", "X-TUDO", "COMBO FAMÍLIA", "Ver carrinho", "Finalizar pedido"];
     const div = document.createElement('div');
     div.className = 'quick-suggestions mt-3';
     suggestions.forEach(txt => {
@@ -583,11 +483,6 @@ function botResponse(msg) {
 
     if (lowerMsg.includes('delivery') || lowerMsg.includes('entrega')) {
         return "🚚 <strong>Entrega GRÁTIS acima de R$25,00</strong>!<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG";
-    }
-
-    if (lowerMsg.includes('caldo') || lowerMsg.includes('caldinho') || lowerMsg.includes('caldos')) {
-        openCaldosModal();
-        return "🍲 Abrindo o combo de <strong>2 Caldinhos por R$22,00</strong> + torradas!<br>Escolha os sabores 😊";
     }
 
     if (lowerMsg.includes('carrinho')) {
@@ -654,7 +549,7 @@ document.getElementById('support-button').onclick = () => {
 };
 
 // =============================================
-// RÁDIO PLAYER
+// RÁDIO PLAYER MELHORADO
 // =============================================
 const radio = document.getElementById('radioPlayer');
 const playBtn = document.getElementById('playPauseBtn');
@@ -666,7 +561,24 @@ const copyRadioLink = document.getElementById('copyRadioLink');
 let isPlaying = false;
 
 if (radio) {
-    radio.volume = volumeSlider.value;
+    // Persistência de volume
+    const savedVolume = localStorage.getItem('degusto_radio_volume');
+    if (savedVolume !== null) {
+        radio.volume = parseFloat(savedVolume);
+        volumeSlider.value = savedVolume;
+    } else {
+        radio.volume = 0.5;
+        volumeSlider.value = 0.5;
+    }
+
+    // Reconexão automática em caso de erro
+    radio.addEventListener('error', () => {
+        showNotification('📻 Erro na rádio. Tentando reconectar...');
+        setTimeout(() => {
+            radio.load();
+            if (isPlaying) radio.play().catch(() => {});
+        }, 5000);
+    });
 
     playBtn.onclick = () => {
         if (isPlaying) {
@@ -675,7 +587,7 @@ if (radio) {
         } else {
             loadingIndicator.style.display = 'block';
             radio.play().catch(() => {
-                showNotification('Erro ao tocar rádio');
+                showNotification('📻 Erro ao tocar rádio');
                 loadingIndicator.style.display = 'none';
             });
             playBtn.innerHTML = '<i class="bi bi-pause-fill fs-1"></i>';
@@ -690,6 +602,7 @@ if (radio) {
 
     volumeSlider.oninput = () => {
         radio.volume = volumeSlider.value;
+        localStorage.setItem('degusto_radio_volume', volumeSlider.value);
         muteBtn.innerHTML = volumeSlider.value == 0 ? '<i class="bi bi-volume-mute-fill fs-4"></i>' : '<i class="bi bi-volume-up-fill fs-4"></i>';
     };
 
@@ -714,6 +627,7 @@ function createModernHeader() {
             <div class="js-logo-container">
                 <img src="${logoUrl}" alt="DêGusto" class="js-logo-img" />
             </div>
+            <h1 class="js-main-title">DêGusto Premium</h1>
             <p class="js-location-text">Monte Carmelo • MG</p>
             <p class="js-delivery-text">
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
@@ -736,7 +650,7 @@ function createModernHeader() {
     const style = document.createElement('style');
     style.textContent = `
         .js-modern-header { background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center / cover; background-attachment: ${attachment}; }
-        /* Todos os estilos do header premium que enviei antes */
+        /* Todos os estilos do header premium */
     `;
     document.head.appendChild(style);
 }
@@ -762,5 +676,4 @@ window.onload = () => {
     renderTabs();
     setupSearch();
     createModernHeader();
-    createCaldosModal();
 };
