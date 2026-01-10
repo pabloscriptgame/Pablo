@@ -13,6 +13,14 @@ const FREE_DELIVERY_MIN = 25.00;
 const DELIVERY_FEE = 5.00;
 
 // =============================================
+// DETECÇÃO DE iOS
+// =============================================
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.platform) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+// =============================================
 // MENU DATA
 // =============================================
 const menuData = {
@@ -765,7 +773,7 @@ function createModernHeader() {
     style.textContent = `
         .js-modern-header {
             position: relative;
-            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -884,6 +892,18 @@ function createModernHeader() {
 // INICIALIZAÇÃO
 // =============================================
 window.onload = () => {
+    // Correção de altura da tela (para todos os dispositivos, evita bug quando barra do navegador some/aparece)
+    function updateVH() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    updateVH();
+    window.addEventListener('resize', updateVH);
+    window.addEventListener('orientationchange', () => {
+        setTimeout(updateVH, 100); // Pequeno delay no iOS para garantir que a nova altura seja correta ao girar
+    });
+
+    // Tema dark
     if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
         const icon = document.querySelector('#theme-button i');
@@ -894,4 +914,10 @@ window.onload = () => {
     renderTabs();
     createModernHeader();
     createCaldosModal();
+
+    // Desabilita background-attachment: fixed apenas no iOS (evita bugs de renderização/tela branca)
+    const header = document.querySelector('.js-modern-header');
+    if (isIOS() && header) {
+        header.style.backgroundAttachment = 'scroll';
+    }
 };

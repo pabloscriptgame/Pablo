@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    
+
     <title>DêGusto Lanchonete Premium 2026 • Monte Carmelo</title>
 
     <!-- PWA e iOS/Android -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#000000" />
     <meta name="background-color" content="#000000" />
-    
+
     <!-- Apple Touch Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/MyY29Cj5/download-We-Resize-com.png" />
-    
+
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="DêGusto" />
@@ -29,6 +30,7 @@
     <!-- Seu CSS personalizado -->
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
     <!-- Botão suporte esquerdo -->
@@ -37,18 +39,16 @@
     </button>
 
     <!-- Botões flutuantes direitos -->
-    <button class="float-btn cart-float"   id="cart-button"><i class="bi bi-cart4"></i><span class="badge" id="cartCount">0</span></button>
-    <button class="float-btn share-float"  id="share-button"><i class="bi bi-share-fill"></i></button>
-    <button class="float-btn help-float"   id="help-button"><i class="bi bi-question-circle-fill"></i></button>
-    <button class="float-btn theme-float"  id="theme-button"><i class="bi bi-moon-stars-fill"></i></button>
-    <button class="float-btn top-float"    id="top-button"><i class="bi bi-arrow-up"></i></button>
+    <button class="float-btn cart-float" id="cart-button"><i class="bi bi-cart4"></i><span class="badge" id="cartCount">0</span></button>
+    <button class="float-btn share-float" id="share-button"><i class="bi bi-share-fill"></i></button>
+    <button class="float-btn help-float" id="help-button"><i class="bi bi-question-circle-fill"></i></button>
+    <button class="float-btn theme-float" id="theme-button"><i class="bi bi-moon-stars-fill"></i></button>
+    <button class="float-btn top-float" id="top-button"><i class="bi bi-arrow-up"></i></button>
 
     <!-- Chat IA -->
     <div id="chat-container" class="chat-container">
         <div class="chat-header">
-            <img src="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" 
-                 alt="Bot" 
-                 class="chat-avatar-img" />
+            <img src="https://i.ibb.co/9kr5m2S7/Gemini-Generated-Image-yrtys6yrtys6yrty-Photoroom.png" alt="Bot" class="chat-avatar-img" />
             <div>
                 <h5>DêGusto Atendimento</h5>
                 <small>Online 24h • 2026</small>
@@ -66,31 +66,22 @@
         <h2 class="text-center mb-5 display-4 fw-bold text-danger">🍟 Cardápio Completo</h2>
 
         <div class="text-center mb-5">
-            <input type="text" id="searchInput" 
-                   class="form-control w-75 mx-auto shadow-lg" 
-                   style="max-width: 500px;" 
-                   placeholder="🔍 Buscar X-Tudo, Combo, Coca..." />
+            <input type="text" id="searchInput" class="form-control w-75 mx-auto shadow-lg" style="max-width: 500px;" placeholder="🔍 Buscar X-Tudo, Combo, Coca..." />
         </div>
 
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-5" id="tab-buttons"></div>
         <div id="tab-panels"></div>
     </main>
 
-    <!-- Footer (mantido igual ao original) -->
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-5 bg-gradient-footer">
         <a href="https://www.instagram.com/degustomontecarmelo/" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #E4405F; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-family: Arial, sans-serif;">
             Seguir no Instagram
         </a>
         <div class="container mb-5">
-            <blockquote class="instagram-media" 
-                       data-instgrm-captioned 
-                       data-instgrm-permalink="https://www.instagram.com/p/DS04jOvETDL" 
-                       data-instgrm-version="14" 
-                       style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%;">
+            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DS04jOvETDL" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%;">
                 <div style="padding:16px;">
-                    <a href="https://www.instagram.com/degustomontecarmelo/" 
-                       style="background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" 
-                       target="_blank"></a>
+                    <a href="https://www.instagram.com/degustomontecarmelo/" style="background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"></a>
                 </div>
             </blockquote>
             <script async src="//www.instagram.com/embed.js"></script>
@@ -176,13 +167,13 @@
             <p class="fs-4 fw-bold mb-2">© 2026 DêGusto Lanchonete Premium</p>
             <p>📍 Monte Carmelo/MG • ☎️ (34) 99953-7698</p>
             <p class="mt-4 pt-3 border-top">
-                <strong>Design:</strong> 
+                <strong>Design:</strong>
                 <a href="https://www.pablologomarcas.online" target="_blank" class="text-warning text-decoration-none fw-bold">PabloDesigner ✨</a>
             </p>
         </div>
     </footer>
 
-    <!-- Modais (mantidos iguais) -->
+    <!-- Modais -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('cartModal')">×</span>
@@ -257,4 +248,5 @@
     <!-- Script principal -->
     <script src="script.js"></script>
 </body>
+
 </html>
