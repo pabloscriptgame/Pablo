@@ -1,7 +1,5 @@
-// script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
-// Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
-// Atualização: 07/01/2026 - Seleção de sabores dos Caldos agora com modal bonito e botões (+/-)
-// Atualização: 10/01/2026 - Fundo animado GIF no header com overlay escuro para destacar textos
+// script.js - DêGusto Lanchonete Premium 2026
+// Atualizações: Header com GIF animado + Player da rádio premium + Modal Caldos
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 let caldosQuantities = {}; // Será inicializado no modal
@@ -92,7 +90,7 @@ const menuData = {
 };
 
 // =============================================
-// MODAL DE ESCOLHA DE SABORES DOS CALDOS (COM BOTÕES)
+// MODAL DE ESCOLHA DE SABORES DOS CALDOS
 // =============================================
 function createCaldosModal() {
     const modal = document.createElement('div');
@@ -118,7 +116,6 @@ function createCaldosModal() {
     `;
     document.body.appendChild(modal);
 
-    // Evento do botão de adicionar
     document.getElementById('caldos-add-btn').onclick = addCaldosToCart;
 }
 
@@ -410,13 +407,6 @@ function renderTabs(){
             addBtn.className = 'add-to-cart btn btn-danger w-100 mt-3 py-3 fs-5 fw-bold shadow';
             addBtn.innerHTML = '➕ Adicionar';
 
-            // Personalização especial para Caldos
-            if (it.name === "2 CALDOS") {
-                addBtn.innerHTML = '🍲 Escolher Sabores e Adicionar';
-                addBtn.classList.remove('btn-danger');
-                addBtn.classList.add('btn-success');
-            }
-
             div.appendChild(addBtn);
 
             grid.appendChild(div);
@@ -432,11 +422,7 @@ function renderTabs(){
 document.addEventListener('click', e => {
     if(e.target.closest('.add-to-cart')) {
         const it = e.target.closest('.item');
-        if (it.dataset.name === "2 CALDOS") {
-            openCaldosModal();
-        } else {
-            addToCart(it.dataset.name, it.dataset.price);
-        }
+        addToCart(it.dataset.name, it.dataset.price);
     }
     else if(e.target.closest('.tab-btn')) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -473,7 +459,6 @@ document.getElementById('top-button').onclick = () => window.scrollTo({top: 0, b
 // BUSCA MELHORADA E ESTÁVEL
 // =============================================
 let searchTimeout = null;
-const tabButtons = document.getElementById('tab-buttons');
 
 function performSearch() {
     const input = document.getElementById('searchInput');
@@ -485,7 +470,7 @@ function performSearch() {
     const items = document.querySelectorAll('.item');
 
     if (!hasTerm) {
-        tabButtons.style.display = 'flex';
+        document.getElementById('tab-buttons').style.display = 'flex';
         panels.forEach(panel => panel.style.display = '');
         items.forEach(item => item.style.display = '');
         document.querySelectorAll('.item h3').forEach(h3 => {
@@ -496,7 +481,7 @@ function performSearch() {
         return;
     }
 
-    tabButtons.style.display = 'none';
+    document.getElementById('tab-buttons').style.display = 'none';
     panels.forEach(panel => panel.style.display = 'block');
 
     items.forEach(item => {
@@ -525,7 +510,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
 document.getElementById('searchInput').addEventListener('search', performSearch);
 
 // =============================================
-// CHECKOUT, TEMA, CHAT, RÁDIO
+// CHECKOUT, TEMA, CHAT
 // =============================================
 document.getElementById('checkout-form').onsubmit = function(e) {
     e.preventDefault();
@@ -639,14 +624,6 @@ function botResp(msg) {
         return `🚚 *Delivery GRÁTIS acima de R$25!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
     }
 
-    // Tratamento especial para Caldos
-    if (lowerMsg.includes('caldo') || lowerMsg.includes('caldos')) {
-        if (lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco') || lowerMsg.includes('valor')) {
-            return "🥣 2 Caldos por apenas *R$22,00* + brinde torradas crocantes!<br>Sabores: Frango • Feijão com Bacon • Calabresa";
-        }
-        return "🥣 Para pedir Caldos, vá à seção 🥣 Caldos no cardápio e clique em \"Escolher Sabores e Adicionar\" para selecionar os sabores! 😋";
-    }
-
     let foundItem = null;
     for(const cat in menuData) {
         for(const item of menuData[cat].items) {
@@ -677,7 +654,7 @@ function botResp(msg) {
         return "✅ Abrindo checkout para finalizar seu pedido!";
     }
 
-    return "🍔 Digite o nome do lanche (ex: Jantinha, X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$25* 😊";
+    return "🍔 Digite o nome do lanche (ex: X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$25* 😊";
 }
 
 function sendMsg() {
@@ -695,27 +672,63 @@ sendBtn.onclick = sendMsg;
 chatInp.addEventListener('keypress', e => { if(e.key === 'Enter') sendMsg(); });
 closeChat.onclick = () => chatCont.style.display = 'none';
 
+// =============================================
+// PLAYER DE RÁDIO PREMIUM
+// =============================================
 const radio = document.getElementById('radioPlayer');
 const playBtn = document.getElementById('playPauseBtn');
 const muteBtn = document.getElementById('muteBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const loadingIndicator = document.getElementById('loadingIndicator');
+const playerContainer = document.querySelector('.radio-player-modern');
+const copyRadioLink = document.getElementById('copyRadioLink');
+
 let isPlaying = false;
 
-if(radio && playBtn && muteBtn) {
+if (radio && playBtn && muteBtn && volumeSlider) {
+    radio.volume = volumeSlider.value;
+
     playBtn.onclick = () => {
-        if(isPlaying) {
+        if (isPlaying) {
             radio.pause();
-            playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+            playBtn.innerHTML = '<i class="bi bi-play-fill fs-1"></i>';
+            playerContainer.classList.remove('playing');
         } else {
-            radio.play().catch(() => {});
-            playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+            loadingIndicator.style.display = 'block';
+            radio.play().catch(err => {
+                showNotification('Erro ao tocar a rádio: ' + err.message);
+                loadingIndicator.style.display = 'none';
+            });
+            playBtn.innerHTML = '<i class="bi bi-pause-fill fs-1"></i>';
+            playerContainer.classList.add('playing');
         }
         isPlaying = !isPlaying;
     };
-    
+
     muteBtn.onclick = () => {
         radio.muted = !radio.muted;
-        muteBtn.innerHTML = radio.muted ? '<i class="bi bi-volume-mute-fill"></i>' : '<i class="bi bi-volume-up-fill"></i>';
+        muteBtn.innerHTML = radio.muted 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
     };
+
+    volumeSlider.oninput = () => {
+        radio.volume = volumeSlider.value;
+        muteBtn.innerHTML = volumeSlider.value == 0 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
+        if (volumeSlider.value > 0) radio.muted = false;
+    };
+
+    radio.onwaiting = () => loadingIndicator.style.display = 'block';
+    radio.onplaying = radio.oncanplay = () => loadingIndicator.style.display = 'none';
+
+    if (copyRadioLink) {
+        copyRadioLink.onclick = () => {
+            navigator.clipboard.writeText('https://www.degusto.store');
+            showNotification('🔗 Link da rádio copiado!');
+        };
+    }
 }
 
 // =============================================
