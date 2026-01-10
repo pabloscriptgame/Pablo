@@ -474,7 +474,7 @@ function botResponse(msg) {
     const lowerMsg = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     if (lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite|e ai|olá/)) {
-        return "👋 Olá! Bem-vindo à <strong>DêGusto</strong> 😋<br><br>Delivery a partir das 19h!<br>💡 <strong>Entrega GRÁTIS acima de R$25</strong><br><br>O que deseja hoje?";
+        return "👋 Olá! Bem-vindo à <strong>DêGusto</strong> 😋<br><br>Delivery a partir das 19h!<br>💡 <strong>cima de R$25</strong><br><br>O que deseja hoje?";
     }
 
     if (lowerMsg.includes('horario') || lowerMsg.includes('horário')) {
@@ -522,7 +522,7 @@ function botResponse(msg) {
         return `✅ ${quantity > 1 ? quantity + '× ' : ''}<strong>${foundItem.name}</strong> adicionado${quantity > 1 ? 's' : ''}! 🎉`;
     }
 
-    return "🍔 Não entendi... 😅<br>Digite o nome do lanche ou use as sugestões!<br>💡 Entrega GRÁTIS acima de R$25!";
+    return "🍔 Não entendi... 😅<br>Digite o nome do lanche ou use as sugestões!<br>💡 cima de R$25!";
 }
 
 function sendMessage() {
@@ -633,7 +633,7 @@ function createModernHeader() {
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
             </p>
             <div class="js-free-delivery-badge">
-                <i class="bi bi-bag"></i> Entrega GRÁTIS acima de R$25,00
+                <i class="bi bi-bag"></i> Delivery GRÁTIS acima de R$25,00
             </div>
             <div class="js-scroll-down">
                 <a href="#tab-buttons" class="js-scroll-link">
