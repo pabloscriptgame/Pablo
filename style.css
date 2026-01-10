@@ -12,7 +12,7 @@ body.dark-mode { background: #121212; color: #f0f0f0; }
 
 /* Logo Grande e Destacada no Lugar do Título */
 .header-logo {
-    background: linear-gradient(135deg, rgba(198, 40, 40, 0.45), rgba(183, 28, 28, 0.45)), 
+    background: linear-gradient(135deg, rgba(198, 40, 40, 0.5), rgba(183, 28, 28, 0.5)), 
                 url("https://i.imgur.com/MVTOZN2.gif");
     background-size: cover;
     background-position: center center;
@@ -29,6 +29,10 @@ body.dark-mode { background: #121212; color: #f0f0f0; }
     position: relative;
     z-index: 2;
 }
+/* Como o GIF já é uma versão animada do logo "Dê Gusto Lanchonete", escondemos a imagem estática para evitar duplicação */
+.header-logo-img { display: none; }
+/* Se quiser manter o logo estático por cima da animação, remova ou comente a linha acima */
+
 .header-logo-img:hover { transform: scale(1.05); }
 .dark-mode .header-logo-img { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.8)) brightness(1.2); }
 
