@@ -96,49 +96,65 @@
             <script async src="//www.instagram.com/embed.js"></script>
         </div>
 
-        <!-- Rádio -->
+        <!-- Rádio PREMIUM ATUALIZADA -->
         <section class="container my-5">
             <div class="text-center mb-4">
                 <h3 class="fw-bold display-5 text-danger">📻 Rádio DêGusto 24H</h3>
                 <p class="text-muted">Música boa + lanche bom = combinação perfeita</p>
             </div>
 
-            <div class="radio-player-modern mx-auto">
-                <div class="player-header">
-                    <div class="now-playing">
-                        <span class="status-dot"></span>
-                        <strong>Tocando agora:</strong> DêGusto Hits • 24 horas
+            <div class="radio-player-modern mx-auto shadow-lg rounded-4 overflow-hidden" style="max-width: 500px; background: linear-gradient(145deg, #1a0000, #000000); border: 2px solid #ff0000;">
+                <div class="player-header p-4 text-center position-relative">
+                    <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+                        <span class="badge bg-danger fs-6 px-3 py-2">🔴 AO VIVO</span>
+                    </div>
+                    <div class="now-playing fs-5 mb-3">
+                        <span class="status-dot me-2"></span>
+                        <strong>Tocando agora:</strong> DêGusto Hits • 24 horas non-stop
+                    </div>
+                    <div class="equalizer">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
 
-                <div class="player-main">
+                <div class="player-main p-4 text-center">
                     <audio id="radioPlayer" preload="metadata">
                         <source src="https://stream.zeno.fm/si5xey7akartv.mp3" type="audio/mpeg">
+                        Seu navegador não suporta áudio.
                     </audio>
 
-                    <div class="controls">
-                        <button id="playPauseBtn" class="control-btn play-btn" aria-label="Play/Pause">
-                            <i class="bi bi-play-fill"></i>
+                    <div class="controls mb-4">
+                        <button id="playPauseBtn" class="btn btn-danger btn-lg rounded-circle shadow-lg d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                            <i class="bi bi-play-fill fs-1"></i>
                         </button>
-                        <button id="muteBtn" class="control-btn volume-btn" aria-label="Volume">
-                            <i class="bi bi-volume-up-fill"></i>
+                    </div>
+
+                    <div class="volume-control d-flex align-items-center justify-content-center gap-3 mb-4">
+                        <button id="muteBtn" class="btn btn-outline-light btn-lg rounded-circle p-3">
+                            <i class="bi bi-volume-up-fill fs-4"></i>
                         </button>
-                        <div class="volume-slider-container">
-                            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
+                        <input type="range" id="volumeSlider" class="form-range" min="0" max="1" step="0.01" value="0.8" style="width: 180px;">
+                    </div>
+
+                    <div id="loadingIndicator" class="text-center text-danger" style="display: none;">
+                        <div class="spinner-border mb-2" role="status">
+                            <span class="visually-hidden">Carregando...</span>
                         </div>
+                        <p class="mb-0">Conectando ao stream...</p>
                     </div>
                 </div>
 
-                <div class="player-footer mt-4">
-                    <div class="share-radio">
-                        <small>Compartilhe a rádio:</small>
-                        <div class="input-group mt-2">
-                            <input type="text" class="form-control bg-dark text-white border-0" 
-                                   id="radioLink" value="www.degusto.store" readonly />
-                            <button class="btn btn-danger px-4" id="copyRadioLink">
-                                <i class="bi bi-copy"></i> Copiar
-                            </button>
-                        </div>
+                <div class="player-footer p-4 text-center border-top border-danger border-opacity-50">
+                    <small class="text-muted d-block mb-2">Compartilhe a rádio com os amigos:</small>
+                    <div class="input-group input-group-lg" style="max-width: 400px; margin: 0 auto;">
+                        <input type="text" class="form-control bg-dark text-white border-danger" id="radioLink" value="https://www.degusto.store" readonly />
+                        <button class="btn btn-danger px-4" id="copyRadioLink">
+                            <i class="bi bi-copy me-2"></i>Copiar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -238,7 +254,7 @@
 
     <div id="notification" class="notification"></div>
 
-    <!-- Script principal com o novo cabeçalho em JS -->
+    <!-- Script principal -->
     <script src="script.js"></script>
 </body>
 </html>
