@@ -1,800 +1,359 @@
-/* ====================== CSS COMPLETO PREMIUM 2026 - VERSÃO FINAL MELHORADA ====================== */
-
-
-/* Melhorias principais nesta versão:
-   - Chat atendimento 100% corrigido: mensagens alinhadas corretamente, bolhas perfeitas, rolagem suave
-   - Quick suggestions com layout flexível e responsivo
-   - Dark mode impecável no chat (cores ajustadas para legibilidade)
-   - Animações suaves de entrada nas mensagens
-   - Header compatível iOS + animações premium
-   - Cards do cardápio mais modernos e hover fluido
-   - Rádio player com visual mais premium
-   - Responsividade aprimorada em todos os elementos
-   - Correções gerais de espaçamento, sombras e transições */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
+/* ====================== CSS COMPLETO 2026 ====================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f8f9fa;
     color: #333;
     overflow-x: hidden;
     min-height: 100vh;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 0.5s, color 0.5s;
 }
+body.dark-mode { background: #121212; color: #f0f0f0; }
 
-body.dark-mode {
-    background: #0a0a0a;
-    color: #f0f0f0;
-}
-
-
-/* ==================== HEADER MODERNO COM GIF ==================== */
-
-.js-modern-header {
-    position: relative;
-    min-height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center / cover;
-    background-attachment: fixed;
-    overflow: hidden;
-    padding: 2rem 0;
+/* Logo Grande e Destacada no Lugar do Título */
+.header-logo {
+    background: linear-gradient(135deg, rgba(198, 40, 40, 0.5), rgba(183, 28, 28, 0.5)), 
+                url("https://i.imgur.com/MVTOZN2.gif");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 60px 20px;
     text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
-
-@supports (-webkit-touch-callout: none) {
-    .js-modern-header {
-        background-attachment: scroll;
-    }
-}
-
-.js-header-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.68);
-    z-index: 1;
-}
-
-.js-header-content {
+.header-logo-img {
+    height: 220px;
+    max-width: 90%;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+    transition: transform 0.4s;
     position: relative;
     z-index: 2;
-    max-width: 900px;
-    padding: 0 1.5rem;
-    animation: fadeInUp 1.5s ease-out;
 }
+/* Como o GIF já é uma versão animada do logo "Dê Gusto Lanchonete", escondemos a imagem estática para evitar duplicação */
+.header-logo-img { display: none; }
+/* Se quiser manter o logo estático por cima da animação, remova ou comente a linha acima */
 
-.js-logo-container {
-    animation: float 6s ease-in-out infinite;
-    margin-bottom: 2rem;
+.header-logo-img:hover { transform: scale(1.05); }
+.dark-mode .header-logo-img { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.8)) brightness(1.2); }
+
+.bg-gradient-footer { background: linear-gradient(135deg, #1a1a1a, #333); }
+
+/* Grid Cardápio */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 15px;
 }
-
-.js-logo-img {
-    width: 240px;
-    max-width: 90vw;
-    height: auto;
-    filter: drop-shadow(0 10px 25px rgba(255, 60, 60, 0.45));
-    transition: transform 0.4s ease;
-}
-
-.js-logo-img:hover {
-    transform: scale(1.08);
-}
-
-.js-main-title {
-    font-size: 3.8rem;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 3px;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-    margin: 0 0 1rem;
-    animation: fadeInUp 1.2s ease-out;
-}
-
-.js-location-text {
-    font-size: 1.9rem;
-    color: white;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-    opacity: 0.95;
-    animation: fadeInUp 1.5s ease-out;
-}
-
-.js-delivery-text {
-    font-size: 1.7rem;
-    font-weight: 500;
-    color: white;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-    margin: 0.8rem 0;
-    animation: fadeInUp 1.6s ease-out;
-}
-
-.js-delivery-text i {
-    margin-right: 0.6rem;
-}
-
-.js-free-delivery-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(90deg, #ff1744, #ff5252);
-    color: white;
-    padding: 14px 34px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 1.4rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    animation: pulse 2.5s infinite, fadeInUp 1.8s ease-out;
-    margin: 2.5rem auto;
-}
-
-.js-free-delivery-badge i {
-    margin-right: 0.8rem;
-    font-size: 1.6rem;
-}
-
-.js-scroll-down {
-    margin-top: 3.5rem;
-    animation: fadeInUp 2.2s ease-out;
-}
-
-.js-scroll-link {
-    color: white;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 600;
-    padding: 14px 34px;
-    border: 3px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50px;
-    transition: all 0.4s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-.js-scroll-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: white;
-    transform: translateY(-6px);
-}
-
-.js-scroll-link i {
-    animation: bounce 2s infinite;
-}
-
-@keyframes float {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-18px);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.06);
-    }
-}
-
-@keyframes bounce {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-
-/* Responsivo Header */
-
-@media (max-width: 768px) {
-    .js-main-title {
-        font-size: 3rem;
-    }
-    .js-location-text {
-        font-size: 1.7rem;
-    }
-    .js-delivery-text {
-        font-size: 1.5rem;
-    }
-    .js-free-delivery-badge {
-        font-size: 1.2rem;
-        padding: 12px 28px;
-    }
-    .js-logo-img {
-        width: 200px;
-    }
-}
-
-@media (max-width: 480px) {
-    .js-main-title {
-        font-size: 2.6rem;
-    }
-    .js-delivery-text {
-        font-size: 1.4rem;
-    }
-    .js-location-text {
-        font-size: 1.5rem;
-    }
-}
-
-
-/* ==================== CARDÁPIO ==================== */
-
-.card {
-    border: none;
+.item {
+    background: #fff;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-    transition: all 0.4s ease;
-    background: white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s;
+    text-align: center;
+    padding: 15px;
 }
+.item:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.item img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; cursor: pointer; }
+.item h3 { color: #d32f2f; font-weight: bold; margin: 15px 0 5px; }
+.item span { font-size: 1.6rem; font-weight: bold; color: #d32f2f; display: block; margin: 10px 0; }
+.dark-mode .item { background: #1e1e1e; }
+.dark-mode .item h3, .dark-mode .item span { color: #ff5252; }
 
-.dark-mode .card {
-    background: #1e1e1e;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-}
+/* Abas */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-btn.active { background: #d32f2f !important; color: #fff !important; }
 
-.card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.card-img-top {
-    height: 220px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.4s ease;
-}
-
-.card-img-top:hover {
-    transform: scale(1.05);
-}
-
-.card-title {
-    color: #d32f2f;
-    font-weight: 800;
-}
-
-.dark-mode .card-title {
-    color: #ff5252;
-}
-
-.btn-danger {
-    background: #d32f2f;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-weight: bold;
-    transition: all 0.3s;
-}
-
-.btn-danger:hover {
-    background: #b71c1c;
-    transform: translateY(-3px);
-}
-
-
-/* ==================== BOTÕES FLUTUANTES ==================== */
-
+/* Botões Flutuantes */
 .float-btn {
     position: fixed;
-    width: 62px;
-    height: 62px;
+    width: 60px; height: 60px;
     border-radius: 50%;
     border: none;
     color: #fff;
-    font-size: 26px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    font-size: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.float-btn:hover {
-    transform: scale(1.12);
-}
-
-.cart-float {
-    right: 20px;
-    bottom: 20px;
-    background: #28a745;
-}
-
-.share-float {
-    right: 92px;
-    bottom: 20px;
-    background: #25d366;
-}
-
-.help-float {
-    right: 164px;
-    bottom: 20px;
-    background: #007bff;
-}
-
-.theme-float {
-    right: 236px;
-    bottom: 20px;
-    background: #6c757d;
-}
-
-.top-float {
-    right: 20px;
-    bottom: 92px;
-    background: #d32f2f;
-    display: none;
-}
-
 @media (max-width: 768px) {
-    .float-btn {
-        width: 54px;
-        height: 54px;
-        font-size: 22px;
-    }
-    .cart-float {
-        right: 15px;
-        bottom: 15px;
-    }
-    .share-float {
-        right: 80px;
-        bottom: 15px;
-    }
-    .help-float {
-        right: 145px;
-        bottom: 15px;
-    }
-    .theme-float {
-        right: 210px;
-        bottom: 15px;
-    }
-    .top-float {
-        right: 15px;
-        bottom: 80px;
-    }
+    .float-btn { width: 50px; height: 50px; font-size: 20px; }
 }
+.cart-float   { right: 20px; bottom: 20px; background: #28a745; }
+.share-float  { right: 90px; bottom: 20px; background: #25d366; }
+.help-float   { right: 160px; bottom: 20px; background: #007bff; }
+.theme-float  { right: 230px; bottom: 20px; background: #6c757d; }
+.top-float    { right: 20px; bottom: 90px; background: #d32f2f; width: 50px; height: 50px; font-size: 20px; }
 
+/* Botão Suporte Esquerdo Pequeno */
 .support-btn {
     position: fixed;
     left: 15px;
     bottom: 20px;
-    width: 58px;
-    height: 58px;
+    width: 55px;
+    height: 55px;
     background: #25d366;
     color: white;
     border-radius: 50%;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     z-index: 1000;
-    font-size: 26px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.support-btn:hover {
-    transform: scale(1.12);
+@media (max-width: 768px) {
+    .support-btn { width: 48px; height: 48px; font-size: 20px; bottom: 15px; left: 10px; }
 }
 
 .badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ff1744;
-    color: #fff;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-    font-weight: bold;
+    position: absolute; top: -5px; right: -5px;
+    background: #ff0000; color: #fff;
+    border-radius: 50%; width: 24px; height: 24px;
+    font-size: 12px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
 }
 
-
-/* ==================== MODAIS ==================== */
-
+/* Modal */
 .modal {
     display: none;
-    position: fixed;
-    z-index: 2000;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    justify-content: center;
-    align-items: center;
+    position: fixed; z-index: 2000; left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center; align-items: center;
     padding: 20px;
 }
-
 .modal-content {
-    background: #fff;
-    border-radius: 28px;
-    max-width: 620px;
-    width: 95%;
-    max-height: 92vh;
-    overflow-y: auto;
-    padding: 40px;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    background: #fff; border-radius: 25px;
+    max-width: 600px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    padding: 35px; position: relative;
 }
+@media (max-width: 768px) { .modal-content { padding: 20px; max-width: 90%; } }
+.dark-mode .modal-content { background: #1e1e1e; }
+.close { position: absolute; top: 15px; right: 25px; font-size: 35px; cursor: pointer; color: #aaa; }
+.close:hover { color: #d32f2f; }
+.full-image { max-width: 90%; max-height: 90vh; margin: auto; display: block; border-radius: 15px; }
 
-.dark-mode .modal-content {
-    background: #1e1e1e;
-}
-
-.close {
-    position: absolute;
-    top: 18px;
-    right: 28px;
-    font-size: 38px;
-    cursor: pointer;
-    color: #aaa;
-}
-
-.close:hover {
-    color: #d32f2f;
-}
-
-.full-image {
-    max-width: 95%;
-    max-height: 90vh;
-    border-radius: 18px;
-}
-
+/* Carrinho Melhorado */
 .cart-item {
     display: flex;
     align-items: center;
-    gap: 18px;
-    padding: 15px 0;
+    gap: 15px;
+    padding: 12px 0;
     border-bottom: 1px solid #eee;
 }
-
-.dark-mode .cart-item {
-    border-bottom-color: #444;
-}
-
+.dark-mode .cart-item { border-bottom-color: #444; }
 .cart-item-img {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
 }
-
+.cart-item-info { flex: 1; }
+.cart-item-info strong { font-size: 1.1rem; }
 .cart-item-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
-
 
 /* Notificação */
-
 .notification {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
+    position: fixed; bottom: 100px; left: 50%;
     transform: translateX(-50%);
-    background: #1e1e1e;
-    color: #fff;
-    padding: 16px 32px;
-    border-radius: 50px;
-    font-weight: bold;
-    z-index: 3000;
-    opacity: 0;
-    transition: opacity 0.4s;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: #333; color: #fff;
+    padding: 15px 30px; border-radius: 50px;
+    font-weight: bold; z-index: 3000;
+    display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-.notification.show {
-    opacity: 1;
-}
-
-
-/* ==================== CHAT ATENDIMENTO - CORRIGIDO E MELHORADO ==================== */
-
-.chat-container {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 420px;
-    max-width: 95%;
-    height: 580px;
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    z-index: 1100;
-    display: none;
-    flex-direction: column;
-}
-
-.dark-mode .chat-container {
-    background: #1e1e1e;
-}
-
-.chat-header {
-    background: linear-gradient(90deg, #d32f2f, #b71c1c);
-    padding: 18px 20px;
+/* Promoção Única Destaque */
+.highlight-promo {
+    background: linear-gradient(135deg, #ff416c, #ff8a00);
     color: white;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.chat-avatar-img {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 3px solid white;
-    object-fit: cover;
-}
-
-.chat-header h5 {
-    margin: 0;
-    font-size: 1.3rem;
-}
-
-.chat-header small {
-    opacity: 0.9;
-}
-
-.chat-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.dark-mode .chat-body {
-    background: #111;
-}
-
-.message {
-    max-width: 80%;
-    padding: 14px 18px;
-    border-radius: 22px;
-    line-height: 1.6;
-    word-wrap: break-word;
-    animation: fadeIn 0.4s ease-out;
-    align-self: flex-start;
-}
-
-.message.bot {
-    background: #d32f2f;
-    color: white;
-    border-bottom-left-radius: 6px;
-}
-
-.message.user {
-    background: #e9ecef;
-    color: #333;
-    align-self: flex-end;
-    border-bottom-right-radius: 6px;
-}
-
-.dark-mode .message.user {
-    background: #333;
-    color: #f0f0f0;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.quick-suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: flex-start;
-}
-
-.quick-btn {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 10px 16px;
     border-radius: 25px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(255,65,108,0.4);
+    border: 5px solid #fff;
+    animation: pulse-border 3s infinite;
 }
-
-.quick-btn:hover {
-    background: #d32f2f;
-    color: white;
-    transform: translateY(-2px);
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
 }
+.highlight-promo h2 { font-size: 2.5rem; font-weight: bold; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+.highlight-promo .price { font-size: 4rem; font-weight: bold; }
+.highlight-promo .desc { font-size: 1.4rem; margin: 15px 0; }
 
-.dark-mode .quick-btn {
-    background: #333;
-    border-color: #555;
-    color: #f0f0f0;
+/* Rádio Fino */
+.radio-player {
+    max-width: 420px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.1);
+    padding: 12px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 }
+.dark-mode .radio-player { background: rgba(0,0,0,0.3); }
+#radioPlayer { width: 100%; height: 40px; border-radius: 10px; }
 
-.dark-mode .quick-btn:hover {
-    background: #d32f2f;
-}
+/* 5 Estrelas */
+.stars-5 { color: #ffc107; font-size: 2.5rem; letter-spacing: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
 
-.chat-footer {
-    padding: 16px;
-    background: white;
-    border-top: 1px solid #ddd;
-    display: flex;
-    gap: 12px;
-}
-
-.dark-mode .chat-footer {
-    background: #1e1e1e;
-    border-top-color: #444;
-}
-
-#chat-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 14px 20px;
-    border-radius: 30px;
-    background: #f1f1f1;
-    font-size: 1rem;
-}
-
-.dark-mode #chat-input {
-    background: #2a2a2a;
-    color: white;
-}
-
-#send-chat {
-    background: #d32f2f;
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    transition: all 0.3s;
-}
-
-#send-chat:hover {
-    background: #b71c1c;
-    transform: scale(1.1);
-}
-
-
-/* Responsivo Chat */
-
-@media (max-width: 576px) {
-    .chat-container {
-        width: 100%;
-        height: 100vh;
-        bottom: 0;
-        right: 0;
-        border-radius: 0;
-    }
-    .message {
-        max-width: 90%;
-    }
-}
-
-
-/* ==================== RÁDIO PLAYER ==================== */
-
-.radio-player-modern {
-    background: linear-gradient(145deg, #1a0000, #000000);
-    border: 3px solid #ff1744;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-}
-
-.player-header {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 20px;
-}
-
-.now-playing {
-    color: #ff5252;
-    font-size: 1.1rem;
-}
-
-.equalizer span {
-    display: inline-block;
-    width: 5px;
-    height: 20px;
-    background: #ff1744;
-    margin: 0 3px;
-    animation: equalize 1.4s infinite alternate;
-}
-
-.equalizer span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.equalizer span:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-.equalizer span:nth-child(4) {
-    animation-delay: 0.6s;
-}
-
-.equalizer span:nth-child(5) {
-    animation-delay: 0.8s;
-}
-
-@keyframes equalize {
-    from {
-        height: 8px;
-    }
-    to {
-        height: 32px;
-    }
-}
-
-
-/* ==================== OUTROS ==================== */
-
-.stars-5 {
-    color: #ffc107;
-    font-size: 2.8rem;
-    letter-spacing: 8px;
-}
-
+/* Selos de Segurança */
 .security-badges {
-    gap: 25px;
-    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
-
 .badge-security {
     background: #d32f2f;
-    padding: 12px 28px;
+    color: white;
+    padding: 10px 20px;
     border-radius: 50px;
     font-weight: bold;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.bg-gradient-footer {
-    background: linear-gradient(135deg, #1a0000, #000000);
+/* Chat */
+.chat-container {
+    position: fixed; bottom: 90px; right: 20px;
+    width: 400px; height: 550px;
+    background: white; border-radius: 20px;
+    box-shadow: 0 12px 45px rgba(0,0,0,0.25);
+    overflow: hidden; z-index: 1100;
+    display: none; flex-direction: column;
+}
+@media (max-width: 768px) {
+    .chat-container { width: 90%; height: 80vh; bottom: 0; right: 0; border-radius: 20px 20px 0 0; }
+}
+.dark-mode .chat-container { background: #1e1e1e; }
+.chat-header { background: #d32f2f; color: white; padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
+.chat-avatar-img { width: 50px; height: 50px; border-radius: 50%; border: 3px solid white; }
+.chat-body { flex: 1; padding: 18px; overflow-y: auto; background: #f8f9fa; }
+.dark-mode .chat-body { background: #121212; }
+.message { margin-bottom: 14px; max-width: 85%; padding: 12px 16px; border-radius: 20px; line-height: 1.5; }
+.message.bot { background: #d32f2f; color: white; border-bottom-left-radius: 5px; }
+.message.user { background: #e0e0e0; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 5px; }
+.dark-mode .message.user { background: #333; }
+.chat-footer { display: flex; padding: 14px; border-top: 1px solid #ddd; background: white; }
+.dark-mode .chat-footer { background: #1e1e1e; border-top-color: #444; }
+#chat-input { flex: 1; border: none; outline: none; padding: 12px 18px; border-radius: 30px; background: #f1f1f1; margin-right: 10px; }
+.dark-mode #chat-input { background: #2a2a2a; color: white; }
+#send-chat { background: #d32f2f; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; }
+.quick-suggestions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.quick-btn { background: #e0e0e0; border: none; padding: 10px 16px; border-radius: 25px; font-size: 0.9rem; cursor: pointer; }
+.dark-mode .quick-btn { background: #444; color: white; }
+
+@media (max-width: 768px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .float-btn { bottom: 10px; }
+    .cart-float { right: 10px; }
+    .share-float { right: 70px; }
+    .help-float { right: 130px; }
+    .theme-float { right: 190px; }
+    .top-float { right: 10px; bottom: 70px; }
 }
 
+// script.js - DêGusto Lanchonete Premium 2026
+// Atualizações: Header com GIF animado + Player da rádio premium
 
-/* Responsivo Geral */
+let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
+let caldosQuantities = {};
+const phoneNumber = "5534999537698";
+const pixKey = "10738419605";
+const logoUrl = "https://i.ibb.co/DPDZb4W1/Gemini-Generated-Image-40opkn40opkn40op-Photoroom.png";
+const siteUrl = "www.degusto.store";
 
-@media (max-width: 576px) {
-    .card-img-top {
-        height: 180px;
+const FREE_DELIVERY_MIN = 25.00;
+const DELIVERY_FEE = 5.00;
+
+// MENU DATA (mantido igual)
+const menuData = { /* ... todo o menuData original aqui ... */ };
+
+// [TODAS AS FUNÇÕES DO CARRINHO, MODAIS, CARDÁPIO, BUSCA, CHECKOUT, TEMA, CHAT – mantenha exatamente como no script anterior]
+
+// PLAYER DE RÁDIO PREMIUM
+const radio = document.getElementById('radioPlayer');
+const playBtn = document.getElementById('playPauseBtn');
+const muteBtn = document.getElementById('muteBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const loadingIndicator = document.getElementById('loadingIndicator');
+const playerContainer = document.querySelector('.radio-player-modern');
+const copyRadioLink = document.getElementById('copyRadioLink');
+
+let isPlaying = false;
+
+if (radio && playBtn && muteBtn && volumeSlider) {
+    radio.volume = volumeSlider.value;
+
+    playBtn.onclick = () => {
+        if (isPlaying) {
+            radio.pause();
+            playBtn.innerHTML = '<i class="bi bi-play-fill fs-1"></i>';
+            playerContainer.classList.remove('playing');
+        } else {
+            loadingIndicator.style.display = 'block';
+            radio.play().catch(err => {
+                showNotification('Erro ao tocar a rádio: ' + err.message);
+                loadingIndicator.style.display = 'none';
+            });
+            playBtn.innerHTML = '<i class="bi bi-pause-fill fs-1"></i>';
+            playerContainer.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    };
+
+    muteBtn.onclick = () => {
+        radio.muted = !radio.muted;
+        muteBtn.innerHTML = radio.muted 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
+    };
+
+    volumeSlider.oninput = () => {
+        radio.volume = volumeSlider.value;
+        muteBtn.innerHTML = volumeSlider.value == 0 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
+        if (volumeSlider.value > 0) radio.muted = false;
+    };
+
+    radio.onwaiting = () => loadingIndicator.style.display = 'block';
+    radio.onplaying = radio.oncanplay = () => loadingIndicator.style.display = 'none';
+
+    if (copyRadioLink) {
+        copyRadioLink.onclick = () => {
+            navigator.clipboard.writeText('https://www.degusto.store');
+            showNotification('🔗 Link da rádio copiado!');
+        };
     }
 }
+
+// CABEÇALHO COM GIF (mantido com overlay escuro)
+function createModernHeader() {
+    // [código completo da função createModernHeader com GIF que eu enviei anteriormente]
+}
+
+// INICIALIZAÇÃO
+window.onload = () => {
+    if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        const icon = document.querySelector('#theme-button i');
+        if(icon) icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
+    }
+    
+    updateCartCount();
+    renderTabs();
+    createModernHeader();
+    createCaldosModal();
+};
