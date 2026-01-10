@@ -122,11 +122,11 @@ function renderTabs() {
     });
 
     // Botão especial Caldinhos
-    const caldosBtn = document.createElement('button');
-    caldosBtn.className = 'btn btn-success me-2 mb-2 px-4 fw-bold';
-    caldosBtn.innerHTML = '🍲 2 Caldinhos + Torradas<br><small>R$ 22,00</small>';
-    caldosBtn.onclick = openCaldosModal;
-    tabButtons.appendChild(caldosBtn);
+    //const caldosBtn = document.createElement('button');
+    //caldosBtn.className = 'btn btn-success me-2 mb-2 px-4 fw-bold';
+    //caldosBtn.innerHTML = '🍲 2 Caldinhos + Torradas<br><small>R$ 22,00</small>';
+    //caldosBtn.onclick = openCaldosModal;
+    //tabButtons.appendChild(caldosBtn);
 
     showCategory(Object.keys(menuData)[0]);
 }
