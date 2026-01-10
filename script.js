@@ -1,6 +1,7 @@
 // script.js - DêGusto Lanchonete Premium 2026 - BUSCA MELHORADA E ESTÁVEL
 // Data: 06/01/2026 - Adicionado: Molho de Alho R$0,50 + Cabeçalho Moderno via JS
 // Atualização: 07/01/2026 - Seleção de sabores dos Caldos agora com modal bonito e botões (+/-)
+// Atualização: 10/01/2026 - Fundo animado GIF no header com overlay escuro para destacar textos
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 let caldosQuantities = {}; // Será inicializado no modal
@@ -718,7 +719,7 @@ if(radio && playBtn && muteBtn) {
 }
 
 // =============================================
-// CABEÇALHO MODERNO SUAVE CRIADO VIA JAVASCRIPT
+// CABEÇALHO MODERNO COM GIF DE FUNDO
 // =============================================
 function createModernHeader() {
     const header = document.createElement('header');
@@ -755,7 +756,9 @@ function createModernHeader() {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #330000 100%);
+            background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
             overflow: hidden;
             padding: 2rem 0;
             text-align: center;
@@ -763,7 +766,7 @@ function createModernHeader() {
         .js-header-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.65);
             z-index: 1;
         }
         .js-header-content {
@@ -877,5 +880,5 @@ window.onload = () => {
     updateCartCount();
     renderTabs();
     createModernHeader();
-    createCaldosModal(); // Novo modal criado aqui
+    createCaldosModal();
 };
