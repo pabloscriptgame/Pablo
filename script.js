@@ -482,7 +482,7 @@ function botResponse(msg) {
     }
 
     if (lowerMsg.includes('delivery') || lowerMsg.includes('entrega')) {
-        return "🚚 <strong>Entrega GRÁTIS acima de R$25,00</strong>!<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG";
+        return "🛵 <strong>Delivey GRÁTIS acima de R$25,00</strong>!<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG";
     }
 
     if (lowerMsg.includes('carrinho')) {
