@@ -633,7 +633,7 @@ function createModernHeader() {
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
             </p>
             <div class="js-free-delivery-badge">
-                <i class="bi bi-truck"></i> Entrega GRÁTIS acima de R$25,00
+                <i class="bi bi-bag"></i> Entrega GRÁTIS acima de R$25,00
             </div>
             <div class="js-scroll-down">
                 <a href="#tab-buttons" class="js-scroll-link">
