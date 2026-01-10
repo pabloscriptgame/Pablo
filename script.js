@@ -627,7 +627,6 @@ function createModernHeader() {
             <div class="js-logo-container">
                 <img src="${logoUrl}" alt="DêGusto" class="js-logo-img" />
             </div>
-            <h1 class="js-main-title">DêGusto Premium</h1>
             <p class="js-location-text">Monte Carmelo • MG</p>
             <p class="js-delivery-text">
                 <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
