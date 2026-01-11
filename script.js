@@ -743,11 +743,6 @@ function createModernHeader() {
             <div class="js-logo-container">
                 <img src="${logoUrl}" alt="DêGusto Lanchonete" class="js-logo-img" />
             </div>
-            <h1 class="js-main-title"></h1>
-            <p class="js-location-text">Monte Carmelo • MG</p>
-            <p class="js-delivery-text">
-                <i class="bi bi-clock"></i> Delivery das 19h às 23h • Todos os dias
-            </p>
             <div class="js-free-delivery-badge">
                 <i class="bi bi-bag"></i> Delivery GRÁTIS acima de R$25,00
             </div>
