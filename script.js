@@ -771,7 +771,6 @@ function createModernHeader() {
             justify-content: center;
             background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center;
             background-size: cover;
-            background-attachment: fixed;
             overflow: hidden;
             padding: 2rem 0;
             text-align: center;
