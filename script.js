@@ -1,5 +1,5 @@
 // script.js - DêGusto Lanchonete Premium 2026
-// Atualizações: Header com GIF animado + Player da rádio premium + Modal Caldos
+// Atualizações: Header com GIF animado + Player da rádio premium + Modal Caldos + FIXO SEM MOVIMENTO LATERAL
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 let caldosQuantities = {}; // Será inicializado no modal
@@ -758,6 +758,13 @@ function createModernHeader() {
 
     const style = document.createElement('style');
     style.textContent = `
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
         .js-modern-header {
             position: relative;
             min-height: 100vh;
@@ -766,6 +773,7 @@ function createModernHeader() {
             justify-content: center;
             background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center;
             background-size: cover;
+            background-attachment: fixed;
             overflow: hidden;
             padding: 2rem 0;
             text-align: center;
@@ -795,24 +803,6 @@ function createModernHeader() {
             transition: transform 0.4s ease;
         }
         .js-logo-img:hover { transform: scale(1.05); }
-        .js-main-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 2px;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            margin: 0 0 1rem;
-            animation: fadeInUp 1.2s ease-out;
-        }
-        .js-location-text, .js-delivery-text {
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            animation: fadeInUp 1.5s ease-out;
-            margin: 0.5rem 0;
-        }
-        .js-location-text { font-size: 1.8rem; opacity: 0.9; }
-        .js-delivery-text { font-size: 1.6rem; font-weight: 500; }
-        .js-delivery-text i { margin-right: 0.5rem; }
         .js-free-delivery-badge {
             display: inline-flex;
             align-items: center;
@@ -854,14 +844,11 @@ function createModernHeader() {
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @media (max-width: 768px) {
-            .js-main-title { font-size: 2.8rem; }
-            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
             .js-logo-img { width: 180px; }
+            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
         }
         @media (max-width: 480px) {
-            .js-main-title { font-size: 2.4rem; }
-            .js-delivery-text { font-size: 1.4rem; }
-            .js-location-text { font-size: 1.6rem; }
+            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
         }
     `;
     document.head.appendChild(style);
