@@ -1,5 +1,5 @@
 // script.js - DêGusto Lanchonete Premium 2026
-// Atualizado: Janeiro 2026 - Cardápio completo reorganizado + novos combos artesanais
+// Atualizações: Header com GIF animado + Player da rádio premium + Modal Caldos + FIXO SEM MOVIMENTO LATERAL
 
 let cart = JSON.parse(localStorage.getItem('degusto_cart')) || [];
 let caldosQuantities = {}; // Será inicializado no modal
@@ -13,90 +13,72 @@ const FREE_DELIVERY_MIN = 25.00;
 const DELIVERY_FEE = 5.00;
 
 // =============================================
-// MENU DATA - CARDÁPIO COMPLETO E ORGANIZADO 2026
+// MENU DATA
 // =============================================
 const menuData = {
-    combos: {
-        title: "🔥 Combos Especiais",
+    hamburgueres: {
+        title: "🍔 Hambúrgueres",
         items: [
-            { name: "COMBO ARTESANAL 1", price: 35.00, img: "https://i.ibb.co/KzLhFRrj/combo-1.png",
-              desc: "Artesanal Clássico + 1 Batata P + Refri 200ml" },
-            { name: "COMBO ARTESANAL 2", price: 38.00, img: "https://i.ibb.co/d4txStn2/combo-5.png",
-              desc: "Artesanal Duplo + 1 Batata P + Refri 200ml" },
-            { name: "COMBO ARTESANAL 3", price: 36.00, img: "https://iili.io/fjgg5Pf.jpg",
-              desc: "Artesanal com Doritos + 1 Batata P + Refri 200ml" },
-            { name: "COMBO FAMÍLIA 3 X-TUDO", price: 60.00, img: "https://iili.io/fjgSYWG.jpg",
-              desc: "3× X-Tudo" },
-            { name: "SUPER COMBO FAMÍLIA", price: 70.00, img: "https://i.ibb.co/GvY9F6kP/combo-2.png",
-              desc: "2× X-Tudo + 2 Refri 200ml + 2 Batatas Fritas" },
-            { name: "COMBO NA CAIXA GIGANTE", price: 70.00, img: "https://iili.io/fjg8NSI.jpg",
-              desc: "2× X-Tudo + Anel de Cebola + Batata c/ Cheddar & Bacon + Steak Frango + Molhos" }
+            { name: "X-DÊ-GUSTO", price: 28.00, img: "https://iili.io/fOXbiFI.png", desc: "Destaque 1ª" },
+            { name: "X-Cheddar com Anéis", price: 26.00, img: "https://i.ibb.co/LDYypj6Q/20251031-205800.jpg" },
+            { name: "X-Bacon Goiabada", price: 26.00, img: "https://i.ibb.co/4n86G96b/20251031-205913.jpg" },
+            { name: "ESPECIAL TILÁPIA", price: 30.00, img: "https://i.ibb.co/7cYcLrD/IMG-20250924-WA0010.jpg" },
+            { name: "ARTESANAL GOIABADA", price: 30.00, img: "https://i.ibb.co/4nfgvWGn/IMG-20250924-WA0009.jpg" },
+            { name: "ESPECIAL STEAK", price: 30.00, img: "https://i.ibb.co/MxtW5hX2/IMG-20250928-WA0026.jpg" },
+            { name: "ARTESANAL CLÁSSICO", price: 28.00, img: "https://i.ibb.co/0pRMs7CM/20251004-235952.jpg" },
+            { name: "ARTESANAL DORITOS", price: 30.00, img: "https://i.ibb.co/ZpvH013t/20251004-235135.jpg" },
+            { name: "ARTESANAL DUPLO", price: 35.00, img: "https://i.ibb.co/JR70qRfW/20251004-235417.jpg" },
+            { name: "X-BOLO GIGANTE", price: 42.00, img: "https://i.ibb.co/23rd6PGY/20251004-235801.jpg" },
+            { name: "X-TUDO", price: 22.00, img: "https://i.ibb.co/Z1d5Q46K/x-tudo.png" },
+            { name: "X-BACON", price: 22.00, img: "https://i.ibb.co/Pv8DLymw/IMG-20251004-WA0057.jpg" },
+            { name: "X-CALABRESA", price: 22.00, img: "https://i.ibb.co/4wFq4fLJ/IMG-20251004-WA0058.jpg" },
+            { name: "X-CHEDDAR", price: 22.00, img: "https://i.ibb.co/TMWKbdX5/IMG-20251004-WA0056.jpg" }
         ]
     },
-    hamburgueres_tradicionais: {
-        title: "🍔 Hamburgueres Tradicionais",
+    combo: {
+        title: "🔥 Combos",
         items: [
-            { name: "X-TUDO", price: 24.00, img: "https://i.ibb.co/Z1d5Q46K/x-tudo.png",
-              desc: "Pão, hambúrguer, presunto, mussarela, salsicha, ovo, bacon, milho, salada e batata palha" },
-            { name: "X-BACON", price: 23.00, img: "https://i.ibb.co/Pv8DLymw/IMG-20251004-WA0057.jpg",
-              desc: "Pão, hambúrguer, presunto, mussarela, salsicha, bacon, milho, salada e batata palha" },
-            { name: "X-CHEDDAR", price: 23.00, img: "https://i.ibb.co/TMWKbdX5/IMG-20251004-WA0056.jpg",
-              desc: "Pão, hambúrguer, presunto, mussarela, ovo, bacon, milho, salada, cheddar e batata palha" },
-            { name: "X-CALABRESA", price: 22.00, img: "https://i.ibb.co/4wFq4fLJ/IMG-20251004-WA0058.jpg",
-              desc: "Pão, hambúrguer, presunto, mussarela, ovo, calabresa, milho, salada, cheddar e batata palha" },
-            { name: "X-SALADA", price: 16.00, img: "https://iili.io/fjgOiTG.jpg",
-              desc: "Pão, hambúrguer, presunto, mussarela, milho, salada e batata palha" },
-            { name: "X-EGG", price: 23.00, img: "https://i.ibb.co/wFt4J1r5/dog1.png",
-              desc: "Pão, hambúrguer, presunto, mussarela, 2 ovos, bacon, milho, salada e batata palha" }
-        ]
-    },
-    hamburgueres_premium: {
-        title: "🍔 Hamburgueres Premium",
-        items: [
-            { name: "X-DÊ-GUSTO", price: 28.00, img: "https://iili.io/fOXbiFI.png",
-              desc: "Pão, 2 hambúrgueres, salsicha, ovo, presunto, mussarela, bacon, milho, cheddar, catupiry, salada e batata palha" },
-            { name: "X-DOBRO", price: 35.00, img: "https://i.ibb.co/JR70qRfW/20251004-235417.jpg",
-              desc: "Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, presunto, mussarela, bacon, milho, cheddar, catupiry, salada e batata palha" },
-            { name: "X-BAGUNÇA", price: 36.00, img: "https://i.ibb.co/23rd6PGY/20251004-235801.jpg",
-              desc: "Pão, hambúrguer, steak, salsicha, ovo, presunto, mussarela, bacon, milho, cheddar, catupiry, salada e batata palha" },
-            { name: "X-BOLO GIGANTE", price: 42.00, img: "https://i.ibb.co/23rd6PGY/20251004-235801.jpg",
-              desc: "Pão, 2 hambúrgueres, 2 salsichas, 2 ovos, presunto, mussarela, cheddar, molho de churrasco, bacon, calabresa, milho, salada e batata frita no topo com cheddar" },
-            { name: "X-STEAK", price: 26.00, img: "https://i.ibb.co/MxtW5hX2/IMG-20250928-WA0026.jpg",
-              desc: "Pão, steak de frango, anel de cebola, presunto, mussarela, bacon, milho, molho de churrasco, salada e batata palha" }
-        ]
-    },
-    artesanais: {
-        title: "🍔 Artesanais Premium",
-        items: [
-            { name: "ARTESANAL CLÁSSICO", price: 27.00, img: "https://i.ibb.co/0pRMs7CM/20251004-235952.jpg",
-              desc: "Pão, hambúrguer artesanal, presunto, mussarela, bacon, milho, cebola caramelizada, cheddar, molho de churrasco, batata palha e salada" },
-            { name: "ARTESANAL DUPLO", price: 35.00, img: "https://i.ibb.co/JR70qRfW/20251004-235417.jpg",
-              desc: "Pão, 2 hambúrgueres artesanais, presunto, mussarela, bacon, milho, cebola caramelizada, cheddar, molho de churrasco, batata palha e salada" },
-            { name: "ARTESANAL COM DORITOS", price: 28.00, img: "https://i.ibb.co/ZpvH013t/20251004-235135.jpg",
-              desc: "Pão, hambúrguer artesanal, presunto, mussarela, bacon, milho, cebola caramelizada, cheddar, molho de churrasco, Doritos e salada" },
-            { name: "ARTESANAL COM ANÉIS DE CEBOLA", price: 30.00, img: "https://i.ibb.co/LDYypj6Q/20251031-205800.jpg",
-              desc: "Pão, hambúrguer artesanal, presunto, mussarela, bacon, milho, cebola caramelizada, cheddar, molho de churrasco, 3 anéis de cebola e salada" }
+            { name: "COMBO FAMÍLIA", price: 50.00, img: "https://i.ibb.co/d4txStn2/combo-5.png", desc: "2 X-Tudo + 2 refri 200ml" },
+            { name: "Combo: X-Saladas + 1 Batata P", price: 32.00, img: "https://i.ibb.co/dJW3mXxR/combo-3.png", desc: "-" },
+            { name: "Combo: Artesanal + Batata + Refri 200ml", price: 38.00, img: "https://i.ibb.co/KzLhFRrj/combo-1.png", desc: "-" },
+            { name: "Combo: 2 X-Duplo", price: 46.00, img: "https://iili.io/fjgwEwx.jpg", desc: "-" },
+            { name: "Combo: 2 X-Tudo + 2 Refrigerantes + 2 Batatas Fritas", price: 70.00, img: "https://i.ibb.co/GvY9F6kP/combo-2.png", desc: "-" },
+            { name: "Combo: X-Salada + Batata Frita", price: 20.00, img: "https://iili.io/fjgOiTG.jpg", desc: "-" },
+            { name: "Combo: X-Tudo + Batata Frita", price: 24.00, img: "https://iili.io/fjgk7xj.jpg", desc: "-" },
+            { name: "Combo na Caixa: 2 X-tudo + Anel de Cebola + Batata Frita com Cheddar e Bacon + Steak de Frango + Molhos", price: 70.00, img: "https://iili.io/fjg8NSI.jpg", desc: "-" },
+            { name: "Combo Familia: 3 X-Tudos", price: 60.00, img: "https://iili.io/fjgSYWG.jpg", desc: "-" },
+            { name: "Super Combo: X-Tudo + Batata + Refri", price: 25.00, img: "https://iili.io/fjgU7kP.jpg", desc: "-" },
+            { name: "Combo: 3 X-Tudos + 3 Refri 200ml", price: 65.00, img: "https://iili.io/fjgrasa.jpg", desc: "-" },
+            { name: "Combo: Artesanal + Batata Frita e Crocantes", price: 20.00, img: "https://iili.io/fjgg5Pf.jpg", desc: "-" }
         ]
     },
     batatas: {
-        title: "🍟 Batatas Fritas",
+        title: "🍟 Batatas",
         items: [
             { name: "BATATA P", price: 15.00, img: "https://iili.io/fjgIomv.jpg" },
             { name: "BATATA M", price: 20.00, img: "https://iili.io/fjg5qOu.jpg" },
             { name: "BATATA G", price: 30.00, img: "https://iili.io/fjg5X5X.jpg" }
         ]
     },
+    hotdogs: {
+        title: "🌭 Hot Dogs",
+        items: [
+            { name: "Hot Dog 1", price: 10.00, img: "https://i.ibb.co/wFt4J1r5/dog1.png" },
+            { name: "Hot Dog 2", price: 14.00, img: "https://i.ibb.co/hJph2sSL/dog-2-2.png" },
+            { name: "Hot Dog Especial", price: 18.00, img: "https://i.ibb.co/Z6TSQVKx/dog-especial-degusto.png" }
+        ]
+    },
     bebidas: {
         title: "🥤 Bebidas",
         items: [
-            { name: "COCA-COLA 2L",    price: 14.00 },
-            { name: "COCA-COLA 1L",    price: 10.00 },
-            { name: "COCA-COLA LATA",  price: 5.00  },
-            { name: "FANTA 2L",        price: 12.00 },
-            { name: "FANTA 1L",        price: 10.00 },
-            { name: "KUAT 2L",         price: 10.00 },
-            { name: "MINEIRO 2L",      price: 12.00 },
-            { name: "PITHULÁ",         price: 3.00  }
+            { name: "COCA-COLA 2L", price: 14.00 },
+            { name: "COCA-COLA 1L", price: 10.00 },
+            { name: "COCA-COLA LATA", price: 5.00 },
+            { name: "FANTA 2L", price: 12.00 },
+            { name: "FANTA 1L", price: 10.00 },
+            { name: "KUAT 2L", price: 10.00 },
+            { name: "MINEIRO 2L", price: 12.00 },
+            { name: "PITHULÁ", price: 3.00 }
         ]
     },
     molhos: {
@@ -108,7 +90,7 @@ const menuData = {
 };
 
 // =============================================
-// FUNÇÕES DO MODAL DE CALDOS (mantidas)
+// MODAL DE ESCOLHA DE SABORES DOS CALDOS
 // =============================================
 function createCaldosModal() {
     const modal = document.createElement('div');
@@ -118,7 +100,7 @@ function createCaldosModal() {
         <div class="modal-content bg-white rounded-4 shadow-lg p-4" style="width: 90%; max-width: 500px;">
             <div class="d-flex justify-content-between align-items-start mb-4">
                 <h3 class="fw-bold text-danger">🍲 Escolha os 2 Sabores</h3>
-                <span class="close fs-3" onclick="closeModal('caldosModal')" style="cursor:pointer;">×</span>
+                <span class="close fs-3" onclick="closeModal('caldosModal')" style="cursor:pointer;">&times;</span>
             </div>
             <p class="text-center mb-4 fs-5">Preço fixo: <strong>R$22,00</strong><br>
                 <span class="text-success fw-bold">+ Brinde: Torradas crocantes!</span>
@@ -207,7 +189,7 @@ function addCaldosToCart() {
 }
 
 // =============================================
-// FUNÇÕES DO CARRINHO (mantidas)
+// FUNÇÕES DO CARRINHO
 // =============================================
 function getCartSubtotal() {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -226,6 +208,15 @@ function saveCart() {
     localStorage.setItem('degusto_cart', JSON.stringify(cart)); 
     updateCartCount(); 
     renderCart();
+
+    const subtotal = getCartSubtotal();
+    const wasNotified = localStorage.getItem('degusto_free_delivery_notified') === 'true';
+    if (subtotal >= FREE_DELIVERY_MIN && !wasNotified) {
+        showNotification('🎉 ENTREGA GRÁTIS! Você atingiu R$25,00!');
+        localStorage.setItem('degusto_free_delivery_notified', 'true');
+    } else if (subtotal < FREE_DELIVERY_MIN && wasNotified) {
+        localStorage.removeItem('degusto_free_delivery_notified');
+    }
 }
 
 function updateCartCount() { 
@@ -319,10 +310,13 @@ function addToCart(n,p,q=1){
 }
 
 // =============================================
-// MODAIS E NOTIFICAÇÕES (mantidas)
+// MODAIS E NOTIFICAÇÕES
 // =============================================
 function openModal(id){ 
-    document.getElementById(id).style.display = 'flex'; 
+    const modal = document.getElementById(id);
+    modal.style.display = 'flex'; 
+    modal.scrollTop = 0;
+    if(id === 'cartModal') renderCart(); 
 }
 
 function closeModal(id){ 
@@ -352,7 +346,7 @@ function showNotification(msg){
 }
 
 // =============================================
-// RENDERIZAÇÃO DO CARDÁPIO (mantida com melhoria nas descrições)
+// RENDERIZAÇÃO DO CARDÁPIO
 // =============================================
 function renderTabs(){
     const btns = document.getElementById('tab-buttons');
@@ -399,7 +393,7 @@ function renderTabs(){
 
             if(it.desc) {
                 const p = document.createElement('p');
-                p.className = 'text-muted small mb-2';
+                p.className = 'text-muted small';
                 p.innerHTML = it.desc;
                 div.appendChild(p);
             }
@@ -423,7 +417,7 @@ function renderTabs(){
 }
 
 // =============================================
-// EVENTOS GERAIS (mantidos)
+// EVENTOS GERAIS
 // =============================================
 document.addEventListener('click', e => {
     if(e.target.closest('.add-to-cart')) {
@@ -440,8 +434,436 @@ document.addEventListener('click', e => {
     }
 });
 
-// ... (mantenha todos os outros eventos e funções do player, chat, checkout, theme, etc. que já estavam funcionando)
+document.getElementById('cart-button').onclick = () => openModal('cartModal');
+document.getElementById('share-button').onclick = () => {
+    if(navigator.share) {
+        navigator.share({title: 'DêGusto Lanchonete', text: 'Melhores lanches de Monte Carmelo! Delivery 19h+', url: location.href});
+    } else {
+        navigator.clipboard.writeText(`${siteUrl} - WhatsApp: (34)99953-7698`);
+        showNotification('🔗 Link copiado!');
+    }
+};
+document.getElementById('help-button').onclick = () => {
+    alert('🕖 Delivery a partir das 19h\n📱 WhatsApp: (34) 99953-7698\n💰 Delivery GRÁTIS acima de R$25!\n\n👉 1. Escolha no cardápio\n👉 2. Adicione no carrinho\n👉 3. Finalize no WhatsApp');
+};
+document.getElementById('copy-pix-cart').onclick = () => {
+    navigator.clipboard.writeText(pixKey);
+    showNotification('💳 Chave PIX copiada: 10738419605');
+};
+document.getElementById('support-button').onclick = () => {
+    document.getElementById('chat-container').style.display = 'flex';
+};
+document.getElementById('top-button').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
+// =============================================
+// BUSCA MELHORADA E ESTÁVEL
+// =============================================
+let searchTimeout = null;
+
+function performSearch() {
+    const input = document.getElementById('searchInput');
+    const term = input.value.trim();
+    const normalizedTerm = term.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const hasTerm = term.length > 0;
+
+    const panels = document.querySelectorAll('.tab-panel');
+    const items = document.querySelectorAll('.item');
+
+    if (!hasTerm) {
+        document.getElementById('tab-buttons').style.display = 'flex';
+        panels.forEach(panel => panel.style.display = '');
+        items.forEach(item => item.style.display = '');
+        document.querySelectorAll('.item h3').forEach(h3 => {
+            if (h3.dataset.original !== undefined) {
+                h3.innerHTML = h3.dataset.original;
+            }
+        });
+        return;
+    }
+
+    document.getElementById('tab-buttons').style.display = 'none';
+    panels.forEach(panel => panel.style.display = 'block');
+
+    items.forEach(item => {
+        const fullText = item.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const matches = fullText.includes(normalizedTerm);
+        item.style.display = matches ? 'block' : 'none';
+
+        const h3 = item.querySelector('h3');
+        if (h3 && h3.dataset.original) {
+            if (matches) {
+                const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escaped})`, 'gi');
+                h3.innerHTML = h3.dataset.original.replace(regex, '<mark class="bg-warning text-dark rounded px-1">$1</mark>');
+            } else {
+                h3.innerHTML = h3.dataset.original;
+            }
+        }
+    });
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(performSearch, 300);
+});
+
+document.getElementById('searchInput').addEventListener('search', performSearch);
+
+// =============================================
+// CHECKOUT, TEMA, CHAT
+// =============================================
+document.getElementById('checkout-form').onsubmit = function(e) {
+    e.preventDefault();
+    if(cart.length === 0) return showNotification('Carrinho vazio!');
+
+    const nome = document.getElementById('nome-cliente').value.trim();
+    const rua = document.getElementById('rua').value.trim();
+    const num = document.getElementById('numero').value.trim();
+    const bairro = document.getElementById('bairro').value.trim();
+    const ref = document.getElementById('referencia').value.trim();
+    const pag = document.querySelector('input[name="pagamento"]:checked')?.value;
+    const troco = document.getElementById('troco').value;
+    const obs = document.getElementById('observacoes').value.trim();
+
+    if(!nome || !rua || !num || !bairro || !pag) {
+        return showNotification('❌ Preencha todos os campos obrigatórios!');
+    }
+
+    const subtotal = getCartSubtotal();
+    const delivery = getDeliveryFee();
+    const total = subtotal + delivery;
+
+    let msg = `*🍔 PEDIDO DÊGUSTO - MONTE CARMELO*%0A%0A`;
+    msg += `*👤 Cliente:* ${nome}%0A`;
+    msg += `*📍 Endereço:* ${rua}, ${num} - ${bairro}${ref ? ` (${ref})` : ''}%0A`;
+    msg += `*⏰ Horário:* Delivery após 19h%0A%0A`;
+    msg += `*🛒 ITENS DO PEDIDO:*%0A`;
+    
+    cart.forEach(it => { 
+        const sub = it.price * it.quantity; 
+        msg += `• ${it.quantity}x ${it.name} .... R$ ${sub.toFixed(2)}%0A`; 
+    });
+    
+    msg += `%0A💰 *RESUMO*%0A`;
+    msg += `*Subtotal:* R$ ${subtotal.toFixed(2)}%0A`;
+    msg += `*Entrega:* ${delivery === 0 ? 'GRÁTIS 🎉' : 'R$ ' + delivery.toFixed(2)}%0A`;
+    msg += `*TOTAL:* R$ ${total.toFixed(2)}%0A%0A`;
+    msg += `*💳 Pagamento:* ${pag}`;
+    if(pag === 'Dinheiro' && troco) msg += ` (troco para R$ ${troco})`;
+    if(obs) msg += `%0A*📝 Observações:* ${obs}`;
+    
+    msg += `%0A%0A👨‍💻 *PIX 10738419605* (mais rápido!)`;
+
+    window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
+    cart = [];
+    saveCart();
+    closeModal('checkout-modal');
+    showNotification('✅ Pedido enviado pro WhatsApp!');
+};
+
+document.querySelectorAll('input[name="pagamento"]').forEach(r => {
+    r.onchange = () => {
+        document.getElementById('troco-div').style.display = r.value === 'Dinheiro' ? 'block' : 'none';
+    };
+});
+
+document.getElementById('theme-button').onclick = () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    const icon = document.querySelector('#theme-button i');
+    icon.classList.toggle('bi-moon-stars-fill', !isDark);
+    icon.classList.toggle('bi-sun-fill', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+};
+
+const chatCont = document.getElementById('chat-container');
+const chatBody = document.getElementById('chat-body');
+const chatInp = document.getElementById('chat-input');
+const sendBtn = document.getElementById('send-chat');
+const closeChat = document.getElementById('close-chat');
+
+function addMsg(text, isUser = false) { 
+    const m = document.createElement('div'); 
+    m.className = `message ${isUser ? 'user' : 'bot'}`; 
+    m.innerHTML = text.replace(/\n/g, '<br>'); 
+    chatBody.appendChild(m); 
+    chatBody.scrollTop = chatBody.scrollHeight; 
+}
+
+function showSugg() {
+    if (chatBody.querySelector('.quick-suggestions')) return;
+    const suggestions = ["X-Tudo", "Ver carrinho", "Delivery grátis", "Finalizar pedido"];
+    const div = document.createElement('div');
+    div.className = 'quick-suggestions mt-3';
+    suggestions.forEach(txt => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-btn me-2 mb-2';
+        btn.textContent = txt;
+        btn.onclick = () => { chatInp.value = txt; sendMsg(); };
+        div.appendChild(btn);
+    });
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function botResp(msg) {
+    const lowerMsg = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let quantity = 1;
+    const qMatch = lowerMsg.match(/(\d+)/);
+    if (qMatch) quantity = parseInt(qMatch[1]);
+
+    if(lowerMsg.match(/oi|ola|bom dia|boa tarde|boa noite|e ai|ei/)) {
+        return "👋 Olá! Bem-vindo ao *DêGusto Lanchonete*! 😋<br>Delivery a partir das 19h em Monte Carmelo!<br><br>💡 *Delivery GRÁTIS acima de R$25!*<br>O que deseja hoje?";
+    }
+
+    if(lowerMsg.includes('horario') || lowerMsg.includes('horário')) {
+        return "🕖 *Delivery a partir das 19h* todos os dias!<br>WhatsApp: (34) 99953-7698";
+    }
+
+    if(lowerMsg.includes('delivery') || lowerMsg.includes('entrega')) {
+        return `🚚 *Delivery GRÁTIS acima de R$25!*<br>Taxa normal: R$5,00<br>📍 Monte Carmelo/MG`;
+    }
+
+    let foundItem = null;
+    for(const cat in menuData) {
+        for(const item of menuData[cat].items) {
+            const normItem = item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if(lowerMsg.includes(normItem)) {
+                foundItem = item;
+                break;
+            }
+        }
+        if(foundItem) break;
+    }
+
+    if(foundItem) {
+        if(lowerMsg.includes('quanto') || lowerMsg.includes('preço') || lowerMsg.includes('preco') || lowerMsg.includes('valor')) {
+            return `${foundItem.name}: *R$ ${foundItem.price.toFixed(2)}*<br>Quer adicionar ao carrinho?`;
+        }
+        addToCart(foundItem.name, foundItem.price, quantity);
+        return `✅ ${quantity > 1 ? quantity + '× ' : ''}${foundItem.name} adicionado${quantity > 1 ? 's' : ''} ao carrinho! 🎉`;
+    }
+
+    if(lowerMsg.includes('carrinho') || lowerMsg.includes('ver carrinho')) {
+        openModal('cartModal');
+        return "🛒 Abrindo seu carrinho agora!";
+    }
+
+    if(lowerMsg.includes('finalizar') || lowerMsg.includes('pedido') || lowerMsg.includes('comprar')) {
+        openCheckout();
+        return "✅ Abrindo checkout para finalizar seu pedido!";
+    }
+
+    return "🍔 Digite o nome do lanche (ex: X-Tudo, Coca...) ou use os botões abaixo!<br>💡 *Delivery GRÁTIS acima de R$25* 😊";
+}
+
+function sendMsg() {
+    const text = chatInp.value.trim();
+    if(!text) return;
+    addMsg(text, true);
+    chatInp.value = '';
+    setTimeout(() => {
+        addMsg(botResp(text));
+        showSugg();
+    }, 800);
+}
+
+sendBtn.onclick = sendMsg;
+chatInp.addEventListener('keypress', e => { if(e.key === 'Enter') sendMsg(); });
+closeChat.onclick = () => chatCont.style.display = 'none';
+
+// =============================================
+// PLAYER DE RÁDIO PREMIUM
+// =============================================
+const radio = document.getElementById('radioPlayer');
+const playBtn = document.getElementById('playPauseBtn');
+const muteBtn = document.getElementById('muteBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const loadingIndicator = document.getElementById('loadingIndicator');
+const playerContainer = document.querySelector('.radio-player-modern');
+const copyRadioLink = document.getElementById('copyRadioLink');
+
+let isPlaying = false;
+
+if (radio && playBtn && muteBtn && volumeSlider) {
+    radio.volume = volumeSlider.value;
+
+    playBtn.onclick = () => {
+        if (isPlaying) {
+            radio.pause();
+            playBtn.innerHTML = '<i class="bi bi-play-fill fs-1"></i>';
+            playerContainer.classList.remove('playing');
+        } else {
+            loadingIndicator.style.display = 'block';
+            radio.play().catch(err => {
+                showNotification('Erro ao tocar a rádio: ' + err.message);
+                loadingIndicator.style.display = 'none';
+            });
+            playBtn.innerHTML = '<i class="bi bi-pause-fill fs-1"></i>';
+            playerContainer.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    };
+
+    muteBtn.onclick = () => {
+        radio.muted = !radio.muted;
+        muteBtn.innerHTML = radio.muted 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
+    };
+
+    volumeSlider.oninput = () => {
+        radio.volume = volumeSlider.value;
+        muteBtn.innerHTML = volumeSlider.value == 0 
+            ? '<i class="bi bi-volume-mute-fill fs-4"></i>' 
+            : '<i class="bi bi-volume-up-fill fs-4"></i>';
+        if (volumeSlider.value > 0) radio.muted = false;
+    };
+
+    radio.onwaiting = () => loadingIndicator.style.display = 'block';
+    radio.onplaying = radio.oncanplay = () => loadingIndicator.style.display = 'none';
+
+    if (copyRadioLink) {
+        copyRadioLink.onclick = () => {
+            navigator.clipboard.writeText('https://www.degusto.store');
+            showNotification('🔗 Link da rádio copiado!');
+        };
+    }
+}
+
+// =============================================
+// CABEÇALHO MODERNO COM GIF DE FUNDO
+// =============================================
+function createModernHeader() {
+    const header = document.createElement('header');
+    header.className = 'js-modern-header';
+    header.innerHTML = `
+        <div class="js-header-overlay"></div>
+        <div class="js-header-content">
+            <div class="js-logo-container">
+                <img src="${logoUrl}" alt="DêGusto Lanchonete" class="js-logo-img" />
+            </div>
+            <div class="js-free-delivery-badge">
+                <i class="bi bi-bag"></i> Delivery GRÁTIS acima de R$25,00
+            </div>
+            <div class="js-scroll-down">
+                <a href="#tab-buttons" class="js-scroll-link">
+                    Ver Cardápio <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+        </div>
+    `;
+
+    document.body.insertBefore(header, document.body.firstChild);
+
+    const style = document.createElement('style');
+    style.textContent = `
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .js-modern-header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://i.imgur.com/MVTOZN2.gif') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            overflow: hidden;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .js-header-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+        .js-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 1rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .js-logo-container {
+            animation: float 6s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+        .js-logo-img {
+            width: 220px;
+            max-width: 90vw;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(255, 60, 60, 0.3));
+            transition: transform 0.4s ease;
+        }
+        .js-logo-img:hover { transform: scale(1.05); }
+        .js-free-delivery-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #ff0000, #ff4444);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: pulse 2s infinite, fadeInUp 1.8s ease-out;
+            margin: 2rem auto;
+            max-width: fit-content;
+        }
+        .js-free-delivery-badge i { margin-right: 0.8rem; font-size: 1.5rem; }
+        .js-scroll-down { margin-top: 3rem; animation: fadeInUp 2s ease-out; }
+        .js-scroll-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .js-scroll-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+            transform: translateY(-5px);
+        }
+        .js-scroll-link i { animation: bounce 2s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @media (max-width: 768px) {
+            .js-logo-img { width: 180px; }
+            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
+        }
+        @media (max-width: 480px) {
+            .js-free-delivery-badge { font-size: 1.1rem; padding: 10px 24px; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    header.addEventListener('click', (e) => {
+        if (e.target.closest('.js-scroll-link')) {
+            e.preventDefault();
+            document.getElementById('tab-buttons')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+}
+
+// =============================================
+// INICIALIZAÇÃO
+// =============================================
 window.onload = () => {
     if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
