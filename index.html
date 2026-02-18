@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DêGusto Lanchonete</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #111, #1a0000, #2a0000);
+            color: white;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px;
+            background: #000000cc;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        header h1 {
+            color: #ff3c3c;
+            font-size: 24px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        .search {
+            width: 100%;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            margin: 20px 0;
+            font-size: 16px;
+            background: #ffffff15;
+            color: white;
+            outline: none;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            margin-bottom: 10px;
+            color: #ff4d4d;
+        }
+        
+        .card {
+            background: #ffffff10;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+        
+        .card:hover {
+            background: #ffffff20;
+        }
+        
+        .card button {
+            background: #ff3c3c;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        /* BOTÃO CARRINHO */
+        
+        .cart-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00c853;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #00c853aa;
+            z-index: 30;
+            transition: 0.3s;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: #000000aa;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 25;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cart-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 380px;
+            max-width: 100%;
+            height: 100%;
+            background: #111;
+            padding: 20px;
+            transition: 0.4s;
+            overflow-y: auto;
+            z-index: 30;
+            box-shadow: -10px 0 30px #000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-panel.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            background: #ffffff10;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .qty-btn {
+            background: #ff3c3c;
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .cart-footer {
+            margin-top: auto;
+        }
+        
+        .total {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #00e676;
+        }
+        
+        .checkout {
+            margin-top: 10px;
+            background: #25d366;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .sugestao {
+            margin-top: 8px;
+            color: #ffc107;
+            font-size: 13px;
+        }
+        
+        @media(max-width:768px) {
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🍔 DÊGUSTO LANCHONETE</h1>
+        <p>Delivery grátis acima de R$25</p>
+    </header>
+
+    <div class="container">
+        <input type="text" id="search" class="search" placeholder="Buscar no cardápio...">
+        <div id="menu"></div>
+    </div>
+
+    <div class="cart-btn" onclick="toggleCart()">
+        🛒
+        <div class="cart-count" id="count">0</div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3>🛒 Seu Pedido</h3>
+            <button class="close-btn" onclick="toggleCart()">✕</button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="cart-footer">
+            <div class="total" id="cartTotal"></div>
+            <div class="sugestao" id="suggestion"></div>
+            <button class="checkout" onclick="finalizar()">Finalizar no WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        const phone = "5534999537698";
+        const FREE_MIN = 25;
+        const DELIVERY = 5;
+        let cart = [];
+
+        const menuData = [
+
+            {
+                title: "🔥 Combos Artesanais (Batata P + Refri 200ml)",
+                items: [{
+                    name: "Artesanal Clássico",
+                    price: 35
+                }, {
+                    name: "Artesanal Duplo",
+                    price: 42
+                }, {
+                    name: "Artesanal com Doritos",
+                    price: 36
+                }, {
+                    name: "Artesanal com Anéis de Cebola",
+                    price: 40
+                }]
+            },
+
+            {
+                title: "🍔 Hambúrgueres Artesanais",
+                items: [{
+                    name: "Artesanal Clássico",
+                    price: 27
+                }, {
+                    name: "Artesanal Duplo",
+                    price: 35
+                }, {
+                    name: "Artesanal com Doritos",
+                    price: 28
+                }, {
+                    name: "Artesanal com Anéis de Cebola",
+                    price: 30
+                }]
+            },
+
+            {
+                title: "🍟 Batatas (com bacon e cheddar)",
+                items: [{
+                    name: "Batata 200g",
+                    price: 15
+                }, {
+                    name: "Batata 300g",
+                    price: 20
+                }, {
+                    name: "Batata 500g",
+                    price: 35
+                }]
+            },
+
+            {
+                title: "🥤 Bebidas",
+                items: [{
+                    name: "Coca-Cola 2L",
+                    price: 14
+                }, {
+                    name: "Coca-Cola 1L",
+                    price: 10
+                }, {
+                    name: "Coca-Cola Lata Grande",
+                    price: 5
+                }, {
+                    name: "Coca-Cola Lata Pequena",
+                    price: 3.5
+                }, {
+                    name: "Coca-Cola 1L Zero",
+                    price: 10
+                }, {
+                    name: "Coca-Cola Lata Zero",
+                    price: 5
+                }, {
+                    name: "Fanta 2L",
+                    price: 12
+                }, {
+                    name: "Fanta 1L",
+                    price: 8
+                }, {
+                    name: "Fanta Lata",
+                    price: 5
+                }, {
+                    name: "Mineiro 2L",
+                    price: 12
+                }, {
+                    name: "Kuat 2L",
+                    price: 10
+                }, {
+                    name: "Antártica Lata",
+                    price: 5
+                }, {
+                    name: "Mineiro Lata",
+                    price: 5
+                }, {
+                    name: "Pithula",
+                    price: 3
+                }]
+            },
+
+            {
+                title: "🔥 Combos Tradicionais",
+                items: [{
+                    name: "2x Tudo + 2 Refri",
+                    price: 48
+                }, {
+                    name: "2x Salada + 2 Refri",
+                    price: 42
+                }, {
+                    name: "2x Cheddar + 2 Refri",
+                    price: 45
+                }, {
+                    name: "2x Calabresa + 2 Refri",
+                    price: 45
+                }, {
+                    name: "2x Steak + 2 Refri",
+                    price: 45
+                }]
+            },
+
+            {
+                title: "🍔 Combos com Batata",
+                items: [{
+                    name: "2x Tudo + Batata P",
+                    price: 50
+                }, {
+                    name: "2x Salada + Batata P",
+                    price: 45
+                }, {
+                    name: "2x Calabresa + Batata P",
+                    price: 45
+                }, {
+                    name: "2x Cheddar + Batata P",
+                    price: 48
+                }, {
+                    name: "1x Tudo + Batata P",
+                    price: 30
+                }, {
+                    name: "1x Salada + Batata P",
+                    price: 25
+                }, {
+                    name: "1x Cheddar + Batata P",
+                    price: 28
+                }, {
+                    name: "1x Tudo + Batata + Refri",
+                    price: 32
+                }]
+            },
+
+            {
+                title: "💎 Combos Especiais",
+                items: [{
+                    name: "2x DêGusto",
+                    price: 55
+                }, {
+                    name: "2x DêGusto + Batata M",
+                    price: 65
+                }, {
+                    name: "3x Tudo + 3 Batata P + 3 Refri",
+                    price: 80
+                }, {
+                    name: "2x Bagunça + 2 Batata P",
+                    price: 80
+                }, {
+                    name: "2x Dobro + 2 Batata P",
+                    price: 82
+                }, {
+                    name: "2 Artesanais Clássicos + 2 Batata P",
+                    price: 65
+                }, {
+                    name: "2 Artesanais Duplo + 2 Batata P",
+                    price: 80
+                }, {
+                    name: "2 Artesanais Clássicos + Batata + Refri",
+                    price: 75
+                }]
+            }
+
+        ];
+
+        function renderMenu() {
+            const menu = document.getElementById("menu");
+            menu.innerHTML = "";
+            const search = document.getElementById("search").value.toLowerCase();
+
+            menuData.forEach(sec => {
+                let html = `<div class="section"><h2>${sec.title}</h2>`;
+                sec.items.forEach(item => {
+                    if (item.name.toLowerCase().includes(search)) {
+                        html += `
+<div class="card">
+<span>${item.name} - R$ ${item.price.toFixed(2)}</span>
+<button onclick="add('${item.name}',${item.price})">Adicionar</button>
+</div>`;
+                    }
+                });
+                html += "</div>";
+                menu.innerHTML += html;
+            });
+        }
+
+        function add(name, price) {
+            let item = cart.find(i => i.name === name);
+            if (item) {
+                item.qty++;
+            } else {
+                cart.push({
+                    name,
+                    price,
+                    qty: 1
+                });
+            }
+            update();
+        }
+
+        function changeQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            update();
+        }
+
+        function update() {
+            document.getElementById("count").innerText =
+                cart.reduce((t, i) => t + i.qty, 0);
+            renderCart();
+        }
+
+        function renderCart() {
+            let html = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price * item.qty;
+                html += `
+<div class="cart-item">
+<div>
+${item.qty}x ${item.name}<br>
+R$ ${(item.price*item.qty).toFixed(2)}
+</div>
+<div>
+<button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
+<button class="qty-btn" onclick="changeQty(${index},1)">+</button>
+</div>
+</div>`;
+            });
+
+            let delivery = total >= FREE_MIN ? 0 : DELIVERY;
+            let final = total + delivery;
+
+            document.getElementById("cartItems").innerHTML = html;
+            document.getElementById("cartTotal").innerText =
+                "Total: R$ " + final.toFixed(2) + " " + (delivery === 0 ? "🚚 Entrega Grátis" : "+ R$5 Entrega");
+
+            if (total > 0 && total < FREE_MIN) {
+                document.getElementById("suggestion").innerText =
+                    "Faltam R$ " + (FREE_MIN - total).toFixed(2) + " para entrega grátis 🚀";
+            } else {
+                document.getElementById("suggestion").innerText = "";
+            }
+        }
+
+        function toggleCart() {
+            document.getElementById("cartPanel").classList.toggle("active");
+            document.getElementById("overlay").classList.toggle("active");
+        }
+
+        function finalizar() {
+            if (cart.length === 0) return alert("Seu carrinho está vazio!");
+
+            let msg = "🍔 Pedido DêGusto:%0A";
+            cart.forEach(item => {
+                msg += `${item.qty}x ${item.name}%0A`;
+            });
+
+            window.open(`https://wa.me/${phone}?text=${msg}`);
+        }
+
+        document.getElementById("search").addEventListener("input", renderMenu);
+        renderMenu();
+    </script>
+
+</body>
+
+</html>
