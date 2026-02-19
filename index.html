@@ -2,209 +2,167 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DêGusto Lanchonete</title>
 
 <style>
 :root{
-    --bg:#0d0d0f;
-    --card:#1b1b1f;
-    --primary:#ff3c3c;
-    --accent:#00e676;
-    --text:#ffffff;
-    --muted:#b3b3b3;
+  --bg:#0e0e11;
+  --card:#1c1c22;
+  --primary:#ff3c3c;
+  --accent:#00e676;
+  --text:#fff;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
-
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{
-    background:linear-gradient(180deg,#0d0d0f,#121216);
-    color:var(--text);
-    min-height:100vh;
+  background:linear-gradient(180deg,#0e0e11,#15151b);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
 }
 
-/* HEADER APP */
+/* HEADER */
 header{
-    position:sticky;
-    top:0;
-    background:rgba(0,0,0,.85);
-    backdrop-filter:blur(12px);
-    padding:.8rem;
-    text-align:center;
-    z-index:10;
+  position:sticky;
+  top:0;
+  background:#000;
+  padding:.8rem;
+  text-align:center;
+  z-index:10;
 }
-.logo{max-width:170px;width:70%}
+.logo{width:160px;max-width:70%}
 
-/* CONTAINER */
+/* MENU */
 .container{
-    max-width:1100px;
-    margin:auto;
-    padding:1rem;
+  max-width:1100px;
+  margin:auto;
+  padding:1rem;
+  padding-bottom:110px;
 }
+.section{margin-bottom:1.8rem}
+.section h2{margin-bottom:.7rem;font-size:1.05rem}
 
-/* SECTION */
-.section{margin-bottom:2rem}
-.section h2{
-    font-size:1.1rem;
-    margin-bottom:.8rem;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-}
-
-/* ITEM CARD */
 .card{
-    background:linear-gradient(145deg,#1f1f24,#17171b);
-    padding:.9rem;
-    border-radius:14px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:.6rem;
-    box-shadow:0 10px 25px rgba(0,0,0,.4);
+  background:linear-gradient(145deg,#1f1f26,#191920);
+  border-radius:16px;
+  padding:.9rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:.6rem;
 }
-.card span{
-    font-size:.95rem;
-    color:#fff;
-}
+.card span{font-size:.95rem}
 .card button{
-    background:linear-gradient(135deg,var(--primary),#ff5f5f);
-    border:none;
-    padding:.45rem 1rem;
-    border-radius:20px;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
+  border:none;
+  padding:.45rem 1rem;
+  border-radius:20px;
+  background:linear-gradient(135deg,var(--primary),#ff6060);
+  color:#fff;
+  font-weight:600;
 }
 
-/* CART FLOAT BUTTON */
+/* CART BUTTON */
 .cart-btn{
-    position:fixed;
-    bottom:22px;
-    right:22px;
-    width:64px;
-    height:64px;
-    background:linear-gradient(135deg,var(--accent),#1aff88);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:1.7rem;
-    box-shadow:0 0 25px rgba(0,230,118,.6);
-    z-index:20;
-    cursor:pointer;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:linear-gradient(135deg,var(--accent),#1aff8c);
+  color:#000;
+  padding:.9rem 1.2rem;
+  border-radius:40px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  box-shadow:0 0 25px rgba(0,230,118,.6);
+  z-index:20;
+  cursor:pointer;
 }
-.cart-count{
-    position:absolute;
-    top:6px;
-    right:6px;
-    width:22px;
-    height:22px;
-    background:var(--primary);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:.75rem;
-    font-weight:bold;
+.cart-btn span{
+  background:var(--primary);
+  color:#fff;
+  padding:.2rem .55rem;
+  border-radius:20px;
+  font-size:.75rem;
 }
 
-/* CART PANEL */
+/* MINI CART */
 .cart{
-    position:fixed;
-    top:0;
-    right:-420px;
-    width:420px;
-    max-width:100%;
-    height:100%;
-    background:linear-gradient(180deg,#0f0f12,#141418);
-    transition:.35s ease;
-    z-index:30;
-    padding:1rem;
-    display:flex;
-    flex-direction:column;
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:320px;
+  max-width:90%;
+  background:#111;
+  border-radius:18px;
+  padding:1rem;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  display:none;
+  flex-direction:column;
+  z-index:30;
 }
-.cart.active{right:0}
+.cart.active{display:flex}
 
-/* MOBILE FULL */
-@media(max-width:768px){
-    .cart{width:100%}
-}
-
-/* CART HEADER */
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding-bottom:.6rem;
-    border-bottom:1px solid #333;
-}
-.cart-header h3{font-size:1.1rem}
-.close-btn{
-    background:none;
-    border:none;
-    color:white;
-    font-size:1.9rem;
-    cursor:pointer;
+.cart h3{
+  font-size:1rem;
+  margin-bottom:.6rem;
+  display:flex;
+  justify-content:space-between;
 }
 
-/* CART ITEM */
+.cart-items{
+  max-height:240px;
+  overflow-y:auto;
+  margin-bottom:.6rem;
+}
+
 .cart-item{
-    background:#1d1d22;
-    padding:.6rem;
-    border-radius:10px;
-    margin-bottom:.4rem;
-    display:flex;
-    justify-content:space-between;
-    font-size:.9rem;
+  background:#1f1f27;
+  padding:.6rem;
+  border-radius:12px;
+  display:flex;
+  justify-content:space-between;
+  font-size:.85rem;
+  margin-bottom:.4rem;
 }
 
-/* TOTAL */
 .cart-total{
-    margin-top:auto;
-    font-size:1.1rem;
-    font-weight:bold;
-    color:var(--accent);
-    padding:.7rem 0;
+  font-weight:bold;
+  color:var(--accent);
+  margin:.4rem 0;
 }
 
-/* CHECKOUT */
 .checkout{
-    background:linear-gradient(135deg,#25d366,#1abf5a);
-    border:none;
-    padding:.9rem;
-    border-radius:14px;
-    color:white;
-    font-size:1rem;
-    font-weight:600;
-    cursor:pointer;
+  border:none;
+  background:linear-gradient(135deg,#25d366,#1bbf5b);
+  color:#fff;
+  padding:.7rem;
+  border-radius:14px;
+  font-weight:600;
 }
 
 /* NOTIFY */
 .notify{
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:#000;
-    padding:.6rem 1rem;
-    border-left:4px solid var(--accent);
-    border-radius:8px;
-    opacity:0;
-    transform:translateY(-10px);
-    transition:.3s;
-    z-index:50;
+  position:fixed;
+  top:15px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  padding:.5rem 1rem;
+  border-radius:10px;
+  display:none;
+  z-index:50;
 }
-.notify.show{opacity:1;transform:translateY(0)}
+.notify.show{display:block}
 
 /* FOOTER */
 footer{
-    margin-top:3rem;
-    padding:1.6rem 1rem;
-    background:#000;
-    text-align:center;
-    font-size:.85rem;
-    color:#ccc;
+  background:#000;
+  padding:1.6rem 1rem;
+  text-align:center;
+  font-size:.85rem;
+  color:#ccc;
 }
 footer a{color:var(--accent);text-decoration:none;font-weight:bold}
 </style>
@@ -213,24 +171,23 @@ footer a{color:var(--accent);text-decoration:none;font-weight:bold}
 <body>
 
 <header>
-    <img src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png" class="logo">
+  <img src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png" class="logo">
 </header>
 
-<div class="container" id="menu"></div>
+<main class="container" id="menu"></main>
 
 <div class="cart-btn" id="cartBtn">
-    🛒
-    <div class="cart-count" id="count">0</div>
+  🛒 Carrinho <span id="count">0</span>
 </div>
 
 <div class="cart" id="cart">
-    <div class="cart-header">
-        <h3>Seu Pedido</h3>
-        <button class="close-btn" id="closeCart">✕</button>
-    </div>
-    <div id="cartItems"></div>
-    <div class="cart-total" id="total">Total: R$ 0,00</div>
-    <button class="checkout" onclick="finalizar()">Finalizar no WhatsApp</button>
+  <h3>
+    Seu pedido
+    <span style="cursor:pointer" onclick="toggleCart()">✕</span>
+  </h3>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-total" id="total">Total: R$ 0,00</div>
+  <button class="checkout" onclick="finalizar()">Finalizar no WhatsApp</button>
 </div>
 
 <div class="notify" id="notify"></div>
@@ -296,71 +253,74 @@ const menuData=[
 ];
 
 const menu=document.getElementById("menu");
-const cartEl=document.getElementById("cart");
+const cartBox=document.getElementById("cart");
 const cartItems=document.getElementById("cartItems");
 const countEl=document.getElementById("count");
 const notify=document.getElementById("notify");
 let cart=[];
 
-document.getElementById("cartBtn").onclick=()=>cartEl.classList.add("active");
-document.getElementById("closeCart").onclick=()=>cartEl.classList.remove("active");
+function toggleCart(){
+  cartBox.classList.toggle("active");
+}
+
+document.getElementById("cartBtn").onclick=toggleCart;
 
 function notifyMsg(t){
-    notify.textContent=t;
-    notify.classList.add("show");
-    setTimeout(()=>notify.classList.remove("show"),1800);
+  notify.textContent=t;
+  notify.classList.add("show");
+  setTimeout(()=>notify.classList.remove("show"),1200);
 }
 
 menuData.forEach(sec=>{
-    const s=document.createElement("div");
-    s.className="section";
-    s.innerHTML=`<h2>${sec.title}</h2>`;
-    sec.items.forEach(item=>{
-        const c=document.createElement("div");
-        c.className="card";
-        c.innerHTML=`<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
-        const b=document.createElement("button");
-        b.textContent="Adicionar";
-        b.onclick=()=>{
-            const i=cart.find(x=>x.name===item.name);
-            i?i.qty++:cart.push({name:item.name,price:item.price,qty:1});
-            updateCart();
-            cartEl.classList.add("active");
-            notifyMsg(item.name+" adicionado");
-        };
-        c.appendChild(b);
-        s.appendChild(c);
-    });
-    menu.appendChild(s);
+  const s=document.createElement("section");
+  s.className="section";
+  s.innerHTML=`<h2>${sec.title}</h2>`;
+  sec.items.forEach(item=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
+    const b=document.createElement("button");
+    b.textContent="Adicionar";
+    b.onclick=()=>{
+      const i=cart.find(x=>x.name===item.name);
+      i?i.qty++:cart.push({name:item.name,price:item.price,qty:1});
+      updateCart();
+      cartBox.classList.add("active");
+      notifyMsg("Adicionado");
+    };
+    c.appendChild(b);
+    s.appendChild(c);
+  });
+  menu.appendChild(s);
 });
 
 function updateCart(){
-    cartItems.innerHTML="";
-    let total=0,count=0;
-    cart.forEach(i=>{
-        total+=i.price*i.qty;
-        count+=i.qty;
-        const d=document.createElement("div");
-        d.className="cart-item";
-        d.innerHTML=`<span>${i.qty}x ${i.name}</span><span>R$ ${(i.price*i.qty).toFixed(2)}</span>`;
-        cartItems.appendChild(d);
-    });
-    document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
-    countEl.textContent=count;
+  cartItems.innerHTML="";
+  let total=0,count=0;
+  cart.forEach(i=>{
+    total+=i.price*i.qty;
+    count+=i.qty;
+    const d=document.createElement("div");
+    d.className="cart-item";
+    d.innerHTML=`<span>${i.qty}x ${i.name}</span><span>R$ ${(i.price*i.qty).toFixed(2)}</span>`;
+    cartItems.appendChild(d);
+  });
+  document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
+  countEl.textContent=count;
 }
 
 function finalizar(){
-    if(!cart.length)return alert("Carrinho vazio");
-    window.open(`https://wa.me/${PHONE}`,"_blank");
+  if(!cart.length)return alert("Carrinho vazio");
+  window.open(`https://wa.me/${PHONE}`,"_blank");
 }
 </script>
 
 <footer>
-    Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
-    Telefone: (34) 99953-7698<br>
-    Horário de Atendimento: 7h noite<br><br>
-    WebDesigner: <strong>PabloDesigner</strong> —
-    <a href="https://www.pablologomarcas.online" target="_blank">www.pablologomarcas.online</a>
+Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
+Telefone: (34) 99953-7698<br>
+Horário de Atendimento: 7h noite<br><br>
+WebDesigner: <strong>PabloDesigner</strong> —
+<a href="https://www.pablologomarcas.online" target="_blank">www.pablologomarcas.online</a>
 </footer>
 
 </body>
