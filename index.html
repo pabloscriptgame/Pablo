@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,220 +16,105 @@
     --panel:#0e0e0e;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 
-body{
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-}
+body{background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER */
 header{
-    position:sticky;
-    top:0;
-    z-index:10;
-    backdrop-filter: blur(10px);
+    position:sticky;top:0;z-index:10;
     background:#000000cc;
+    backdrop-filter:blur(10px);
     padding:.4rem 0;
 }
-.logo{
-    max-width:180px;
-    width:70%;
-    display:block;
-    margin:auto;
-}
+.logo{max-width:180px;width:70%;margin:auto;display:block}
 
 /* CONTAINER */
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:.8rem 1rem;
-}
+.container{max-width:1000px;margin:auto;padding:1rem}
 
 /* SEARCH */
 .search{
-    width:100%;
-    padding:.8rem 1.1rem;
-    border-radius:40px;
-    border:none;
-    background:#ffffff18;
-    color:white;
-    font-size:1rem;
-    outline:none;
-}
-.search:focus{
-    background:#ffffff25;
+    width:100%;padding:.8rem 1.1rem;border-radius:40px;
+    border:none;background:#ffffff18;color:white;font-size:1rem
 }
 
 /* SECTION */
-.section{
-    margin-top:1.5rem;
-}
-.section h2{
-    color:#ff5555;
-    margin-bottom:.4rem;
-}
+.section{margin-top:1.5rem}
+.section h2{color:#ff5555;margin-bottom:.4rem}
 
 /* CARD */
 .card{
-    background:var(--card);
-    padding:.85rem 1rem;
-    margin-bottom:.55rem;
-    border-radius:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    transition:.2s;
+    background:var(--card);padding:.85rem 1rem;margin-bottom:.55rem;
+    border-radius:12px;display:flex;justify-content:space-between;
+    align-items:center;transition:.2s
 }
-.card:hover{
-    background:var(--card-hover);
-    transform:translateY(-1px);
-}
+.card:hover{background:var(--card-hover)}
 .card button{
-    background:var(--red);
-    border:none;
-    padding:.45rem 1rem;
-    border-radius:30px;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
+    background:var(--red);border:none;padding:.45rem 1rem;
+    border-radius:30px;color:white;font-weight:600;cursor:pointer
 }
 
-/* CART BUTTON */
+/* CART */
 .cart-btn{
-    position:fixed;
-    bottom:18px;
-    right:18px;
-    width:60px;
-    height:60px;
-    background:var(--green);
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:1.6rem;
-    cursor:pointer;
-    box-shadow:0 8px 20px #00e67666;
-    z-index:20;
+    position:fixed;bottom:18px;right:18px;width:60px;height:60px;
+    background:var(--green);border-radius:50%;display:flex;
+    align-items:center;justify-content:center;font-size:1.6rem;
+    cursor:pointer;z-index:20
 }
 .cart-count{
-    position:absolute;
-    top:4px;
-    right:4px;
-    background:var(--red);
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    font-size:.75rem;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
+    position:absolute;top:4px;right:4px;background:var(--red);
+    width:22px;height:22px;border-radius:50%;font-size:.75rem;
+    display:flex;align-items:center;justify-content:center;font-weight:bold
 }
 
 /* OVERLAY */
 .overlay{
-    position:fixed;
-    inset:0;
-    background:#000000aa;
-    backdrop-filter:blur(4px);
-    opacity:0;
-    visibility:hidden;
-    transition:.3s;
-    z-index:15;
+    position:fixed;inset:0;background:#000000aa;
+    opacity:0;visibility:hidden;transition:.3s;z-index:15
 }
-.overlay.active{
-    opacity:1;
-    visibility:visible;
-}
+.overlay.active{opacity:1;visibility:visible}
 
-/* CART PANEL */
+/* PANEL */
 .cart-panel{
-    position:fixed;
-    right:-380px;
-    top:0;
-    width:380px;
-    max-width:100%;
-    height:100%;
-    background:var(--panel);
-    padding:1rem;
-    transition:.35s;
-    z-index:20;
-    display:flex;
-    flex-direction:column;
+    position:fixed;right:-380px;top:0;width:380px;max-width:100%;
+    height:100%;background:var(--panel);padding:1rem;
+    transition:.35s;z-index:20;display:flex;flex-direction:column
 }
-.cart-panel.active{
-    right:0;
-}
-
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:.8rem;
-}
-.close-btn{
-    background:none;
-    border:none;
-    color:white;
-    font-size:1.6rem;
-    cursor:pointer;
-}
+.cart-panel.active{right:0}
 
 .cart-item{
-    background:var(--card);
-    padding:.65rem;
-    border-radius:8px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:.6rem;
+    background:var(--card);padding:.65rem;border-radius:8px;
+    display:flex;justify-content:space-between;margin-bottom:.6rem
 }
-
 .qty-btn{
-    width:26px;
-    height:26px;
-    background:var(--red);
-    border:none;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
-    margin-left:5px;
+    width:26px;height:26px;background:var(--red);border:none;
+    color:white;border-radius:6px;cursor:pointer;margin-left:5px
 }
-
-.cart-footer{
-    margin-top:auto;
-}
-.total{
-    font-weight:bold;
-    color:var(--green);
-}
-.sugestao{
-    font-size:.85rem;
-    color:#ffc107;
-    margin:.3rem 0;
-}
+.total{color:var(--green);font-weight:bold}
 .checkout{
-    background:#25d366;
-    border:none;
-    padding:.8rem;
-    width:100%;
-    border-radius:10px;
-    color:white;
-    font-size:1rem;
-    cursor:pointer;
+    background:#25d366;border:none;padding:.8rem;
+    border-radius:10px;color:white;font-size:1rem;cursor:pointer
 }
 
-@media(max-width:480px){
-    .cart-panel{width:100%}
-    .logo{max-width:160px}
+/* FOOTER */
+.footer{
+    margin-top:3rem;padding:1.5rem 1rem;text-align:center;
+    background:rgba(0,0,0,.6);border-top:1px solid rgba(255,255,255,.08);
+    font-size:.9rem;color:#ddd
 }
+.footer a{color:#00e676;text-decoration:none;font-weight:600}
+
+/* NOTIFICATION */
+.toast{
+    position:fixed;top:20px;right:20px;
+    background:#111;padding:.8rem 1rem;
+    border-left:4px solid var(--green);
+    border-radius:8px;color:white;
+    opacity:0;transform:translateY(-10px);
+    transition:.3s;z-index:99;font-size:.9rem
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{border-color:var(--red)}
 </style>
 </head>
 
@@ -243,7 +127,6 @@ const PHONE="5534999537698";
 const FREE_MIN=25;
 const DELIVERY=5;
 
-/* ===== CARDÁPIO ORIGINAL COMPLETO ===== */
 const menuData=[
 {title:"🔥 Artesanais",items:[
 {name:"Artesanal Clássico",price:35},
@@ -301,151 +184,119 @@ const menuData=[
 ]}
 ];
 
-/* ===== ELEMENTOS (ORIGINAL) ===== */
+/* NOTIFY */
+const toast=document.createElement('div');
+toast.className='toast';
+document.body.appendChild(toast);
+function notify(msg,err=false){
+    toast.textContent=msg;
+    toast.className='toast show'+(err?' error':'');
+    setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+/* ELEMENTOS */
 const header=document.createElement('header');
-const logo=document.createElement('img');
-logo.src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png";
-logo.className="logo";
-header.appendChild(logo);
+header.innerHTML='<img class="logo" src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png">';
 document.body.appendChild(header);
 
 const container=document.createElement('div');
-container.className="container";
-
-const search=document.createElement('input');
-search.className="search";
-search.placeholder="Buscar no cardápio...";
-container.appendChild(search);
-
-const menuContainer=document.createElement('div');
-container.appendChild(menuContainer);
+container.className='container';
+container.innerHTML='<input class="search" placeholder="Buscar no cardápio...">';
+const menu=document.createElement('div');
+container.appendChild(menu);
 document.body.appendChild(container);
 
 const cartBtn=document.createElement('div');
-cartBtn.className="cart-btn";
-cartBtn.innerHTML="🛒";
-const count=document.createElement('div');
-count.className="cart-count";
-count.textContent="0";
-cartBtn.appendChild(count);
+cartBtn.className='cart-btn';
+cartBtn.innerHTML='🛒<div class="cart-count">0</div>';
 document.body.appendChild(cartBtn);
 
 const overlay=document.createElement('div');
-overlay.className="overlay";
+overlay.className='overlay';
 document.body.appendChild(overlay);
 
 const panel=document.createElement('div');
-panel.className="cart-panel";
-
-const panelHeader=document.createElement('div');
-panelHeader.className="cart-header";
-panelHeader.innerHTML="<h3>🛒 Seu Pedido</h3>";
-const close=document.createElement('button');
-close.className="close-btn";
-close.textContent="✕";
-panelHeader.appendChild(close);
-panel.appendChild(panelHeader);
-
-const itemsDiv=document.createElement('div');
-panel.appendChild(itemsDiv);
-
-const footer=document.createElement('div');
-footer.className="cart-footer";
-const totalEl=document.createElement('div');
-totalEl.className="total";
-const sugEl=document.createElement('div');
-sugEl.className="sugestao";
-const finishBtn=document.createElement('button');
-finishBtn.className="checkout";
-finishBtn.textContent="Finalizar no WhatsApp";
-footer.append(totalEl,sugEl,finishBtn);
-panel.appendChild(footer);
+panel.className='cart-panel';
+panel.innerHTML='<h3>🛒 Seu Pedido</h3><div id="items"></div><div class="total"></div><button class="checkout">Finalizar no WhatsApp</button>';
 document.body.appendChild(panel);
 
-/* ===== LÓGICA ORIGINAL ===== */
+const itemsDiv=panel.querySelector('#items');
+const totalEl=panel.querySelector('.total');
+const count=cartBtn.querySelector('.cart-count');
+
 let cart=JSON.parse(localStorage.getItem('degusto-cart'))||[];
 
 function save(){localStorage.setItem('degusto-cart',JSON.stringify(cart))}
 function updateCount(){count.textContent=cart.reduce((s,i)=>s+i.qty,0)}
 
 function renderMenu(){
-    const q=search.value.toLowerCase();
-    menuContainer.innerHTML="";
+    menu.innerHTML='';
     menuData.forEach(sec=>{
-        const filtered=sec.items.filter(i=>i.name.toLowerCase().includes(q));
-        if(!filtered.length) return;
         const s=document.createElement('div');
-        s.className="section";
+        s.className='section';
         s.innerHTML=`<h2>${sec.title}</h2>`;
-        filtered.forEach(item=>{
+        sec.items.forEach(item=>{
             const c=document.createElement('div');
-            c.className="card";
+            c.className='card';
             c.innerHTML=`<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
             const b=document.createElement('button');
-            b.textContent="Adicionar";
+            b.textContent='Adicionar';
             b.onclick=()=>{
                 let it=cart.find(x=>x.name===item.name);
                 it?it.qty++:cart.push({name:item.name,price:item.price,qty:1});
                 save();updateCount();renderCart();
+                notify('Item adicionado ao carrinho');
             };
             c.appendChild(b);
             s.appendChild(c);
         });
-        menuContainer.appendChild(s);
+        menu.appendChild(s);
     });
 }
 
 function renderCart(){
-    itemsDiv.innerHTML="";
+    itemsDiv.innerHTML='';
     let sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-    const entrega=sub>=FREE_MIN?0:DELIVERY;
     cart.forEach((item,idx)=>{
-        const row=document.createElement('div');
-        row.className="cart-item";
-        row.innerHTML=`<div>${item.qty}× ${item.name}<br>R$ ${(item.price*item.qty).toFixed(2)}</div>`;
-        const ctr=document.createElement('div');
-        ["−","+"].forEach((t,i)=>{
-            const b=document.createElement('button');
-            b.className="qty-btn";
-            b.textContent=t;
-            b.onclick=()=>{
-                i?item.qty++:item.qty--;
-                if(item.qty<=0)cart.splice(idx,1);
-                save();updateCount();renderCart();
-            };
-            ctr.appendChild(b);
-        });
-        row.appendChild(ctr);
-        itemsDiv.appendChild(row);
+        const r=document.createElement('div');
+        r.className='cart-item';
+        r.innerHTML=`${item.qty}× ${item.name}`;
+        const b=document.createElement('button');
+        b.className='qty-btn';
+        b.textContent='−';
+        b.onclick=()=>{
+            item.qty--;
+            if(item.qty<=0)cart.splice(idx,1);
+            save();updateCount();renderCart();
+            notify('Item removido',true);
+        };
+        r.appendChild(b);
+        itemsDiv.appendChild(r);
     });
-    totalEl.textContent=`Total: R$ ${(sub+entrega).toFixed(2)} ${entrega?' + R$5 entrega':'🚚 Grátis'}`;
-    sugEl.textContent=(sub>0&&sub<FREE_MIN)?`Faltam R$ ${(FREE_MIN-sub).toFixed(2)} para entrega grátis`:"";
+    totalEl.textContent='Total: R$ '+sub.toFixed(2);
 }
 
-function toggle(){
-    panel.classList.toggle("active");
-    overlay.classList.toggle("active");
-}
-function sendWhats(){
-    if(!cart.length) return alert("Carrinho vazio!");
-    let txt="🍔 Pedido DêGusto\n\n"+cart.map(i=>`${i.qty}× ${i.name}`).join("\n");
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(txt)}`,"_blank");
+cartBtn.onclick=()=>{panel.classList.add('active');overlay.classList.add('active')}
+overlay.onclick=()=>{panel.classList.remove('active');overlay.classList.remove('active')}
+panel.querySelector('.checkout').onclick=()=>{
+    if(!cart.length)return notify('Carrinho vazio',true);
+    notify('Abrindo WhatsApp...');
+    window.open(`https://wa.me/${PHONE}`,'_blank');
 }
 
-/* EVENTOS */
-search.oninput=renderMenu;
-cartBtn.onclick=toggle;
-overlay.onclick=toggle;
-close.onclick=toggle;
-finishBtn.onclick=sendWhats;
-
-/* INIT */
-renderMenu();
-updateCount();
-renderCart();
-
+renderMenu();updateCount();renderCart();
 });
 </script>
+
+<footer class="footer">
+    Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
+    Telefone: (34) 99953-7698<br>
+    Horário: 7h noite<br><br>
+    WebDesigner: <strong>PabloDesigner</strong> —
+    <a href="https://www.pablologomarcas.online" target="_blank">
+        www.pablologomarcas.online
+    </a>
+</footer>
 
 </body>
 </html>
