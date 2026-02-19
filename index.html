@@ -7,46 +7,50 @@
 
 <style>
 :root{
-    --bg: linear-gradient(135deg,#0c0c0c,#1a0000,#300000);
-    --card: rgba(255,255,255,.08);
-    --card-hover: rgba(255,255,255,.15);
+    --bg:#0b0b0b;
+    --card:#1a1a1a;
     --red:#ff3c3c;
     --green:#00e676;
-    --panel:#0e0e0e;
     --text:#fff;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:var(--bg);color:var(--text)}
 
 /* HEADER */
 header{
-    position:sticky;top:0;z-index:10;
-    background:#000000cc;
-    backdrop-filter:blur(10px);
-    padding:.4rem 0;
+    position:sticky;
+    top:0;
+    background:#000;
+    padding:.6rem;
+    text-align:center;
+    z-index:10;
 }
-.logo{max-width:180px;width:70%;margin:auto;display:block}
+.logo{
+    max-width:180px;
+    width:70%;
+}
 
 /* CONTAINER */
-.container{max-width:1000px;margin:auto;padding:1rem}
-
-/* SEARCH */
-.search{
-    width:100%;padding:.8rem 1.1rem;border-radius:40px;
-    border:none;background:#ffffff18;color:white;font-size:1rem
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:1rem;
 }
 
-/* SECTION */
-.section{margin-top:1.5rem}
-.section h2{color:#ff5555;margin-bottom:.4rem}
-
-/* CARD */
+/* CARDÁPIO */
+.section{
+    margin-bottom:1.5rem;
+}
+.section h2{
+    margin-bottom:.5rem;
+    color:#ff5555;
+}
 .card{
     background:var(--card);
-    padding:.85rem 1rem;
-    margin-bottom:.55rem;
-    border-radius:12px;
+    padding:.7rem;
+    margin-bottom:.5rem;
+    border-radius:8px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -54,18 +58,17 @@ header{
 .card button{
     background:var(--red);
     border:none;
-    padding:.45rem 1rem;
-    border-radius:30px;
     color:white;
-    font-weight:600;
+    padding:.4rem .9rem;
+    border-radius:20px;
     cursor:pointer;
 }
 
-/* CART BUTTON */
+/* BOTÃO CARRINHO */
 .cart-btn{
     position:fixed;
-    bottom:18px;
-    right:18px;
+    bottom:20px;
+    right:20px;
     width:60px;
     height:60px;
     background:var(--green);
@@ -75,7 +78,6 @@ header{
     justify-content:center;
     font-size:1.6rem;
     cursor:pointer;
-    z-index:20;
 }
 .cart-count{
     position:absolute;
@@ -89,241 +91,153 @@ header{
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:bold;
 }
 
-/* OVERLAY */
-.overlay{
+/* CARRINHO */
+.cart{
     position:fixed;
-    inset:0;
-    background:#000000aa;
-    opacity:0;
-    visibility:hidden;
-    transition:.3s;
-    z-index:15;
-}
-.overlay.active{opacity:1;visibility:visible}
-
-/* CART PANEL */
-.cart-panel{
-    position:fixed;
-    right:-380px;
+    right:-350px;
     top:0;
-    width:380px;
-    max-width:100%;
+    width:350px;
     height:100%;
-    background:var(--panel);
+    background:#111;
     padding:1rem;
-    transition:.35s;
+    transition:.3s;
     z-index:20;
-    display:flex;
-    flex-direction:column;
 }
-.cart-panel.active{right:0}
-
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:.8rem;
-}
-
-.close-btn{
-    background:none;
-    border:none;
-    color:white;
-    font-size:1.6rem;
-    cursor:pointer;
-}
-
+.cart.active{right:0}
+.cart h3{margin-bottom:.5rem}
 .cart-item{
-    background:var(--card);
-    padding:.65rem;
-    border-radius:8px;
+    background:#222;
+    padding:.5rem;
+    border-radius:6px;
+    margin-bottom:.4rem;
     display:flex;
     justify-content:space-between;
-    margin-bottom:.6rem;
 }
-
-.qty-btn{
-    width:26px;
-    height:26px;
-    background:var(--red);
-    border:none;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
-    margin-left:5px;
-}
-
-.cart-footer{
-    margin-top:auto;
-}
-
-.total{
-    font-weight:bold;
-    color:var(--green);
-    margin-bottom:.6rem;
-}
-
-.checkout{
+.cart button{
+    width:100%;
+    margin-top:.6rem;
     background:#25d366;
     border:none;
-    padding:.8rem;
-    width:100%;
-    border-radius:10px;
+    padding:.6rem;
+    border-radius:8px;
     color:white;
-    font-size:1rem;
     cursor:pointer;
 }
 
-/* INFO NO FINAL DO CARRINHO */
-.cart-info{
-    margin-top:1rem;
-    padding-top:.8rem;
-    border-top:1px solid rgba(255,255,255,.08);
-    font-size:.78rem;
-    color:#ccc;
-    line-height:1.4;
+/* NOTIFICAÇÃO */
+.notify{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#000;
+    border-left:4px solid var(--green);
+    padding:.6rem 1rem;
+    border-radius:6px;
+    opacity:0;
+    transform:translateY(-10px);
+    transition:.3s;
+    z-index:50;
 }
-.cart-info a{
-    color:#00e676;
-    text-decoration:none;
-    font-weight:600;
+.notify.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
-/* FOOTER */
-.footer{
-    margin-top:2rem;
+/* RODAPÉ */
+footer{
+    margin-top:3rem;
     padding:1.5rem 1rem;
+    background:#000;
     text-align:center;
-    background:rgba(0,0,0,.6);
-    border-top:1px solid rgba(255,255,255,.08);
-    font-size:.9rem;
-    color:#ddd;
+    font-size:.85rem;
+    color:#ccc;
 }
-.footer a{color:#00e676;text-decoration:none;font-weight:600}
-
-@media(max-width:480px){
-    .cart-panel{width:100%}
+footer a{
+    color:var(--green);
+    text-decoration:none;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
+<header>
+    <img src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png" class="logo">
+</header>
 
+<div class="container" id="menu"></div>
+
+<div class="cart-btn" id="cartBtn">
+    🛒
+    <div class="cart-count" id="count">0</div>
+</div>
+
+<div class="cart" id="cart">
+    <h3>Seu Pedido</h3>
+    <div id="cartItems"></div>
+    <div id="total"></div>
+    <button onclick="finalizar()">Finalizar no WhatsApp</button>
+</div>
+
+<div class="notify" id="notify"></div>
+
+<script>
 const PHONE="5534999537698";
 
-/* CARDÁPIO COMPLETO */
 const menuData=[
-{title:"🔥 Artesanais",items:[
+{title:"Artesanais",items:[
 {name:"Artesanal Clássico",price:35},
 {name:"Artesanal Duplo",price:42},
 {name:"Artesanal com Doritos",price:36},
 {name:"Artesanal com Anéis de Cebola",price:40}
 ]},
-{title:"🍟 Batatas (com bacon e cheddar)",items:[
+{title:"Batatas",items:[
 {name:"Batata 200g",price:15},
 {name:"Batata 300g",price:20},
 {name:"Batata 500g",price:35}
 ]},
-{title:"🥤 Bebidas",items:[
+{title:"Bebidas",items:[
 {name:"Coca-Cola 2L",price:14},
 {name:"Coca-Cola 1L",price:10},
-{name:"Coca-Cola Lata Grande",price:5},
-{name:"Coca-Cola Lata Pequena",price:3.5},
-{name:"Coca-Cola 1L Zero",price:10},
-{name:"Coca-Cola Lata Zero",price:5},
+{name:"Coca-Cola Lata",price:5},
 {name:"Fanta 2L",price:12},
-{name:"Fanta 1L",price:8},
-{name:"Fanta Lata",price:5},
-{name:"Mineiro 2L",price:12},
-{name:"Kuat 2L",price:10},
-{name:"Antártica Lata",price:5},
-{name:"Mineiro Lata",price:5},
-{name:"Pithula",price:3}
+{name:"Mineiro 2L",price:12}
 ]}
 ];
 
-/* HEADER */
-const header=document.createElement('header');
-header.innerHTML='<img class="logo" src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png">';
-document.body.appendChild(header);
-
-/* CONTAINER */
-const container=document.createElement('div');
-container.className='container';
-const search=document.createElement('input');
-search.className='search';
-search.placeholder='Buscar no cardápio...';
-container.appendChild(search);
-const menu=document.createElement('div');
-container.appendChild(menu);
-document.body.appendChild(container);
-
-/* CART BTN */
-const cartBtn=document.createElement('div');
-cartBtn.className='cart-btn';
-cartBtn.innerHTML='🛒<div class="cart-count">0</div>';
-document.body.appendChild(cartBtn);
-
-/* OVERLAY */
-const overlay=document.createElement('div');
-overlay.className='overlay';
-document.body.appendChild(overlay);
-
-/* CART PANEL */
-const panel=document.createElement('div');
-panel.className='cart-panel';
-panel.innerHTML=`
-<div class="cart-header">
-    <h3>🛒 Seu Pedido</h3>
-    <button class="close-btn">✕</button>
-</div>
-<div id="items"></div>
-<div class="cart-footer">
-    <div class="total"></div>
-    <button class="checkout">Finalizar no WhatsApp</button>
-    <div class="cart-info">
-        Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
-        Telefone: (34) 99953-7698<br>
-        Horário de Atendimento: 7h noite<br><br>
-        WebDesigner: <strong>PabloDesigner</strong> —
-        <a href="https://www.pablologomarcas.online" target="_blank">
-            www.pablologomarcas.online
-        </a>
-    </div>
-</div>`;
-document.body.appendChild(panel);
-
-const itemsDiv=panel.querySelector('#items');
-const totalEl=panel.querySelector('.total');
-const close=panel.querySelector('.close-btn');
-const count=cartBtn.querySelector('.cart-count');
+const menu=document.getElementById("menu");
+const cartEl=document.getElementById("cart");
+const cartItems=document.getElementById("cartItems");
+const countEl=document.getElementById("count");
+const notify=document.getElementById("notify");
 
 let cart=[];
 
-function updateCount(){count.textContent=cart.reduce((s,i)=>s+i.qty,0)}
+function notifyMsg(text){
+    notify.textContent=text;
+    notify.classList.add("show");
+    setTimeout(()=>notify.classList.remove("show"),2000);
+}
 
 function renderMenu(){
-    menu.innerHTML='';
     menuData.forEach(sec=>{
-        const s=document.createElement('div');
-        s.className='section';
+        const s=document.createElement("div");
+        s.className="section";
         s.innerHTML=`<h2>${sec.title}</h2>`;
         sec.items.forEach(item=>{
-            const c=document.createElement('div');
-            c.className='card';
-            c.innerHTML=`<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
-            const b=document.createElement('button');
-            b.textContent='Adicionar';
+            const c=document.createElement("div");
+            c.className="card";
+            c.innerHTML=`${item.name} — R$ ${item.price.toFixed(2)}`;
+            const b=document.createElement("button");
+            b.textContent="Adicionar";
             b.onclick=()=>{
-                let it=cart.find(x=>x.name===item.name);
-                it?it.qty++:cart.push({name:item.name,price:item.price,qty:1});
-                updateCount();renderCart();
+                const i=cart.find(x=>x.name===item.name);
+                i?i.qty++:cart.push({name:item.name,price:item.price,qty:1});
+                updateCart();
+                notifyMsg(item.name+" adicionado");
             };
             c.appendChild(b);
             s.appendChild(c);
@@ -332,43 +246,42 @@ function renderMenu(){
     });
 }
 
-function renderCart(){
-    itemsDiv.innerHTML='';
-    let sub=0;
-    cart.forEach((item,idx)=>{
-        sub+=item.price*item.qty;
-        const r=document.createElement('div');
-        r.className='cart-item';
-        r.innerHTML=`${item.qty}× ${item.name}`;
-        const b=document.createElement('button');
-        b.className='qty-btn';
-        b.textContent='−';
-        b.onclick=()=>{
-            item.qty--;
-            if(item.qty<=0)cart.splice(idx,1);
-            updateCount();renderCart();
-        };
-        r.appendChild(b);
-        itemsDiv.appendChild(r);
+function updateCart(){
+    cartItems.innerHTML="";
+    let total=0;
+    let count=0;
+    cart.forEach(i=>{
+        total+=i.price*i.qty;
+        count+=i.qty;
+        const d=document.createElement("div");
+        d.className="cart-item";
+        d.textContent=`${i.qty}x ${i.name}`;
+        cartItems.appendChild(d);
     });
-    totalEl.textContent='Total: R$ '+sub.toFixed(2);
+    document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
+    countEl.textContent=count;
 }
 
-cartBtn.onclick=()=>{panel.classList.add('active');overlay.classList.add('active')}
-overlay.onclick=()=>{panel.classList.remove('active');overlay.classList.remove('active')}
-close.onclick=()=>{panel.classList.remove('active');overlay.classList.remove('active')}
+document.getElementById("cartBtn").onclick=()=>{
+    cartEl.classList.toggle("active");
+};
 
-panel.querySelector('.checkout').onclick=()=>{
-    if(!cart.length)return alert('Carrinho vazio!');
-    window.open(`https://wa.me/${PHONE}`,'_blank');
+function finalizar(){
+    if(!cart.length)return alert("Carrinho vazio");
+    window.open(`https://wa.me/${PHONE}`,"_blank");
 }
 
-renderMenu();updateCount();
-});
+renderMenu();
 </script>
 
-<footer class="footer">
-    © DêGusto Lanchonete — Todos os direitos reservados
+<footer>
+    Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
+    Telefone: (34) 99953-7698<br>
+    Horário de Atendimento: 7h noite<br><br>
+    WebDesigner: <strong>PabloDesigner</strong> —
+    <a href="https://www.pablologomarcas.online" target="_blank">
+        www.pablologomarcas.online
+    </a>
 </footer>
 
 </body>
