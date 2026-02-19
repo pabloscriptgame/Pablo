@@ -1,327 +1,613 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>DêGusto Lanchonete</title>
-
-<style>
-:root{
-  --bg:#0e0e11;
-  --card:#1c1c22;
-  --primary:#ff3c3c;
-  --accent:#00e676;
-  --text:#fff;
-}
-
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{
-  background:linear-gradient(180deg,#0e0e11,#15151b);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-}
-
-/* HEADER */
-header{
-  position:sticky;
-  top:0;
-  background:#000;
-  padding:.8rem;
-  text-align:center;
-  z-index:10;
-}
-.logo{width:160px;max-width:70%}
-
-/* MENU */
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:1rem;
-  padding-bottom:110px;
-}
-.section{margin-bottom:1.8rem}
-.section h2{margin-bottom:.7rem;font-size:1.05rem}
-
-.card{
-  background:linear-gradient(145deg,#1f1f26,#191920);
-  border-radius:16px;
-  padding:.9rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:.6rem;
-}
-.card span{font-size:.95rem}
-.card button{
-  border:none;
-  padding:.45rem 1rem;
-  border-radius:20px;
-  background:linear-gradient(135deg,var(--primary),#ff6060);
-  color:#fff;
-  font-weight:600;
-}
-
-/* CART BUTTON */
-.cart-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:linear-gradient(135deg,var(--accent),#1aff8c);
-  color:#000;
-  padding:.9rem 1.2rem;
-  border-radius:40px;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-  box-shadow:0 0 25px rgba(0,230,118,.6);
-  z-index:20;
-  cursor:pointer;
-}
-.cart-btn span{
-  background:var(--primary);
-  color:#fff;
-  padding:.2rem .55rem;
-  border-radius:20px;
-  font-size:.75rem;
-}
-
-/* MINI CART */
-.cart{
-  position:fixed;
-  bottom:90px;
-  right:20px;
-  width:320px;
-  max-width:90%;
-  background:#111;
-  border-radius:18px;
-  padding:1rem;
-  box-shadow:0 20px 40px rgba(0,0,0,.6);
-  display:none;
-  flex-direction:column;
-  z-index:30;
-}
-.cart.active{display:flex}
-
-.cart h3{
-  font-size:1rem;
-  margin-bottom:.6rem;
-  display:flex;
-  justify-content:space-between;
-}
-
-.cart-items{
-  max-height:240px;
-  overflow-y:auto;
-  margin-bottom:.6rem;
-}
-
-.cart-item{
-  background:#1f1f27;
-  padding:.6rem;
-  border-radius:12px;
-  display:flex;
-  justify-content:space-between;
-  font-size:.85rem;
-  margin-bottom:.4rem;
-}
-
-.cart-total{
-  font-weight:bold;
-  color:var(--accent);
-  margin:.4rem 0;
-}
-
-.checkout{
-  border:none;
-  background:linear-gradient(135deg,#25d366,#1bbf5b);
-  color:#fff;
-  padding:.7rem;
-  border-radius:14px;
-  font-weight:600;
-}
-
-/* NOTIFY */
-.notify{
-  position:fixed;
-  top:15px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#000;
-  padding:.5rem 1rem;
-  border-radius:10px;
-  display:none;
-  z-index:50;
-}
-.notify.show{display:block}
-
-/* FOOTER */
-footer{
-  background:#000;
-  padding:1.6rem 1rem;
-  text-align:center;
-  font-size:.85rem;
-  color:#ccc;
-}
-footer a{color:var(--accent);text-decoration:none;font-weight:bold}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DêGusto Lanchonete</title>
+    <style>
+         :root {
+            --bg: linear-gradient(135deg, #111, #1a0000, #2a0000);
+            --text: #ffffff;
+            --red: #ff3c3c;
+            --green: #00c853;
+            --card: #ffffff10;
+            --card-hover: #ffffff20;
+            --overlay: #000000aa;
+            --panel: #111;
+            --success: #00e676;
+            --warning: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            text-align: center;
+            padding: 0.4rem 0;
+            /* muito fino */
+            background: #000000cc;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+        }
+        
+        .logo {
+            max-width: 180px;
+            /* bem menor */
+            width: 65%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0.6rem 1rem;
+            flex: 1;
+        }
+        
+        .search {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 50px;
+            border: none;
+            margin: 0.6rem 0;
+            font-size: 0.98rem;
+            background: #ffffff15;
+            color: white;
+            outline: none;
+        }
+        
+        .search:focus {
+            background: #ffffff25;
+        }
+        
+        .section {
+            margin-bottom: 1.8rem;
+        }
+        
+        .section h2 {
+            margin-bottom: 0.4rem;
+            color: #ff5555;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .card {
+            background: var(--card);
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.18s;
+        }
+        
+        .card:hover {
+            background: var(--card-hover);
+        }
+        
+        .card button {
+            background: var(--red);
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .cart-btn {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            background: var(--green);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.7rem;
+            cursor: pointer;
+            box-shadow: 0 4px 18px #00c85377;
+            z-index: 30;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: #ff3c3c;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            z-index: 25;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cart-panel {
+            position: fixed;
+            right: -380px;
+            top: 0;
+            width: 380px;
+            max-width: 100%;
+            height: 100%;
+            background: var(--panel);
+            padding: 1.1rem;
+            transition: right 0.4s;
+            overflow-y: auto;
+            z-index: 30;
+            box-shadow: -10px 0 30px #000;
+        }
+        
+        .cart-panel.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.9rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.7rem;
+            cursor: pointer;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7rem;
+            background: var(--card);
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.94rem;
+        }
+        
+        .qty-btn {
+            background: var(--red);
+            border: none;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .cart-footer {
+            margin-top: auto;
+            padding-top: 0.9rem;
+        }
+        
+        .total {
+            font-weight: bold;
+            color: var(--success);
+            font-size: 1.08rem;
+        }
+        
+        .sugestao {
+            color: var(--warning);
+            font-size: 0.83rem;
+            margin: 0.4rem 0;
+        }
+        
+        .checkout {
+            background: #25d366;
+            border: none;
+            padding: 0.85rem;
+            width: 100%;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.02rem;
+            cursor: pointer;
+            margin-top: 0.7rem;
+        }
+        
+        @media (max-width:480px) {
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+                padding: 0.9rem;
+            }
+            .cart-btn {
+                width: 54px;
+                height: 54px;
+                font-size: 1.5rem;
+                bottom: 14px;
+                right: 14px;
+            }
+            .logo {
+                max-width: 160px;
+            }
+            header {
+                padding: 0.3rem 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <img src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png" class="logo">
-</header>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
-<main class="container" id="menu"></main>
+            const PHONE = "5534999537698";
+            const FREE_MIN = 25;
+            const DELIVERY = 5;
 
-<div class="cart-btn" id="cartBtn">
-  🛒 Carrinho <span id="count">0</span>
-</div>
+            const menuData = [{
+                title: "🔥 Artesanais",
+                items: [{
+                    name: "Artesanal Clássico",
+                    price: 35
+                }, {
+                    name: "Artesanal Duplo",
+                    price: 42
+                }, {
+                    name: "Artesanal com Doritos",
+                    price: 36
+                }, {
+                    name: "Artesanal com Anéis de Cebola",
+                    price: 40
+                }]
+            }, {
+                title: "🍟 Batatas (com bacon e cheddar)",
+                items: [{
+                    name: "Batata 200g",
+                    price: 15
+                }, {
+                    name: "Batata 300g",
+                    price: 20
+                }, {
+                    name: "Batata 500g",
+                    price: 35
+                }]
+            }, {
+                title: "🥤 Bebidas",
+                items: [{
+                    name: "Coca-Cola 2L",
+                    price: 14
+                }, {
+                    name: "Coca-Cola 1L",
+                    price: 10
+                }, {
+                    name: "Coca-Cola Lata Grande",
+                    price: 5
+                }, {
+                    name: "Coca-Cola Lata Pequena",
+                    price: 3.5
+                }, {
+                    name: "Coca-Cola 1L Zero",
+                    price: 10
+                }, {
+                    name: "Coca-Cola Lata Zero",
+                    price: 5
+                }, {
+                    name: "Fanta 2L",
+                    price: 12
+                }, {
+                    name: "Fanta 1L",
+                    price: 8
+                }, {
+                    name: "Fanta Lata",
+                    price: 5
+                }, {
+                    name: "Mineiro 2L",
+                    price: 12
+                }, {
+                    name: "Kuat 2L",
+                    price: 10
+                }, {
+                    name: "Antártica Lata",
+                    price: 5
+                }, {
+                    name: "Mineiro Lata",
+                    price: 5
+                }, {
+                    name: "Pithula",
+                    price: 3
+                }]
+            }, {
+                title: "🔥 Combos Tradicionais",
+                items: [{
+                    name: "2x Tudo + 2 Refri",
+                    price: 48
+                }, {
+                    name: "2x Salada + 2 Refri",
+                    price: 42
+                }, {
+                    name: "2x Cheddar + 2 Refri",
+                    price: 45
+                }, {
+                    name: "2x Calabresa + 2 Refri",
+                    price: 45
+                }, {
+                    name: "2x Steak + 2 Refri",
+                    price: 45
+                }]
+            }, {
+                title: "🍔 Combos com Batata",
+                items: [{
+                    name: "2x Tudo + Batata P",
+                    price: 50
+                }, {
+                    name: "2x Salada + Batata P",
+                    price: 45
+                }, {
+                    name: "2x Calabresa + Batata P",
+                    price: 45
+                }, {
+                    name: "2x Cheddar + Batata P",
+                    price: 48
+                }, {
+                    name: "1x Tudo + Batata P",
+                    price: 30
+                }, {
+                    name: "1x Salada + Batata P",
+                    price: 25
+                }, {
+                    name: "1x Cheddar + Batata P",
+                    price: 28
+                }, {
+                    name: "1x Tudo + Batata + Refri",
+                    price: 32
+                }]
+            }, {
+                title: "💎 Combos Especiais",
+                items: [{
+                    name: "2x DêGusto",
+                    price: 55
+                }, {
+                    name: "2x DêGusto + Batata M",
+                    price: 65
+                }, {
+                    name: "3x Tudo + 3 Batata P + 3 Refri",
+                    price: 80
+                }, {
+                    name: "2x Bagunça + 2 Batata P",
+                    price: 80
+                }, {
+                    name: "2x Dobro + 2 Batata P",
+                    price: 82
+                }, {
+                    name: "2 Artesanais Clássicos + 2 Batata P",
+                    price: 65
+                }, {
+                    name: "2 Artesanais Duplo + 2 Batata P",
+                    price: 80
+                }, {
+                    name: "2 Artesanais Clássicos + Batata + Refri",
+                    price: 75
+                }]
+            }];
 
-<div class="cart" id="cart">
-  <h3>
-    Seu pedido
-    <span style="cursor:pointer" onclick="toggleCart()">✕</span>
-  </h3>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-total" id="total">Total: R$ 0,00</div>
-  <button class="checkout" onclick="finalizar()">Finalizar no WhatsApp</button>
-</div>
+            // ── Criação dos elementos ─────────────────────────────────
 
-<div class="notify" id="notify"></div>
+            const header = document.createElement('header');
+            const logo = document.createElement('img');
+            logo.src = "https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png";
+            logo.alt = "DêGusto Lanchonete";
+            logo.className = "logo";
+            logo.loading = "lazy";
+            header.appendChild(logo);
+            document.body.appendChild(header);
 
-<script>
-const PHONE="5534999537698";
+            const container = document.createElement('div');
+            container.className = 'container';
 
-const menuData=[
-{title:"🔥 Artesanais",items:[
-{name:"Artesanal Clássico",price:35},
-{name:"Artesanal Duplo",price:42},
-{name:"Artesanal com Doritos",price:36},
-{name:"Artesanal com Anéis de Cebola",price:40}
-]},
-{title:"🍟 Batatas (com bacon e cheddar)",items:[
-{name:"Batata 200g",price:15},
-{name:"Batata 300g",price:20},
-{name:"Batata 500g",price:35}
-]},
-{title:"🥤 Bebidas",items:[
-{name:"Coca-Cola 2L",price:14},
-{name:"Coca-Cola 1L",price:10},
-{name:"Coca-Cola Lata Grande",price:5},
-{name:"Coca-Cola Lata Pequena",price:3.5},
-{name:"Coca-Cola 1L Zero",price:10},
-{name:"Coca-Cola Lata Zero",price:5},
-{name:"Fanta 2L",price:12},
-{name:"Fanta 1L",price:8},
-{name:"Fanta Lata",price:5},
-{name:"Mineiro 2L",price:12},
-{name:"Kuat 2L",price:10},
-{name:"Antártica Lata",price:5},
-{name:"Mineiro Lata",price:5},
-{name:"Pithula",price:3}
-]},
-{title:"🔥 Combos Tradicionais",items:[
-{name:"2x Tudo + 2 Refri",price:48},
-{name:"2x Salada + 2 Refri",price:42},
-{name:"2x Cheddar + 2 Refri",price:45},
-{name:"2x Calabresa + 2 Refri",price:45},
-{name:"2x Steak + 2 Refri",price:45}
-]},
-{title:"🍔 Combos com Batata",items:[
-{name:"2x Tudo + Batata P",price:50},
-{name:"2x Salada + Batata P",price:45},
-{name:"2x Calabresa + Batata P",price:45},
-{name:"2x Cheddar + Batata P",price:48},
-{name:"1x Tudo + Batata P",price:30},
-{name:"1x Salada + Batata P",price:25},
-{name:"1x Cheddar + Batata P",price:28},
-{name:"1x Tudo + Batata + Refri",price:32}
-]},
-{title:"💎 Combos Especiais",items:[
-{name:"2x DêGusto",price:55},
-{name:"2x DêGusto + Batata M",price:65},
-{name:"3x Tudo + 3 Batata P + 3 Refri",price:80},
-{name:"2x Bagunça + 2 Batata P",price:80},
-{name:"2x Dobro + 2 Batata P",price:82},
-{name:"2 Artesanais Clássicos + 2 Batata P",price:65},
-{name:"2 Artesanais Duplo + 2 Batata P",price:80},
-{name:"2 Artesanais Clássicos + Batata + Refri",price:75}
-]}
-];
+            const search = document.createElement('input');
+            search.type = 'text';
+            search.className = 'search';
+            search.placeholder = 'Buscar no cardápio...';
+            container.appendChild(search);
 
-const menu=document.getElementById("menu");
-const cartBox=document.getElementById("cart");
-const cartItems=document.getElementById("cartItems");
-const countEl=document.getElementById("count");
-const notify=document.getElementById("notify");
-let cart=[];
+            const menuContainer = document.createElement('div');
+            container.appendChild(menuContainer);
+            document.body.appendChild(container);
 
-function toggleCart(){
-  cartBox.classList.toggle("active");
-}
+            const cartBtn = document.createElement('div');
+            cartBtn.className = 'cart-btn';
+            cartBtn.innerHTML = '🛒';
+            const count = document.createElement('div');
+            count.className = 'cart-count';
+            count.textContent = '0';
+            cartBtn.appendChild(count);
+            document.body.appendChild(cartBtn);
 
-document.getElementById("cartBtn").onclick=toggleCart;
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            document.body.appendChild(overlay);
 
-function notifyMsg(t){
-  notify.textContent=t;
-  notify.classList.add("show");
-  setTimeout(()=>notify.classList.remove("show"),1200);
-}
+            const panel = document.createElement('div');
+            panel.className = 'cart-panel';
 
-menuData.forEach(sec=>{
-  const s=document.createElement("section");
-  s.className="section";
-  s.innerHTML=`<h2>${sec.title}</h2>`;
-  sec.items.forEach(item=>{
-    const c=document.createElement("div");
-    c.className="card";
-    c.innerHTML=`<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
-    const b=document.createElement("button");
-    b.textContent="Adicionar";
-    b.onclick=()=>{
-      const i=cart.find(x=>x.name===item.name);
-      i?i.qty++:cart.push({name:item.name,price:item.price,qty:1});
-      updateCart();
-      cartBox.classList.add("active");
-      notifyMsg("Adicionado");
-    };
-    c.appendChild(b);
-    s.appendChild(c);
-  });
-  menu.appendChild(s);
-});
+            const panelHeader = document.createElement('div');
+            panelHeader.className = 'cart-header';
+            panelHeader.innerHTML = '<h3>🛒 Seu Pedido</h3>';
+            const close = document.createElement('button');
+            close.className = 'close-btn';
+            close.textContent = '✕';
+            panelHeader.appendChild(close);
+            panel.appendChild(panelHeader);
 
-function updateCart(){
-  cartItems.innerHTML="";
-  let total=0,count=0;
-  cart.forEach(i=>{
-    total+=i.price*i.qty;
-    count+=i.qty;
-    const d=document.createElement("div");
-    d.className="cart-item";
-    d.innerHTML=`<span>${i.qty}x ${i.name}</span><span>R$ ${(i.price*i.qty).toFixed(2)}</span>`;
-    cartItems.appendChild(d);
-  });
-  document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
-  countEl.textContent=count;
-}
+            const itemsDiv = document.createElement('div');
+            panel.appendChild(itemsDiv);
 
-function finalizar(){
-  if(!cart.length)return alert("Carrinho vazio");
-  window.open(`https://wa.me/${PHONE}`,"_blank");
-}
-</script>
+            const footer = document.createElement('div');
+            footer.className = 'cart-footer';
+            const totalEl = document.createElement('div');
+            totalEl.className = 'total';
+            const sugEl = document.createElement('div');
+            sugEl.className = 'sugestao';
+            const finishBtn = document.createElement('button');
+            finishBtn.className = 'checkout';
+            finishBtn.textContent = 'Finalizar no WhatsApp';
+            footer.append(totalEl, sugEl, finishBtn);
+            panel.appendChild(footer);
+            document.body.appendChild(panel);
 
-<footer>
-Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
-Telefone: (34) 99953-7698<br>
-Horário de Atendimento: 7h noite<br><br>
-WebDesigner: <strong>PabloDesigner</strong> —
-<a href="https://www.pablologomarcas.online" target="_blank">www.pablologomarcas.online</a>
-</footer>
+            // ── Lógica do carrinho e menu ─────────────────────────────
 
+            let cart = JSON.parse(localStorage.getItem('degusto-cart')) || [];
+
+            function save() {
+                localStorage.setItem('degusto-cart', JSON.stringify(cart));
+            }
+
+            function updateCount() {
+                count.textContent = cart.reduce((s, i) => s + i.qty, 0);
+            }
+
+            function renderMenu() {
+                const q = search.value.toLowerCase().trim();
+                menuContainer.innerHTML = '';
+
+                menuData.forEach(sec => {
+                    const filtered = sec.items.filter(it => it.name.toLowerCase().includes(q));
+                    if (!filtered.length) return;
+
+                    const s = document.createElement('div');
+                    s.className = 'section';
+                    const h = document.createElement('h2');
+                    h.textContent = sec.title;
+                    s.appendChild(h);
+
+                    filtered.forEach(item => {
+                        const c = document.createElement('div');
+                        c.className = 'card';
+                        c.innerHTML = `<span>${item.name} — R$ ${item.price.toFixed(2)}</span>`;
+                        const b = document.createElement('button');
+                        b.textContent = 'Adicionar';
+                        b.onclick = () => {
+                            let it = cart.find(x => x.name === item.name);
+                            if (it) it.qty++;
+                            else cart.push({
+                                name: item.name,
+                                price: item.price,
+                                qty: 1
+                            });
+                            save();
+                            updateCount();
+                            renderCart();
+                        };
+                        c.appendChild(b);
+                        s.appendChild(c);
+                    });
+
+                    menuContainer.appendChild(s);
+                });
+            }
+
+            function renderCart() {
+                itemsDiv.innerHTML = '';
+                let sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+                const entrega = sub >= FREE_MIN ? 0 : DELIVERY;
+                const tot = sub + entrega;
+
+                cart.forEach((item, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'cart-item';
+                    row.innerHTML = `<div>${item.qty}× ${item.name}<br>R$ ${(item.price*item.qty).toFixed(2)}</div>`;
+
+                    const ctr = document.createElement('div');
+                    const m = document.createElement('button');
+                    m.className = 'qty-btn';
+                    m.textContent = '−';
+                    m.onclick = () => {
+                        item.qty--;
+                        if (item.qty <= 0) cart.splice(idx, 1);
+                        save();
+                        updateCount();
+                        renderCart();
+                    };
+                    const p = document.createElement('button');
+                    p.className = 'qty-btn';
+                    p.textContent = '+';
+                    p.onclick = () => {
+                        item.qty++;
+                        save();
+                        updateCount();
+                        renderCart();
+                    };
+                    ctr.append(m, p);
+                    row.appendChild(ctr);
+                    itemsDiv.appendChild(row);
+                });
+
+                totalEl.textContent = `Total: R$ ${tot.toFixed(2)} ${entrega ? '+ R$5 entrega' : '🚚 Grátis'}`;
+                sugEl.textContent = (sub > 0 && sub < FREE_MIN) ? `Faltam R$ ${(FREE_MIN - sub).toFixed(2)} para entrega grátis` : '';
+            }
+
+            function toggle() {
+                panel.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+
+            function sendWhats() {
+                if (!cart.length) return alert('Carrinho vazio!');
+                let txt = "🍔 Pedido DêGusto\n\n" + cart.map(i => `${i.qty}× ${i.name}`).join('\n');
+                window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(txt)}`, '_blank');
+            }
+
+            // Eventos
+            search.addEventListener('input', renderMenu);
+            cartBtn.onclick = toggle;
+            overlay.onclick = toggle;
+            close.onclick = toggle;
+            finishBtn.onclick = sendWhats;
+
+            // Inicializa
+            renderMenu();
+            updateCount();
+            renderCart();
+        });
+    </script>
 </body>
+
+
 </html>
+
