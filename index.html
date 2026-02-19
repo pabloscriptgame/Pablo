@@ -16,8 +16,8 @@
     --panel:#0e0e0e;
 }
 
+/* BASE */
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-
 body{background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER */
@@ -54,7 +54,7 @@ header{
     border-radius:30px;color:white;font-weight:600;cursor:pointer
 }
 
-/* CART */
+/* CART BUTTON */
 .cart-btn{
     position:fixed;bottom:18px;right:18px;width:60px;height:60px;
     background:var(--green);border-radius:50%;display:flex;
@@ -74,7 +74,7 @@ header{
 }
 .overlay.active{opacity:1;visibility:visible}
 
-/* PANEL */
+/* CART PANEL */
 .cart-panel{
     position:fixed;right:-380px;top:0;width:380px;max-width:100%;
     height:100%;background:var(--panel);padding:1rem;
@@ -96,25 +96,31 @@ header{
     border-radius:10px;color:white;font-size:1rem;cursor:pointer
 }
 
+/* NOTIFICATION (EMBAIXO) */
+.toast{
+    margin:1rem auto 0;
+    background:#111;
+    padding:.8rem 1rem;
+    border-left:4px solid var(--green);
+    border-radius:8px;
+    max-width:320px;
+    text-align:center;
+    font-size:.9rem;
+    display:none;
+}
+.toast.show{display:block}
+.toast.error{border-color:var(--red)}
+
 /* FOOTER */
 .footer{
-    margin-top:3rem;padding:1.5rem 1rem;text-align:center;
-    background:rgba(0,0,0,.6);border-top:1px solid rgba(255,255,255,.08);
+    margin-top:2rem;
+    padding:1.5rem 1rem;
+    text-align:center;
+    background:rgba(0,0,0,.6);
+    border-top:1px solid rgba(255,255,255,.08);
     font-size:.9rem;color:#ddd
 }
 .footer a{color:#00e676;text-decoration:none;font-weight:600}
-
-/* NOTIFICATION */
-.toast{
-    position:fixed;top:20px;right:20px;
-    background:#111;padding:.8rem 1rem;
-    border-left:4px solid var(--green);
-    border-radius:8px;color:white;
-    opacity:0;transform:translateY(-10px);
-    transition:.3s;z-index:99;font-size:.9rem
-}
-.toast.show{opacity:1;transform:translateY(0)}
-.toast.error{border-color:var(--red)}
 </style>
 </head>
 
@@ -124,9 +130,8 @@ header{
 document.addEventListener('DOMContentLoaded',()=>{
 
 const PHONE="5534999537698";
-const FREE_MIN=25;
-const DELIVERY=5;
 
+/* CARDÁPIO COMPLETO */
 const menuData=[
 {title:"🔥 Artesanais",items:[
 {name:"Artesanal Clássico",price:35},
@@ -154,37 +159,10 @@ const menuData=[
 {name:"Antártica Lata",price:5},
 {name:"Mineiro Lata",price:5},
 {name:"Pithula",price:3}
-]},
-{title:"🔥 Combos Tradicionais",items:[
-{name:"2x Tudo + 2 Refri",price:48},
-{name:"2x Salada + 2 Refri",price:42},
-{name:"2x Cheddar + 2 Refri",price:45},
-{name:"2x Calabresa + 2 Refri",price:45},
-{name:"2x Steak + 2 Refri",price:45}
-]},
-{title:"🍔 Combos com Batata",items:[
-{name:"2x Tudo + Batata P",price:50},
-{name:"2x Salada + Batata P",price:45},
-{name:"2x Calabresa + Batata P",price:45},
-{name:"2x Cheddar + Batata P",price:48},
-{name:"1x Tudo + Batata P",price:30},
-{name:"1x Salada + Batata P",price:25},
-{name:"1x Cheddar + Batata P",price:28},
-{name:"1x Tudo + Batata + Refri",price:32}
-]},
-{title:"💎 Combos Especiais",items:[
-{name:"2x DêGusto",price:55},
-{name:"2x DêGusto + Batata M",price:65},
-{name:"3x Tudo + 3 Batata P + 3 Refri",price:80},
-{name:"2x Bagunça + 2 Batata P",price:80},
-{name:"2x Dobro + 2 Batata P",price:82},
-{name:"2 Artesanais Clássicos + 2 Batata P",price:65},
-{name:"2 Artesanais Duplo + 2 Batata P",price:80},
-{name:"2 Artesanais Clássicos + Batata + Refri",price:75}
 ]}
 ];
 
-/* NOTIFY */
+/* TOAST */
 const toast=document.createElement('div');
 toast.className='toast';
 document.body.appendChild(toast);
@@ -194,23 +172,29 @@ function notify(msg,err=false){
     setTimeout(()=>toast.classList.remove('show'),2500);
 }
 
-/* ELEMENTOS */
+/* HEADER */
 const header=document.createElement('header');
 header.innerHTML='<img class="logo" src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png">';
 document.body.appendChild(header);
 
+/* CONTAINER */
 const container=document.createElement('div');
 container.className='container';
-container.innerHTML='<input class="search" placeholder="Buscar no cardápio...">';
+const search=document.createElement('input');
+search.className='search';
+search.placeholder='Buscar no cardápio...';
+container.appendChild(search);
 const menu=document.createElement('div');
 container.appendChild(menu);
 document.body.appendChild(container);
 
+/* CART BTN */
 const cartBtn=document.createElement('div');
 cartBtn.className='cart-btn';
 cartBtn.innerHTML='🛒<div class="cart-count">0</div>';
 document.body.appendChild(cartBtn);
 
+/* OVERLAY & PANEL */
 const overlay=document.createElement('div');
 overlay.className='overlay';
 document.body.appendChild(overlay);
@@ -224,9 +208,8 @@ const itemsDiv=panel.querySelector('#items');
 const totalEl=panel.querySelector('.total');
 const count=cartBtn.querySelector('.cart-count');
 
-let cart=JSON.parse(localStorage.getItem('degusto-cart'))||[];
+let cart=[];
 
-function save(){localStorage.setItem('degusto-cart',JSON.stringify(cart))}
 function updateCount(){count.textContent=cart.reduce((s,i)=>s+i.qty,0)}
 
 function renderMenu(){
@@ -244,7 +227,7 @@ function renderMenu(){
             b.onclick=()=>{
                 let it=cart.find(x=>x.name===item.name);
                 it?it.qty++:cart.push({name:item.name,price:item.price,qty:1});
-                save();updateCount();renderCart();
+                updateCount();renderCart();
                 notify('Item adicionado ao carrinho');
             };
             c.appendChild(b);
@@ -256,8 +239,9 @@ function renderMenu(){
 
 function renderCart(){
     itemsDiv.innerHTML='';
-    let sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+    let sub=0;
     cart.forEach((item,idx)=>{
+        sub+=item.price*item.qty;
         const r=document.createElement('div');
         r.className='cart-item';
         r.innerHTML=`${item.qty}× ${item.name}`;
@@ -267,7 +251,7 @@ function renderCart(){
         b.onclick=()=>{
             item.qty--;
             if(item.qty<=0)cart.splice(idx,1);
-            save();updateCount();renderCart();
+            updateCount();renderCart();
             notify('Item removido',true);
         };
         r.appendChild(b);
@@ -284,14 +268,14 @@ panel.querySelector('.checkout').onclick=()=>{
     window.open(`https://wa.me/${PHONE}`,'_blank');
 }
 
-renderMenu();updateCount();renderCart();
+renderMenu();updateCount();
 });
 </script>
 
 <footer class="footer">
     Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
     Telefone: (34) 99953-7698<br>
-    Horário: 7h noite<br><br>
+    Horário de Atendimento: 7h noite<br><br>
     WebDesigner: <strong>PabloDesigner</strong> —
     <a href="https://www.pablologomarcas.online" target="_blank">
         www.pablologomarcas.online
