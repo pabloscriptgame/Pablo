@@ -95,9 +95,10 @@ header{
 /* CART PANEL */
 .cart{
     position:fixed;
-    right:-380px;
+    right:-400px;
     top:0;
-    width:380px;
+    width:400px;
+    max-width:100%;
     height:100%;
     background:#111;
     padding:1rem;
@@ -107,11 +108,29 @@ header{
     flex-direction:column
 }
 .cart.active{right:0}
-.cart h3{
-    margin-bottom:.8rem;
-    border-bottom:1px solid #333;
-    padding-bottom:.4rem
+
+/* MOBILE FULL */
+@media(max-width:768px){
+    .cart{width:100%}
 }
+
+/* CART HEADER */
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #333;
+    padding-bottom:.5rem;
+    margin-bottom:.5rem
+}
+.close-btn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:1.8rem;
+    cursor:pointer
+}
+
 .cart-item{
     background:#1e1e1e;
     padding:.6rem;
@@ -121,16 +140,18 @@ header{
     justify-content:space-between;
     font-size:.9rem
 }
+
 .cart-total{
     margin-top:auto;
     font-weight:bold;
     color:var(--green);
     margin-bottom:.6rem
 }
-.cart button{
+
+.cart button.checkout{
     background:#25d366;
     border:none;
-    padding:.7rem;
+    padding:.8rem;
     border-radius:10px;
     color:white;
     cursor:pointer;
@@ -180,10 +201,13 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 </div>
 
 <div class="cart" id="cart">
-    <h3>🛒 Seu Pedido</h3>
+    <div class="cart-header">
+        <h3>🛒 Seu Pedido</h3>
+        <button class="close-btn" id="closeCart">✕</button>
+    </div>
     <div id="cartItems"></div>
     <div class="cart-total" id="total">Total: R$ 0,00</div>
-    <button onclick="finalizar()">Finalizar no WhatsApp</button>
+    <button class="checkout" onclick="finalizar()">Finalizar no WhatsApp</button>
 </div>
 
 <div class="notify" id="notify"></div>
@@ -257,6 +281,12 @@ const notify=document.getElementById("notify");
 
 let cart=[];
 
+function openCart(){cartEl.classList.add("active")}
+function closeCart(){cartEl.classList.remove("active")}
+
+document.getElementById("cartBtn").onclick=openCart;
+document.getElementById("closeCart").onclick=closeCart;
+
 function notifyMsg(text){
     notify.textContent=text;
     notify.classList.add("show");
@@ -278,6 +308,7 @@ function renderMenu(){
                 const i=cart.find(x=>x.name===item.name);
                 i?i.qty++:cart.push({name:item.name,price:item.price,qty:1});
                 updateCart();
+                openCart();
                 notifyMsg(item.name+" adicionado");
             };
             c.appendChild(b);
@@ -302,10 +333,6 @@ function updateCart(){
     document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
     countEl.textContent=count;
 }
-
-document.getElementById("cartBtn").onclick=()=>{
-    cartEl.classList.toggle("active");
-};
 
 function finalizar(){
     if(!cart.length)return alert("Carrinho vazio");
