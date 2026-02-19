@@ -15,7 +15,7 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:var(--bg);color:var(--text)}
+body{background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER */
 header{
@@ -24,60 +24,58 @@ header{
     background:#000;
     padding:.6rem;
     text-align:center;
-    z-index:10;
+    z-index:10
 }
-.logo{
-    max-width:180px;
-    width:70%;
-}
+.logo{max-width:180px;width:70%}
 
 /* CONTAINER */
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:1rem;
+.container{max-width:1000px;margin:auto;padding:1rem}
+
+/* SECTIONS */
+.section{margin-bottom:1.8rem}
+.section h2{
+    margin-bottom:.6rem;
+    color:#ff5555;
+    border-left:4px solid var(--red);
+    padding-left:.5rem
 }
 
-/* CARDÁPIO */
-.section{
-    margin-bottom:1.5rem;
-}
-.section h2{
-    margin-bottom:.5rem;
-    color:#ff5555;
-}
+/* CARD ITEM */
 .card{
     background:var(--card);
-    padding:.7rem;
+    padding:.75rem;
     margin-bottom:.5rem;
-    border-radius:8px;
+    border-radius:10px;
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    align-items:center
 }
 .card button{
     background:var(--red);
     border:none;
     color:white;
-    padding:.4rem .9rem;
-    border-radius:20px;
+    padding:.45rem 1rem;
+    border-radius:25px;
     cursor:pointer;
+    font-weight:bold
 }
 
-/* BOTÃO CARRINHO */
+/* CART BUTTON */
 .cart-btn{
     position:fixed;
     bottom:20px;
     right:20px;
-    width:60px;
-    height:60px;
+    width:64px;
+    height:64px;
     background:var(--green);
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:1.6rem;
+    font-size:1.7rem;
     cursor:pointer;
+    box-shadow:0 0 15px rgba(0,230,118,.6);
+    z-index:20
 }
 .cart-count{
     position:absolute;
@@ -91,42 +89,55 @@ header{
     display:flex;
     align-items:center;
     justify-content:center;
+    font-weight:bold
 }
 
-/* CARRINHO */
+/* CART PANEL */
 .cart{
     position:fixed;
-    right:-350px;
+    right:-380px;
     top:0;
-    width:350px;
+    width:380px;
     height:100%;
     background:#111;
     padding:1rem;
-    transition:.3s;
-    z-index:20;
+    transition:.35s;
+    z-index:30;
+    display:flex;
+    flex-direction:column
 }
 .cart.active{right:0}
-.cart h3{margin-bottom:.5rem}
+.cart h3{
+    margin-bottom:.8rem;
+    border-bottom:1px solid #333;
+    padding-bottom:.4rem
+}
 .cart-item{
-    background:#222;
-    padding:.5rem;
-    border-radius:6px;
+    background:#1e1e1e;
+    padding:.6rem;
+    border-radius:8px;
     margin-bottom:.4rem;
     display:flex;
     justify-content:space-between;
+    font-size:.9rem
+}
+.cart-total{
+    margin-top:auto;
+    font-weight:bold;
+    color:var(--green);
+    margin-bottom:.6rem
 }
 .cart button{
-    width:100%;
-    margin-top:.6rem;
     background:#25d366;
     border:none;
-    padding:.6rem;
-    border-radius:8px;
+    padding:.7rem;
+    border-radius:10px;
     color:white;
     cursor:pointer;
+    font-size:1rem
 }
 
-/* NOTIFICAÇÃO */
+/* NOTIFY */
 .notify{
     position:fixed;
     top:20px;
@@ -138,27 +149,20 @@ header{
     opacity:0;
     transform:translateY(-10px);
     transition:.3s;
-    z-index:50;
+    z-index:50
 }
-.notify.show{
-    opacity:1;
-    transform:translateY(0);
-}
+.notify.show{opacity:1;transform:translateY(0)}
 
-/* RODAPÉ */
+/* FOOTER */
 footer{
     margin-top:3rem;
     padding:1.5rem 1rem;
     background:#000;
     text-align:center;
     font-size:.85rem;
-    color:#ccc;
+    color:#ccc
 }
-footer a{
-    color:var(--green);
-    text-decoration:none;
-    font-weight:bold;
-}
+footer a{color:var(--green);text-decoration:none;font-weight:bold}
 </style>
 </head>
 
@@ -176,9 +180,9 @@ footer a{
 </div>
 
 <div class="cart" id="cart">
-    <h3>Seu Pedido</h3>
+    <h3>🛒 Seu Pedido</h3>
     <div id="cartItems"></div>
-    <div id="total"></div>
+    <div class="cart-total" id="total">Total: R$ 0,00</div>
     <button onclick="finalizar()">Finalizar no WhatsApp</button>
 </div>
 
@@ -187,24 +191,61 @@ footer a{
 <script>
 const PHONE="5534999537698";
 
+/* CARDÁPIO ORIGINAL COMPLETO */
 const menuData=[
-{title:"Artesanais",items:[
+{title:"🔥 Artesanais",items:[
 {name:"Artesanal Clássico",price:35},
 {name:"Artesanal Duplo",price:42},
 {name:"Artesanal com Doritos",price:36},
 {name:"Artesanal com Anéis de Cebola",price:40}
 ]},
-{title:"Batatas",items:[
+{title:"🍟 Batatas (com bacon e cheddar)",items:[
 {name:"Batata 200g",price:15},
 {name:"Batata 300g",price:20},
 {name:"Batata 500g",price:35}
 ]},
-{title:"Bebidas",items:[
+{title:"🥤 Bebidas",items:[
 {name:"Coca-Cola 2L",price:14},
 {name:"Coca-Cola 1L",price:10},
-{name:"Coca-Cola Lata",price:5},
+{name:"Coca-Cola Lata Grande",price:5},
+{name:"Coca-Cola Lata Pequena",price:3.5},
+{name:"Coca-Cola 1L Zero",price:10},
+{name:"Coca-Cola Lata Zero",price:5},
 {name:"Fanta 2L",price:12},
-{name:"Mineiro 2L",price:12}
+{name:"Fanta 1L",price:8},
+{name:"Fanta Lata",price:5},
+{name:"Mineiro 2L",price:12},
+{name:"Kuat 2L",price:10},
+{name:"Antártica Lata",price:5},
+{name:"Mineiro Lata",price:5},
+{name:"Pithula",price:3}
+]},
+{title:"🔥 Combos Tradicionais",items:[
+{name:"2x Tudo + 2 Refri",price:48},
+{name:"2x Salada + 2 Refri",price:42},
+{name:"2x Cheddar + 2 Refri",price:45},
+{name:"2x Calabresa + 2 Refri",price:45},
+{name:"2x Steak + 2 Refri",price:45}
+]},
+{title:"🍔 Combos com Batata",items:[
+{name:"2x Tudo + Batata P",price:50},
+{name:"2x Salada + Batata P",price:45},
+{name:"2x Calabresa + Batata P",price:45},
+{name:"2x Cheddar + Batata P",price:48},
+{name:"1x Tudo + Batata P",price:30},
+{name:"1x Salada + Batata P",price:25},
+{name:"1x Cheddar + Batata P",price:28},
+{name:"1x Tudo + Batata + Refri",price:32}
+]},
+{title:"💎 Combos Especiais",items:[
+{name:"2x DêGusto",price:55},
+{name:"2x DêGusto + Batata M",price:65},
+{name:"3x Tudo + 3 Batata P + 3 Refri",price:80},
+{name:"2x Bagunça + 2 Batata P",price:80},
+{name:"2x Dobro + 2 Batata P",price:82},
+{name:"2 Artesanais Clássicos + 2 Batata P",price:65},
+{name:"2 Artesanais Duplo + 2 Batata P",price:80},
+{name:"2 Artesanais Clássicos + Batata + Refri",price:75}
 ]}
 ];
 
@@ -255,7 +296,7 @@ function updateCart(){
         count+=i.qty;
         const d=document.createElement("div");
         d.className="cart-item";
-        d.textContent=`${i.qty}x ${i.name}`;
+        d.innerHTML=`<span>${i.qty}x ${i.name}</span><span>R$ ${(i.price*i.qty).toFixed(2)}</span>`;
         cartItems.appendChild(d);
     });
     document.getElementById("total").textContent="Total: R$ "+total.toFixed(2);
