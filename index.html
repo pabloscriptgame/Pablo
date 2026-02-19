@@ -10,13 +10,12 @@
     --bg: linear-gradient(135deg,#0c0c0c,#1a0000,#300000);
     --card: rgba(255,255,255,.08);
     --card-hover: rgba(255,255,255,.15);
-    --text:#fff;
     --red:#ff3c3c;
     --green:#00e676;
     --panel:#0e0e0e;
+    --text:#fff;
 }
 
-/* BASE */
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 body{background:var(--bg);color:var(--text);min-height:100vh}
 
@@ -44,72 +43,154 @@ header{
 
 /* CARD */
 .card{
-    background:var(--card);padding:.85rem 1rem;margin-bottom:.55rem;
-    border-radius:12px;display:flex;justify-content:space-between;
-    align-items:center;transition:.2s
+    background:var(--card);
+    padding:.85rem 1rem;
+    margin-bottom:.55rem;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
-.card:hover{background:var(--card-hover)}
 .card button{
-    background:var(--red);border:none;padding:.45rem 1rem;
-    border-radius:30px;color:white;font-weight:600;cursor:pointer
+    background:var(--red);
+    border:none;
+    padding:.45rem 1rem;
+    border-radius:30px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
 }
 
 /* CART BUTTON */
 .cart-btn{
-    position:fixed;bottom:18px;right:18px;width:60px;height:60px;
-    background:var(--green);border-radius:50%;display:flex;
-    align-items:center;justify-content:center;font-size:1.6rem;
-    cursor:pointer;z-index:20
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    width:60px;
+    height:60px;
+    background:var(--green);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.6rem;
+    cursor:pointer;
+    z-index:20;
 }
 .cart-count{
-    position:absolute;top:4px;right:4px;background:var(--red);
-    width:22px;height:22px;border-radius:50%;font-size:.75rem;
-    display:flex;align-items:center;justify-content:center;font-weight:bold
+    position:absolute;
+    top:4px;
+    right:4px;
+    background:var(--red);
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    font-size:.75rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
 /* OVERLAY */
 .overlay{
-    position:fixed;inset:0;background:#000000aa;
-    opacity:0;visibility:hidden;transition:.3s;z-index:15
+    position:fixed;
+    inset:0;
+    background:#000000aa;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:15;
 }
 .overlay.active{opacity:1;visibility:visible}
 
 /* CART PANEL */
 .cart-panel{
-    position:fixed;right:-380px;top:0;width:380px;max-width:100%;
-    height:100%;background:var(--panel);padding:1rem;
-    transition:.35s;z-index:20;display:flex;flex-direction:column
+    position:fixed;
+    right:-380px;
+    top:0;
+    width:380px;
+    max-width:100%;
+    height:100%;
+    background:var(--panel);
+    padding:1rem;
+    transition:.35s;
+    z-index:20;
+    display:flex;
+    flex-direction:column;
 }
 .cart-panel.active{right:0}
 
-.cart-item{
-    background:var(--card);padding:.65rem;border-radius:8px;
-    display:flex;justify-content:space-between;margin-bottom:.6rem
-}
-.qty-btn{
-    width:26px;height:26px;background:var(--red);border:none;
-    color:white;border-radius:6px;cursor:pointer;margin-left:5px
-}
-.total{color:var(--green);font-weight:bold}
-.checkout{
-    background:#25d366;border:none;padding:.8rem;
-    border-radius:10px;color:white;font-size:1rem;cursor:pointer
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:.8rem;
 }
 
-/* NOTIFICATION (EMBAIXO) */
-.toast{
-    margin:1rem auto 0;
-    background:#111;
-    padding:.8rem 1rem;
-    border-left:4px solid var(--green);
-    border-radius:8px;
-    max-width:320px;
-    text-align:center;
-    font-size:.9rem;
-    display:none;
+.close-btn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:1.6rem;
+    cursor:pointer;
 }
-.toast.show{display:block}
-.toast.error{border-color:var(--red)}
+
+.cart-item{
+    background:var(--card);
+    padding:.65rem;
+    border-radius:8px;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:.6rem;
+}
+
+.qty-btn{
+    width:26px;
+    height:26px;
+    background:var(--red);
+    border:none;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    margin-left:5px;
+}
+
+.cart-footer{
+    margin-top:auto;
+}
+
+.total{
+    font-weight:bold;
+    color:var(--green);
+    margin-bottom:.6rem;
+}
+
+.checkout{
+    background:#25d366;
+    border:none;
+    padding:.8rem;
+    width:100%;
+    border-radius:10px;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+/* INFO NO FINAL DO CARRINHO */
+.cart-info{
+    margin-top:1rem;
+    padding-top:.8rem;
+    border-top:1px solid rgba(255,255,255,.08);
+    font-size:.78rem;
+    color:#ccc;
+    line-height:1.4;
+}
+.cart-info a{
+    color:#00e676;
+    text-decoration:none;
+    font-weight:600;
+}
 
 /* FOOTER */
 .footer{
@@ -118,9 +199,14 @@ header{
     text-align:center;
     background:rgba(0,0,0,.6);
     border-top:1px solid rgba(255,255,255,.08);
-    font-size:.9rem;color:#ddd
+    font-size:.9rem;
+    color:#ddd;
 }
 .footer a{color:#00e676;text-decoration:none;font-weight:600}
+
+@media(max-width:480px){
+    .cart-panel{width:100%}
+}
 </style>
 </head>
 
@@ -162,16 +248,6 @@ const menuData=[
 ]}
 ];
 
-/* TOAST */
-const toast=document.createElement('div');
-toast.className='toast';
-document.body.appendChild(toast);
-function notify(msg,err=false){
-    toast.textContent=msg;
-    toast.className='toast show'+(err?' error':'');
-    setTimeout(()=>toast.classList.remove('show'),2500);
-}
-
 /* HEADER */
 const header=document.createElement('header');
 header.innerHTML='<img class="logo" src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png">';
@@ -194,18 +270,38 @@ cartBtn.className='cart-btn';
 cartBtn.innerHTML='🛒<div class="cart-count">0</div>';
 document.body.appendChild(cartBtn);
 
-/* OVERLAY & PANEL */
+/* OVERLAY */
 const overlay=document.createElement('div');
 overlay.className='overlay';
 document.body.appendChild(overlay);
 
+/* CART PANEL */
 const panel=document.createElement('div');
 panel.className='cart-panel';
-panel.innerHTML='<h3>🛒 Seu Pedido</h3><div id="items"></div><div class="total"></div><button class="checkout">Finalizar no WhatsApp</button>';
+panel.innerHTML=`
+<div class="cart-header">
+    <h3>🛒 Seu Pedido</h3>
+    <button class="close-btn">✕</button>
+</div>
+<div id="items"></div>
+<div class="cart-footer">
+    <div class="total"></div>
+    <button class="checkout">Finalizar no WhatsApp</button>
+    <div class="cart-info">
+        Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
+        Telefone: (34) 99953-7698<br>
+        Horário de Atendimento: 7h noite<br><br>
+        WebDesigner: <strong>PabloDesigner</strong> —
+        <a href="https://www.pablologomarcas.online" target="_blank">
+            www.pablologomarcas.online
+        </a>
+    </div>
+</div>`;
 document.body.appendChild(panel);
 
 const itemsDiv=panel.querySelector('#items');
 const totalEl=panel.querySelector('.total');
+const close=panel.querySelector('.close-btn');
 const count=cartBtn.querySelector('.cart-count');
 
 let cart=[];
@@ -228,7 +324,6 @@ function renderMenu(){
                 let it=cart.find(x=>x.name===item.name);
                 it?it.qty++:cart.push({name:item.name,price:item.price,qty:1});
                 updateCount();renderCart();
-                notify('Item adicionado ao carrinho');
             };
             c.appendChild(b);
             s.appendChild(c);
@@ -252,7 +347,6 @@ function renderCart(){
             item.qty--;
             if(item.qty<=0)cart.splice(idx,1);
             updateCount();renderCart();
-            notify('Item removido',true);
         };
         r.appendChild(b);
         itemsDiv.appendChild(r);
@@ -262,9 +356,10 @@ function renderCart(){
 
 cartBtn.onclick=()=>{panel.classList.add('active');overlay.classList.add('active')}
 overlay.onclick=()=>{panel.classList.remove('active');overlay.classList.remove('active')}
+close.onclick=()=>{panel.classList.remove('active');overlay.classList.remove('active')}
+
 panel.querySelector('.checkout').onclick=()=>{
-    if(!cart.length)return notify('Carrinho vazio',true);
-    notify('Abrindo WhatsApp...');
+    if(!cart.length)return alert('Carrinho vazio!');
     window.open(`https://wa.me/${PHONE}`,'_blank');
 }
 
@@ -273,13 +368,7 @@ renderMenu();updateCount();
 </script>
 
 <footer class="footer">
-    Endereço: R. Nápoles, 461 - Belo Horizonte, Monte Carmelo - MG, 38500-000<br>
-    Telefone: (34) 99953-7698<br>
-    Horário de Atendimento: 7h noite<br><br>
-    WebDesigner: <strong>PabloDesigner</strong> —
-    <a href="https://www.pablologomarcas.online" target="_blank">
-        www.pablologomarcas.online
-    </a>
+    © DêGusto Lanchonete — Todos os direitos reservados
 </footer>
 
 </body>
