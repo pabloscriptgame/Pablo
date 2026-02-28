@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DêGusto Lanchonete Digital | Cardápio Completo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+         :root {
+            --bg-color: #0f0c13;
+            --bg-gradient: linear-gradient(135deg, #130f1a 0%, #250a16 100%);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #ff3232;
+            --accent-hover: #d11f1f;
+            --success: #00c853;
+            --success-hover: #00a444;
+            --card-bg: #1a151f;
+            --card-hover: #231c2a;
+            --panel-bg: #140f18;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --radius: 14px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            background-color: var(--bg-color);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* HEADER */
+        
+        header {
+            background: rgba(15, 12, 19, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo {
+            height: 70px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        /* CONTAINER */
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+        /* BUSCA */
+        
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            color: white;
+            border-radius: 50px;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(255, 50, 50, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            opacity: 0.5;
+        }
+        /* CARDÁPIO */
+        
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 2.5rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover);
+            border-color: var(--accent);
+        }
+        
+        .menu-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .menu-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        
+        .menu-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--success);
+        }
+        
+        .add-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .add-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+        /* CARRINHO (DIREITA) */
+        
+        .cart-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
+            z-index: 200;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.8rem;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--bg-color);
+            font-weight: bold;
+        }
+        
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 400px;
+            max-width: 100vw;
+            height: 100vh;
+            background: var(--panel-bg);
+            z-index: 300;
+            transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+        }
+        
+        .cart-panel.active {
+            right: 0;
+        }
+        
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 250;
+            transition: 0.3s;
+        }
+        
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        .cart-footer {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid var(--border);
+        }
+        
+        .cart-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #000;
+            padding: 5px;
+            border-radius: 8px;
+        }
+        
+        .qty-btn {
+            background: #333;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        /* CHATBOT (ESQUERDA) - CORRIGIDO */
+        
+        .chatbox {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 350px;
+            height: 450px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 400;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: bottom left;
+        }
+        
+        .chatbox.minimized {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: var(--accent);
+            border: none;
+        }
+        
+        .chatbox.minimized .chat-content,
+        .chatbox.minimized .chat-header-text,
+        .chatbox.minimized .chat-input-area,
+        .chatbox.minimized .close-chat-btn {
+            display: none;
+        }
+        
+        .chat-icon-mini {
+            display: none;
+        }
+        
+        .chatbox.minimized .chat-icon-mini {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .chat-header {
+            background: var(--card-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .close-chat-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .chat-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #0c090e;
+        }
+        
+        .msg {
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+        
+        .msg.bot {
+            background: #1e1a24;
+            align-self: flex-start;
+        }
+        
+        .msg.user {
+            background: var(--accent);
+            align-self: flex-end;
+        }
+        
+        .chat-input-area {
+            padding: 1rem;
+            display: flex;
+            gap: 8px;
+            background: var(--card-bg);
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: #000;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.6rem;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .chat-send {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* TOAST */
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border-left: 5px solid var(--success);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideIn 0.3s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+            .chatbox {
+                width: 300px;
+                bottom: 20px;
+                left: 20px;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img src="https://i.ibb.co/hFf6TMBb/logo-degusto-original-oficial.png" class="logo" alt="Logo DêGusto">
+    </header>
+
+    <main class="container">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search" class="search-input" placeholder="O que você quer comer hoje?">
+        </div>
+
+        <div id="menu-container">
+            <!-- Renderizado via JS -->
+        </div>
+    </main>
+
+    <!-- CARRINHO -->
+    <div id="cart-float" class="cart-float">
+        🛒
+        <div id="cart-badge" class="cart-badge">0</div>
+    </div>
+
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <div id="cart-panel" class="cart-panel">
+        <div class="cart-header">
+            <h2>🛒 Meu Pedido</h2>
+            <button id="close-cart" style="background:none; border:none; color:white; font-size:2rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="cart-body" class="cart-body"></div>
+        <div class="cart-footer">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">R$ 0,00</span>
+            </div>
+            <div id="delivery-info" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;"></div>
+            <div style="display:flex; justify-content:space-between; font-size:1.4rem; font-weight:800; color:var(--success);">
+                <span>Total</span>
+                <span id="cart-total">R$ 0,00</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">Finalizar no WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- CHAT (ESQUERDA) -->
+    <div id="chatbox" class="chatbox minimized">
+        <div class="chat-icon-mini">💬</div>
+        <div class="chat-header">
+            <span class="chat-header-text">🤖 Assistente DêGusto</span>
+            <button id="close-chat" class="close-chat-btn">&times;</button>
+        </div>
+        <div id="chat-content" class="chat-content"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Dúvidas? Pergunte aqui...">
+            <button id="chat-send" class="chat-send">SND</button>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const PHONE = "5534999537698";
+            const FREE_DELIVERY_MIN = 25;
+            const DELIVERY_FEE = 5;
+
+            // CARDÁPIO COMPLETO ORIGINAL
+            const menuData = [{
+                title: "🍔 Artesanais",
+                items: [{
+                    name: "Artesanal Clássico",
+                    price: 35,
+                    desc: "Pão brioche, blend artesanal, queijo e salada."
+                }, {
+                    name: "Artesanal Duplo",
+                    price: 42,
+                    desc: "2 Blends artesanais, queijo duplo e bacon."
+                }, {
+                    name: "Artesanal com Doritos",
+                    price: 36,
+                    desc: "O clássico com o crocante do Doritos."
+                }, {
+                    name: "Artesanal com Anéis de Cebola",
+                    price: 40,
+                    desc: "Acompanha onion rings dentro do burger."
+                }]
+            }, {
+                title: "🍟 Batatas Especiais",
+                items: [{
+                    name: "Batata 200g",
+                    price: 15,
+                    desc: "Porção individual crocante."
+                }, {
+                    name: "Batata 300g",
+                    price: 20,
+                    desc: "Porção média para compartilhar."
+                }, {
+                    name: "Batata 500g",
+                    price: 35,
+                    desc: "Porção família caprichada."
+                }]
+            }, {
+                title: "🥤 Bebidas",
+                items: [{
+                    name: "Coca-Cola 2L",
+                    price: 14,
+                    desc: ""
+                }, {
+                    name: "Coca-Cola 1L",
+                    price: 10,
+                    desc: ""
+                }, {
+                    name: "Coca-Cola Lata Grande",
+                    price: 5,
+                    desc: ""
+                }, {
+                    name: "Coca-Cola Lata Pequena",
+                    price: 3.5,
+                    desc: ""
+                }, {
+                    name: "Fanta 2L",
+                    price: 12,
+                    desc: ""
+                }, {
+                    name: "Fanta 1L",
+                    price: 8,
+                    desc: ""
+                }, {
+                    name: "Fanta Lata",
+                    price: 5,
+                    desc: ""
+                }, {
+                    name: "Mineiro 2L",
+                    price: 12,
+                    desc: ""
+                }, {
+                    name: "Mineiro Lata",
+                    price: 5,
+                    desc: ""
+                }, {
+                    name: "Kuat 2L",
+                    price: 10,
+                    desc: ""
+                }, {
+                    name: "Antártica Lata",
+                    price: 5,
+                    desc: ""
+                }, {
+                    name: "Pithula",
+                    price: 3,
+                    desc: ""
+                }]
+            }, {
+                title: "📦 Combos Tradicionais",
+                items: [{
+                    name: "2x Tudo + 2 Refri",
+                    price: 48,
+                    desc: "Os clássicos com bebida inclusa."
+                }, {
+                    name: "2x Salada + 2 Refri",
+                    price: 42,
+                    desc: "Leve e saboroso."
+                }, {
+                    name: "2x Cheddar + 2 Refri",
+                    price: 45,
+                    desc: "Muito queijo cheddar."
+                }, {
+                    name: "2x Calabresa + 2 Refri",
+                    price: 45,
+                    desc: "Com fatias de calabresa grelhada."
+                }, {
+                    name: "2x Steak + 2 Refri",
+                    price: 45,
+                    desc: "Steak de carne suculento."
+                }]
+            }, {
+                title: "🍟 Combos com Batata",
+                items: [{
+                    name: "2x Tudo + Batata P",
+                    price: 50,
+                    desc: ""
+                }, {
+                    name: "2x Salada + Batata P",
+                    price: 45,
+                    desc: ""
+                }, {
+                    name: "2x Calabresa + Batata P",
+                    price: 45,
+                    desc: ""
+                }, {
+                    name: "2x Cheddar + Batata P",
+                    price: 48,
+                    desc: ""
+                }, {
+                    name: "1x Tudo + Batata P",
+                    price: 30,
+                    desc: ""
+                }, {
+                    name: "1x Salada + Batata P",
+                    price: 25,
+                    desc: ""
+                }, {
+                    name: "1x Cheddar + Batata P",
+                    price: 28,
+                    desc: ""
+                }, {
+                    name: "1x Tudo + Batata + Refri",
+                    price: 32,
+                    desc: ""
+                }]
+            }, {
+                title: "⭐ Combos Especiais",
+                items: [{
+                    name: "2x DêGusto",
+                    price: 55,
+                    desc: "O segredo da casa em dobro."
+                }, {
+                    name: "2x DêGusto + Batata M",
+                    price: 65,
+                    desc: "Completo com batata média."
+                }, {
+                    name: "3x Tudo + 3 Batata P + 3 Refri",
+                    price: 80,
+                    desc: "Combo Galera!"
+                }, {
+                    name: "2x Bagunça + 2 Batata P",
+                    price: 80,
+                    desc: "Para quem tem muita fome."
+                }, {
+                    name: "2x Dobro + 2 Batata P",
+                    price: 82,
+                    desc: "Tudo em dobro!"
+                }, {
+                    name: "2 Artesanais Clássicos + 2 Batata P",
+                    price: 65,
+                    desc: ""
+                }, {
+                    name: "2 Artesanais Duplo + 2 Batata P",
+                    price: 80,
+                    desc: ""
+                }, {
+                    name: "2 Artesanais Clássicos + Batata + Refri",
+                    price: 75,
+                    desc: ""
+                }]
+            }];
+
+            let cart = [];
+
+            // UI ELEMENTS
+            const menuContainer = document.getElementById('menu-container');
+            const searchInput = document.getElementById('search');
+            const cartPanel = document.getElementById('cart-panel');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartBody = document.getElementById('cart-body');
+            const cartBadge = document.getElementById('cart-badge');
+            const cartTotal = document.getElementById('cart-total');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const deliveryInfo = document.getElementById('delivery-info');
+
+            // RENDER MENU
+            function renderMenu() {
+                const query = searchInput.value.toLowerCase();
+                menuContainer.innerHTML = '';
+
+                menuData.forEach(section => {
+                    const filteredItems = section.items.filter(i => i.name.toLowerCase().includes(query));
+                    if (filteredItems.length === 0) return;
+
+                    const sec = document.createElement('div');
+                    sec.innerHTML = `<h2 class="section-title">${section.title}</h2>`;
+
+                    const grid = document.createElement('div');
+                    grid.className = 'menu-grid';
+
+                    filteredItems.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'menu-card';
+                        card.innerHTML = `
+                            <div class="menu-info">
+                                <h3>${item.name}</h3>
+                                <p>${item.desc || 'O melhor sabor você encontra aqui no DêGusto.'}</p>
+                            </div>
+                            <div class="menu-footer">
+                                <span class="price">R$ ${item.price.toFixed(2)}</span>
+                                <button class="add-btn" data-name="${item.name}" data-price="${item.price}">Adicionar</button>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                    sec.appendChild(grid);
+                    menuContainer.appendChild(sec);
+                });
+
+                document.querySelectorAll('.add-btn').forEach(btn => {
+                    btn.onclick = () => addToCart(btn.dataset.name, parseFloat(btn.dataset.price));
+                });
+            }
+
+            // CART LOGIC
+            function addToCart(name, price) {
+                const item = cart.find(i => i.name === name);
+                if (item) item.qty++;
+                else cart.push({
+                    name,
+                    price,
+                    qty: 1
+                });
+                updateCart();
+                showToast(`Adicionado: ${name}`);
+            }
+
+            window.changeQty = (name, delta) => {
+                const item = cart.find(i => i.name === name);
+                if (item) {
+                    item.qty += delta;
+                    if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+                }
+                updateCart();
+            }
+
+            function updateCart() {
+                cartBody.innerHTML = '';
+                let sub = 0;
+                let count = 0;
+
+                cart.forEach(item => {
+                    sub += item.price * item.qty;
+                    count += item.qty;
+                    const el = document.createElement('div');
+                    el.className = 'cart-item';
+                    el.innerHTML = `
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <small>R$ ${(item.price * item.qty).toFixed(2)}</small>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty('${item.name}', -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+                        </div>
+                    `;
+                    cartBody.appendChild(el);
+                });
+
+                cartBadge.innerText = count;
+                cartSubtotal.innerText = `R$ ${sub.toFixed(2)}`;
+
+                const delivery = sub >= FREE_DELIVERY_MIN ? 0 : (sub > 0 ? DELIVERY_FEE : 0);
+                deliveryInfo.innerHTML = delivery === 0 && sub > 0 ?
+                    '<span style="color:var(--success)">Frete Grátis!</span>' :
+                    `Frete: R$ ${delivery.toFixed(2)} (Grátis acima de R$ 25)`;
+
+                cartTotal.innerText = `R$ ${(sub + delivery).toFixed(2)}`;
+            }
+
+            function showToast(msg) {
+                const t = document.createElement('div');
+                t.className = 'toast';
+                t.innerText = msg;
+                document.getElementById('toast-container').appendChild(t);
+                setTimeout(() => t.remove(), 2500);
+            }
+
+            // TOGGLE CART
+            document.getElementById('cart-float').onclick = () => {
+                cartPanel.classList.add('active');
+                cartOverlay.classList.add('active');
+            }
+            document.getElementById('close-cart').onclick = () => {
+                cartPanel.classList.remove('active');
+                cartOverlay.classList.remove('active');
+            }
+            cartOverlay.onclick = () => {
+                cartPanel.classList.remove('active');
+                cartOverlay.classList.remove('active');
+            }
+
+            // CHECKOUT
+            document.getElementById('checkout-btn').onclick = () => {
+                if (cart.length === 0) return alert("Seu carrinho está vazio!");
+                let text = "*NOVO PEDIDO - DÊGUSTO*\n\n";
+                cart.forEach(i => text += `• ${i.qty}x ${i.name}\n`);
+                text += `\n*Total:* ${cartTotal.innerText}`;
+                window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`);
+            }
+
+            // CHAT LOGIC (CORRETO)
+            const chatbox = document.getElementById('chatbox');
+            const chatInput = document.getElementById('chat-input');
+            const chatContent = document.getElementById('chat-content');
+
+            chatbox.addEventListener('click', function(e) {
+                if (this.classList.contains('minimized')) {
+                    this.classList.remove('minimized');
+                    setTimeout(() => chatInput.focus(), 300);
+                }
+            });
+
+            document.getElementById('close-chat').onclick = (e) => {
+                e.stopPropagation(); // Impede o evento de clique do chatbox (abrir)
+                chatbox.classList.add('minimized');
+            }
+
+            function bot(msg) {
+                const el = document.createElement('div');
+                el.className = 'msg bot';
+                el.innerText = msg;
+                chatContent.appendChild(el);
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }
+
+            document.getElementById('chat-send').onclick = () => {
+                const val = chatInput.value.trim();
+                if (!val) return;
+                const el = document.createElement('div');
+                el.className = 'msg user';
+                el.innerText = val;
+                chatContent.appendChild(el);
+                chatInput.value = '';
+
+                setTimeout(() => {
+                    if (val.toLowerCase().includes('horário')) bot("Funcionamos das 18h às 23h!");
+                    else if (val.toLowerCase().includes('frete')) bot("Frete grátis para pedidos acima de R$ 25,00!");
+                    else bot("Olá! Como posso te ajudar com seu pedido hoje?");
+                }, 600);
+            }
+
+            // INIT
+            bot("Olá! Sou o assistente DêGusto. Peça agora o seu lanche favorito!");
+            renderMenu();
+            searchInput.oninput = renderMenu;
+        });
+    </script>
+</body>
+
+</html>
