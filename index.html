@@ -3,9 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dê Gusto</title>
+<title>Dê Gusto • Redirecionando...</title>
 
 <meta http-equiv="refresh" content="2;url=http://degusto.co4.in/">
 
@@ -15,7 +15,13 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,Arial,sans-serif;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+html,body{
+
+height:100%;
+
 }
 
 body{
@@ -24,81 +30,180 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-height:100vh;
+overflow:hidden;
 
 background:
-linear-gradient(135deg,#111,#1a1a1a,#000);
+linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.82)),
+url("https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=2000&q=80");
 
-overflow:hidden;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
 
 }
 
-body:before{
+/* BRASAS */
+
+body::before{
 
 content:"";
 
-position:absolute;
+position:fixed;
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 10% 90%, rgba(255,80,0,.45), transparent 25%),
+radial-gradient(circle at 85% 20%, rgba(255,170,0,.35), transparent 25%),
+radial-gradient(circle at 40% 60%, rgba(255,40,0,.20), transparent 20%);
+
+animation:fireGlow 6s ease-in-out infinite alternate;
+
+pointer-events:none;
+
+}
+
+@keyframes fireGlow{
+
+0%{
+
+filter:brightness(1);
+
+}
+
+100%{
+
+filter:brightness(1.35);
+
+}
+
+}
+
+body::after{
+
+content:"";
+
+position:fixed;
+
 width:200%;
 height:200%;
 
-background:
-radial-gradient(circle,#ff1f4d22 0%,transparent 45%),
-radial-gradient(circle,#ffb40022 0%,transparent 35%);
+left:-50%;
+top:-50%;
 
-animation:bg 12s linear infinite;
+background-image:
+
+radial-gradient(circle,#ffb000 2px,transparent 2px),
+radial-gradient(circle,#ff4500 2px,transparent 2px),
+radial-gradient(circle,#ffd000 1px,transparent 1px);
+
+background-size:
+
+180px 180px,
+240px 240px,
+300px 300px;
+
+opacity:.5;
+
+animation:embers 18s linear infinite;
+
+pointer-events:none;
 
 }
 
-@keyframes bg{
+@keyframes embers{
+
+0%{
+
+transform:translateY(120px);
+
+}
 
 100%{
-transform:rotate(360deg);
+
+transform:translateY(-120px);
+
 }
 
 }
+
+/* CARD */
 
 .card{
 
 position:relative;
-z-index:2;
+z-index:5;
 
-width:420px;
+width:430px;
 max-width:92%;
 
 padding:45px;
 
 text-align:center;
 
-border-radius:30px;
+border-radius:28px;
 
-background:rgba(255,255,255,.07);
+background:rgba(20,10,5,.78);
 
 backdrop-filter:blur(18px);
 
-border:1px solid rgba(255,255,255,.15);
+border:1px solid rgba(255,170,0,.35);
 
 box-shadow:
-0 0 60px rgba(255,0,80,.25);
+
+0 0 25px rgba(255,80,0,.55),
+0 0 80px rgba(255,120,0,.25);
+
+animation:card 1s;
 
 }
 
+@keyframes card{
+
+from{
+
+opacity:0;
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+transform:none;
+
+}
+
+}
+
+/* LOGO */
+
 .logo{
 
-width:170px;
+width:190px;
 
 margin:auto;
 
-animation:logo 1.5s infinite alternate;
+display:block;
 
 filter:
-drop-shadow(0 0 15px #ff0048);
+
+drop-shadow(0 0 18px #ff4500)
+drop-shadow(0 0 35px #ffb000);
+
+animation:logo 2s ease-in-out infinite alternate;
 
 }
 
 @keyframes logo{
 
 100%{
+
 transform:scale(1.05);
+
 }
 
 }
@@ -107,70 +212,40 @@ h1{
 
 margin-top:25px;
 
-font-size:34px;
-
 color:white;
+
+font-size:36px;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
 
 }
 
 p{
 
-margin-top:10px;
+margin-top:12px;
 
 color:#ddd;
 
-font-size:16px;
+font-size:17px;
 
 }
 
-.progress{
-
-margin-top:35px;
-
-height:8px;
-
-background:#333;
-
-border-radius:50px;
-
-overflow:hidden;
-
-}
-
-.bar{
-
-height:100%;
-
-background:linear-gradient(90deg,#ff0048,#ffae00);
-
-width:0;
-
-animation:load 2s linear forwards;
-
-}
-
-@keyframes load{
-
-100%{
-
-width:100%;
-
-}
-
-}
+/* LOADER */
 
 .loader{
 
-margin:25px auto;
+margin:28px auto;
 
-width:55px;
-height:55px;
+width:65px;
+height:65px;
 
 border-radius:50%;
 
-border:5px solid rgba(255,255,255,.1);
+border:6px solid rgba(255,255,255,.1);
 
-border-top:5px solid #ff0048;
+border-top:6px solid #ff4500;
 
 animation:spin 1s linear infinite;
 
@@ -186,23 +261,67 @@ transform:rotate(360deg);
 
 }
 
-small{
+/* PROGRESSO */
 
-display:block;
+.progress{
 
-margin-top:20px;
+margin-top:10px;
 
-color:#888;
+height:10px;
+
+background:#2a2a2a;
+
+border-radius:50px;
+
+overflow:hidden;
 
 }
 
-a{
+.bar{
 
-color:#fff;
+height:100%;
+
+width:0;
+
+background:linear-gradient(90deg,#ff4500,#ff8c00,#ffd700);
+
+animation:load 2s linear forwards;
+
+}
+
+@keyframes load{
+
+100%{
+
+width:100%;
+
+}
+
+}
+
+.info{
+
+margin-top:25px;
+
+font-size:14px;
+
+color:#bbb;
+
+}
+
+.info a{
+
+color:#ffd54f;
+
+font-weight:bold;
 
 text-decoration:none;
 
-font-weight:bold;
+}
+
+.info a:hover{
+
+text-decoration:underline;
 
 }
 
@@ -212,7 +331,7 @@ font-weight:bold;
 
 setTimeout(function(){
 
-window.location="http://degusto.co4.in/";
+window.location.href="http://degusto.co4.in/";
 
 },2000);
 
@@ -224,38 +343,32 @@ window.location="http://degusto.co4.in/";
 
 <div class="card">
 
-<img class="logo"
+<img
+class="logo"
 src="https://iili.io/C1muS7s.png"
-alt="Logo">
+alt="Dê Gusto">
 
 <h1>DÊ GUSTO</h1>
 
-<p>Preparando sua experiência...</p>
+<p>Preparando uma experiência deliciosa...</p>
 
 <div class="loader"></div>
 
 <div class="progress">
-
 <div class="bar"></div>
-
 </div>
 
-<small>
+<div class="info">
 
-Caso não seja redirecionado automaticamente,
-
-<br><br>
+Você será redirecionado automaticamente.<br><br>
 
 <a href="http://degusto.co4.in/">
-
-Clique aqui
-
+Clique aqui caso o redirecionamento não aconteça.
 </a>
 
-</small>
+</div>
 
 </div>
 
 </body>
-
 </html>
