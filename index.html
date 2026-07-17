@@ -5,9 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dê Gusto • Redirecionando...</title>
-
-<meta http-equiv="refresh" content="2;url=http://degusto.co4.in/">
+<title>Dê Gusto</title>
 
 <style>
 
@@ -19,9 +17,7 @@ font-family:"Segoe UI",Arial,sans-serif;
 }
 
 html,body{
-
 height:100%;
-
 }
 
 body{
@@ -40,9 +36,15 @@ background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
 
+visibility:hidden; /* evita "flash" de tela até decidirmos qual card mostrar */
+
 }
 
-/* BRASAS */
+body.ready{
+visibility:visible;
+}
+
+/* BRASAS (glow de fundo) */
 
 body::before{
 
@@ -67,20 +69,11 @@ pointer-events:none;
 }
 
 @keyframes fireGlow{
-
-0%{
-
-filter:brightness(1);
-
+0%{filter:brightness(1);}
+100%{filter:brightness(1.35);}
 }
 
-100%{
-
-filter:brightness(1.35);
-
-}
-
-}
+/* FAGULHAS/BRASAS SUBINDO (pontos) */
 
 body::after{
 
@@ -95,13 +88,11 @@ left:-50%;
 top:-50%;
 
 background-image:
-
 radial-gradient(circle,#ffb000 2px,transparent 2px),
 radial-gradient(circle,#ff4500 2px,transparent 2px),
 radial-gradient(circle,#ffd000 1px,transparent 1px);
 
 background-size:
-
 180px 180px,
 240px 240px,
 300px 300px;
@@ -115,19 +106,20 @@ pointer-events:none;
 }
 
 @keyframes embers{
-
-0%{
-
-transform:translateY(120px);
-
+0%{transform:translateY(120px);}
+100%{transform:translateY(-120px);}
 }
 
-100%{
+/* FAÍSCAS (canvas por cima de tudo) */
 
-transform:translateY(-120px);
-
-}
-
+#sparks{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:4;
 }
 
 /* CARD */
@@ -153,7 +145,6 @@ backdrop-filter:blur(18px);
 border:1px solid rgba(255,170,0,.35);
 
 box-shadow:
-
 0 0 25px rgba(255,80,0,.55),
 0 0 80px rgba(255,120,0,.25);
 
@@ -162,21 +153,8 @@ animation:card 1s;
 }
 
 @keyframes card{
-
-from{
-
-opacity:0;
-transform:translateY(40px);
-
-}
-
-to{
-
-opacity:1;
-transform:none;
-
-}
-
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:none;}
 }
 
 /* LOGO */
@@ -190,7 +168,6 @@ margin:auto;
 display:block;
 
 filter:
-
 drop-shadow(0 0 18px #ff4500)
 drop-shadow(0 0 35px #ffb000);
 
@@ -199,154 +176,118 @@ animation:logo 2s ease-in-out infinite alternate;
 }
 
 @keyframes logo{
-
-100%{
-
-transform:scale(1.05);
-
-}
-
+100%{transform:scale(1.05);}
 }
 
 h1{
-
 margin-top:25px;
-
 color:white;
-
 font-size:36px;
-
 letter-spacing:2px;
-
 text-transform:uppercase;
-
 }
 
 p{
-
 margin-top:12px;
-
 color:#ddd;
-
 font-size:17px;
-
 }
 
-/* LOADER */
+/* LOADER (tela "abrindo") */
 
 .loader{
-
 margin:28px auto;
-
 width:65px;
 height:65px;
-
 border-radius:50%;
-
 border:6px solid rgba(255,255,255,.1);
-
 border-top:6px solid #ff4500;
-
 animation:spin 1s linear infinite;
-
 }
 
 @keyframes spin{
-
-100%{
-
-transform:rotate(360deg);
-
-}
-
+100%{transform:rotate(360deg);}
 }
 
 /* PROGRESSO */
 
 .progress{
-
 margin-top:10px;
-
 height:10px;
-
 background:#2a2a2a;
-
 border-radius:50px;
-
 overflow:hidden;
-
 }
 
 .bar{
-
 height:100%;
-
 width:0;
-
 background:linear-gradient(90deg,#ff4500,#ff8c00,#ffd700);
-
 animation:load 2s linear forwards;
-
 }
 
 @keyframes load{
-
-100%{
-
-width:100%;
-
-}
-
+100%{width:100%;}
 }
 
 .info{
-
 margin-top:25px;
-
 font-size:14px;
-
 color:#bbb;
-
 }
 
 .info a{
-
 color:#ffd54f;
-
 font-weight:bold;
-
 text-decoration:none;
-
 }
 
 .info a:hover{
-
 text-decoration:underline;
+}
 
+/* TELA "FECHADO" */
+
+.closed-badge{
+display:inline-block;
+margin-top:22px;
+padding:8px 22px;
+border-radius:50px;
+background:rgba(255,69,0,.15);
+border:1px solid rgba(255,140,0,.5);
+color:#ffb84d;
+font-size:13px;
+font-weight:bold;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.horario{
+margin-top:20px;
+font-size:22px;
+color:#ffd54f;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.countdown{
+margin-top:8px;
+font-size:14px;
+color:#ccc;
 }
 
 </style>
-
-<script>
-
-setTimeout(function(){
-
-window.location.href="http://degusto.co4.in/";
-
-},2000);
-
-</script>
 
 </head>
 
 <body>
 
-<div class="card">
+<canvas id="sparks"></canvas>
 
-<img
-class="logo"
-src="https://iili.io/C1muS7s.png"
-alt="Dê Gusto">
+<!-- CARD: LANCHONETE ABERTA (redireciona) -->
+<div class="card" id="cardAberto" style="display:none">
+
+<img class="logo" src="https://iili.io/C1muS7s.png" alt="Dê Gusto">
 
 <h1>DÊ GUSTO</h1>
 
@@ -359,16 +300,167 @@ alt="Dê Gusto">
 </div>
 
 <div class="info">
-
 Você será redirecionado automaticamente.<br><br>
-
 <a href="http://degusto.co4.in/">
 Clique aqui caso o redirecionamento não aconteça.
 </a>
-
 </div>
 
 </div>
+
+<!-- CARD: LANCHONETE FECHADA -->
+<div class="card" id="cardFechado" style="display:none">
+
+<img class="logo" src="https://iili.io/C1muS7s.png" alt="Dê Gusto">
+
+<h1>DÊ GUSTO</h1>
+
+<div class="closed-badge">Fechado no momento</div>
+
+<p style="margin-top:18px">Nossa lanchonete abre todos os dias a partir das:</p>
+
+<div class="horario">19:00</div>
+
+<p class="countdown" id="countdown"></p>
+
+<div class="info">
+Volte durante o horário de funcionamento (19h às 1h) para acessar o cardápio.
+</div>
+
+</div>
+
+<script>
+
+/* ---------- CONTROLE DE HORÁRIO (fuso de Brasília) ---------- */
+
+function horaBrasilia(){
+    // Retorna {hora, minuto} no horário de Brasília, independente do fuso do visitante
+    const agora = new Date();
+    const formatado = new Intl.DateTimeFormat('en-US',{
+        timeZone:'America/Sao_Paulo',
+        hour12:false,
+        hour:'2-digit',
+        minute:'2-digit'
+    }).formatToParts(agora);
+
+    let hora = 0, minuto = 0;
+    formatado.forEach(p=>{
+        if(p.type==='hour') hora = parseInt(p.value,10);
+        if(p.type==='minute') minuto = parseInt(p.value,10);
+    });
+    return {hora, minuto};
+}
+
+function redirecionamentoLiberado(){
+    // Liberado das 18:00 até 01:00 (horário de Brasília)
+    const {hora} = horaBrasilia();
+    return (hora >= 18) || (hora < 1);
+}
+
+const cardAberto = document.getElementById('cardAberto');
+const cardFechado = document.getElementById('cardFechado');
+const countdownEl = document.getElementById('countdown');
+
+if(redirecionamentoLiberado()){
+
+    cardAberto.style.display = 'block';
+
+    setTimeout(function(){
+        window.location.href = "http://degusto.co4.in/";
+    }, 2000);
+
+} else {
+
+    cardFechado.style.display = 'block';
+
+    function atualizarContagem(){
+        const {hora, minuto} = horaBrasilia();
+        let minutosAgora = hora*60 + minuto;
+        let minutosAbertura = 19*60; // abre às 19:00
+        let diff = minutosAbertura - minutosAgora;
+        if(diff < 0) diff += 24*60;
+
+        const h = Math.floor(diff/60);
+        const m = diff % 60;
+
+        if(h > 0){
+            countdownEl.textContent = "Abrimos em aproximadamente " + h + "h" + (m>0? " "+m+"min" : "");
+        } else {
+            countdownEl.textContent = "Abrimos em aproximadamente " + m + " minuto(s)";
+        }
+    }
+
+    atualizarContagem();
+    setInterval(atualizarContagem, 60000);
+}
+
+document.body.classList.add('ready');
+
+/* ---------- FAÍSCAS (canvas) ---------- */
+
+(function(){
+    const canvas = document.getElementById('sparks');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resize(){
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const cores = ['#ff4500','#ff8c00','#ffd700','#ffb000'];
+
+    function criarFaisca(){
+        return {
+            x: Math.random()*w,
+            y: h + 10,
+            r: Math.random()*2 + 1,
+            vy: Math.random()*1.5 + 0.6,
+            vx: (Math.random()-0.5)*0.6,
+            vida: 1,
+            decaimento: Math.random()*0.006 + 0.003,
+            cor: cores[Math.floor(Math.random()*cores.length)]
+        };
+    }
+
+    let faiscas = [];
+    for(let i=0;i<45;i++){
+        const f = criarFaisca();
+        f.y = Math.random()*h;
+        faiscas.push(f);
+    }
+
+    function loop(){
+        ctx.clearRect(0,0,w,h);
+
+        faiscas.forEach((f,i)=>{
+            f.x += f.vx;
+            f.y -= f.vy;
+            f.vida -= f.decaimento;
+
+            if(f.vida <= 0 || f.y < -10){
+                faiscas[i] = criarFaisca();
+                return;
+            }
+
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+            ctx.fillStyle = f.cor;
+            ctx.globalAlpha = Math.max(f.vida, 0);
+            ctx.shadowColor = f.cor;
+            ctx.shadowBlur = 6;
+            ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
+
+</script>
 
 </body>
 </html>
