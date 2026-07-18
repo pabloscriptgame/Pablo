@@ -408,6 +408,54 @@ box-shadow:0 10px 26px rgba(255,140,0,.6);
 transform:translateY(0);
 }
 
+.btn-compartilhar{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+width:100%;
+margin-top:10px;
+padding:12px 20px;
+border-radius:14px;
+
+background:rgba(255,170,0,.08);
+border:1px solid rgba(255,170,0,.4);
+
+color:#ffd54f;
+font-size:13.5px;
+font-weight:700;
+letter-spacing:.3px;
+text-transform:uppercase;
+text-decoration:none;
+cursor:pointer;
+
+transition:background .25s ease, transform .18s ease;
+}
+
+.btn-compartilhar:hover{
+background:rgba(255,170,0,.18);
+transform:translateY(-2px);
+}
+
+.btn-compartilhar:active{
+transform:translateY(0);
+}
+
+.share-feedback{
+margin-top:8px;
+text-align:center;
+font-size:11.5px;
+color:#8fffb0;
+font-weight:600;
+min-height:14px;
+opacity:0;
+transition:opacity .25s ease;
+}
+
+.share-feedback.show{
+opacity:1;
+}
+
 /* BANNER DE IMAGENS EM MOVIMENTO */
 
 .marquee{
@@ -527,6 +575,8 @@ Clique aqui caso o redirecionamento não aconteça.
 <p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
 <div class="sorteio-regra">🔒 Exclusivo para clientes nível Ouro para cima</div>
 <a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
+<button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
+<div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
 </div>
 
 </div>
@@ -562,6 +612,8 @@ Volte durante o horário de funcionamento (19h às 1h) para acessar o cardápio.
 <p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
 <div class="sorteio-regra">🔒 Exclusivo para clientes nível Ouro para cima</div>
 <a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
+<button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
+<div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
 </div>
 
 </div>
@@ -640,6 +692,50 @@ if(redirecionamentoLiberado()){
 
     atualizarContagem();
     setInterval(atualizarContagem, 60000);
+}
+
+/* ---------- COMPARTILHAR SORTEIO ---------- */
+
+function compartilharSorteio(botao){
+
+    const link = "http://degusto.co4.in/?p=cadastro";
+    const texto = "🏆 Tô concorrendo ao sorteio do mês da Dê Gusto! Prêmio: 1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola 200ml. Cadastre-se também:";
+
+    if(navigator.share){
+        navigator.share({
+            title: "Sorteio Dê Gusto",
+            text: texto,
+            url: link
+        }).catch(function(){ /* usuário cancelou, sem problema */ });
+        return;
+    }
+
+    // Fallback: copia o link e o texto para a área de transferência
+    const conteudo = texto + " " + link;
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(conteudo).then(function(){
+            mostrarFeedback(botao);
+        }).catch(function(){
+            abrirWhatsapp(texto, link);
+        });
+    } else {
+        abrirWhatsapp(texto, link);
+    }
+}
+
+function abrirWhatsapp(texto, link){
+    const url = "https://wa.me/?text=" + encodeURIComponent(texto + " " + link);
+    window.open(url, "_blank");
+}
+
+function mostrarFeedback(botao){
+    const feedback = botao.nextElementSibling;
+    if(!feedback) return;
+    feedback.classList.add('show');
+    setTimeout(function(){
+        feedback.classList.remove('show');
+    }, 2500);
 }
 
 document.body.classList.add('ready');
