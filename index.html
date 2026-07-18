@@ -26,13 +26,13 @@ min-height:100%;
 
 display:flex;
 flex-direction:column;
-justify-content:center;
+justify-content:flex-start;
 align-items:center;
 
 overflow-y:auto;
 overflow-x:hidden;
 
-padding:40px 16px 155px;
+padding:40px 16px 0;
 
 background:
 linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.82)),
@@ -411,17 +411,30 @@ transform:translateY(0);
 /* BANNER DE IMAGENS EM MOVIMENTO */
 
 .marquee{
-position:fixed;
-left:0;
-bottom:0;
+position:relative;
 width:100%;
-height:120px;
+max-width:600px;
+margin:36px auto 40px;
+height:150px;
 overflow:hidden;
-z-index:6;
-background:linear-gradient(180deg, rgba(20,10,5,0), rgba(10,5,2,.94) 40%);
+border-radius:20px;
+background:linear-gradient(180deg, rgba(255,140,0,.05), rgba(10,5,2,.6));
 backdrop-filter:blur(6px);
-border-top:1px solid rgba(255,170,0,.35);
-box-shadow:0 -10px 25px rgba(255,80,0,.25);
+border:1px solid rgba(255,170,0,.3);
+box-shadow:0 8px 25px rgba(0,0,0,.35);
+}
+
+.marquee-label{
+position:absolute;
+top:10px;
+left:16px;
+z-index:2;
+font-size:11px;
+font-weight:700;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:#ffcf8a;
+opacity:.85;
 }
 
 .marquee-track{
@@ -429,8 +442,8 @@ display:flex;
 width:max-content;
 height:100%;
 align-items:center;
-gap:18px;
-padding:0 18px;
+gap:16px;
+padding:26px 16px 16px;
 animation:marqueeScroll 22s linear infinite;
 }
 
@@ -553,8 +566,9 @@ Volte durante o horário de funcionamento (19h às 1h) para acessar o cardápio.
 
 </div>
 
-<!-- BANNER DE IMAGENS EM MOVIMENTO -->
+<!-- RODAPÉ: BANNER DE IMAGENS EM MOVIMENTO -->
 <div class="marquee">
+<span class="marquee-label">Nosso Cardápio</span>
 <div class="marquee-track" id="marqueeTrack">
 <div class="marquee-item"><img src="https://iili.io/C1DW2rx.jpg" alt="Bebidas"><span>Bebidas</span></div>
 <div class="marquee-item"><img src="https://iili.io/C1DWK7V.jpg" alt="Lanches"><span>Lanches</span></div>
