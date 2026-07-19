@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dê Gusto</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins","Segoe UI",Arial,sans-serif;
+}
+
+html,body{
+height:100%;
+}
+
+body{
+
+min-height:100%;
+
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:center;
+
+overflow-y:auto;
+overflow-x:hidden;
+
+padding:40px 16px 0;
+
+background:
+linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.82)),
+url("https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=2000&q=80");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+
+visibility:hidden; /* evita "flash" de tela até decidirmos qual card mostrar */
+
+}
+
+body::-webkit-scrollbar{
+width:8px;
+}
+body::-webkit-scrollbar-thumb{
+background:rgba(255,120,0,.4);
+border-radius:10px;
+}
+
+body.ready{
+visibility:visible;
+}
+
+/* BRASAS (glow de fundo) */
+
+body::before{
+
+content:"";
+
+position:fixed;
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 10% 90%, rgba(255,80,0,.45), transparent 25%),
+radial-gradient(circle at 85% 20%, rgba(255,170,0,.35), transparent 25%),
+radial-gradient(circle at 40% 60%, rgba(255,40,0,.20), transparent 20%);
+
+animation:fireGlow 6s ease-in-out infinite alternate;
+
+pointer-events:none;
+
+}
+
+@keyframes fireGlow{
+0%{filter:brightness(1);}
+100%{filter:brightness(1.35);}
+}
+
+/* FAGULHAS/BRASAS SUBINDO (pontos) */
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+width:200%;
+height:200%;
+
+left:-50%;
+top:-50%;
+
+background-image:
+radial-gradient(circle,#ffb000 2px,transparent 2px),
+radial-gradient(circle,#ff4500 2px,transparent 2px),
+radial-gradient(circle,#ffd000 1px,transparent 1px);
+
+background-size:
+180px 180px,
+240px 240px,
+300px 300px;
+
+opacity:.5;
+
+animation:embers 18s linear infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes embers{
+0%{transform:translateY(120px);}
+100%{transform:translateY(-120px);}
+}
+
+/* FAÍSCAS (canvas por cima de tudo) */
+
+#sparks{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:4;
+}
+
+/* CARD */
+
+.card{
+
+position:relative;
+z-index:5;
+
+width:430px;
+max-width:92%;
+
+padding:45px;
+
+text-align:center;
+
+border-radius:28px;
+
+background:rgba(20,10,5,.78);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,170,0,.35);
+
+box-shadow:
+0 0 25px rgba(255,80,0,.55),
+0 0 80px rgba(255,120,0,.25);
+
+animation:card 1s;
+
+}
+
+@keyframes card{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:none;}
+}
+
+/* BANNER (imagem em destaque no topo do card) */
+
+.banner{
+position:relative;
+width:calc(100% + 90px);
+margin:-45px -45px 0;
+height:175px;
+overflow:hidden;
+border-radius:28px 28px 0 0;
+}
+
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+animation:bannerZoom 9s ease-in-out infinite alternate;
+}
+
+@keyframes bannerZoom{
+0%{transform:scale(1);}
+100%{transform:scale(1.08);}
+}
+
+.banner::after{
+content:"";
+position:absolute;
+left:0;right:0;bottom:0;
+height:80%;
+background:linear-gradient(to top, rgba(20,10,5,1) 20%, rgba(20,10,5,0));
+pointer-events:none;
+}
+
+h1{
+margin-top:6px;
+color:white;
+font-size:32px;
+font-weight:800;
+letter-spacing:3px;
+text-transform:uppercase;
+}
+
+p{
+margin-top:10px;
+color:#ddd;
+font-size:15px;
+font-weight:400;
+}
+
+
+/* LOADER (tela "abrindo") */
+
+.loader{
+margin:28px auto;
+width:65px;
+height:65px;
+border-radius:50%;
+border:6px solid rgba(255,255,255,.1);
+border-top:6px solid #ff4500;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+/* PROGRESSO */
+
+.progress{
+margin-top:10px;
+height:10px;
+background:#2a2a2a;
+border-radius:50px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0;
+background:linear-gradient(90deg,#ff4500,#ff8c00,#ffd700);
+animation:load 2s linear forwards;
+}
+
+@keyframes load{
+100%{width:100%;}
+}
+
+.info{
+margin-top:25px;
+font-size:14px;
+color:#bbb;
+}
+
+.info a{
+color:#ffd54f;
+font-weight:bold;
+text-decoration:none;
+}
+
+.info a:hover{
+text-decoration:underline;
+}
+
+/* PLACA ABERTO / FECHADO */
+
+.status-badge{
+display:inline-flex;
+align-items:center;
+gap:9px;
+margin-top:20px;
+padding:9px 24px;
+border-radius:50px;
+font-size:13px;
+font-weight:700;
+letter-spacing:1.5px;
+text-transform:uppercase;
+backdrop-filter:blur(4px);
+}
+
+.status-dot{
+position:relative;
+width:9px;
+height:9px;
+border-radius:50%;
+flex-shrink:0;
+}
+
+.status-dot::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:9px;
+height:9px;
+border-radius:50%;
+background:inherit;
+animation:statusPulse 1.6s ease-out infinite;
+}
+
+@keyframes statusPulse{
+0%{transform:scale(1);opacity:.7;}
+100%{transform:scale(2.8);opacity:0;}
+}
+
+.status-badge.aberto{
+background:rgba(60,220,130,.14);
+border:1px solid rgba(90,230,150,.5);
+color:#8CFFB4;
+box-shadow:0 0 18px rgba(60,220,130,.25);
+}
+.status-badge.aberto .status-dot{
+background:#4ade80;
+box-shadow:0 0 8px #4ade80;
+}
+
+.status-badge.fechado{
+background:rgba(255,69,0,.15);
+border:1px solid rgba(255,140,0,.5);
+color:#ffb84d;
+box-shadow:0 0 18px rgba(255,100,0,.2);
+}
+.status-badge.fechado .status-dot{
+background:#ff6b35;
+box-shadow:0 0 8px #ff6b35;
+}
+
+.horario-label{
+margin-top:22px;
+font-size:12px;
+color:#bbb;
+letter-spacing:1.5px;
+text-transform:uppercase;
+font-weight:600;
+}
+
+.horario{
+margin-top:4px;
+font-size:30px;
+color:#ffd54f;
+font-weight:800;
+letter-spacing:1px;
+}
+
+.countdown{
+margin-top:6px;
+font-size:13px;
+color:#ccc;
+font-weight:500;
+}
+
+/* BLOCO DO SORTEIO (moderno, estilo "card dentro do card") */
+
+.sorteio{
+position:relative;
+margin-top:28px;
+padding:22px 20px;
+border-radius:20px;
+text-align:left;
+overflow:hidden;
+
+background:
+linear-gradient(160deg, rgba(15,8,4,.7), rgba(8,4,2,.88)),
+url("https://images.unsplash.com/photo-1552285227-5a2f4b075a64?auto=format&fit=crop&w=1200&q=80");
+background-size:cover;
+background-position:center;
+
+border:1px solid rgba(255,180,60,.35);
+
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,.06),
+0 8px 24px rgba(0,0,0,.35);
+}
+
+.sorteio-top{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:12px;
+}
+
+.sorteio-icon{
+display:flex;
+align-items:center;
+justify-content:center;
+width:34px;
+height:34px;
+flex-shrink:0;
+border-radius:50%;
+font-size:16px;
+background:linear-gradient(135deg,#ff8c00,#ffd700);
+box-shadow:0 0 14px rgba(255,160,0,.55);
+}
+
+.sorteio-tag{
+color:#ffe9c2;
+font-size:12px;
+font-weight:700;
+letter-spacing:1.5px;
+text-transform:uppercase;
+}
+
+.sorteio-data{
+color:#ffb84d;
+font-size:11px;
+font-weight:600;
+opacity:.85;
+}
+
+.sorteio-premio{
+color:#fff;
+font-size:15px;
+font-weight:700;
+line-height:1.35;
+}
+
+.sorteio-desc{
+margin-top:6px;
+color:#d8cfc7;
+font-size:13px;
+line-height:1.55;
+}
+
+.sorteio-regra{
+display:flex;
+align-items:center;
+gap:6px;
+margin-top:12px;
+padding:8px 12px;
+border-radius:10px;
+background:rgba(0,0,0,.28);
+border:1px solid rgba(255,170,0,.25);
+font-size:11.5px;
+color:#ffcf8a;
+font-weight:600;
+letter-spacing:.2px;
+}
+
+.btn-sorteio{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+width:100%;
+margin-top:16px;
+padding:14px 20px;
+border-radius:14px;
+
+background:linear-gradient(90deg,#ff4500,#ff8c00,#ffd700);
+background-size:160% 100%;
+background-position:0% 0%;
+
+color:#1a0d00;
+font-size:14.5px;
+font-weight:800;
+letter-spacing:.3px;
+text-transform:uppercase;
+text-decoration:none;
+
+box-shadow:0 6px 20px rgba(255,120,0,.45);
+transition:background-position .35s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.btn-sorteio:hover{
+background-position:100% 0%;
+transform:translateY(-2px);
+box-shadow:0 10px 26px rgba(255,140,0,.6);
+}
+
+.btn-sorteio:active{
+transform:translateY(0);
+}
+
+.btn-compartilhar{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+width:100%;
+margin-top:10px;
+padding:12px 20px;
+border-radius:14px;
+
+background:rgba(255,170,0,.08);
+border:1px solid rgba(255,170,0,.4);
+
+color:#ffd54f;
+font-size:13.5px;
+font-weight:700;
+letter-spacing:.3px;
+text-transform:uppercase;
+text-decoration:none;
+cursor:pointer;
+
+transition:background .25s ease, transform .18s ease;
+}
+
+.btn-compartilhar:hover{
+background:rgba(255,170,0,.18);
+transform:translateY(-2px);
+}
+
+.btn-compartilhar:active{
+transform:translateY(0);
+}
+
+.share-feedback{
+margin-top:8px;
+text-align:center;
+font-size:11.5px;
+color:#8fffb0;
+font-weight:600;
+min-height:14px;
+opacity:0;
+transition:opacity .25s ease;
+}
+
+.share-feedback.show{
+opacity:1;
+}
+
+/* BANNER DE IMAGENS EM MOVIMENTO */
+
+.marquee{
+position:relative;
+width:100%;
+max-width:600px;
+margin:36px auto 40px;
+height:150px;
+overflow:hidden;
+border-radius:20px;
+background:linear-gradient(180deg, rgba(255,140,0,.05), rgba(10,5,2,.6));
+backdrop-filter:blur(6px);
+border:1px solid rgba(255,170,0,.3);
+box-shadow:0 8px 25px rgba(0,0,0,.35);
+}
+
+.marquee-label{
+position:absolute;
+top:10px;
+left:16px;
+z-index:2;
+font-size:11px;
+font-weight:700;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:#ffcf8a;
+opacity:.85;
+}
+
+.marquee-track{
+display:flex;
+width:max-content;
+height:100%;
+align-items:center;
+gap:16px;
+padding:26px 16px 16px;
+animation:marqueeScroll 22s linear infinite;
+}
+
+.marquee-item{
+position:relative;
+flex:0 0 auto;
+width:150px;
+height:100px;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 0 15px rgba(255,120,0,.35);
+border:1px solid rgba(255,170,0,.45);
+}
+
+.marquee-item img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.marquee-item span{
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+padding:4px 0;
+text-align:center;
+font-size:11px;
+font-weight:bold;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#ffd54f;
+background:rgba(0,0,0,.6);
+}
+
+@keyframes marqueeScroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="sparks"></canvas>
+
+<!-- CARD: LANCHONETE ABERTA (redireciona) -->
+<div class="card" id="cardAberto" style="display:none">
+
+<div class="banner">
+<img src="https://iili.io/CwqYQvS.png" alt="Dê Gusto">
+</div>
+
+<h1>DÊ GUSTO</h1>
+
+<div class="status-badge aberto"><span class="status-dot"></span>Aberto agora</div>
+
+<div class="loader"></div>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div class="info">
+Redirecionando...<br>
+<a href="http://degusto.co4.in/">Não abriu? Clique aqui</a>
+</div>
+
+<div class="sorteio">
+<div class="sorteio-top">
+<div class="sorteio-icon">🏆</div>
+<div>
+<div class="sorteio-tag">Sorteio do Mês</div>
+<div class="sorteio-data">Sorteio em 31/07/2026</div>
+</div>
+</div>
+<div class="sorteio-premio">Combo Especial</div>
+<p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
+<div class="sorteio-regra">🔒 Exclusivo para clientes nível Prata para cima</div>
+<a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
+<button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
+<div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
+</div>
+
+</div>
+
+<!-- CARD: LANCHONETE FECHADA -->
+<div class="card" id="cardFechado" style="display:none">
+
+<div class="banner">
+<img src="https://iili.io/CwqYQvS.png" alt="Dê Gusto">
+</div>
+
+<h1>DÊ GUSTO</h1>
+
+<div class="status-badge fechado"><span class="status-dot"></span>Fechado agora</div>
+
+<div class="horario-label">Abrimos às</div>
+<div class="horario">19:00</div>
+
+<p class="countdown" id="countdown"></p>
+
+<div class="sorteio">
+<div class="sorteio-top">
+<div class="sorteio-icon">🏆</div>
+<div>
+<div class="sorteio-tag">Sorteio do Mês</div>
+<div class="sorteio-data">Sorteio em 31/07/2026</div>
+</div>
+</div>
+<div class="sorteio-premio">Combo Especial</div>
+<p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
+<div class="sorteio-regra">🔒 Exclusivo para clientes nível Prata para cima</div>
+<a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
+<button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
+<div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
+</div>
+
+</div>
+
+<!-- RODAPÉ: BANNER DE IMAGENS EM MOVIMENTO -->
+<div class="marquee">
+<span class="marquee-label">Nosso Cardápio</span>
+<div class="marquee-track" id="marqueeTrack">
+<div class="marquee-item"><img src="https://iili.io/C1DW2rx.jpg" alt="Bebidas"><span>Bebidas</span></div>
+<div class="marquee-item"><img src="https://iili.io/C1DWK7V.jpg" alt="Lanches"><span>Lanches</span></div>
+<div class="marquee-item"><img src="https://iili.io/C1DWd1j.jpg" alt="Lanches"><span>Lanches</span></div>
+<div class="marquee-item"><img src="https://iili.io/C1DWFdQ.jpg" alt="Lanches"><span>Lanches</span></div>
+</div>
+</div>
+
+<script>
+
+/* ---------- CONTROLE DE HORÁRIO (fuso de Brasília) ---------- */
+
+function horaBrasilia(){
+    // Retorna {hora, minuto} no horário de Brasília, independente do fuso do visitante
+    const agora = new Date();
+    const formatado = new Intl.DateTimeFormat('en-US',{
+        timeZone:'America/Sao_Paulo',
+        hour12:false,
+        hour:'2-digit',
+        minute:'2-digit'
+    }).formatToParts(agora);
+
+    let hora = 0, minuto = 0;
+    formatado.forEach(p=>{
+        if(p.type==='hour') hora = parseInt(p.value,10);
+        if(p.type==='minute') minuto = parseInt(p.value,10);
+    });
+    return {hora, minuto};
+}
+
+function redirecionamentoLiberado(){
+    // Liberado das 18:00 até 01:00 (horário de Brasília)
+    const {hora} = horaBrasilia();
+    return (hora >= 18) || (hora < 1);
+}
+
+const cardAberto = document.getElementById('cardAberto');
+const cardFechado = document.getElementById('cardFechado');
+const countdownEl = document.getElementById('countdown');
+
+if(redirecionamentoLiberado()){
+
+    cardAberto.style.display = 'block';
+
+    setTimeout(function(){
+        window.location.href = "http://degusto.co4.in/";
+    }, 2000);
+
+} else {
+
+    cardFechado.style.display = 'block';
+
+    function atualizarContagem(){
+        const {hora, minuto} = horaBrasilia();
+        let minutosAgora = hora*60 + minuto;
+        let minutosAbertura = 19*60; // abre às 19:00
+        let diff = minutosAbertura - minutosAgora;
+        if(diff < 0) diff += 24*60;
+
+        const h = Math.floor(diff/60);
+        const m = diff % 60;
+
+        if(h > 0){
+            countdownEl.textContent = "Abrimos em aproximadamente " + h + "h" + (m>0? " "+m+"min" : "");
+        } else {
+            countdownEl.textContent = "Abrimos em aproximadamente " + m + " minuto(s)";
+        }
+    }
+
+    atualizarContagem();
+    setInterval(atualizarContagem, 60000);
+}
+
+/* ---------- COMPARTILHAR SORTEIO ---------- */
+
+function compartilharSorteio(botao){
+
+    const link = "http://degusto.co4.in/?p=cadastro";
+    const texto = "🏆 Tô concorrendo ao sorteio do mês da Dê Gusto! Prêmio: 1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola 200ml. Cadastre-se também:";
+
+    if(navigator.share){
+        navigator.share({
+            title: "Sorteio Dê Gusto",
+            text: texto,
+            url: link
+        }).catch(function(){ /* usuário cancelou, sem problema */ });
+        return;
+    }
+
+    // Fallback: copia o link e o texto para a área de transferência
+    const conteudo = texto + " " + link;
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(conteudo).then(function(){
+            mostrarFeedback(botao);
+        }).catch(function(){
+            abrirWhatsapp(texto, link);
+        });
+    } else {
+        abrirWhatsapp(texto, link);
+    }
+}
+
+function abrirWhatsapp(texto, link){
+    const url = "https://wa.me/?text=" + encodeURIComponent(texto + " " + link);
+    window.open(url, "_blank");
+}
+
+function mostrarFeedback(botao){
+    const feedback = botao.nextElementSibling;
+    if(!feedback) return;
+    feedback.classList.add('show');
+    setTimeout(function(){
+        feedback.classList.remove('show');
+    }, 2500);
+}
+
+document.body.classList.add('ready');
+
+/* Duplica os itens do banner para o scroll ficar contínuo (sem "salto") */
+(function(){
+    const track = document.getElementById('marqueeTrack');
+    track.innerHTML += track.innerHTML;
+})();
+
+/* ---------- FAÍSCAS (canvas) ---------- */
+
+(function(){
+    const canvas = document.getElementById('sparks');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resize(){
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const cores = ['#ff4500','#ff8c00','#ffd700','#ffb000'];
+
+    function criarFaisca(){
+        return {
+            x: Math.random()*w,
+            y: h + 10,
+            r: Math.random()*2 + 1,
+            vy: Math.random()*1.5 + 0.6,
+            vx: (Math.random()-0.5)*0.6,
+            vida: 1,
+            decaimento: Math.random()*0.006 + 0.003,
+            cor: cores[Math.floor(Math.random()*cores.length)]
+        };
+    }
+
+    let faiscas = [];
+    for(let i=0;i<45;i++){
+        const f = criarFaisca();
+        f.y = Math.random()*h;
+        faiscas.push(f);
+    }
+
+    function loop(){
+        ctx.clearRect(0,0,w,h);
+
+        faiscas.forEach((f,i)=>{
+            f.x += f.vx;
+            f.y -= f.vy;
+            f.vida -= f.decaimento;
+
+            if(f.vida <= 0 || f.y < -10){
+                faiscas[i] = criarFaisca();
+                return;
+            }
+
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+            ctx.fillStyle = f.cor;
+            ctx.globalAlpha = Math.max(f.vida, 0);
+            ctx.shadowColor = f.cor;
+            ctx.shadowBlur = 6;
+            ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
+
+</script>
+
+</body>
+</html>
