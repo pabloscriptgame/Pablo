@@ -7,13 +7,17 @@
 
 <title>Dê Gusto</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:"Segoe UI",Arial,sans-serif;
+font-family:"Poppins","Segoe UI",Arial,sans-serif;
 }
 
 html,body{
@@ -172,41 +176,55 @@ from{opacity:0;transform:translateY(40px);}
 to{opacity:1;transform:none;}
 }
 
-/* LOGO */
+/* BANNER (imagem em destaque no topo do card) */
 
-.logo{
-
-width:190px;
-
-margin:auto;
-
-display:block;
-
-filter:
-drop-shadow(0 0 18px #ff4500)
-drop-shadow(0 0 35px #ffb000);
-
-animation:logo 2s ease-in-out infinite alternate;
-
+.banner{
+position:relative;
+width:calc(100% + 90px);
+margin:-45px -45px 0;
+height:175px;
+overflow:hidden;
+border-radius:28px 28px 0 0;
 }
 
-@keyframes logo{
-100%{transform:scale(1.05);}
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+animation:bannerZoom 9s ease-in-out infinite alternate;
+}
+
+@keyframes bannerZoom{
+0%{transform:scale(1);}
+100%{transform:scale(1.08);}
+}
+
+.banner::after{
+content:"";
+position:absolute;
+left:0;right:0;bottom:0;
+height:80%;
+background:linear-gradient(to top, rgba(20,10,5,1) 20%, rgba(20,10,5,0));
+pointer-events:none;
 }
 
 h1{
-margin-top:25px;
+margin-top:6px;
 color:white;
-font-size:36px;
-letter-spacing:2px;
+font-size:32px;
+font-weight:800;
+letter-spacing:3px;
 text-transform:uppercase;
 }
 
 p{
-margin-top:12px;
+margin-top:10px;
 color:#ddd;
-font-size:17px;
+font-size:15px;
+font-weight:400;
 }
+
 
 /* LOADER (tela "abrindo") */
 
@@ -261,34 +279,91 @@ text-decoration:none;
 text-decoration:underline;
 }
 
-/* TELA "FECHADO" */
+/* PLACA ABERTO / FECHADO */
 
-.closed-badge{
-display:inline-block;
-margin-top:22px;
-padding:8px 22px;
+.status-badge{
+display:inline-flex;
+align-items:center;
+gap:9px;
+margin-top:20px;
+padding:9px 24px;
 border-radius:50px;
+font-size:13px;
+font-weight:700;
+letter-spacing:1.5px;
+text-transform:uppercase;
+backdrop-filter:blur(4px);
+}
+
+.status-dot{
+position:relative;
+width:9px;
+height:9px;
+border-radius:50%;
+flex-shrink:0;
+}
+
+.status-dot::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:9px;
+height:9px;
+border-radius:50%;
+background:inherit;
+animation:statusPulse 1.6s ease-out infinite;
+}
+
+@keyframes statusPulse{
+0%{transform:scale(1);opacity:.7;}
+100%{transform:scale(2.8);opacity:0;}
+}
+
+.status-badge.aberto{
+background:rgba(60,220,130,.14);
+border:1px solid rgba(90,230,150,.5);
+color:#8CFFB4;
+box-shadow:0 0 18px rgba(60,220,130,.25);
+}
+.status-badge.aberto .status-dot{
+background:#4ade80;
+box-shadow:0 0 8px #4ade80;
+}
+
+.status-badge.fechado{
 background:rgba(255,69,0,.15);
 border:1px solid rgba(255,140,0,.5);
 color:#ffb84d;
-font-size:13px;
-font-weight:bold;
-letter-spacing:1px;
+box-shadow:0 0 18px rgba(255,100,0,.2);
+}
+.status-badge.fechado .status-dot{
+background:#ff6b35;
+box-shadow:0 0 8px #ff6b35;
+}
+
+.horario-label{
+margin-top:22px;
+font-size:12px;
+color:#bbb;
+letter-spacing:1.5px;
 text-transform:uppercase;
+font-weight:600;
 }
 
 .horario{
-margin-top:20px;
-font-size:22px;
+margin-top:4px;
+font-size:30px;
 color:#ffd54f;
-font-weight:bold;
+font-weight:800;
 letter-spacing:1px;
 }
 
 .countdown{
-margin-top:8px;
-font-size:14px;
+margin-top:6px;
+font-size:13px;
 color:#ccc;
+font-weight:500;
 }
 
 /* BLOCO DO SORTEIO (moderno, estilo "card dentro do card") */
@@ -296,13 +371,17 @@ color:#ccc;
 .sorteio{
 position:relative;
 margin-top:28px;
-padding:0;
+padding:22px 20px;
 border-radius:20px;
 text-align:left;
 overflow:hidden;
 
 background:
-linear-gradient(160deg, rgba(255,140,0,.14), rgba(255,60,0,.05));
+linear-gradient(160deg, rgba(15,8,4,.7), rgba(8,4,2,.88)),
+url("https://images.unsplash.com/photo-1552285227-5a2f4b075a64?auto=format&fit=crop&w=1200&q=80");
+background-size:cover;
+background-position:center;
+
 border:1px solid rgba(255,180,60,.35);
 
 box-shadow:
@@ -310,88 +389,39 @@ inset 0 1px 0 rgba(255,255,255,.06),
 0 8px 24px rgba(0,0,0,.35);
 }
 
-/* BANNER DA PROMOÇÃO (imagem no topo do card do sorteio) */
-
-.sorteio-banner{
-position:relative;
-width:100%;
-height:170px;
-overflow:hidden;
-}
-
-.sorteio-banner img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-filter:brightness(.97) saturate(1.12);
-transform:scale(1);
-transition:transform .5s ease;
-}
-
-.sorteio:hover .sorteio-banner img{
-transform:scale(1.06);
-}
-
-.sorteio-banner-overlay{
-position:absolute;
-inset:0;
-background:linear-gradient(180deg, rgba(20,10,5,0) 35%, rgba(20,10,5,.55) 78%, rgba(20,10,5,.92) 100%);
-pointer-events:none;
-}
-
-.sorteio-banner::after{
-content:"";
-position:absolute;
-top:0;
-left:-60%;
-width:45%;
-height:100%;
-background:linear-gradient(115deg, transparent, rgba(255,255,255,.35), transparent);
-transform:skewX(-20deg);
-animation:brilho 4.5s ease-in-out infinite;
-pointer-events:none;
-}
-
-@keyframes brilho{
-0%{left:-60%;}
-28%{left:130%;}
-100%{left:130%;}
-}
-
-.sorteio-banner-badge{
-position:absolute;
-top:12px;
-left:14px;
-z-index:2;
+.sorteio-top{
 display:flex;
 align-items:center;
-gap:6px;
-padding:6px 13px;
-border-radius:50px;
+gap:10px;
+margin-bottom:12px;
+}
+
+.sorteio-icon{
+display:flex;
+align-items:center;
+justify-content:center;
+width:34px;
+height:34px;
+flex-shrink:0;
+border-radius:50%;
+font-size:16px;
 background:linear-gradient(135deg,#ff8c00,#ffd700);
-color:#1a0d00;
-font-size:11px;
-font-weight:800;
-letter-spacing:1px;
-text-transform:uppercase;
-box-shadow:0 4px 14px rgba(255,140,0,.55);
+box-shadow:0 0 14px rgba(255,160,0,.55);
 }
 
-.sorteio-banner-data{
-position:absolute;
-bottom:10px;
-left:14px;
-z-index:2;
-color:#ffd54f;
-font-size:11.5px;
+.sorteio-tag{
+color:#ffe9c2;
+font-size:12px;
 font-weight:700;
-letter-spacing:.6px;
-text-shadow:0 1px 4px rgba(0,0,0,.6);
+letter-spacing:1.5px;
+text-transform:uppercase;
 }
 
-.sorteio-body{
-padding:18px 20px 20px;
+.sorteio-data{
+color:#ffb84d;
+font-size:11px;
+font-weight:600;
+opacity:.85;
 }
 
 .sorteio-premio{
@@ -594,11 +624,13 @@ background:rgba(0,0,0,.6);
 <!-- CARD: LANCHONETE ABERTA (redireciona) -->
 <div class="card" id="cardAberto" style="display:none">
 
-<img class="logo" src="https://iili.io/C1muS7s.png" alt="Dê Gusto">
+<div class="banner">
+<img src="https://iili.io/CwqYQvS.png" alt="Dê Gusto">
+</div>
 
 <h1>DÊ GUSTO</h1>
 
-<p>Preparando uma experiência deliciosa...</p>
+<div class="status-badge aberto"><span class="status-dot"></span>Aberto agora</div>
 
 <div class="loader"></div>
 
@@ -607,27 +639,24 @@ background:rgba(0,0,0,.6);
 </div>
 
 <div class="info">
-Você será redirecionado automaticamente.<br><br>
-<a href="http://degusto.co4.in/">
-Clique aqui caso o redirecionamento não aconteça.
-</a>
+Redirecionando...<br>
+<a href="http://degusto.co4.in/">Não abriu? Clique aqui</a>
 </div>
 
 <div class="sorteio">
-<div class="sorteio-banner">
-<img src="https://iili.io/CjP84hN.jpg" alt="Promoção Dê Gusto">
-<div class="sorteio-banner-overlay"></div>
-<div class="sorteio-banner-badge">🏆 Sorteio do Mês</div>
-<div class="sorteio-banner-data">Sorteio em 31/07/2026</div>
+<div class="sorteio-top">
+<div class="sorteio-icon">🏆</div>
+<div>
+<div class="sorteio-tag">Sorteio do Mês</div>
+<div class="sorteio-data">Sorteio em 31/07/2026</div>
 </div>
-<div class="sorteio-body">
+</div>
 <div class="sorteio-premio">Combo Especial</div>
 <p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
-<div class="sorteio-regra">🔒 Exclusivo para clientes nível Ouro para cima</div>
+<div class="sorteio-regra">🔒 Exclusivo para clientes nível Prata para cima</div>
 <a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
 <button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
 <div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
-</div>
 </div>
 
 </div>
@@ -635,37 +664,33 @@ Clique aqui caso o redirecionamento não aconteça.
 <!-- CARD: LANCHONETE FECHADA -->
 <div class="card" id="cardFechado" style="display:none">
 
-<img class="logo" src="https://iili.io/C1muS7s.png" alt="Dê Gusto">
+<div class="banner">
+<img src="https://iili.io/CwqYQvS.png" alt="Dê Gusto">
+</div>
 
 <h1>DÊ GUSTO</h1>
 
-<div class="closed-badge">Fechado no momento</div>
+<div class="status-badge fechado"><span class="status-dot"></span>Fechado agora</div>
 
-<p style="margin-top:18px">Nossa lanchonete abre todos os dias a partir das:</p>
-
+<div class="horario-label">Abrimos às</div>
 <div class="horario">19:00</div>
 
 <p class="countdown" id="countdown"></p>
 
-<div class="info">
-Volte durante o horário de funcionamento (19h às 1h) para acessar o cardápio.
-</div>
-
 <div class="sorteio">
-<div class="sorteio-banner">
-<img src="https://iili.io/CjP84hN.jpg" alt="Promoção Dê Gusto">
-<div class="sorteio-banner-overlay"></div>
-<div class="sorteio-banner-badge">🏆 Sorteio do Mês</div>
-<div class="sorteio-banner-data">Sorteio em 31/07/2026</div>
+<div class="sorteio-top">
+<div class="sorteio-icon">🏆</div>
+<div>
+<div class="sorteio-tag">Sorteio do Mês</div>
+<div class="sorteio-data">Sorteio em 31/07/2026</div>
 </div>
-<div class="sorteio-body">
+</div>
 <div class="sorteio-premio">Combo Especial</div>
 <p class="sorteio-desc">1 X Tudo + porção de batata frita com cheddar e bacon + Coca-Cola sabor original 200ml.</p>
-<div class="sorteio-regra">🔒 Exclusivo para clientes nível Ouro para cima</div>
+<div class="sorteio-regra">🔒 Exclusivo para clientes nível Prata para cima</div>
 <a class="btn-sorteio" href="http://degusto.co4.in/?p=cadastro">✨ Cadastrar e Concorrer</a>
 <button class="btn-compartilhar" onclick="compartilharSorteio(this)">📤 Compartilhar com Amigos</button>
 <div class="share-feedback">Link copiado! Cole para seus amigos 🎉</div>
-</div>
 </div>
 
 </div>
